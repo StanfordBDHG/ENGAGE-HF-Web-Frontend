@@ -1,5 +1,5 @@
 //
-// This source file is part of the Stanford Biodesign Digital Health Next.js Template open-source project
+// This source file is part of the Stanford Biodesign Digital Health ENGAGE-HF open-source project
 //
 // SPDX-FileCopyrightText: 2023 Stanford University and the project authors (see CONTRIBUTORS.md)
 //
@@ -11,11 +11,11 @@ import '@testing-library/jest-dom'
 import Home from './page'
 
 describe('Home Component', () => {
-  it('renders the Stanford Biodesign Digital Health Next.js Template heading', () => {
+  it('renders the Stanford Biodesign Digital Health ENGAGE-HF Web Frontend heading', () => {
     render(<Home />)
 
     const headingElement = screen.getByText(
-      /Welcome to the Stanford Biodesign Digital Health Next.js Template/i,
+      /Welcome to the Stanford Biodesign Digital Health ENGAGE-HF Web Frontend/i,
     )
 
     expect(headingElement).toBeInTheDocument()
@@ -24,9 +24,9 @@ describe('Home Component', () => {
   it('renders the Stanford Biodesign Logo', () => {
     render(<Home />)
 
-    const imageElement = screen.getByAltText(
+    const imageElement: HTMLImageElement = screen.getByAltText(
       'Stanford Biodesign Logo',
-    ) as HTMLImageElement
+    )
 
     expect(imageElement).toBeInTheDocument()
     expect(imageElement.src).toContain('stanfordbiodesign.png')

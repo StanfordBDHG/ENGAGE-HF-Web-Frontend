@@ -1,5 +1,5 @@
 #
-# This source file is part of the Stanford Biodesign Digital Health Next.js Template open-source project
+# This source file is part of the Stanford Biodesign Digital Health ENGAGE-HF open-source project
 # Based on the Apodini workflow found at: https://github.com/Apodini/ApodiniExample/docker-compose-development.yml
 #
 # SPDX-FileCopyrightText: 2023 Stanford University and the project authors (see CONTRIBUTORS.md)
@@ -10,10 +10,10 @@
 version: '3.9'
 
 services:
-  # An Next.js Template
-  stanford-bdhg-nextjs-template:
-    container_name: 'stanford-bdhg-nextjs-template'
-    image: 'stanfordbdgh/nextjstemplate:dev'
+  # ENGAGE-HF Web Frontend
+  stanford-bdhg-engage-hf-web-frontend:
+    container_name: 'stanford-bdhg-engage-hf-web-frontend'
+    image: 'stanfordbdgh/engagehfwebfrontend:dev'
     build:
       context: ./
       dockerfile: ./Dockerfile
@@ -47,7 +47,7 @@ services:
       # 8080 on the container is mapped to 8080 on the server/VM/your Machine.
       # Port 8080 is where the api traefik dashboard is located
       - '8080:8080'
-      # Port 80 is where our stanford-bdhg-nextjs-template is running
+      # Port 80 is where our stanford-bdhg-engage-hf-web-frontend is running
       - '80:80'
     # Traefik needs the docker.sock to detect new docker container
     volumes:

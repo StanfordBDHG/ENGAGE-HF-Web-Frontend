@@ -1,6 +1,6 @@
 <!--
 
-This source file is part of the Stanford Biodesign Digital Health Next.js Template open-source project
+This source file is part of the Stanford Biodesign Digital Health ENGAGE-HF open-source project
 
 SPDX-FileCopyrightText: 2023 Stanford University and the project authors (see CONTRIBUTORS.md)
 
@@ -8,26 +8,15 @@ SPDX-License-Identifier: MIT
 
 -->
 
-# Biodesign Digital Health Next.js Template
+# Stanford Biodesign Digital Health ENGAGE-HF Web Frontend
 
-[![Build and Test](https://github.com/StanfordBDHG/NextJSTemplate/actions/workflows/build-and-test.yml/badge.svg)](https://github.com/StanfordBDHG/NextJSTemplate/actions/workflows/build-and-test.yml)
-[![Deployment](https://github.com/StanfordBDHG/NextJSTemplate/actions/workflows/main.yml/badge.svg)](https://github.com/StanfordBDHG/NextJSTemplate/actions/workflows/main.yml)
-[![codecov](https://codecov.io/gh/StanfordBDHG/NextJSTemplate/graph/badge.svg?token=dfQW5eZ2up)](https://codecov.io/gh/StanfordBDHG/NextJSTemplate)
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.10052055.svg)](https://doi.org/10.5281/zenodo.10052055)
+[![Build and Test](https://github.com/StanfordBDHG/ENGAGE-HF-Web-Frontend/actions/workflows/build-and-test.yml/badge.svg)](https://github.com/StanfordBDHG/ENGAGE-HF-Web-Frontend/actions/workflows/build-and-test.yml)
+[![Deployment](https://github.com/StanfordBDHG/ENGAGE-HF-Web-Frontend/actions/workflows/main.yml/badge.svg)](https://github.com/StanfordBDHG/ENGAGE-HF-Web-Frontend/actions/workflows/main.yml)
+[![codecov](https://codecov.io/gh/StanfordBDHG/ENGAGE-HF-Web-Frontend/graph/badge.svg?token=PsKyNz7Woe)](https://codecov.io/gh/StanfordBDHG/ENGAGE-HF-Web-Frontend)
 
-## How To Use This Template
+## How To Use ENGAGE-HF Web Frontend
 
-The template repository contains a template for a Next.js project providing automated GitHub Actions and setups for code linting, testing & test coverage reports, docker deployments, a docker compose setup, local packages for modular deployment, and documentation generation & deployment.
-
-Follow these steps to customize it to your needs:
-
-1. Rename the Next.js project.
-2. Modify, add, or remove the local packages found at `/packages/*` to separate code into smaller modules.
-3. Add dependencies and edit the project in `/app` and the local Node packages.
-
-The main application is automatically deployed to https://stanfordbdhg.github.io/NextJSTemplate/.
-
-The documentation of the local packages is automatically deployed to https://stanfordbdhg.github.io/NextJSTemplate/docs.
+The ENGAGE-HF Web Frontend repository contains a Next.js project providing automated GitHub Actions and setups for code linting, testing & test coverage reports, docker deployments, a docker compose setup, local packages for modular deployment.
 
 ## Getting Started
 
@@ -73,12 +62,12 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 
 ## License
 
-This project is licensed under the MIT License. See [Licenses](https://github.com/StanfordBDHG/NextJSTemplate/tree/main/LICENSES) for more information.
+This project is licensed under the MIT License. See [Licenses](https://github.com/StanfordBDHG/ENGAGE-HF-Web-Frontend/tree/main/LICENSES) for more information.
 
 ## Contributors
 
 This project is developed as part of the Stanford Byers Center for Biodesign at Stanford University.
-See [CONTRIBUTORS.md](https://github.com/StanfordBDHG/NextJSTemplate/tree/main/CONTRIBUTORS.md) for a full list of all Next.js Template contributors.
+See [CONTRIBUTORS.md](https://github.com/StanfordBDHG/ENGAGE-HF-Web-Frontend/tree/main/CONTRIBUTORS.md) for a full list of all contributors.
 
 ![Stanford Byers Center for Biodesign Logo](https://raw.githubusercontent.com/StanfordBDHG/.github/main/assets/biodesign-footer-light.png#gh-light-mode-only)
 ![Stanford Byers Center for Biodesign Logo](https://raw.githubusercontent.com/StanfordBDHG/.github/main/assets/biodesign-footer-dark.png#gh-dark-mode-only)

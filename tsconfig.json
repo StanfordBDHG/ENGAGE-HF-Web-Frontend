@@ -27,7 +27,7 @@
   "exclude": ["node_modules"],
   "typedocOptions": {
     "entryPoints": ["packages/*"],
-    "name": "Stanford Biodesign Digital Health Next.js Template",
+    "name": "Stanford Biodesign Digital Health ENGAGE-HF Web Frontend",
     "entryPointStrategy": "packages",
     "includeVersion": false
   }

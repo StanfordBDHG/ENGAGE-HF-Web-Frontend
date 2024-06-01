@@ -1,5 +1,5 @@
 #
-# This source file is part of the Stanford Biodesign Digital Health Next.js Template open-source project
+# This source file is part of the Stanford Biodesign Digital Health ENGAGE-HF open-source project
 # Based on the Apodini workflow found at: https://github.com/Apodini/ApodiniExample/docker-compose.yml
 #
 # SPDX-FileCopyrightText: 2023 Stanford University and the project authors (see CONTRIBUTORS.md)
@@ -10,10 +10,10 @@
 version: '3.9'
 
 services:
-  # An Next.js Template
-  stanford-bdhg-nextjs-template:
-    container_name: 'stanford-bdhg-nextjs-template'
-    image: 'ghcr.io/stanfordbdhg/nextjstemplate:latest'
+  # ENGAGE-HF Web Frontend
+  stanford-bdhg-engage-hf-web-frontend:
+    container_name: 'stanford-bdhg-engage-hf-web-frontend'
+    image: 'ghcr.io/stanfordbdhg/engagehfwebfrontend:latest'
     expose:
       - '80'
     command: ['node', 'server.js']

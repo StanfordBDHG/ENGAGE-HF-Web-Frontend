@@ -1,5 +1,5 @@
 //
-// This source file is part of the Stanford Biodesign Digital Health Next.js Template open-source project
+// This source file is part of the Stanford Biodesign Digital Health ENGAGE-HF open-source project
 //
 // SPDX-FileCopyrightText: 2023 Stanford University and the project authors (see CONTRIBUTORS.md)
 //
@@ -17,7 +17,7 @@
 export function generateGreeting(): Greeting {
   return {
     message: 'Welcome',
-    project: 'Stanford Biodesign Digital Health Next.js Template',
+    project: 'Stanford Biodesign Digital Health ENGAGE-HF Web Frontend',
   }
 }
 
@@ -25,6 +25,6 @@ export function generateGreeting(): Greeting {
  * A greeting with a message and a proejct name.
  */
 export interface Greeting {
-  message: String
-  project: String
+  message: string
+  project: string
 }
