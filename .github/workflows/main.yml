@@ -21,19 +21,11 @@ jobs:
     permissions:
       contents: read
       checks: write
-  nextjsgithubpages:
-    name: Deploy Next.js site to GitHub Pages
-    needs: buildandtest
-    uses: StanfordBDHG/.github/.github/workflows/nextjs-github-pages.yml@v2
-    permissions:
-      contents: read
-      pages: write
-      id-token: write
   dockerimage:
     name: Docker Build and Push
     uses: StanfordBDHG/.github/.github/workflows/docker-build-and-push.yml@v2
     with:
-      imageName: stanfordbdhg/nextjstemplate
+      imageName: stanfordbdhg/engagehffrontend
       environment: package
     permissions:
       contents: read
