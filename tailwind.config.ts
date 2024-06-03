@@ -5,19 +5,15 @@
 //
 // SPDX-License-Identifier: MIT
 //
+import { tailwindColors } from '@stanfordbdhg/design-system'
 
-/** @type {import('ts-jest').JestConfigWithTsJest} */
-
+/** @type {import('tailwindcss').Config} */
 module.exports = {
-  collectCoverage: true,
-  preset: 'ts-jest',
-  testEnvironment: 'jsdom',
-  transform: {
-    '^.+\\.tsx?$': [
-      'ts-jest',
-      {
-        tsconfig: 'tsconfig.jest.json',
-      },
-    ],
+  content: ['./{app,pages,components}/**/*.{js,ts,jsx,tsx,mdx}'],
+  theme: {
+    extend: {
+      colors: tailwindColors,
+    },
   },
+  plugins: [],
 }

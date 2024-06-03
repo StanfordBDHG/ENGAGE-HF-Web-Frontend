@@ -103,7 +103,7 @@
   },
   "overrides": [
     {
-      "files": ["app/**/*.ts?(x)"],
+      "files": ["app/**/*.ts?(x)", "**/*.stories.ts?(x)"],
       "rules": {
         "import/no-default-export": "off"
       }
