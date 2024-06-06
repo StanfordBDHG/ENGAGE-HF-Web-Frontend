@@ -27,6 +27,7 @@
   },
   "dependencies": {
     "@stanfordbdhg/design-system": "file:./packages/design-system",
+    "firebase": "^10.12.2",
     "next": "^14",
     "prettier-plugin-tailwindcss": "^0.5.14",
     "react": "^18",
