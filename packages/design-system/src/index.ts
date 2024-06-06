@@ -11,7 +11,6 @@
  * @packageDocumentation
  */
 
-export * from './components/Button'
 export * from './utils/className'
 export * from './utils/tailwind'
 export * from './theme/light'
