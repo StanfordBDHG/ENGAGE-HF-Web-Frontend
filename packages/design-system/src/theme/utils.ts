@@ -24,6 +24,7 @@ type Size = string
 export interface Theme {
   [key: string]: string
   surface: RGBColor
+  'surface-primary': RGBColor
   foreground: RGBColor
   card: RGBColor
   'card-foreground': RGBColor
