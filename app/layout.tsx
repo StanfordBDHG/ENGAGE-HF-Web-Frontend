@@ -10,6 +10,8 @@ import type { ReactNode } from 'react'
 import './globals.css'
 import '@stanfordbdhg/design-system/main.css'
 import { themeToCSSVariables, lightTheme } from '@stanfordbdhg/design-system'
+import { getLocale, getMessages } from 'next-intl/server'
+import { NextIntlClientProvider } from 'next-intl'
 
 export const metadata: Metadata = {
   title: 'ENGAGE-HF Web Frontend',
@@ -20,9 +22,12 @@ interface RootLayoutProps {
   children: ReactNode
 }
 
-export default function RootLayout({ children }: RootLayoutProps) {
+export default async function RootLayout({ children }: RootLayoutProps) {
+  const locale = await getLocale()
+  const messages = await getMessages()
+
   return (
-    <html lang="en">
+    <html lang={locale}>
       <head>
         <style>
           {`
@@ -30,8 +35,11 @@ export default function RootLayout({ children }: RootLayoutProps) {
           `}
         </style>
       </head>
-
-      <body>{children}</body>
+      <body>
+        <NextIntlClientProvider messages={messages}>
+          {children}
+        </NextIntlClientProvider>
+      </body>
     </html>
   )
 }
