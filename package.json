@@ -15,7 +15,8 @@
   "scripts": {
     "dev": "concurrently \"next dev\" \"npm --prefix packages/design-system run watch\"",
     "prebuild": "npm --prefix packages/design-system run build",
-    "build": "next build",
+    "build": "npm run build-service-worker && next build",
+    "buildServiceWorker": "npx esbuild authServiceWorker.ts --bundle --outfile=public/authServiceWorker.js",
     "start": "next start",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix & prettier --write .",
@@ -26,13 +27,18 @@
     "docs:ci": "typedoc --out ./out/docs --githubPages true"
   },
   "dependencies": {
+    "@hookform/resolvers": "^3.6.0",
     "@stanfordbdhg/design-system": "file:./packages/design-system",
+    "@t3-oss/env-nextjs": "^0.10.1",
     "firebase": "^10.12.2",
     "next": "^14",
+    "next-intl": "^3.14.1",
     "prettier-plugin-tailwindcss": "^0.5.14",
     "react": "^18",
     "react-dom": "^18",
-    "sharp": "^0.33"
+    "react-hook-form": "^7.51.5",
+    "sharp": "^0.33",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^6",
@@ -45,6 +51,7 @@
     "@typescript-eslint/parser": "^7",
     "autoprefixer": "^10",
     "concurrently": "^8",
+    "esbuild": "^0.21.5",
     "eslint": "^8",
     "eslint-config-next": "^14",
     "eslint-config-prettier": "^9",

@@ -6,12 +6,13 @@
 // SPDX-License-Identifier: MIT
 //
 import type { Metadata } from 'next'
+import { NextIntlClientProvider } from 'next-intl'
+import { getLocale, getMessages } from 'next-intl/server'
 import type { ReactNode } from 'react'
-import './globals.css'
 import '@stanfordbdhg/design-system/main.css'
 import { themeToCSSVariables, lightTheme } from '@stanfordbdhg/design-system'
-import { getLocale, getMessages } from 'next-intl/server'
-import { NextIntlClientProvider } from 'next-intl'
+import { RegisterWorker } from './RegisterWorker'
+import './globals.css'
 
 export const metadata: Metadata = {
   title: 'ENGAGE-HF Web Frontend',
@@ -36,6 +37,7 @@ export default async function RootLayout({ children }: RootLayoutProps) {
         </style>
       </head>
       <body>
+        <RegisterWorker />
         <NextIntlClientProvider messages={messages}>
           {children}
         </NextIntlClientProvider>

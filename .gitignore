@@ -23,6 +23,7 @@
 
 # production
 /build
+/public/authServiceWorker.js
 
 # misc
 .DS_Store
