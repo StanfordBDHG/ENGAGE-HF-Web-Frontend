@@ -1,9 +1,17 @@
 'use client'
 
-import { useEffect } from 'react'
+import { type User } from '@firebase/auth-types'
+import { onAuthStateChanged } from 'firebase/auth'
+import { useRouter } from 'next/navigation'
+import { useEffect, useState } from 'react'
+import { auth } from '../modules/firebase/clientApp'
 import { firebaseConfig } from '../modules/firebase/config'
+import { routes } from '../modules/routes'
 
 export const RegisterWorker = () => {
+  const router = useRouter()
+  const [user, setUser] = useState<User | null>()
+
   useEffect(() => {
     if ('serviceWorker' in navigator) {
       const serializedFirebaseConfig = encodeURIComponent(
@@ -14,6 +22,24 @@ export const RegisterWorker = () => {
       void navigator.serviceWorker.register(serviceWorkerUrl)
     }
   }, [])
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      // @ts-expect-error Nested methods are not used anyway
+      setUser(user)
+    })
+    return () => unsubscribe()
+  }, [])
+
+  useEffect(() => {
+    // TODO: This is not ideal, results with double redirect. To investigate
+    const isSignIn = window.location.pathname === '/sign-in'
+    if (isSignIn && user) {
+      window.location.assign(routes.home)
+    } else if (!isSignIn && user === null) {
+      window.location.assign(routes.signIn)
+    }
+  }, [router, user])
 
   return null
 }

@@ -23,6 +23,8 @@ interface RootLayoutProps {
   children: ReactNode
 }
 
+export const dynamic = 'force-dynamic'
+
 export default async function RootLayout({ children }: RootLayoutProps) {
   const locale = await getLocale()
   const messages = await getMessages()

@@ -1,6 +1,5 @@
 'use client'
 import { signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth'
-import { useRouter } from 'next/navigation'
 import { useTranslations } from 'next-intl'
 import { z } from 'zod'
 import { Button } from '@stanfordbdhg/design-system/components/Button'
@@ -12,7 +11,6 @@ import {
 import { Field } from '@stanfordbdhg/design-system/forms/Field'
 import { useForm } from '@stanfordbdhg/design-system/forms/useForm'
 import { auth, authProvider } from '../../modules/firebase/clientApp'
-import { routes } from '../../modules/routes'
 
 const formSchema = z.object({
   email: z.string().min(1, 'Email is required'),
@@ -21,7 +19,6 @@ const formSchema = z.object({
 
 export const SignInForm = () => {
   const t = useTranslations()
-  const router = useRouter()
   const form = useForm({
     formSchema,
     defaultValues: { email: '', password: '' },
@@ -30,7 +27,6 @@ export const SignInForm = () => {
   const handleSubmit = form.handleSubmit(async ({ email, password }) => {
     try {
       await signInWithEmailAndPassword(auth, email, password)
-      router.push(routes.home)
     } catch (error) {
       if (
         error instanceof Error &&
