@@ -14,6 +14,8 @@ services:
   stanford-bdhg-engage-hf-web-frontend:
     container_name: 'stanford-bdhg-engage-hf-web-frontend'
     image: 'ghcr.io/stanfordbdhg/engagehfwebfrontend:latest'
+    environment:
+      - NEXT_PUBLIC_CHECK=${NEXT_PUBLIC_CHECK}
     expose:
       - '80'
     command: ['node', 'server.js']
