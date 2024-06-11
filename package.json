@@ -15,7 +15,7 @@
   "scripts": {
     "dev": "concurrently \"next dev\" \"npm --prefix packages/design-system run watch\"",
     "prebuild": "npm --prefix packages/design-system run build",
-    "build": "npm run build-service-worker && next build",
+    "build": "npm run buildServiceWorker && next build",
     "buildServiceWorker": "npx esbuild authServiceWorker.ts --bundle --outfile=public/authServiceWorker.js",
     "start": "next start",
     "lint": "eslint .",
