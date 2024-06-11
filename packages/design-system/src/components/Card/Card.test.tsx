@@ -13,7 +13,7 @@ describe('Card', () => {
   it('renders element', () => {
     render(<Card>Lorem</Card>)
 
-    const element = screen.getByText('lorem')
+    const element = screen.getByText('Lorem')
     expect(element).toBeInTheDocument()
   })
 })
