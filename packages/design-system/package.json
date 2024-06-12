@@ -42,6 +42,7 @@
     "./components/Input": "./dist/components/Input/Input.js",
     "./components/Label": "./dist/components/Form/Label.js",
     "./components/Separator": "./dist/components/Separator/index.js",
+    "./molecules/AsideBrandLayout": "./dist/molecules/AsideBrandLayout/index.js",
     "./forms/Field": "./dist/forms/Field/index.js",
     "./forms/useForm": "./dist/forms/useForm/index.js",
     "./main.css": "./dist/main.css"

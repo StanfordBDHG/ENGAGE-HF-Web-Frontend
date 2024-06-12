@@ -5,6 +5,4 @@
 //
 // SPDX-License-Identifier: MIT
 //
-import { AsideEngageLayout } from '../../components/AsideEngageLayout'
-
-export default AsideEngageLayout
+export * from './AsideEngageLayout'
