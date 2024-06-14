@@ -1,7 +1,6 @@
 {
   "signIn": "Sign In",
-  "signIn_apple": "Sign in with Apple",
-  "signIn_stanford": "Sign in with Stanford",
+  "signIn_provider": "Sign in with { provider }",
   "signIn_separator": "or",
   "signIn_field_email": "Email",
   "signIn_field_password": "Password",
