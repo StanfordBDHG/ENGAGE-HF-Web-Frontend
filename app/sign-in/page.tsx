@@ -5,16 +5,13 @@
 //
 // SPDX-License-Identifier: MIT
 //
-import { redirect } from 'next/navigation'
 import { SignInForm } from './SignInForm'
-import { getServerApp } from '../../modules/firebase/serverApp'
-import { routes } from '../../modules/routes'
+import { unauthenticatedOnly } from '../../modules/firebase/guards'
 
 export const dynamic = 'force-dynamic'
 
 const SignInPage = async () => {
-  const { currentUser } = await getServerApp()
-  if (currentUser) redirect(routes.home)
+  await unauthenticatedOnly()
   return <SignInForm />
 }
 
