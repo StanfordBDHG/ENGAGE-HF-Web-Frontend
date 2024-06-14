@@ -1,0 +1,36 @@
+//
+// This source file is part of the Stanford Biodesign Digital Health ENGAGE-HF open-source project
+//
+// SPDX-FileCopyrightText: 2023 Stanford University and the project authors (see CONTRIBUTORS.md)
+//
+// SPDX-License-Identifier: MIT
+//
+'use client'
+import { useRouter } from 'next/navigation'
+import { useEffect } from 'react'
+import {
+  useAuthUser,
+  useRegisterAuthServiceWorker,
+} from '@stanfordbdhg/design-system/modules/auth/hooks'
+import { auth } from './clientApp'
+import { firebaseConfig } from './config'
+import { routes } from '../routes'
+
+export const AuthProvider = () => {
+  const router = useRouter()
+  const user = useAuthUser(auth)
+
+  useRegisterAuthServiceWorker(firebaseConfig)
+
+  useEffect(() => {
+    // TODO: This is not ideal, results with double redirect. To investigate
+    const isSignIn = window.location.pathname === routes.signIn
+    if (isSignIn && user) {
+      window.location.assign(routes.home)
+    } else if (!isSignIn && user === null) {
+      window.location.assign(routes.signIn)
+    }
+  }, [router, user])
+
+  return null
+}

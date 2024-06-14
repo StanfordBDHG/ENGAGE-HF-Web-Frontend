@@ -11,8 +11,8 @@ import { getLocale, getMessages } from 'next-intl/server'
 import type { ReactNode } from 'react'
 import '@stanfordbdhg/design-system/main.css'
 import { themeToCSSVariables, lightTheme } from '@stanfordbdhg/design-system'
-import { RegisterWorker } from './RegisterWorker'
 import './globals.css'
+import { AuthProvider } from '../modules/firebase/AuthProvider'
 
 export const metadata: Metadata = {
   title: 'ENGAGE-HF Web Frontend',
@@ -39,7 +39,7 @@ export default async function RootLayout({ children }: RootLayoutProps) {
         </style>
       </head>
       <body>
-        <RegisterWorker />
+        <AuthProvider />
         <NextIntlClientProvider messages={messages}>
           {children}
         </NextIntlClientProvider>
