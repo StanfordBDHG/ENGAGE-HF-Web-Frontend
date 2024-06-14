@@ -5,6 +5,15 @@
 //
 // SPDX-License-Identifier: MIT
 //
+import { type ReactNode } from 'react'
 import { AsideEngageLayout } from '../../components/AsideEngageLayout'
 
-export default AsideEngageLayout
+interface SignInLayoutProps {
+  children?: ReactNode
+}
+
+const SignInLayout = (props: SignInLayoutProps) => (
+  <AsideEngageLayout {...props} />
+)
+
+export default SignInLayout
