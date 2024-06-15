@@ -10,6 +10,7 @@
 
 module.exports = {
   collectCoverage: true,
+  modulePathIgnorePatterns: ['dist'],
   preset: 'ts-jest',
   testEnvironment: 'jsdom',
   transform: {
