@@ -62,7 +62,9 @@ export const EmailPasswordForm = ({ auth }: EmailPasswordFormProps) => {
         render={({ field }) => <Input type="password" {...field} />}
         error={form.formError}
       />
-      <Button type="submit">{t('signIn_submit')}</Button>
+      <Button type="submit" isPending={form.formState.isSubmitting}>
+        {t('signIn_submit')}
+      </Button>
     </form>
   )
 }
