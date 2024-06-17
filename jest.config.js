@@ -10,6 +10,7 @@
 
 module.exports = {
   collectCoverage: true,
+  modulePathIgnorePatterns: ['dist'],
   preset: 'ts-jest',
   testEnvironment: 'jsdom',
   transform: {
@@ -20,4 +21,13 @@ module.exports = {
       },
     ],
   },
+  collectCoverageFrom: [
+    '**/*.ts',
+    '**/*.tsx',
+    '!**/build/**',
+    '!**/node_modules/**',
+    '!**/.storybook/**',
+    '!**/tailwind.config.ts',
+    '!**/*.stories.tsx'
+  ]
 }
