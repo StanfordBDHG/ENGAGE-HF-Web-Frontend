@@ -13,7 +13,7 @@ import { Button } from '../../../components/Button'
 import { Separator, SeparatorText } from '../../../components/Separator'
 import { cn } from '../../../utils/className'
 
-interface SignInFormProps {
+export interface SignInFormProps {
   auth: Auth
   providers: Array<{
     provider: AuthProvider
@@ -44,9 +44,11 @@ export const SignInForm = ({
       ))}
       {enableEmailPassword && (
         <>
-          <Separator className="my-5">
-            <SeparatorText>{t('signIn_separator')}</SeparatorText>
-          </Separator>
+          {providers.length > 0 && (
+            <Separator className="my-5">
+              <SeparatorText>{t('signIn_separator')}</SeparatorText>
+            </Separator>
+          )}
           <EmailPasswordForm auth={auth} />
         </>
       )}
