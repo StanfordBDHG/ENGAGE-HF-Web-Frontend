@@ -20,7 +20,7 @@ import {
 import { Error } from '../../components/Error'
 import { Label } from '../../components/Label'
 
-type FormFieldProps<
+export type FieldProps<
   TFieldValues extends FieldValues = FieldValues,
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
 > = Omit<ControllerProps<TFieldValues, TName>, 'render'> & {
@@ -32,7 +32,7 @@ type FormFieldProps<
     field: ControllerRenderProps<TFieldValues, TName> & {
       id: string
       'aria-invalid': boolean
-      'aria-describedby': string
+      'aria-errormessage': string
     }
     fieldState: ControllerFieldState
     formState: UseFormStateReturn<TFieldValues>
@@ -43,6 +43,9 @@ type FormFieldProps<
   error?: ErrorOption
 }
 
+/**
+ * Registers form field with correct error and label handler built-in
+ * */
 export const Field = <
   TFieldValues extends FieldValues = FieldValues,
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
@@ -54,7 +57,7 @@ export const Field = <
   render,
   error: errorProp,
   ...props
-}: FormFieldProps<TFieldValues, TName>) => {
+}: FieldProps<TFieldValues, TName>) => {
   const id = name
   return (
     <Controller
@@ -66,7 +69,7 @@ export const Field = <
         const fieldProps = {
           ...states.field,
           id,
-          'aria-describedby': error ? errorId : '',
+          'aria-errormessage': error ? errorId : '',
           'aria-invalid': !!error,
         }
         return (
