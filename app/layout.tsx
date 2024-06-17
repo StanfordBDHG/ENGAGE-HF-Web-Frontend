@@ -19,13 +19,13 @@ export const metadata: Metadata = {
   description: 'Stanford Biodesign Digital Health ENGAGE-HF Web Frontend',
 }
 
+export const dynamic = 'force-dynamic'
+
 interface RootLayoutProps {
   children: ReactNode
 }
 
-export const dynamic = 'force-dynamic'
-
-export default async function RootLayout({ children }: RootLayoutProps) {
+const RootLayout = async ({ children }: RootLayoutProps) => {
   const locale = await getLocale()
   const messages = await getMessages()
 
@@ -47,3 +47,5 @@ export default async function RootLayout({ children }: RootLayoutProps) {
     </html>
   )
 }
+
+export default RootLayout
