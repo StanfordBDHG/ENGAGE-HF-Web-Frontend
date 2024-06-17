@@ -5,13 +5,15 @@
 //
 // SPDX-License-Identifier: MIT
 //
+const createNextIntlPlugin = require('next-intl/plugin')
 
-/** @type {import('next').NextConfig} */
+const withNextIntl = createNextIntlPlugin('./modules/messages/i18n.ts')
 
 const output = process.env.NEXT_JS_OUTPUT || 'standalone'
 const imagesUnoptimized = process.env.NEXT_JS_IMAGES_UNOPTIMIZED == 'true'
 const basePath = process.env.NEXT_JS_BASE_PATH ?? ''
 
+/** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
   output: output,
@@ -24,4 +26,4 @@ const nextConfig = {
   },
 }
 
-module.exports = nextConfig
+module.exports = withNextIntl(nextConfig)

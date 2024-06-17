@@ -12,6 +12,7 @@ import { type Theme } from './utils'
  * */
 export const lightTheme: Theme = {
   surface: '250 250 249',
+  'surface-primary': '255 255 255',
   foreground: '9 4 4',
   card: '255 255 255',
   'card-foreground': '9 4 4',

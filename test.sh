@@ -11,6 +11,6 @@
 set -e
 
 CONTENT=$(curl --fail http://localhost)
-echo "$CONTENT" | grep "Welcome to the Stanford Biodesign Digital Health ENGAGE-HF Web Frontend"
+echo "$CONTENT" | grep "ENGAGE-HF"
 
 echo "✅ Test Passed!"
