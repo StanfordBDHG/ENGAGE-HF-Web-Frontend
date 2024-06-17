@@ -21,4 +21,13 @@ module.exports = {
       },
     ],
   },
+  collectCoverageFrom: [
+    '**/*.ts',
+    '**/*.tsx',
+    '!**/build/**',
+    '!**/node_modules/**',
+    '!**/.storybook/**',
+    '!**/tailwind.config.ts',
+    '!**/*.stories.tsx'
+  ]
 }
