@@ -11,7 +11,7 @@ import { type AbstractIntlMessages } from 'use-intl'
 
 export default getRequestConfig(async () => {
   const locale = 'en'
-  const messages = (await import(`./messages/${locale}.json`)) as {
+  const messages = (await import(`./translations/${locale}.json`)) as {
     default: AbstractIntlMessages
   }
 

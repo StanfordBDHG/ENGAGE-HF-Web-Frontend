@@ -5,7 +5,7 @@
 //
 // SPDX-License-Identifier: MIT
 //
-import type en from './messages/en.json'
+import type en from './modules/messages/translations/en.json'
 
 type Messages = typeof en
 

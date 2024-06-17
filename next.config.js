@@ -7,7 +7,7 @@
 //
 const createNextIntlPlugin = require('next-intl/plugin')
 
-const withNextIntl = createNextIntlPlugin()
+const withNextIntl = createNextIntlPlugin('./modules/messages/i18n.ts')
 
 const output = process.env.NEXT_JS_OUTPUT || 'standalone'
 const imagesUnoptimized = process.env.NEXT_JS_IMAGES_UNOPTIMIZED == 'true'
