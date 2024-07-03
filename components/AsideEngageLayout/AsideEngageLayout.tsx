@@ -17,7 +17,7 @@ export const AsideEngageLayout = (
   <AsideBrandLayout
     aside={
       <>
-        <h2 className="text-6xl font-thin tracking-widest text-primary/30">
+        <h2 className="text-6xl font-light tracking-widest text-primary">
           ENGAGE-HF
         </h2>
         <Image
