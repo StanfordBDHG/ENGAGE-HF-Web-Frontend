@@ -21,7 +21,7 @@ export const Error = forwardRef<HTMLParagraphElement, ErrorProps>(
     return (
       <p
         className={cn(
-          'mt-2 min-h-[20px] text-[13px] leading-none text-destructive',
+          'mb-1 mt-1.5 min-h-5 text-xs leading-none text-destructive',
           className,
         )}
         ref={ref}
