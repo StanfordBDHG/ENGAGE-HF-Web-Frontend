@@ -23,7 +23,6 @@ export const AuthProvider = () => {
   useRegisterAuthServiceWorker(firebaseConfig)
 
   useEffect(() => {
-    // TODO: This is not ideal, results with double redirect. To investigate
     const isSignIn = window.location.pathname === routes.signIn
     if (isSignIn && user) {
       window.location.assign(routes.home)
