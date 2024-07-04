@@ -10,6 +10,7 @@ import {
   type AsideBrandLayoutProps,
   AsideBrandLayout,
 } from '@stanfordbdhg/design-system/molecules/AsideBrandLayout'
+import { LogoType } from '../icons/LogoType'
 
 export const AsideEngageLayout = (
   props: Omit<AsideBrandLayoutProps, 'aside'>,
@@ -17,9 +18,7 @@ export const AsideEngageLayout = (
   <AsideBrandLayout
     aside={
       <>
-        <h2 className="text-6xl font-light tracking-widest text-primary">
-          ENGAGE-HF
-        </h2>
+        <LogoType className="h-auto w-80 text-primary" />
         <Image
           src="/stanfordbiodesign.png"
           alt="Stanford Biodesign Logo"
