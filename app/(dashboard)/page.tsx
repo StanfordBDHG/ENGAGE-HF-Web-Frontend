@@ -5,12 +5,10 @@
 //
 // SPDX-License-Identifier: MIT
 //
-import { SignOutButton } from './SignOutButton'
 
 const DashboardPage = () => (
-  <div className="grid gap-6 p-10 text-center">
+  <div className="text-center">
     <h1 className="text-2xl">Dashboard</h1>
-    <SignOutButton />
   </div>
 )
 
