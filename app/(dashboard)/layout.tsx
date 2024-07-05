@@ -8,12 +8,15 @@
 import { Home } from 'lucide-react'
 import Link from 'next/link'
 import { type ReactNode } from 'react'
+import {
+  DashboardLayout as DashboardLayoutBase,
+  MenuItem,
+  PageTitle,
+} from '@stanfordbdhg/design-system/molecules/DashboardLayout'
 import { User } from './User'
 import { LogoType } from '../../components/icons/LogoType'
 import { getAuthenticatedOnlyApp } from '../../modules/firebase/guards'
 import { getUserInfo } from '../../packages/design-system/src/modules/auth/user'
-import { DashboardLayout as DashboardLayoutBase } from '../../packages/design-system/src/molecules/DashboardLayout'
-import { MenuItem } from '../../packages/design-system/src/molecules/DashboardLayout/MenuItem'
 
 interface DashboardLayoutProps {
   children?: ReactNode
@@ -56,7 +59,7 @@ const DashboardLayout = async ({ children }: DashboardLayoutProps) => {
           {user}
         </>
       }
-      title="Something"
+      title={<PageTitle icon={<Home />} title="Home" />}
     >
       {children}
     </DashboardLayoutBase>

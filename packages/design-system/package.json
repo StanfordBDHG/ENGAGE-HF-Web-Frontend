@@ -43,14 +43,17 @@
   "exports": {
     ".": "./dist/index.js",
     "./components/Button": "./dist/components/Button/index.js",
+    "./components/DropdownMenu": "./dist/components/DropdownMenu/index.js",
     "./components/Input": "./dist/components/Input/Input.js",
     "./components/Label": "./dist/components/Form/Label.js",
     "./components/Separator": "./dist/components/Separator/index.js",
     "./molecules/AsideBrandLayout": "./dist/molecules/AsideBrandLayout/index.js",
+    "./molecules/DashboardLayout": "./dist/molecules/DashboardLayout/index.js",
     "./modules/auth/SignInForm": "./dist/modules/auth/SignInForm/index.js",
     "./modules/auth/serverApp": "./dist/modules/auth/serverApp.js",
     "./modules/auth/serviceWorker": "./dist/modules/auth/serviceWorker.js",
     "./modules/auth/hooks": "./dist/modules/auth/hooks.js",
+    "./modules/auth/user": "./dist/modules/auth/user.js",
     "./forms/Field": "./dist/forms/Field/index.js",
     "./forms/useForm": "./dist/forms/useForm/index.js",
     "./main.css": "./dist/main.css"

@@ -1,18 +1,18 @@
 'use client'
 
 import { LogOut } from 'lucide-react'
-import { auth } from '../../modules/firebase/clientApp'
 import {
   DropdownMenu,
   DropdownMenuTrigger,
   DropdownMenuContent,
   DropdownMenuItem,
-} from '../../packages/design-system/src/components/DropdownMenu'
+} from '@stanfordbdhg/design-system/components/DropdownMenu'
 import {
   getUserName,
   type UserInfo,
-} from '../../packages/design-system/src/modules/auth/user'
-import { UserMenuItem } from '../../packages/design-system/src/molecules/DashboardLayout/User'
+} from '@stanfordbdhg/design-system/modules/auth/user'
+import { UserMenuItem } from '@stanfordbdhg/design-system/molecules/DashboardLayout'
+import { auth } from '../../modules/firebase/clientApp'
 
 interface UserProps {
   user: UserInfo
