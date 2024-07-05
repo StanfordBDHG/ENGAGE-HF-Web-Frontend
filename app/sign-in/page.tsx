@@ -6,12 +6,12 @@
 // SPDX-License-Identifier: MIT
 //
 import { SignInForm } from './SignInForm'
-import { unauthenticatedOnly } from '../../modules/firebase/guards'
+import { getUnauthenticatedOnlyApp } from '../../modules/firebase/guards'
 
 export const dynamic = 'force-dynamic'
 
 const SignInPage = async () => {
-  await unauthenticatedOnly()
+  await getUnauthenticatedOnlyApp()
   return <SignInForm />
 }
 
