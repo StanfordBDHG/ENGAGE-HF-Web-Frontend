@@ -30,6 +30,7 @@
     "@hookform/resolvers": "^3.6.0",
     "@stanfordbdhg/design-system": "file:./packages/design-system",
     "@t3-oss/env-nextjs": "^0.10.1",
+    "@tanstack/react-table": "^8.19.2",
     "firebase": "^10.12.2",
     "next": "^14",
     "next-intl": "^3.14.1",
