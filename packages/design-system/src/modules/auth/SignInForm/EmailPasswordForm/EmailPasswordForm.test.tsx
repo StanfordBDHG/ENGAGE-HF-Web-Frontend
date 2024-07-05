@@ -76,8 +76,6 @@ describe('EmailPasswordForm', () => {
     await user.type(getPasswordField(), 'something')
     await user.click(getSubmitButton())
 
-    screen.debug()
-
     expect(getEmailField()).toHaveAccessibleErrorMessage()
     expect(signInWithEmailAndPasswordMock).not.toHaveBeenCalled()
   })
