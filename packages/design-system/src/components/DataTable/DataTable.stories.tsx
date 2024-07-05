@@ -20,5 +20,5 @@ const meta: Meta<typeof DataTable> = {
 export default meta
 
 export const Default = () => (
-  <DataTable columns={peopleColumns} data={peopleData} />
+  <DataTable columns={peopleColumns} data={peopleData} className="m-5" />
 )
