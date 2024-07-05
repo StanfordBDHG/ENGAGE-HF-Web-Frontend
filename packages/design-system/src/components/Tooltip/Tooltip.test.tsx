@@ -5,12 +5,14 @@
 //
 // SPDX-License-Identifier: MIT
 //
-import { fireEvent, render, screen } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 import '@testing-library/jest-dom'
+import { userEvent } from '@testing-library/user-event'
 import { Tooltip } from '.'
 
 describe('Tooltip', () => {
-  it('renders accessible tooltip', () => {
+  it('renders accessible tooltip', async () => {
+    const user = userEvent.setup()
     render(
       <Tooltip tooltip="Lorem">
         <button type="button" />
@@ -21,9 +23,9 @@ describe('Tooltip', () => {
     expect(tooltip).not.toBeInTheDocument()
 
     const trigger = screen.getByRole('button')
-    fireEvent.mouseEnter(trigger)
+    await user.hover(trigger)
 
-    const tooltip2 = screen.getByRole('tooltip')
+    const tooltip2 = await screen.findByRole('tooltip')
     expect(tooltip2).toBeInTheDocument()
     expect(trigger).toHaveAccessibleDescription('Lorem')
   })

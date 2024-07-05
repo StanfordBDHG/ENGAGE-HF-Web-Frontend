@@ -25,7 +25,7 @@ describe('DropdownMenu', () => {
       </DropdownMenu>,
     )
 
-    const button = screen.getByRole('button')
+    const button = screen.getByText('Trigger')
     fireEvent.click(button)
 
     expect(screen.getByRole('menu')).toBeInTheDocument()
