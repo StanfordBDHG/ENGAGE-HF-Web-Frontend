@@ -17,7 +17,7 @@ const config = {
     '@storybook/addon-interactions',
   ],
   framework: {
-    name: '@storybook/react-vite',
+    name: '@storybook/nextjs',
     options: {},
   },
 }
