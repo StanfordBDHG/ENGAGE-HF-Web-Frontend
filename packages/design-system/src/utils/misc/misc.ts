@@ -13,3 +13,5 @@
 export const not = <T>(value: T) => !value
 
 export type InitialState<T> = T | (() => T)
+
+export type Nil<T> = T | null | undefined
