@@ -8,13 +8,13 @@
 'use client'
 import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
+import { routes } from '@/modules/routes'
 import {
   useAuthUser,
   useRegisterAuthServiceWorker,
 } from '@stanfordbdhg/design-system/modules/auth/hooks'
 import { auth } from './clientApp'
 import { firebaseConfig } from './config'
-import { routes } from '../routes'
 
 export const AuthProvider = () => {
   const router = useRouter()

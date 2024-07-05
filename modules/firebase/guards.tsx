@@ -7,8 +7,8 @@
 //
 import { type User } from '@firebase/auth-types'
 import { redirect } from 'next/navigation'
+import { routes } from '@/modules/routes'
 import { getServerApp } from './serverApp'
-import { routes } from '../routes'
 
 /**
  * Redirects to home if authenticated

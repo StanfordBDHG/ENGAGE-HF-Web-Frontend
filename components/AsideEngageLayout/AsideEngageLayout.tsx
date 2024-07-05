@@ -6,11 +6,11 @@
 // SPDX-License-Identifier: MIT
 //
 import Image from 'next/image'
+import { LogoType } from '@/components/icons/LogoType'
 import {
   type AsideBrandLayoutProps,
   AsideBrandLayout,
 } from '@stanfordbdhg/design-system/molecules/AsideBrandLayout'
-import { LogoType } from '../icons/LogoType'
 
 export const AsideEngageLayout = (
   props: Omit<AsideBrandLayoutProps, 'aside'>,

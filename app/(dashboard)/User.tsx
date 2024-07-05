@@ -1,6 +1,7 @@
 'use client'
 
 import { LogOut } from 'lucide-react'
+import { auth } from '@/modules/firebase/clientApp'
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -12,7 +13,6 @@ import {
   type UserInfo,
 } from '@stanfordbdhg/design-system/modules/auth/user'
 import { UserMenuItem } from '@stanfordbdhg/design-system/molecules/DashboardLayout'
-import { auth } from '../../modules/firebase/clientApp'
 
 interface UserProps {
   user: UserInfo
