@@ -39,10 +39,7 @@ const DashboardLayout = async ({ children }: DashboardLayoutProps) => {
     <DashboardLayoutBase
       aside={
         <>
-          <Link
-            href="/"
-            className="interactive-opacity w-full pt-4 text-primary"
-          >
+          <Link href="/" className="interactive-opacity w-full pt-4">
             <LogoType className="!h-auto !w-full px-2 xl:px-8" />
           </Link>
           <nav className="mt-24 flex flex-col gap-1 xl:w-full">
