@@ -28,6 +28,6 @@ module.exports = {
     '!**/node_modules/**',
     '!**/.storybook/**',
     '!**/tailwind.config.ts',
-    '!**/*.stories.tsx'
-  ]
+    '!**/*.stories.tsx',
+  ],
 }

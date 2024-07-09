@@ -6,8 +6,8 @@
 // SPDX-License-Identifier: MIT
 //
 'use client'
-import { type ReactNode } from 'react'
 import { Menu } from 'lucide-react'
+import { type ReactNode } from 'react'
 import { Button } from '../../components/Button'
 import { cn } from '../../utils/className'
 import { useOpenState } from '../../utils/useOpenState'
