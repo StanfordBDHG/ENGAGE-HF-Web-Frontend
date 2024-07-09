@@ -7,6 +7,7 @@
 //
 'use client'
 import { SignInForm as AuthSignInForm } from '@stanfordbdhg/design-system/modules/auth/SignInForm'
+import { signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth'
 import { auth, authProvider } from '../../modules/firebase/clientApp'
 
 export const SignInForm = () => (
@@ -18,5 +19,7 @@ export const SignInForm = () => (
     ]}
     enableEmailPassword
     auth={auth}
+    signInWithPopup={signInWithPopup}
+    signInWithEmailAndPassword={signInWithEmailAndPassword}
   />
 )

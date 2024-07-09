@@ -5,7 +5,7 @@
 //
 // SPDX-License-Identifier: MIT
 //
-import { type Auth, signInWithEmailAndPassword } from 'firebase/auth'
+import { type Auth, type signInWithEmailAndPassword } from 'firebase/auth'
 import { useTranslations } from 'next-intl'
 import { z } from 'zod'
 import { Button } from '../../../../components/Button'
@@ -20,9 +20,13 @@ const formSchema = z.object({
 
 interface EmailPasswordFormProps {
   auth: Auth
+  signInWithEmailAndPassword: typeof signInWithEmailAndPassword
 }
 
-export const EmailPasswordForm = ({ auth }: EmailPasswordFormProps) => {
+export const EmailPasswordForm = ({
+  auth,
+  signInWithEmailAndPassword,
+}: EmailPasswordFormProps) => {
   const t = useTranslations()
   const form = useForm({
     formSchema,

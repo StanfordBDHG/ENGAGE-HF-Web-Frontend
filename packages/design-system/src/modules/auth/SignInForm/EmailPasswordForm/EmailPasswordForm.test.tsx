@@ -8,11 +8,12 @@
 import { render, screen } from '@testing-library/react'
 import '@testing-library/jest-dom'
 import { userEvent } from '@testing-library/user-event'
-import { type Auth, signInWithEmailAndPassword } from 'firebase/auth'
+import { type Auth } from 'firebase/auth'
 import { EmailPasswordForm } from './EmailPasswordForm'
 import { Providers } from '../../../../tests/Providers'
 
 const authMock = {} as Auth
+const signInWithEmailAndPasswordMock = jest.fn()
 
 jest.mock('firebase/auth')
 
@@ -46,10 +47,16 @@ describe('EmailPasswordForm', () => {
   })
 
   it('calls signIn function', async () => {
-    render(<EmailPasswordForm auth={authMock} />, { wrapper: Providers })
+    render(
+      <EmailPasswordForm
+        signInWithEmailAndPassword={signInWithEmailAndPasswordMock}
+        auth={authMock}
+      />,
+      { wrapper: Providers },
+    )
     await signIn()
 
-    expect(signInWithEmailAndPassword).toHaveBeenLastCalledWith(
+    expect(signInWithEmailAndPasswordMock).toHaveBeenLastCalledWith(
       expect.anything(),
       validCreds.email,
       validCreds.password,
@@ -58,7 +65,13 @@ describe('EmailPasswordForm', () => {
 
   it('validates against empty values', async () => {
     const user = userEvent.setup()
-    render(<EmailPasswordForm auth={authMock} />, { wrapper: Providers })
+    render(
+      <EmailPasswordForm
+        signInWithEmailAndPassword={signInWithEmailAndPasswordMock}
+        auth={authMock}
+      />,
+      { wrapper: Providers },
+    )
 
     await user.type(getPasswordField(), 'something')
     await user.click(getSubmitButton())
@@ -66,16 +79,20 @@ describe('EmailPasswordForm', () => {
     screen.debug()
 
     expect(getEmailField()).toHaveAccessibleErrorMessage()
-    expect(signInWithEmailAndPassword).not.toHaveBeenCalled()
+    expect(signInWithEmailAndPasswordMock).not.toHaveBeenCalled()
   })
 
   it('handles', async () => {
-    render(<EmailPasswordForm auth={authMock} />, { wrapper: Providers })
-    const signInWithEmailAndPasswordMock =
-      signInWithEmailAndPassword as jest.Mock
     signInWithEmailAndPasswordMock.mockImplementation(() => {
       throw new InvalidCredsError()
     })
+    render(
+      <EmailPasswordForm
+        signInWithEmailAndPassword={signInWithEmailAndPasswordMock}
+        auth={authMock}
+      />,
+      { wrapper: Providers },
+    )
 
     await signIn()
 

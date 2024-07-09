@@ -6,7 +6,12 @@
 // SPDX-License-Identifier: MIT
 //
 'use client'
-import { type Auth, type AuthProvider, signInWithPopup } from 'firebase/auth'
+import {
+  type Auth,
+  type AuthProvider,
+  type signInWithPopup,
+  type signInWithEmailAndPassword,
+} from 'firebase/auth'
 import { useTranslations } from 'next-intl'
 import { EmailPasswordForm } from './EmailPasswordForm'
 import { Button } from '../../../components/Button'
@@ -20,6 +25,8 @@ export interface SignInFormProps {
     name: string
   }>
   enableEmailPassword: boolean
+  signInWithPopup: typeof signInWithPopup
+  signInWithEmailAndPassword: typeof signInWithEmailAndPassword
   className?: string
 }
 
@@ -28,6 +35,8 @@ export const SignInForm = ({
   providers,
   enableEmailPassword,
   className,
+  signInWithPopup,
+  signInWithEmailAndPassword,
 }: SignInFormProps) => {
   const t = useTranslations()
   return (
@@ -49,7 +58,10 @@ export const SignInForm = ({
               <SeparatorText>{t('signIn_separator')}</SeparatorText>
             </Separator>
           )}
-          <EmailPasswordForm auth={auth} />
+          <EmailPasswordForm
+            auth={auth}
+            signInWithEmailAndPassword={signInWithEmailAndPassword}
+          />
         </>
       )}
     </div>
