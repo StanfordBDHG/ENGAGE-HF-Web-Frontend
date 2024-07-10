@@ -16,6 +16,8 @@
     "**/dist/*",
     "/docs/**",
     "/out/**",
+    "/coverage/**",
+    "/public/authServiceWorker.js",
     "**/jest.config.js",
     "**/next.config.js",
     "**/postcss.config.js",
