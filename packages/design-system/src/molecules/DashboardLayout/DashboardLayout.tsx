@@ -12,7 +12,7 @@ import { Button } from '../../components/Button'
 import { cn } from '../../utils/className'
 import { useOpenState } from '../../utils/useOpenState'
 
-interface DashboardLayoutProps {
+export interface DashboardLayoutProps {
   title?: ReactNode
   actions?: ReactNode
   children?: ReactNode

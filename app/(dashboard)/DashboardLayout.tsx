@@ -5,32 +5,21 @@
 //
 // SPDX-License-Identifier: MIT
 //
-import { Home } from 'lucide-react'
 import Link from 'next/link'
-import { type ReactNode } from 'react'
 import { LogoType } from '@/components/icons/LogoType'
 import { getAuthenticatedOnlyApp } from '@/modules/firebase/guards'
 import { getUserInfo } from '@stanfordbdhg/design-system/modules/auth/user'
 import {
   DashboardLayout as DashboardLayoutBase,
-  MenuItem,
-  PageTitle,
+  type DashboardLayoutProps as DashboardLayoutPropsBase,
 } from '@stanfordbdhg/design-system/molecules/DashboardLayout'
+import { MenuLinks } from './MenuLinks'
 import { User } from './User'
 
-interface DashboardLayoutProps {
-  children?: ReactNode
-}
+interface DashboardLayoutProps
+  extends Pick<DashboardLayoutPropsBase, 'children' | 'title'> {}
 
-export const dynamic = 'force-dynamic'
-
-const MenuLinks = () => (
-  <>
-    <MenuItem href="/" label="Home" icon={<Home />} isActive />
-  </>
-)
-
-const DashboardLayout = async ({ children }: DashboardLayoutProps) => {
+export const DashboardLayout = async (props: DashboardLayoutProps) => {
   const { currentUser } = await getAuthenticatedOnlyApp()
 
   const user = <User user={getUserInfo(currentUser)} />
@@ -56,11 +45,7 @@ const DashboardLayout = async ({ children }: DashboardLayoutProps) => {
           {user}
         </>
       }
-      title={<PageTitle icon={<Home />} title="Home" />}
-    >
-      {children}
-    </DashboardLayoutBase>
+      {...props}
+    />
   )
 }
-
-export default DashboardLayout
