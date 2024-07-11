@@ -35,7 +35,11 @@ export const DashboardLayout = ({
         {title}
         <div className="ml-auto gap-4">
           {actions}
-          <Button onClick={menu.toggle} className="lg:hidden">
+          <Button
+            onClick={menu.toggle}
+            aria-label={`${menu.isOpen ? 'Close' : 'Open'} menu`}
+            className="lg:hidden"
+          >
             <Menu />
           </Button>
         </div>
@@ -43,17 +47,19 @@ export const DashboardLayout = ({
       <aside className="border-r-border-layout fixed left-0 top-0 hidden h-screen w-[--asideWidth] flex-col items-center border-y-0 border-l-0 border-r border-solid bg-surface py-4 lg:flex xl:px-4">
         {aside}
       </aside>
-      <div
+      <nav
         className={cn(
           'bg-background fixed left-0 right-0 top-[calc(var(--headerHeight)+1px)] flex h-[calc(100vh-var(--headerHeight)-1px)] w-screen flex-col overflow-y-auto bg-surface transition duration-300 lg:hidden',
           menu.isOpen ? 'translate-x-0' : (
             'pointer-events-none -translate-x-24 opacity-0'
           ),
         )}
+        hidden={!menu.isOpen}
+        data-testid="mobileMenu"
       >
         {actions && <div>{actions}</div>}
         {mobile}
-      </div>
+      </nav>
       <div className="flex min-h-[calc(100vh-var(--headerHeight))] flex-col px-4 pb-12 pt-6 md:px-12 md:pb-16 md:pt-10 lg:ml-[--asideWidth]">
         {children}
       </div>
