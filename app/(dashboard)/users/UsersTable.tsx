@@ -1,0 +1,70 @@
+//
+// This source file is part of the Stanford Biodesign Digital Health ENGAGE-HF open-source project
+//
+// SPDX-FileCopyrightText: 2023 Stanford University and the project authors (see CONTRIBUTORS.md)
+//
+// SPDX-License-Identifier: MIT
+//
+'use client'
+import { createColumnHelper } from '@tanstack/table-core'
+import { Ellipsis, Trash, Pencil } from 'lucide-react'
+import { Button } from '@/packages/design-system/src/components/Button'
+import { DataTable } from '@/packages/design-system/src/components/DataTable'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/packages/design-system/src/components/DropdownMenu'
+import type { listUsers } from './page'
+
+type Data = Awaited<ReturnType<typeof listUsers>>
+
+interface UsersDataTableProps {
+  data: Data
+}
+
+const columnHelper = createColumnHelper<Data[number]>()
+
+const columns = [
+  columnHelper.accessor('uid', {
+    header: 'Id',
+    cell: (props) => (
+      //   TODO: Truncate with Tooltip
+      <div className="max-w-[50px] truncate">{props.getValue()}</div>
+    ),
+  }),
+  columnHelper.accessor('displayName', {
+    header: 'Name',
+    cell: (props) => props.getValue() ?? '-',
+  }),
+  columnHelper.accessor('email', { header: 'Email' }),
+  columnHelper.accessor('role', { header: 'Role' }),
+  columnHelper.display({
+    id: 'actions',
+    cell: () => (
+      //   TODO: Actions
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button size="round" className="size-6" variant="ghost">
+            <Ellipsis className="size-4" />
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent>
+          <DropdownMenuItem>
+            <Pencil className="size-4" />
+            Edit
+          </DropdownMenuItem>
+          <DropdownMenuItem>
+            <Trash className="size-4" />
+            Delete
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+    ),
+  }),
+]
+
+export const UsersTable = ({ data }: UsersDataTableProps) => (
+  <DataTable columns={columns} data={data} />
+)
