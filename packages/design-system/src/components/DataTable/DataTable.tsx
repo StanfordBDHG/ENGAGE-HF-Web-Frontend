@@ -6,13 +6,17 @@
 // SPDX-License-Identifier: MIT
 //
 'use client'
-
 import {
   type ColumnDef,
   flexRender,
   getCoreRowModel,
+  getFilteredRowModel,
   useReactTable,
 } from '@tanstack/react-table'
+import { useState } from 'react'
+import { useDebouncedCallback } from 'use-debounce'
+import { fuzzyFilter } from './DataTable.utils'
+import { GlobalFilterInput } from './GlobalFilterInput'
 import { cn } from '../../utils/className'
 import {
   Table,
@@ -34,15 +38,33 @@ export const DataTable = <TData, TValue>({
   data,
   className,
 }: DataTableProps<TData, TValue>) => {
+  const [globalFilter, setGlobalFilter] = useState('')
+  const setGlobalFilterDebounced = useDebouncedCallback(
+    (value: string) => setGlobalFilter(value),
+    200,
+  )
+
   const table = useReactTable({
     data,
     columns,
+    filterFns: {
+      fuzzy: fuzzyFilter,
+    },
+    globalFilterFn: 'fuzzy',
     getCoreRowModel: getCoreRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+    state: { globalFilter },
+    onGlobalFilterChange: setGlobalFilter,
   })
   const rows = table.getRowModel().rows
 
   return (
-    <div className={cn('rounded-md border', className)}>
+    <div className={cn('rounded-md border bg-surface-primary', className)}>
+      <header className="flex border-b p-4">
+        <GlobalFilterInput
+          onChange={(event) => setGlobalFilterDebounced(event.target.value)}
+        />
+      </header>
       <Table>
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (

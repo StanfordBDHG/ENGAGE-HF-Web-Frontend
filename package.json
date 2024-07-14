@@ -30,6 +30,7 @@
     "@hookform/resolvers": "^3.6.0",
     "@stanfordbdhg/design-system": "file:./packages/design-system",
     "@t3-oss/env-nextjs": "^0.10.1",
+    "@tanstack/match-sorter-utils": "^8.15.1",
     "@tanstack/react-table": "^8.19.2",
     "firebase": "^10.12.2",
     "firebase-admin": "^12.2.0",
@@ -40,6 +41,7 @@
     "react-dom": "^18",
     "react-hook-form": "^7.51.5",
     "sharp": "^0.33",
+    "use-debounce": "^10.0.1",
     "zod": "^3.23.8"
   },
   "devDependencies": {
