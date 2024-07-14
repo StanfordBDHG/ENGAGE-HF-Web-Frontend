@@ -18,13 +18,13 @@ import {
 } from '@/packages/design-system/src/components/DropdownMenu'
 import type { listUsers } from './page'
 
-type Data = Awaited<ReturnType<typeof listUsers>>
+type User = Awaited<ReturnType<typeof listUsers>>[number]
 
 interface UsersDataTableProps {
-  data: Data
+  data: User[]
 }
 
-const columnHelper = createColumnHelper<Data[number]>()
+const columnHelper = createColumnHelper<User>()
 
 const columns = [
   columnHelper.accessor('uid', {
