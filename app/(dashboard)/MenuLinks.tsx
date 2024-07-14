@@ -6,7 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 'use client'
-import { Home, Users } from 'lucide-react'
+import { Home, Users, Contact } from 'lucide-react'
 import { usePathname } from 'next/navigation'
 import { Role } from '@/modules/firebase/role'
 import { MenuItem } from '@stanfordbdhg/design-system/molecules/DashboardLayout'
@@ -29,6 +29,11 @@ export const MenuLinks = ({ role }: MenuLinksProps) => {
       {role === Role.admin && (
         <MenuItem {...hrefProps('/users')} label="Users" icon={<Users />} />
       )}
+      <MenuItem
+        {...hrefProps('/patients')}
+        label="Patients"
+        icon={<Contact />}
+      />
     </>
   )
 }
