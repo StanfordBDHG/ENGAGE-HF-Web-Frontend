@@ -10,6 +10,7 @@ import { type FirebaseOptions, initializeServerApp } from 'firebase/app'
 import { getAuth } from 'firebase/auth'
 import {
   doc,
+  type DocumentReference,
   getDoc,
   getDocs,
   getFirestore,
@@ -20,7 +21,11 @@ import { headers } from 'next/headers'
 import { redirect } from 'next/navigation'
 import { firebaseConfig } from '@/modules/firebase/config'
 import { Role } from '@/modules/firebase/role'
-import { collectionNames, getCollectionRefs } from '@/modules/firebase/utils'
+import {
+  type Clinician,
+  collectionNames,
+  getCollectionRefs,
+} from '@/modules/firebase/utils'
 import { routes } from '@/modules/routes'
 
 export const getServerApp = async (firebaseOptions: FirebaseOptions) => {
@@ -51,18 +56,33 @@ export const getUserRole = async () => {
   const { currentUser, db } = await getAuthenticatedOnlyApp()
   const adminDocRef = doc(db, collectionNames.admins, currentUser.uid)
   const adminDoc = await getDoc(adminDocRef)
-  if (adminDoc.exists()) return Role.admin
-  const clinicianDocRef = doc(db, collectionNames.clinicians, currentUser.uid)
+  if (adminDoc.exists())
+    return {
+      role: Role.admin,
+    } as const
+  const clinicianDocRef = doc(
+    db,
+    collectionNames.clinicians,
+    currentUser.uid,
+  ) as DocumentReference<Clinician>
   const clinicianDoc = await getDoc(clinicianDocRef)
-  if (clinicianDoc.exists()) return Role.clinician
+  if (clinicianDoc.exists())
+    return {
+      role: Role.clinician,
+      clinician: clinicianDoc,
+    } as const
   const organizationsRef = getCollectionRefs(db).organizations()
   const organizationsQuery = query(
     organizationsRef,
     where('owners', 'array-contains-any', [currentUser.uid]),
   )
   const organizationsDocs = await getDocs(organizationsQuery)
-  if (!organizationsDocs.empty) return Role.owner
-  return Role.user
+  if (!organizationsDocs.empty)
+    return {
+      role: Role.owner as const,
+      organizations: organizationsDocs,
+    } as const
+  return { role: Role.user } as const
 }
 
 /**
@@ -87,7 +107,7 @@ export const getAuthenticatedOnlyApp = async () => {
  * Redirects to 403 if user's role d
  * */
 export const allowRoles = async (roles: Role[]) => {
-  const role = await getUserRole()
+  const { role } = await getUserRole()
   // TODO: HTTP Error
   if (!roles.includes(role)) redirect(routes.home)
 }

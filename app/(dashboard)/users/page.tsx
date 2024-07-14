@@ -5,7 +5,7 @@
 //
 // SPDX-License-Identifier: MIT
 //
-import { getDocs, query, where } from 'firebase/firestore'
+import { getDocs, query, type QuerySnapshot, where } from 'firebase/firestore'
 import { getAuth } from 'firebase-admin/auth'
 import { Users } from 'lucide-react'
 import {
@@ -14,7 +14,7 @@ import {
   getUserRole,
 } from '@/modules/firebase/guards'
 import { Role } from '@/modules/firebase/role'
-import { getAdminApp } from '@/modules/firebase/utils'
+import { getAdminApp, type Organization } from '@/modules/firebase/utils'
 import { PageTitle } from '@/packages/design-system/src/molecules/DashboardLayout'
 import { UsersTable } from './UsersTable'
 import { DashboardLayout } from '../DashboardLayout'
@@ -33,13 +33,10 @@ export const getAdminData = async () => {
   }
 }
 
-export const getOwnerData = async () => {
-  const { currentUser, refs } = await getAuthenticatedOnlyApp()
-  const organizationsQuery = query(
-    refs.organizations(),
-    where('owners', 'array-contains-any', [currentUser.uid]),
-  )
-  const organizations = await getDocs(organizationsQuery)
+export const getOwnerData = async (
+  organizations: QuerySnapshot<Organization>,
+) => {
+  const { refs } = await getAuthenticatedOnlyApp()
   const organizationIds = organizations.docs.map(
     (organization) => organization.id,
   )
@@ -58,7 +55,11 @@ export const getOwnerData = async () => {
 export const listUsers = async () => {
   const role = await getUserRole()
   const { adminIds, organizations, cliniciansQuery } =
-    role === Role.admin ? await getAdminData() : await getOwnerData()
+    role.role === Role.admin ?
+      await getAdminData()
+      // Non-null assertion is fine here
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    : await getOwnerData(role.organizations!)
 
   const clinicians = await getDocs(cliniciansQuery)
   const clinicianIds = new Set(clinicians.docs.map((clinician) => clinician.id))

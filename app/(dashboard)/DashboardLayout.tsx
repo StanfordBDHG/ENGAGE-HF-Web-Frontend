@@ -21,7 +21,7 @@ interface DashboardLayoutProps
 
 export const DashboardLayout = async (props: DashboardLayoutProps) => {
   const { currentUser } = await getAuthenticatedOnlyApp()
-  const userRole = await getUserRole()
+  const { role: userRole } = await getUserRole()
   const user = <User user={getUserInfo(currentUser)} />
 
   return (
