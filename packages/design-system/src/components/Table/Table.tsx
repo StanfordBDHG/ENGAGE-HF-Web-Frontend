@@ -63,19 +63,23 @@ export const TableFooter = forwardRef<
 ))
 TableFooter.displayName = 'TableFooter'
 
-export const TableRow = forwardRef<
-  HTMLTableRowElement,
-  HTMLAttributes<HTMLTableRowElement>
->(({ className, ...props }, ref) => (
-  <tr
-    ref={ref}
-    className={cn(
-      'border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted',
-      className,
-    )}
-    {...props}
-  />
-))
+export interface TableRowProps extends HTMLAttributes<HTMLTableRowElement> {
+  isHoverable?: boolean
+}
+
+export const TableRow = forwardRef<HTMLTableRowElement, TableRowProps>(
+  ({ className, isHoverable = true, ...props }, ref) => (
+    <tr
+      ref={ref}
+      className={cn(
+        'border-b transition-colors data-[state=selected]:bg-muted',
+        isHoverable && 'hover:bg-muted/50',
+        className,
+      )}
+      {...props}
+    />
+  ),
+)
 TableRow.displayName = 'TableRow'
 
 export const TableHead = forwardRef<
