@@ -13,21 +13,33 @@ export const getAdminApp = () => {
   }
 }
 
-interface Organization {
+export interface Organization {
+  id: string
+  name: string
+  contactName: string
+  phoneNumber: string
+  emailAddress: string
   owners: string[]
 }
 
-interface Admin {}
+export interface Admin {}
 
-interface Clinician {}
+export interface User {}
+
+export interface Clinician {
+  organization?: string
+}
 
 export const collectionNames = {
+  users: 'users',
   admins: 'admins',
   clinicians: 'clinicians',
   organizations: 'organizations',
 }
 
 export const getCollectionRefs = (db: Firestore) => ({
+  users: () =>
+    collection(db, collectionNames.users) as CollectionReference<User>,
   admins: () =>
     collection(db, collectionNames.admins) as CollectionReference<Admin>,
   clinicians: () =>
