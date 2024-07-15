@@ -8,11 +8,17 @@
 import { Search } from 'lucide-react'
 import { Input, type InputProps } from '../Input'
 
-export const GlobalFilterInput = (props: InputProps) => (
-  <div className="relative">
+interface GlobalFilterInputProps extends InputProps {
+  entityName?: string
+}
+export const GlobalFilterInput = ({
+  entityName,
+  ...props
+}: GlobalFilterInputProps) => (
+  <div className="relative max-w-72 grow">
     <Search className="absolute left-3 top-2.5 size-5 text-muted-foreground" />
     <Input
-      placeholder="Search..."
+      placeholder={`Search${entityName ? ` ${entityName}` : ''}...`}
       defaultValue=""
       className="pl-10"
       {...props}

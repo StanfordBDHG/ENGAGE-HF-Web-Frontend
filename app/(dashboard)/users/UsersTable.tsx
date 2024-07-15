@@ -56,5 +56,5 @@ interface UsersDataTableProps {
 }
 
 export const UsersTable = ({ data }: UsersDataTableProps) => (
-  <DataTable columns={columns} data={data} />
+  <DataTable columns={columns} data={data} entityName="users" />
 )

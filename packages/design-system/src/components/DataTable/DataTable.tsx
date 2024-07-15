@@ -18,6 +18,7 @@ import { type TableOptions } from '@tanstack/table-core'
 import { useState } from 'react'
 import { useDebouncedCallback } from 'use-debounce'
 import { fuzzyFilter } from './DataTable.utils'
+import { EmptyState } from './EmptyState'
 import { GlobalFilterInput } from './GlobalFilterInput'
 import { ToggleSortButton } from './ToggleSortButton'
 import { cn } from '../../utils/className'
@@ -31,14 +32,23 @@ import {
   TableRow,
 } from '../Table'
 
-interface DataTableProps<Data>
+export interface DataTableProps<Data>
   extends PartialSome<TableOptions<Data>, 'getCoreRowModel' | 'filterFns'> {
   className?: string
+  /**
+   * Name of the presented data entity
+   * Used inside empty states, placeholders
+   * Provide pluralized and lowercased
+   * @example "users"
+   * */
+  entityName?: string
 }
 
 export const DataTable = <Data,>({
   className,
   columns,
+  entityName,
+  data,
   ...props
 }: DataTableProps<Data>) => {
   const [sorting, setSorting] = useState<SortingState>([])
@@ -50,6 +60,7 @@ export const DataTable = <Data,>({
 
   const table = useReactTable({
     columns,
+    data,
     filterFns: {
       fuzzy: fuzzyFilter,
     },
@@ -69,6 +80,7 @@ export const DataTable = <Data,>({
       <header className="flex border-b p-4">
         <GlobalFilterInput
           onChange={(event) => setGlobalFilterDebounced(event.target.value)}
+          entityName={entityName}
         />
       </header>
       <Table>
@@ -98,11 +110,12 @@ export const DataTable = <Data,>({
         </TableHeader>
         <TableBody>
           {!rows.length ?
-            <TableRow>
-              <TableCell colSpan={columns.length} className="h-24 text-center">
-                No results.
-              </TableCell>
-            </TableRow>
+            <EmptyState
+              entityName={entityName}
+              colSpan={columns.length}
+              globalFilter={globalFilter}
+              hasData={!!data.length}
+            />
           : rows.map((row) => (
               <TableRow
                 key={row.id}

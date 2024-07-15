@@ -26,6 +26,9 @@ export type Nil<T> = T | null | undefined
  * */
 export type PartialSome<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>
 
+/**
+ * Handles copying to clipboard and show confirmation toast
+ * */
 export const copyToClipboard = async (value: string) => {
   try {
     await navigator.clipboard.writeText(value)

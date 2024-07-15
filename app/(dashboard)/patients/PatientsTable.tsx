@@ -55,5 +55,5 @@ interface PatientsDataTableProps {
 }
 
 export const PatientsTable = ({ data }: PatientsDataTableProps) => (
-  <DataTable columns={columns} data={data} />
+  <DataTable columns={columns} data={data} entityName="patients" />
 )
