@@ -28,6 +28,7 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^3.6.0",
+    "@nextui-org/pagination": "^2.0.33",
     "@stanfordbdhg/design-system": "file:./packages/design-system",
     "@t3-oss/env-nextjs": "^0.10.1",
     "@tanstack/match-sorter-utils": "^8.15.1",

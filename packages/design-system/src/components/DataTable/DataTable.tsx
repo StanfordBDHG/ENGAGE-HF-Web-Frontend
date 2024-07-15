@@ -10,6 +10,7 @@ import {
   flexRender,
   getCoreRowModel,
   getFilteredRowModel,
+  getPaginationRowModel,
   getSortedRowModel,
   type SortingState,
   useReactTable,
@@ -23,6 +24,8 @@ import { GlobalFilterInput } from './GlobalFilterInput'
 import { ToggleSortButton } from './ToggleSortButton'
 import { cn } from '../../utils/className'
 import { type PartialSome } from '../../utils/misc'
+import { ButtonPagination } from '../Pagination'
+import { RangeCounter } from '../RangeCounter'
 import {
   Table,
   TableBody,
@@ -42,6 +45,7 @@ export interface DataTableProps<Data>
    * @example "users"
    * */
   entityName?: string
+  pageSize?: number
 }
 
 export const DataTable = <Data,>({
@@ -49,6 +53,7 @@ export const DataTable = <Data,>({
   columns,
   entityName,
   data,
+  pageSize = 50,
   ...props
 }: DataTableProps<Data>) => {
   const [sorting, setSorting] = useState<SortingState>([])
@@ -68,13 +73,26 @@ export const DataTable = <Data,>({
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     getSortedRowModel: getSortedRowModel(),
-    state: { globalFilter, sorting },
+    getPaginationRowModel: getPaginationRowModel(),
     onGlobalFilterChange: setGlobalFilter,
     onSortingChange: setSorting,
+    state: { globalFilter, sorting },
+    initialState: {
+      pagination: {
+        pageSize,
+      },
+    },
     ...props,
   })
   const rows = table.getRowModel().rows
+  const filteredRowsLength = table.getFilteredRowModel().rows.length
 
+  const tableState = table.getState()
+  const currentPage = tableState.pagination.pageIndex + 1
+
+  const itemsRangeStartIndex = tableState.pagination.pageIndex * pageSize
+
+  const pageCount = table.getPageCount()
   return (
     <div className={cn('rounded-md border bg-surface-primary', className)}>
       <header className="flex border-b p-4">
@@ -131,6 +149,22 @@ export const DataTable = <Data,>({
           }
         </TableBody>
       </Table>
+      {!!rows.length && (
+        <footer className="flex items-center justify-between border-t p-4">
+          <RangeCounter
+            start={itemsRangeStartIndex + 1}
+            end={itemsRangeStartIndex + rows.length}
+            all={filteredRowsLength}
+          />
+          {pageCount > 1 && (
+            <ButtonPagination
+              total={pageCount}
+              page={currentPage}
+              onPageChange={(page) => table.setPageIndex(page - 1)}
+            />
+          )}
+        </footer>
+      )}
     </div>
   )
 }
