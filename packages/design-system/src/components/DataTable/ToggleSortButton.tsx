@@ -29,7 +29,7 @@ export const ToggleSortButton = <Data,>({
     <Button
       size="sm"
       variant="ghost"
-      className="relative -left-2 !px-2"
+      className="relative -left-2 w-full !justify-start !px-2"
       onClick={header.column.getToggleSortingHandler()}
       aria-label={label}
     >
@@ -38,7 +38,7 @@ export const ToggleSortButton = <Data,>({
         <ArrowDown className="size-4" />
       : isSorted === 'desc' ?
         <ArrowUp className="size-4" />
-      : null}
+      : <div aria-hidden className="size-4" />}
     </Button>
   )
 }
