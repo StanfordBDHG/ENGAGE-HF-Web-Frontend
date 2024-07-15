@@ -18,6 +18,14 @@ export type InitialState<T> = T | (() => T)
 
 export type Nil<T> = T | null | undefined
 
+/**
+ * Make some fields in the object partial
+ *
+ * @example
+ * PartialSome<{ a: string, b: string, c: string }, 'a'> => { a?: string, b: string, c: string }
+ * */
+export type PartialSome<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>
+
 export const copyToClipboard = async (value: string) => {
   try {
     await navigator.clipboard.writeText(value)
