@@ -8,6 +8,7 @@
 import type { Metadata } from 'next'
 import { getLocale } from 'next-intl/server'
 import type { ReactNode } from 'react'
+import { Toaster } from '@/packages/design-system/src/components/Toaster'
 import { themeToCSSVariables, lightTheme } from '@stanfordbdhg/design-system'
 import './globals.css'
 import { AuthProvider } from '../modules/firebase/AuthProvider'
@@ -38,6 +39,7 @@ const RootLayout = async ({ children }: RootLayoutProps) => {
       </head>
       <body>
         <AuthProvider />
+        <Toaster />
         <MessagesProvider>{children}</MessagesProvider>
       </body>
     </html>
