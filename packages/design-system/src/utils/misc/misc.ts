@@ -6,6 +6,8 @@
 // SPDX-License-Identifier: MIT
 //
 
+import { toast } from '../../components/Toaster'
+
 /**
  * Negates value
  * Useful for functional patterns and state callbacks
@@ -19,6 +21,7 @@ export type Nil<T> = T | null | undefined
 export const copyToClipboard = async (value: string) => {
   try {
     await navigator.clipboard.writeText(value)
+    toast('Copied to clipboard')
   } catch (error) {
     console.log('Copying failed')
   }
