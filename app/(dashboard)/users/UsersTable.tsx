@@ -18,10 +18,6 @@ import type { listUsers } from './page'
 
 type User = Awaited<ReturnType<typeof listUsers>>[number]
 
-interface UsersDataTableProps {
-  data: User[]
-}
-
 const columnHelper = createColumnHelper<User>()
 
 const columns = [
@@ -54,6 +50,10 @@ const columns = [
     ),
   }),
 ]
+
+interface UsersDataTableProps {
+  data: User[]
+}
 
 export const UsersTable = ({ data }: UsersDataTableProps) => (
   <DataTable columns={columns} data={data} />

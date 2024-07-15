@@ -18,10 +18,6 @@ import type { listPatients } from './page'
 
 type Patient = Awaited<ReturnType<typeof listPatients>>[number]
 
-interface PatientsDataTableProps {
-  data: Patient[]
-}
-
 const columnHelper = createColumnHelper<Patient>()
 
 const columns = [
@@ -53,6 +49,10 @@ const columns = [
     ),
   }),
 ]
+
+interface PatientsDataTableProps {
+  data: Patient[]
+}
 
 export const PatientsTable = ({ data }: PatientsDataTableProps) => (
   <DataTable columns={columns} data={data} />

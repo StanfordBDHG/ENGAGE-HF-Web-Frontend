@@ -7,7 +7,6 @@
 //
 'use client'
 import {
-  type ColumnDef,
   flexRender,
   getCoreRowModel,
   getFilteredRowModel,
@@ -15,12 +14,14 @@ import {
   type SortingState,
   useReactTable,
 } from '@tanstack/react-table'
+import { type TableOptions } from '@tanstack/table-core'
 import { useState } from 'react'
 import { useDebouncedCallback } from 'use-debounce'
 import { fuzzyFilter } from './DataTable.utils'
 import { GlobalFilterInput } from './GlobalFilterInput'
 import { ToggleSortButton } from './ToggleSortButton'
 import { cn } from '../../utils/className'
+import { type PartialSome } from '../../utils/misc'
 import {
   Table,
   TableBody,
@@ -30,17 +31,16 @@ import {
   TableRow,
 } from '../Table'
 
-interface DataTableProps<TData, TValue> {
-  columns: Array<ColumnDef<TData, TValue>>
-  data: TData[]
+interface DataTableProps<Data>
+  extends PartialSome<TableOptions<Data>, 'getCoreRowModel' | 'filterFns'> {
   className?: string
 }
 
-export const DataTable = <TData, TValue>({
-  columns,
-  data,
+export const DataTable = <Data,>({
   className,
-}: DataTableProps<TData, TValue>) => {
+  columns,
+  ...props
+}: DataTableProps<Data>) => {
   const [sorting, setSorting] = useState<SortingState>([])
   const [globalFilter, setGlobalFilter] = useState('')
   const setGlobalFilterDebounced = useDebouncedCallback(
@@ -49,7 +49,6 @@ export const DataTable = <TData, TValue>({
   )
 
   const table = useReactTable({
-    data,
     columns,
     filterFns: {
       fuzzy: fuzzyFilter,
@@ -61,6 +60,7 @@ export const DataTable = <TData, TValue>({
     state: { globalFilter, sorting },
     onGlobalFilterChange: setGlobalFilter,
     onSortingChange: setSorting,
+    ...props,
   })
   const rows = table.getRowModel().rows
 

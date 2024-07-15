@@ -1,17 +1,17 @@
-import { type HeaderContext } from '@tanstack/react-table'
+import { type Header } from '@tanstack/react-table'
 import { ArrowDown, ArrowUp } from 'lucide-react'
 import { type ReactNode } from 'react'
 import { Button } from '../Button'
 
-interface ToggleSortButtonProps {
+interface ToggleSortButtonProps<Data> {
   children?: ReactNode
-  header: HeaderContext<unknown, unknown>
+  header: Header<Data, unknown>
 }
 
-export const ToggleSortButton = ({
+export const ToggleSortButton = <Data,>({
   children,
   header,
-}: ToggleSortButtonProps) => {
+}: ToggleSortButtonProps<Data>) => {
   const isSorted = header.column.getIsSorted()
 
   const label = [
