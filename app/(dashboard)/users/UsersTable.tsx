@@ -8,6 +8,7 @@
 'use client'
 import { createColumnHelper } from '@tanstack/table-core'
 import { Pencil, Trash } from 'lucide-react'
+import { CopyText } from '@/packages/design-system/src/components/CopyText'
 import {
   DataTable,
   RowDropdownMenu,
@@ -27,8 +28,7 @@ const columns = [
   columnHelper.accessor('uid', {
     header: 'Id',
     cell: (props) => (
-      //   TODO: Truncate with Tooltip
-      <div className="max-w-[50px] truncate">{props.getValue()}</div>
+      <CopyText className="max-w-[7rem]">{props.getValue()}</CopyText>
     ),
   }),
   columnHelper.accessor('displayName', {
