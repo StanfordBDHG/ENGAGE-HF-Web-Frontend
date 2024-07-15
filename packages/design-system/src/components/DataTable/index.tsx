@@ -6,3 +6,4 @@
 // SPDX-License-Identifier: MIT
 //
 export * from './DataTable'
+export * from './RowDropdownMenu'

@@ -7,15 +7,12 @@
 //
 'use client'
 import { createColumnHelper } from '@tanstack/table-core'
-import { Ellipsis, Trash, Pencil } from 'lucide-react'
-import { Button } from '@/packages/design-system/src/components/Button'
-import { DataTable } from '@/packages/design-system/src/components/DataTable'
+import { Pencil, Trash } from 'lucide-react'
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from '@/packages/design-system/src/components/DropdownMenu'
+  DataTable,
+  RowDropdownMenu,
+} from '@/packages/design-system/src/components/DataTable'
+import { DropdownMenuItem } from '@/packages/design-system/src/components/DropdownMenu'
 import type { listUsers } from './page'
 
 type User = Awaited<ReturnType<typeof listUsers>>[number]
@@ -44,23 +41,16 @@ const columns = [
     id: 'actions',
     cell: () => (
       //   TODO: Actions
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Button size="round" className="size-6" variant="ghost">
-            <Ellipsis className="size-4" />
-          </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent>
-          <DropdownMenuItem>
-            <Pencil className="size-4" />
-            Edit
-          </DropdownMenuItem>
-          <DropdownMenuItem>
-            <Trash className="size-4" />
-            Delete
-          </DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
+      <RowDropdownMenu>
+        <DropdownMenuItem>
+          <Pencil className="size-4" />
+          Edit
+        </DropdownMenuItem>
+        <DropdownMenuItem>
+          <Trash className="size-4" />
+          Delete
+        </DropdownMenuItem>
+      </RowDropdownMenu>
     ),
   }),
 ]
