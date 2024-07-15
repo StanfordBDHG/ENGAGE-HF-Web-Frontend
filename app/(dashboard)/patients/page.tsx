@@ -39,17 +39,29 @@ export const listPatients = async () => {
   const patientsQuery = await getPatientsQuery()
   const patients = await getDocs(patientsQuery)
   const userIdsToGet = patients.docs.map((patient) => ({ uid: patient.id }))
+  const patientsById = new Map(
+    patients.docs.map(
+      (patient) => [patient.id, { id: patient.id, ...patient.data() }] as const,
+    ),
+  )
 
   const adminApp = getAdminApp()
   const adminAuth = getAuth(adminApp)
 
   // TODO: It can take max 100 users. Batch/paginate? Use getting by id? Fetch all and match?
   const users = await adminAuth.getUsers(userIdsToGet)
-  const usersData = users.users.map((user) => ({
-    uid: user.uid,
-    email: user.email,
-    displayName: user.displayName,
-  }))
+  const usersData = users.users
+    .map((user) => {
+      const patient = patientsById.get(user.uid)
+      if (!patient) return null
+      return {
+        uid: user.uid,
+        email: user.email,
+        displayName: user.displayName,
+        gender: patient.GenderIdentityKey,
+      }
+    })
+    .filter(Boolean)
 
   return usersData
 }

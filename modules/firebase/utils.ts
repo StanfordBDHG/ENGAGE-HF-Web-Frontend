@@ -24,7 +24,14 @@ export interface Organization {
 
 export interface Admin {}
 
-export interface User {}
+export interface User {
+  GenderIdentityKey: string
+  invitationCode: string
+  clinician?: string
+  organization?: string
+  language?: string
+  timeZone?: string
+}
 
 export interface Clinician {
   organization?: string

@@ -32,6 +32,7 @@ const columns = [
     cell: (props) => props.getValue() ?? '-',
   }),
   columnHelper.accessor('email', { header: 'Email' }),
+  columnHelper.accessor('gender', { header: 'Gender' }),
   columnHelper.display({
     id: 'actions',
     cell: () => (
