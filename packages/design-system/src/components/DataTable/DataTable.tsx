@@ -11,12 +11,15 @@ import {
   flexRender,
   getCoreRowModel,
   getFilteredRowModel,
+  getSortedRowModel,
+  type SortingState,
   useReactTable,
 } from '@tanstack/react-table'
 import { useState } from 'react'
 import { useDebouncedCallback } from 'use-debounce'
 import { fuzzyFilter } from './DataTable.utils'
 import { GlobalFilterInput } from './GlobalFilterInput'
+import { ToggleSortButton } from './ToggleSortButton'
 import { cn } from '../../utils/className'
 import {
   Table,
@@ -38,6 +41,7 @@ export const DataTable = <TData, TValue>({
   data,
   className,
 }: DataTableProps<TData, TValue>) => {
+  const [sorting, setSorting] = useState<SortingState>([])
   const [globalFilter, setGlobalFilter] = useState('')
   const setGlobalFilterDebounced = useDebouncedCallback(
     (value: string) => setGlobalFilter(value),
@@ -53,8 +57,10 @@ export const DataTable = <TData, TValue>({
     globalFilterFn: 'fuzzy',
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
-    state: { globalFilter },
+    getSortedRowModel: getSortedRowModel(),
+    state: { globalFilter, sorting },
     onGlobalFilterChange: setGlobalFilter,
+    onSortingChange: setSorting,
   })
   const rows = table.getRowModel().rows
 
@@ -68,17 +74,25 @@ export const DataTable = <TData, TValue>({
       <Table>
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
-            <TableRow key={headerGroup.id}>
-              {headerGroup.headers.map((header) => (
-                <TableHead key={header.id}>
-                  {header.isPlaceholder ? null : (
+            <TableRow key={headerGroup.id} isHoverable={false}>
+              {headerGroup.headers.map((header) => {
+                const columnContent =
+                  header.isPlaceholder ? null : (
                     flexRender(
                       header.column.columnDef.header,
                       header.getContext(),
                     )
-                  )}
-                </TableHead>
-              ))}
+                  )
+                return (
+                  <TableHead key={header.id}>
+                    {header.column.getCanFilter() ?
+                      <ToggleSortButton header={header}>
+                        {columnContent}
+                      </ToggleSortButton>
+                    : columnContent}
+                  </TableHead>
+                )
+              })}
             </TableRow>
           ))}
         </TableHeader>
