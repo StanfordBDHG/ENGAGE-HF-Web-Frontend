@@ -35,11 +35,11 @@ export const Triggerable = () => (
     <DropdownMenuTrigger>Trigger</DropdownMenuTrigger>
     <DropdownMenuContent>
       <DropdownMenuItem>
-        <LogOut className="size-4" />
+        <LogOut />
         Action one
       </DropdownMenuItem>
       <DropdownMenuItem>
-        <LogOut className="size-4" />
+        <LogOut />
         Action two
       </DropdownMenuItem>
     </DropdownMenuContent>
@@ -51,11 +51,11 @@ export const Simple = () => (
     <DropdownMenuTrigger>Trigger</DropdownMenuTrigger>
     <DropdownMenuContent>
       <DropdownMenuItem>
-        <LogOut className="size-4" />
+        <LogOut />
         Action one
       </DropdownMenuItem>
       <DropdownMenuItem>
-        <LogOut className="size-4" />
+        <LogOut />
         Action two
       </DropdownMenuItem>
     </DropdownMenuContent>
@@ -72,22 +72,22 @@ export const Complex = () => (
       <DropdownMenuSeparator />
       <DropdownMenuGroup>
         <DropdownMenuItem>
-          <LogOut className="size-4" />
+          <LogOut />
           <span>Profile</span>
           <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
         </DropdownMenuItem>
         <DropdownMenuItem disabled>
-          <LogOut className="size-4" />
+          <LogOut />
           <span>Billing</span>
           <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
         </DropdownMenuItem>
         <DropdownMenuItem>
-          <LogOut className="size-4" />
+          <LogOut />
           <span>Settings</span>
           <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
         </DropdownMenuItem>
         <DropdownMenuItem>
-          <LogOut className="size-4" />
+          <LogOut />
           <span>Keyboard shortcuts</span>
           <DropdownMenuShortcut>⌘K</DropdownMenuShortcut>
         </DropdownMenuItem>
@@ -96,22 +96,22 @@ export const Complex = () => (
       <DropdownMenuGroup>
         <DropdownMenuSub>
           <DropdownMenuSubTrigger>
-            <LogOut className="size-4" />
+            <LogOut />
             <span>Invite users</span>
           </DropdownMenuSubTrigger>
           <DropdownMenuPortal>
             <DropdownMenuSubContent>
               <DropdownMenuItem>
-                <LogOut className="size-4" />
+                <LogOut />
                 <span>Email</span>
               </DropdownMenuItem>
               <DropdownMenuItem>
-                <LogOut className="size-4" />
+                <LogOut />
                 <span>Message</span>
               </DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem>
-                <LogOut className="size-4" />
+                <LogOut />
                 <span>More...</span>
               </DropdownMenuItem>
             </DropdownMenuSubContent>
@@ -120,7 +120,7 @@ export const Complex = () => (
       </DropdownMenuGroup>
       <DropdownMenuSeparator />
       <DropdownMenuItem>
-        <LogOut className="size-4" />
+        <LogOut />
         <span>Log out</span>
         <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
       </DropdownMenuItem>

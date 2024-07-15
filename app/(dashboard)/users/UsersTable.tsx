@@ -43,11 +43,11 @@ const columns = [
       //   TODO: Actions
       <RowDropdownMenu>
         <DropdownMenuItem>
-          <Pencil className="size-4" />
+          <Pencil />
           Edit
         </DropdownMenuItem>
         <DropdownMenuItem>
-          <Trash className="size-4" />
+          <Trash />
           Delete
         </DropdownMenuItem>
       </RowDropdownMenu>

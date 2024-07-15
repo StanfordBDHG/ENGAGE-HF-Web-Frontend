@@ -35,7 +35,7 @@ export const User = ({ user }: UserProps) => (
           await auth.signOut()
         }}
       >
-        <LogOut className="size-4" />
+        <LogOut />
         Sign Out
       </DropdownMenuItem>
     </DropdownMenuContent>
