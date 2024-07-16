@@ -42,7 +42,7 @@ const DashboardLayout = async ({ children }: DashboardLayoutProps) => {
           <Link href="/" className="interactive-opacity w-full pt-4">
             <LogoType className="!h-auto !w-full px-2 xl:px-8" />
           </Link>
-          <nav className="mt-24 flex flex-col gap-1 xl:w-full">
+          <nav className="mt-9 flex flex-col gap-1 xl:w-full">
             <MenuLinks />
           </nav>
           {user}
@@ -50,7 +50,7 @@ const DashboardLayout = async ({ children }: DashboardLayoutProps) => {
       }
       mobile={
         <>
-          <nav className="mt-10 flex flex-col gap-1 px-4">
+          <nav className="mt-9 flex flex-col gap-1 px-4">
             <MenuLinks />
           </nav>
           {user}
