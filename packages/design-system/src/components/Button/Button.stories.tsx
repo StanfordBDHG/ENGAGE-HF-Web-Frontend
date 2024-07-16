@@ -38,6 +38,9 @@ export const Link: Story = { args: { variant: 'link' } }
 
 export const Sm: Story = { args: { size: 'sm' } }
 export const Lg: Story = { args: { size: 'lg' } }
+export const Round: Story = {
+  args: { size: 'round', children: 'x', className: 'size-6' },
+}
 
 /**
  * Renders button styles over link element
