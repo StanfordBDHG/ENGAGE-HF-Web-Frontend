@@ -8,7 +8,6 @@
 import type { Metadata } from 'next'
 import { getLocale } from 'next-intl/server'
 import type { ReactNode } from 'react'
-import '@stanfordbdhg/design-system/main.css'
 import { themeToCSSVariables, lightTheme } from '@stanfordbdhg/design-system'
 import './globals.css'
 import { AuthProvider } from '../modules/firebase/AuthProvider'

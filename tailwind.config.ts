@@ -9,7 +9,9 @@ import { tailwindColors } from '@stanfordbdhg/design-system'
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ['./{app,pages,components}/**/*.{js,ts,jsx,tsx,mdx}'],
+  content: [
+    './{app,pages,components,packages/design-system}/**/*.{js,ts,jsx,tsx,mdx}',
+  ],
   theme: {
     extend: {
       colors: tailwindColors,

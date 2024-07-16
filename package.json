@@ -62,6 +62,7 @@
     "jest": "^29",
     "jest-environment-jsdom": "^29",
     "postcss": "^8",
+    "postcss-import": "^16.1.0",
     "prettier": "^3",
     "tailwindcss": "^3",
     "ts-jest": "^29",
