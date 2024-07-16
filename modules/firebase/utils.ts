@@ -50,7 +50,10 @@ export const getCollectionRefs = (db: Firestore) => ({
   admins: () =>
     collection(db, collectionNames.admins) as CollectionReference<Admin>,
   clinicians: () =>
-    collection(db, collectionNames.admins) as CollectionReference<Clinician>,
+    collection(
+      db,
+      collectionNames.clinicians,
+    ) as CollectionReference<Clinician>,
   organizations: () =>
     collection(
       db,
