@@ -28,7 +28,7 @@ export const MenuItem = ({ href, icon, isActive, label }: MenuItemProps) => (
     <Link
       href={href}
       className={cn(
-        'focus-ring flex items-center gap-3 rounded-lg px-3 py-2 font-medium no-underline transition xl:w-full xl:self-start',
+        'focus-ring flex items-center gap-3 rounded-lg p-2 font-medium no-underline transition xl:w-full xl:self-start',
         isActive ?
           'bg-accent/50 text-primary hover:opacity-60'
         : 'text-foreground/60 hover:bg-accent hover:text-foreground',

@@ -20,12 +20,12 @@ export const UserMenuItem = forwardRef<HTMLButtonElement, UserMenuItemProps>(
   ({ name, img, ...props }, ref) => (
     <Button
       variant="ghost"
-      className="mt-auto gap-3 px-3 py-2 transition xl:w-full xl:self-start"
+      className="mt-auto !p-2 transition xl:w-full xl:justify-start xl:self-start"
       ref={ref}
       {...props}
     >
       <Avatar size="sm" name={name} src={img} />
-      <span className="truncate lg:hidden xl:block">{name}</span>
+      <span className="truncate text-sm lg:hidden xl:block">{name}</span>
     </Button>
   ),
 )
