@@ -8,6 +8,10 @@ export interface RangeCounterProps
   start: number
 }
 
+/**
+ * Shows range of displayed items
+ * Useful for showing pagination or filter results
+ * */
 export const RangeCounter = ({
   all,
   end,
