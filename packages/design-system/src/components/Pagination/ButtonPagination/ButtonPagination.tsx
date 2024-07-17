@@ -1,4 +1,8 @@
-import { PaginationItemType, usePagination } from '@nextui-org/use-pagination'
+import {
+  PaginationItemType,
+  usePagination,
+  type UsePaginationProps,
+} from '@nextui-org/use-pagination'
 import {
   Pagination,
   PaginationContent,
@@ -7,10 +11,13 @@ import {
   PaginationItemContainer,
   PaginationNext,
   PaginationPrevious,
-} from './Pagination'
+} from '../Pagination'
 
-export interface PaginationProps {
+export interface ButtonPaginationProps extends UsePaginationProps {
   total: number
+  /**
+   * Currently selected page, 1-based
+   * */
   page: number
   onPageChange: (page: number) => void
 }
@@ -22,11 +29,16 @@ export const ButtonPagination = ({
   total,
   page,
   onPageChange,
-}: PaginationProps) => {
+  siblings = 1,
+  showControls = true,
+  ...props
+}: ButtonPaginationProps) => {
   const { activePage, range } = usePagination({
     total,
     page,
-    showControls: true,
+    siblings,
+    showControls,
+    ...props,
   })
 
   return (
