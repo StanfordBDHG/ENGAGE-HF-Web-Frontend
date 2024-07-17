@@ -6,6 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 
+import type { UrlObject } from 'url'
 import { toast } from '../../components/Toaster'
 
 /**
@@ -17,6 +18,8 @@ export const not = <T>(value: T) => !value
 export type InitialState<T> = T | (() => T)
 
 export type Nil<T> = T | null | undefined
+
+export type Url = string | UrlObject
 
 /**
  * Make some fields in the object partial
