@@ -1,5 +1,5 @@
 import { type Header } from '@tanstack/react-table'
-import { ArrowDown, ArrowUp } from 'lucide-react'
+import { ArrowDownAZ, ArrowUpZA } from 'lucide-react'
 import { type ReactNode } from 'react'
 import { Button } from '../Button'
 
@@ -14,9 +14,11 @@ export const ToggleSortButton = <Data,>({
 }: ToggleSortButtonProps<Data>) => {
   const isSorted = header.column.getIsSorted()
 
+  const nextSorting = header.column.getNextSortingOrder()
+
   const label = [
-    isSorted === 'asc' ? 'Sort descending'
-    : isSorted === false ? 'Sort ascending'
+    nextSorting === 'asc' ? 'Sort ascending'
+    : nextSorting === 'desc' ? 'Sort descending'
     : 'Disable sorting',
     'by',
     typeof children === 'string' ? children : null,
@@ -35,9 +37,9 @@ export const ToggleSortButton = <Data,>({
     >
       {children}
       {isSorted === 'asc' ?
-        <ArrowDown className="size-4" />
+        <ArrowDownAZ className="size-4" />
       : isSorted === 'desc' ?
-        <ArrowUp className="size-4" />
+        <ArrowUpZA className="size-4" />
       : <div aria-hidden className="size-4" />}
     </Button>
   )

@@ -5,9 +5,9 @@
 //
 // SPDX-License-Identifier: MIT
 //
-import { type Meta } from '@storybook/react'
+import { type Meta, type StoryObj } from '@storybook/react'
 import { DataTable } from './DataTable'
-import { peopleColumns, peopleData } from './DataTable.mocks'
+import { peopleColumns, peopleData, type Person } from './DataTable.mocks'
 
 const meta: Meta<typeof DataTable> = {
   title: 'Components/DataTable',
@@ -19,6 +19,20 @@ const meta: Meta<typeof DataTable> = {
 
 export default meta
 
-export const Default = () => (
-  <DataTable columns={peopleColumns} data={peopleData} className="m-5" />
-)
+type Story = StoryObj<typeof DataTable<Person>>
+
+export const Default: Story = {
+  args: {
+    columns: peopleColumns,
+    data: peopleData,
+    entityName: 'users',
+    className: 'm-5',
+  },
+}
+
+export const Paginated: Story = {
+  args: {
+    ...Default.args,
+    pageSize: 2,
+  },
+}
