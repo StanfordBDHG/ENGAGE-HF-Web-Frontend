@@ -24,7 +24,7 @@ import { GlobalFilterInput } from './GlobalFilterInput'
 import { ToggleSortButton } from './ToggleSortButton'
 import { cn } from '../../utils/className'
 import { type PartialSome } from '../../utils/misc'
-import { ButtonPagination } from '../Pagination'
+import { ButtonPagination } from '../Pagination/ButtonPagination'
 import { RangeCounter } from '../RangeCounter'
 import {
   Table,
