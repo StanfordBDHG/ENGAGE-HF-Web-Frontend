@@ -3,6 +3,10 @@ import { type ComponentProps, forwardRef } from 'react'
 import { cn } from '../../utils/className'
 import { Button, type ButtonProps } from '../Button'
 
+/**
+ * Primitives to build your Pagination
+ * If you're looking for batteries-included components, see ButtonPagination
+ * */
 export const Pagination = ({ className, ...props }: ComponentProps<'nav'>) => (
   <nav
     role="navigation"
@@ -50,19 +54,25 @@ export const PaginationItem = ({
   />
 )
 
-export const PaginationPrevious = (
-  props: ComponentProps<typeof PaginationItem>,
-) => (
+export const PaginationPreviousIcon = () => <ChevronLeft className="size-4" />
+
+export const PaginationPrevious = ({
+  children,
+  ...props
+}: ComponentProps<typeof PaginationItem>) => (
   <PaginationItem aria-label="Go to previous page" {...props}>
-    <ChevronLeft className="size-4" />
+    {children ?? <PaginationPreviousIcon />}
   </PaginationItem>
 )
 
-export const PaginationNext = (
-  props: ComponentProps<typeof PaginationItem>,
-) => (
+export const PaginationNextIcon = () => <ChevronRight className="size-4" />
+
+export const PaginationNext = ({
+  children,
+  ...props
+}: ComponentProps<typeof PaginationItem>) => (
   <PaginationItem aria-label="Go to next page" {...props}>
-    <ChevronRight className="size-4" />
+    {children ?? <PaginationNextIcon />}
   </PaginationItem>
 )
 
