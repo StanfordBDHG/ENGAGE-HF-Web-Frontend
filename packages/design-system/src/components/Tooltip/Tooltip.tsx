@@ -37,7 +37,7 @@ export const TooltipContent = forwardRef<
 ))
 TooltipContent.displayName = RadixTooltip.Content.displayName
 
-interface TooltipDProps
+interface TooltipProps
   extends Omit<ComponentPropsWithoutRef<typeof RadixTooltip.Root>, 'children'>,
     Pick<
       ComponentPropsWithoutRef<typeof RadixTooltip.Content>,
@@ -55,7 +55,7 @@ export const Tooltip = ({
   side,
   delayDuration = 0,
   ...rootProps
-}: TooltipDProps) => (
+}: TooltipProps) => (
   <TooltipProvider>
     <TooltipRoot {...rootProps} delayDuration={delayDuration}>
       {children && <TooltipTrigger asChild>{children}</TooltipTrigger>}
