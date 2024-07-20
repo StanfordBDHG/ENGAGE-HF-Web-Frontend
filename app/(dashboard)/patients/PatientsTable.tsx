@@ -14,9 +14,7 @@ import {
   RowDropdownMenu,
 } from '@/packages/design-system/src/components/DataTable'
 import { DropdownMenuItem } from '@/packages/design-system/src/components/DropdownMenu'
-import type { listPatients } from './page'
-
-type Patient = Awaited<ReturnType<typeof listPatients>>[number]
+import type { Patient } from './page'
 
 const columnHelper = createColumnHelper<Patient>()
 

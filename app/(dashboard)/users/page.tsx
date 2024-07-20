@@ -19,7 +19,7 @@ import { PageTitle } from '@/packages/design-system/src/molecules/DashboardLayou
 import { UsersTable } from './UsersTable'
 import { DashboardLayout } from '../DashboardLayout'
 
-export const getAdminData = async () => {
+const getAdminData = async () => {
   const { refs } = await getAuthenticatedOnlyApp()
   const admins = await getDocs(refs.admins())
   const organizations = await getDocs(refs.organizations())
@@ -33,9 +33,7 @@ export const getAdminData = async () => {
   }
 }
 
-export const getOwnerData = async (
-  organizations: QuerySnapshot<Organization>,
-) => {
+const getOwnerData = async (organizations: QuerySnapshot<Organization>) => {
   const { refs } = await getAuthenticatedOnlyApp()
   const organizationIds = organizations.docs.map(
     (organization) => organization.id,
@@ -52,7 +50,7 @@ export const getOwnerData = async (
   }
 }
 
-export const listUsers = async () => {
+const listUsers = async () => {
   const role = await getUserRole()
   const { adminIds, organizations, cliniciansQuery } =
     role.role === Role.admin ?
@@ -92,6 +90,8 @@ export const listUsers = async () => {
 
   return usersData
 }
+
+export type User = Awaited<ReturnType<typeof listUsers>>[number]
 
 const UsersPage = async () => {
   await allowRoles([Role.admin, Role.owner])

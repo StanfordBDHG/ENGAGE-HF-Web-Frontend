@@ -35,7 +35,7 @@ const getPatientsQuery = async () => {
   throw new Error()
 }
 
-export const listPatients = async () => {
+const listPatients = async () => {
   const patientsQuery = await getPatientsQuery()
   const patients = await getDocs(patientsQuery)
   const userIdsToGet = patients.docs.map((patient) => ({ uid: patient.id }))
@@ -65,6 +65,8 @@ export const listPatients = async () => {
 
   return usersData
 }
+
+export type Patient = Awaited<ReturnType<typeof listPatients>>[number]
 
 const PatientsPage = async () => {
   const patients = await listPatients()
