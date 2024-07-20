@@ -21,10 +21,10 @@ declare module '@tanstack/react-table' {
 export const fuzzyFilter: FilterFn<unknown> = (
   row,
   columnId,
-  value,
+  filterValue,
   addMeta,
 ) => {
-  const itemRank = rankItem(row.getValue(columnId), value)
+  const itemRank = rankItem(row.getValue(columnId), filterValue as string)
 
   // Store the itemRank info
   addMeta({
