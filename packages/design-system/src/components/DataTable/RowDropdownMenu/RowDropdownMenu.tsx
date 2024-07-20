@@ -17,16 +17,25 @@ import {
 interface RowDropdownMenuProps {
   /* pass DropdownMenuContent children */
   children?: ReactNode
+  itemName?: string
 }
 
 /**
  * Standard DataTable row actions dropdown menu
  * */
-export const RowDropdownMenu = ({ children }: RowDropdownMenuProps) => (
+export const RowDropdownMenu = ({
+  children,
+  itemName,
+}: RowDropdownMenuProps) => (
   <div className="text-right">
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button size="round" className="size-6" variant="ghost">
+        <Button
+          size="round"
+          className="size-6"
+          variant="ghost"
+          aria-label={`Open actions${itemName ? ` for ${itemName}` : ''}`}
+        >
           <Ellipsis className="size-4" />
         </Button>
       </DropdownMenuTrigger>
