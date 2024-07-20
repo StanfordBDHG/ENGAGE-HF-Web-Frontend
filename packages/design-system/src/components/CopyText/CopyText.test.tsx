@@ -5,36 +5,47 @@
 //
 // SPDX-License-Identifier: MIT
 //
-import { fireEvent, render, screen, waitFor } from '@testing-library/react'
+import { render, screen, waitFor } from '@testing-library/react'
 import '@testing-library/jest-dom'
-import { copyToClipboard } from '../../utils/misc'
+import userEvent from '@testing-library/user-event'
+import { Toaster } from '../Toaster'
 import { CopyText } from '.'
 
-jest.mock('../../utils/misc')
-
 describe('CopyText', () => {
-  const clickCopy = () => {
+  const expectCopyValue = async (value: string) => {
+    const user = userEvent.setup()
     const button = screen.getByRole('button')
-    fireEvent.click(button)
+    await user.click(button)
+
+    await waitFor(async () => {
+      const clipboardText = await navigator.clipboard.readText()
+      expect(clipboardText).toBe(value)
+    })
   }
 
   it('copies children value if string provided', async () => {
     render(<CopyText>John Doe</CopyText>)
 
-    clickCopy()
-
-    await waitFor(() => {
-      expect(copyToClipboard).toHaveBeenLastCalledWith('John Doe')
-    })
+    await expectCopyValue('John Doe')
   })
 
   it('copies custom value', async () => {
     render(<CopyText value="special">John Doe</CopyText>)
 
-    clickCopy()
+    await expectCopyValue('special')
+  })
 
-    await waitFor(() => {
-      expect(copyToClipboard).toHaveBeenLastCalledWith('special')
-    })
+  it('shows toast after copying', async () => {
+    render(
+      <>
+        <Toaster />
+        <CopyText>some</CopyText>
+      </>,
+    )
+
+    await expectCopyValue('some')
+
+    const toast = await screen.findByText('Copied to clipboard')
+    expect(toast).toBeInTheDocument()
   })
 })
