@@ -80,13 +80,13 @@ describe('DataTable', () => {
       name: 'Sort descending by Age column',
     })
     fireEvent.click(enableDescSortButton)
-    expectNamesInGivenOrder(peopleData.toSorted((a, b) => b.age - a.age))
+    expectNamesInGivenOrder([...peopleData].sort((a, b) => b.age - a.age))
 
     const enableAscSortButton = screen.getByRole('button', {
       name: 'Sort ascending by Age column',
     })
     fireEvent.click(enableAscSortButton)
-    expectNamesInGivenOrder(peopleData.toSorted((a, b) => a.age - b.age))
+    expectNamesInGivenOrder([...peopleData].sort((a, b) => a.age - b.age))
 
     const disabledSortButton = screen.getByRole('button', {
       name: 'Disable sorting by Age column',
