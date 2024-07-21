@@ -6,11 +6,9 @@
 // SPDX-License-Identifier: MIT
 //
 import { getDocs, query, where } from 'firebase/firestore'
-import { getAuth } from 'firebase-admin/auth'
 import { Contact } from 'lucide-react'
 import { getAuthenticatedOnlyApp, getUserRole } from '@/modules/firebase/guards'
 import { Role } from '@/modules/firebase/role'
-import { getAdminApp } from '@/modules/firebase/utils'
 import { PageTitle } from '@/packages/design-system/src/molecules/DashboardLayout'
 import { PatientsTable } from './PatientsTable'
 import { DashboardLayout } from '../DashboardLayout'
@@ -36,34 +34,36 @@ const getPatientsQuery = async () => {
 }
 
 const listPatients = async () => {
+  const { callables } = await getAuthenticatedOnlyApp()
   const patientsQuery = await getPatientsQuery()
   const patients = await getDocs(patientsQuery)
-  const userIdsToGet = patients.docs.map((patient) => ({ uid: patient.id }))
+  const userIdsToGet = patients.docs.map((patient) => patient.id)
   const patientsById = new Map(
     patients.docs.map(
       (patient) => [patient.id, { id: patient.id, ...patient.data() }] as const,
     ),
   )
 
-  const adminApp = getAdminApp()
-  const adminAuth = getAuth(adminApp)
-
   // TODO: It can take max 100 users. Batch/paginate? Use getting by id? Fetch all and match?
-  const users = await adminAuth.getUsers(userIdsToGet)
-  const usersData = users.users
-    .map((user) => {
-      const patient = patientsById.get(user.uid)
-      if (!patient) return null
+  const usersRecord = await callables.getUsersInformation({
+    userIds: userIdsToGet,
+  })
+  return userIdsToGet
+    .map((id) => {
+      // authData might be undefined
+      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+      const authData = usersRecord.data[id]?.data?.auth
+      const patient = patientsById.get(id)
+      // TODO: At least log the error here
+      if (!authData || !patient) return null
       return {
-        uid: user.uid,
-        email: user.email,
-        displayName: user.displayName,
+        uid: id,
+        email: authData.email,
+        displayName: authData.displayName,
         gender: patient.GenderIdentityKey,
       }
     })
     .filter(Boolean)
-
-  return usersData
 }
 
 export type Patient = Awaited<ReturnType<typeof listPatients>>[number]

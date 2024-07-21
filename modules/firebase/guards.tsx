@@ -6,7 +6,12 @@
 // SPDX-License-Identifier: MIT
 //
 import { type User } from '@firebase/auth-types'
-import { connectFunctionsEmulator, getFunctions } from '@firebase/functions'
+import {
+  connectFunctionsEmulator,
+  getFunctions,
+  httpsCallable,
+  type Functions,
+} from '@firebase/functions'
 import { type FirebaseOptions, initializeServerApp } from 'firebase/app'
 import { connectAuthEmulator, getAuth } from 'firebase/auth'
 import {
@@ -30,8 +35,33 @@ import {
 } from '@/modules/firebase/utils'
 import { routes } from '@/modules/routes'
 
-let isEmulatorEnabled = false
+interface Result<T> {
+  data?: T
+  error?: {
+    code: string
+    message: string
+  }
+}
 
+interface UserAuthenticationInformation {
+  displayName?: string
+  email?: string
+  phoneNumber?: string
+  photoURL?: string
+}
+
+interface UserInformation {
+  auth: UserAuthenticationInformation
+}
+
+const getCallables = (functions: Functions) => ({
+  getUsersInformation: httpsCallable<
+    { userIds?: string[] },
+    Record<string, Result<UserInformation>>
+  >(functions, 'getUsersInformation'),
+})
+
+let isEmulatorEnabled = false
 export const getServerApp = async (firebaseOptions: FirebaseOptions) => {
   const idToken = headers().get('Authorization')?.split('Bearer ').at(1)
 
@@ -49,13 +79,14 @@ export const getServerApp = async (firebaseOptions: FirebaseOptions) => {
   const db = getFirestore(firebaseServerApp)
   if (!isEmulatorEnabled) connectFirestoreEmulator(db, '127.0.0.1', 8080)
   const functions = getFunctions(firebaseServerApp)
-  if (!isEmulatorEnabled) connectFunctionsEmulator(functions, '127.0.0.1', 9150)
+  if (!isEmulatorEnabled) connectFunctionsEmulator(functions, '127.0.0.1', 5001)
   isEmulatorEnabled = true
   return {
     firebaseServerApp,
     currentUser: auth.currentUser,
     db,
     functions,
+    callables: getCallables(functions),
     refs: getCollectionRefs(db),
   }
 }
