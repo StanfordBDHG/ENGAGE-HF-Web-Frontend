@@ -6,10 +6,8 @@
 // SPDX-License-Identifier: MIT
 //
 import { chunk } from 'es-toolkit'
-import {
-  getAuthenticatedOnlyApp,
-  type UserAuthenticationInformation,
-} from '@/modules/firebase/guards'
+import { getAuthenticatedOnlyApp } from '@/modules/firebase/guards'
+import { type UserAuthenticationInformation } from '@/modules/firebase/utils'
 
 export const mapUserData = async <T>(
   userIds: string[],

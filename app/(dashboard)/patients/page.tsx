@@ -5,7 +5,7 @@
 //
 // SPDX-License-Identifier: MIT
 //
-import { getDocs, query, where } from 'firebase/firestore'
+import { getDoc, getDocs, query, where } from 'firebase/firestore'
 import { Contact } from 'lucide-react'
 import { getAuthenticatedOnlyApp, getUserRole } from '@/modules/firebase/guards'
 import { Role } from '@/modules/firebase/role'
@@ -15,20 +15,20 @@ import { PatientsTable } from './PatientsTable'
 import { DashboardLayout } from '../DashboardLayout'
 
 const getPatientsQuery = async () => {
-  const { refs } = await getAuthenticatedOnlyApp()
+  const { refs, currentUser, docRefs } = await getAuthenticatedOnlyApp()
   const userRole = await getUserRole()
-  if (userRole.role === Role.admin) return refs.patients()
+  if (userRole.role === Role.admin) return refs.users()
   if (userRole.role === Role.owner) {
     const organizationIds = userRole.organizations.docs.map((doc) => doc.id)
-    return query(refs.patients(), where('organization', 'in', organizationIds))
+    return query(refs.users(), where('organization', 'in', organizationIds))
   }
   if (userRole.role === Role.clinician) {
-    const organizationId = userRole.clinician.data().organization
-    if (!organizationId) {
-      // TODO: Check if there is any reason for organization not to be defined
-      throw new Error('')
-    }
-    return query(refs.patients(), where('organization', '==', organizationId))
+    const user = docRefs.user(currentUser.uid)
+    const userDoc = await getDoc(user)
+    const organizationId = userDoc.data()?.organization
+    // TODO: Check if there is any reason for organization not to be defined
+    if (!organizationId) throw new Error('Clinician without organization id')
+    return query(refs.users(), where('organization', '==', organizationId))
   }
   // Other roles can't reach this point, so this should never execute
   throw new Error()
@@ -54,7 +54,6 @@ const listPatients = async () => {
       uid: id,
       email: authData.email,
       displayName: authData.displayName,
-      gender: patient.GenderIdentityKey,
     }
   })
 }

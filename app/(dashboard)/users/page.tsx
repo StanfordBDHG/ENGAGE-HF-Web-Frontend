@@ -77,10 +77,10 @@ const listUsers = async () => {
     email: authData.email,
     displayName: authData.displayName,
     role:
-      adminIds.has(id) ? 'Admin'
-      : clinicianIds.has(id) ? 'Clinician'
-      : ownersIds.has(id) ? 'Owner'
-      : '-',
+      adminIds.has(id) ? Role.admin
+      : clinicianIds.has(id) ? Role.clinician
+      : ownersIds.has(id) ? Role.owner
+      : undefined,
   }))
 }
 
