@@ -2,6 +2,7 @@
 import { Pencil, Trash } from 'lucide-react'
 import { deleteUser } from '@/app/(dashboard)/users/actions'
 import type { User } from '@/app/(dashboard)/users/page'
+import { useUser } from '@/modules/firebase/UserProvider'
 import { RowDropdownMenu } from '@/packages/design-system/src/components/DataTable'
 import { DropdownMenuItem } from '@/packages/design-system/src/components/DropdownMenu'
 import { getUserName } from '@/packages/design-system/src/modules/auth/user'
@@ -13,6 +14,7 @@ interface UserMenuProps {
 }
 
 export const UserMenu = ({ user }: UserMenuProps) => {
+  const authUser = useUser()
   const deleteConfirm = useOpenState()
 
   const handleDelete = async () => {
@@ -34,7 +36,10 @@ export const UserMenu = ({ user }: UserMenuProps) => {
           <Pencil />
           Edit
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={deleteConfirm.open}>
+        <DropdownMenuItem
+          onClick={deleteConfirm.open}
+          disabled={authUser.uid === user.uid}
+        >
           <Trash />
           Delete
         </DropdownMenuItem>
