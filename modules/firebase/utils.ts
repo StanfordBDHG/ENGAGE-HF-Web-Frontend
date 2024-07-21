@@ -5,9 +5,12 @@
 //
 // SPDX-License-Identifier: MIT
 //
+import { type Functions, httpsCallable } from '@firebase/functions'
 import {
   collection,
   type CollectionReference,
+  doc,
+  DocumentReference,
   type Firestore,
 } from 'firebase/firestore'
 
@@ -22,21 +25,31 @@ export interface Organization {
 
 export interface Admin {}
 
-export interface Patient {
-  GenderIdentityKey: string
+export interface UserMessagesSettings {
+  dailyRemindersAreActive?: boolean
+  textNotificationsAreActive?: boolean
+  medicationRemindersAreActive?: boolean
+}
+
+export interface User {
+  dateOfEnrollment: Date
   invitationCode: string
-  clinician?: string
+  messagesSettings?: UserMessagesSettings
   organization?: string
   language?: string
   timeZone?: string
 }
 
-export interface Clinician {
-  organization?: string
+export interface Patient {
+  dateOfBirth: Date
+  clinician?: string
 }
+
+export interface Clinician {}
 
 export const collectionNames = {
   patients: 'patients',
+  users: 'users',
   admins: 'admins',
   clinicians: 'clinicians',
   organizations: 'organizations',
@@ -45,6 +58,8 @@ export const collectionNames = {
 export const getCollectionRefs = (db: Firestore) => ({
   patients: () =>
     collection(db, collectionNames.patients) as CollectionReference<Patient>,
+  users: () =>
+    collection(db, collectionNames.users) as CollectionReference<User>,
   admins: () =>
     collection(db, collectionNames.admins) as CollectionReference<Admin>,
   clinicians: () =>
@@ -57,4 +72,60 @@ export const getCollectionRefs = (db: Firestore) => ({
       db,
       collectionNames.organizations,
     ) as CollectionReference<Organization>,
+})
+
+export const getDocumentsRefs = (db: Firestore) => ({
+  patient: (...segments: string[]) =>
+    doc(
+      db,
+      collectionNames.patients,
+      ...segments,
+    ) as DocumentReference<Patient>,
+  user: (...segments: string[]) =>
+    doc(db, collectionNames.users, ...segments) as DocumentReference<User>,
+  admin: (...segments: string[]) =>
+    doc(db, collectionNames.admins, ...segments) as DocumentReference<Admin>,
+  clinician: (...segments: string[]) =>
+    doc(
+      db,
+      collectionNames.clinicians,
+      ...segments,
+    ) as DocumentReference<Clinician>,
+  organization: (...segments: string[]) =>
+    doc(
+      db,
+      collectionNames.organizations,
+      ...segments,
+    ) as DocumentReference<Organization>,
+})
+
+interface Result<T> {
+  data?: T
+  error?: {
+    code: string
+    message: string
+  }
+}
+
+export interface UserAuthenticationInformation {
+  displayName?: string
+  email?: string
+  phoneNumber?: string
+  photoURL?: string
+}
+
+interface UserInformation {
+  auth: UserAuthenticationInformation
+}
+
+export const getCallables = (functions: Functions) => ({
+  getUsersInformation: httpsCallable<
+    { userIds?: string[] },
+    Record<string, Result<UserInformation>>
+  >(functions, 'getUsersInformation'),
+  seedEmulator: httpsCallable(functions, 'seedEmulator'),
+  deleteUser: httpsCallable<{ userId: string }, string>(
+    functions,
+    'deleteUser',
+  ),
 })

@@ -6,18 +6,11 @@
 // SPDX-License-Identifier: MIT
 //
 import { type User } from '@firebase/auth-types'
-import {
-  connectFunctionsEmulator,
-  getFunctions,
-  httpsCallable,
-  type Functions,
-} from '@firebase/functions'
+import { connectFunctionsEmulator, getFunctions } from '@firebase/functions'
 import { type FirebaseOptions, initializeServerApp } from 'firebase/app'
 import { connectAuthEmulator, getAuth } from 'firebase/auth'
 import {
   connectFirestoreEmulator,
-  doc,
-  type DocumentReference,
   getDoc,
   getDocs,
   getFirestore,
@@ -30,42 +23,11 @@ import { env } from '@/env'
 import { firebaseConfig } from '@/modules/firebase/config'
 import { Role } from '@/modules/firebase/role'
 import {
-  type Clinician,
-  collectionNames,
+  getCallables,
   getCollectionRefs,
+  getDocumentsRefs,
 } from '@/modules/firebase/utils'
 import { routes } from '@/modules/routes'
-
-interface Result<T> {
-  data?: T
-  error?: {
-    code: string
-    message: string
-  }
-}
-
-export interface UserAuthenticationInformation {
-  displayName?: string
-  email?: string
-  phoneNumber?: string
-  photoURL?: string
-}
-
-interface UserInformation {
-  auth: UserAuthenticationInformation
-}
-
-const getCallables = (functions: Functions) => ({
-  getUsersInformation: httpsCallable<
-    { userIds?: string[] },
-    Record<string, Result<UserInformation>>
-  >(functions, 'getUsersInformation'),
-  seedEmulator: httpsCallable(functions, 'seedEmulator'),
-  deleteUser: httpsCallable<{ userId: string }, string>(
-    functions,
-    'deleteUser',
-  ),
-})
 
 // it's mutable, because emulation should be triggerred once
 let enableEmulation = env.NEXT_PUBLIC_EMULATOR
@@ -96,12 +58,13 @@ export const getServerApp = async (firebaseOptions: FirebaseOptions) => {
     functions,
     callables: getCallables(functions),
     refs: getCollectionRefs(db),
+    docRefs: getDocumentsRefs(db),
   }
 }
 
 export const getUserRole = async () => {
-  const { currentUser, db, refs } = await getAuthenticatedOnlyApp()
-  const adminDocRef = doc(db, collectionNames.admins, currentUser.uid)
+  const { currentUser, refs, docRefs } = await getAuthenticatedOnlyApp()
+  const adminDocRef = docRefs.admin(currentUser.uid)
   // Try-catches are necessary, because user might not have permissions to read collections
   try {
     const adminDoc = await getDoc(adminDocRef)
@@ -111,11 +74,7 @@ export const getUserRole = async () => {
       } as const
   } catch (error) {}
 
-  const clinicianDocRef = doc(
-    db,
-    collectionNames.clinicians,
-    currentUser.uid,
-  ) as DocumentReference<Clinician>
+  const clinicianDocRef = docRefs.clinician(currentUser.uid)
   try {
     const clinicianDoc = await getDoc(clinicianDocRef)
     if (clinicianDoc.exists())
