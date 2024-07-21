@@ -9,10 +9,10 @@ import { getDocs, query, where } from 'firebase/firestore'
 import { Contact } from 'lucide-react'
 import { getAuthenticatedOnlyApp, getUserRole } from '@/modules/firebase/guards'
 import { Role } from '@/modules/firebase/role'
+import { mapUserData } from '@/modules/firebase/user'
 import { PageTitle } from '@/packages/design-system/src/molecules/DashboardLayout'
 import { PatientsTable } from './PatientsTable'
 import { DashboardLayout } from '../DashboardLayout'
-import { mapUserData } from '@/modules/firebase/user'
 
 const getPatientsQuery = async () => {
   const { refs } = await getAuthenticatedOnlyApp()
