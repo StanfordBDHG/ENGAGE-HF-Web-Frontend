@@ -12,9 +12,10 @@ declare let self: ServiceWorkerGlobalScope
 import {
   getFirebaseConfig,
   handleFetchEvent,
+  type Config,
 } from '@stanfordbdhg/design-system/modules/auth/serviceWorker'
 
-let firebaseConfig: object
+let firebaseConfig: Config
 
 self.addEventListener('install', () => {
   firebaseConfig = getFirebaseConfig()

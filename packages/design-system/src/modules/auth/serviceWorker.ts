@@ -16,7 +16,7 @@ import {
 } from 'firebase/auth'
 import { getInstallations, getToken } from 'firebase/installations'
 
-type Config = FirebaseOptions & { emulate: boolean }
+export type Config = FirebaseOptions & { emulate: boolean }
 
 /**
  * Get Firebase config from query string
