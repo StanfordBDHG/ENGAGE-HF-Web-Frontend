@@ -1,3 +1,4 @@
+import { chunk } from 'es-toolkit'
 import {
   getAuthenticatedOnlyApp,
   type UserAuthenticationInformation,
@@ -8,10 +9,17 @@ export const mapUserData = async <T>(
   callback: (userInformation: UserAuthenticationInformation, id: string) => T,
 ) => {
   const { callables } = await getAuthenticatedOnlyApp()
-  // TODO: It can take max 100 users. Batch/paginate? Use getting by id? Fetch all and match?
-  const usersRecord = await callables.getUsersInformation({ userIds })
-  return userIds
-    .map((id) => {
+
+  const chunks = chunk(userIds, 100)
+  if (chunks.length > 5) {
+    // If we reach that stage, we should implement server side pagination
+    console.warn('More than 500 users batched together')
+  }
+  const promises = chunks.map(async (chunkIds) => {
+    const usersRecord = await callables.getUsersInformation({
+      userIds: chunkIds,
+    })
+    return userIds.map((id) => {
       // authData might be undefined
       // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
       const authData = usersRecord.data[id]?.data?.auth
@@ -24,5 +32,7 @@ export const mapUserData = async <T>(
       }
       return callback(authData, id)
     })
-    .filter(Boolean)
+  })
+  const results = await Promise.all(promises)
+  return results.flat(1).filter(Boolean)
 }
