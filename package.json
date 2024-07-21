@@ -33,7 +33,7 @@
     "@t3-oss/env-nextjs": "^0.10.1",
     "@tanstack/match-sorter-utils": "^8.15.1",
     "@tanstack/react-table": "^8.19.2",
-    "firebase": "^10.12.2",
+    "firebase": "^10.12.4",
     "firebase-admin": "^12.2.0",
     "next": "^14",
     "next-intl": "^3.14.1",
