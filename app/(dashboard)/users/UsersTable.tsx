@@ -7,14 +7,10 @@
 //
 'use client'
 import { createColumnHelper } from '@tanstack/table-core'
-import { Pencil, Trash } from 'lucide-react'
 import { CopyText } from '@/packages/design-system/src/components/CopyText'
-import {
-  DataTable,
-  RowDropdownMenu,
-} from '@/packages/design-system/src/components/DataTable'
-import { DropdownMenuItem } from '@/packages/design-system/src/components/DropdownMenu'
+import { DataTable } from '@/packages/design-system/src/components/DataTable'
 import type { User } from './page'
+import { UserMenu } from './UserMenu'
 
 const columnHelper = createColumnHelper<User>()
 
@@ -33,19 +29,7 @@ const columns = [
   columnHelper.accessor('role', { header: 'Role' }),
   columnHelper.display({
     id: 'actions',
-    cell: () => (
-      //   TODO: Actions
-      <RowDropdownMenu>
-        <DropdownMenuItem>
-          <Pencil />
-          Edit
-        </DropdownMenuItem>
-        <DropdownMenuItem>
-          <Trash />
-          Delete
-        </DropdownMenuItem>
-      </RowDropdownMenu>
-    ),
+    cell: (props) => <UserMenu user={props.row.original} />,
   }),
 ]
 
