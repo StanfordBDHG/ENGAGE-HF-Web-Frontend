@@ -6,9 +6,11 @@
 // SPDX-License-Identifier: MIT
 //
 import { type User } from '@firebase/auth-types'
+import { connectFunctionsEmulator, getFunctions } from '@firebase/functions'
 import { type FirebaseOptions, initializeServerApp } from 'firebase/app'
-import { getAuth } from 'firebase/auth'
+import { connectAuthEmulator, getAuth } from 'firebase/auth'
 import {
+  connectFirestoreEmulator,
   doc,
   type DocumentReference,
   getDoc,
@@ -28,26 +30,32 @@ import {
 } from '@/modules/firebase/utils'
 import { routes } from '@/modules/routes'
 
+let isEmulatorEnabled = false
+
 export const getServerApp = async (firebaseOptions: FirebaseOptions) => {
   const idToken = headers().get('Authorization')?.split('Bearer ').at(1)
 
   const firebaseServerApp = initializeServerApp(
     firebaseOptions,
-    idToken ?
-      {
-        authIdToken: idToken,
-      }
-    : {},
+    idToken ? { authIdToken: idToken } : {},
   )
 
   const auth = getAuth(firebaseServerApp)
+  if (!auth.emulatorConfig) {
+    connectAuthEmulator(auth, 'http://127.0.0.1:9099')
+  }
   await auth.authStateReady()
 
   const db = getFirestore(firebaseServerApp)
+  if (!isEmulatorEnabled) connectFirestoreEmulator(db, '127.0.0.1', 8080)
+  const functions = getFunctions(firebaseServerApp)
+  if (!isEmulatorEnabled) connectFunctionsEmulator(functions, '127.0.0.1', 9150)
+  isEmulatorEnabled = true
   return {
     firebaseServerApp,
     currentUser: auth.currentUser,
     db,
+    functions,
     refs: getCollectionRefs(db),
   }
 }

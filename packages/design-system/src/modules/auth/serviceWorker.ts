@@ -8,7 +8,12 @@
 /// <reference lib="webworker" />
 
 import { type FirebaseOptions, initializeApp } from 'firebase/app'
-import { getAuth, getIdToken, type Auth } from 'firebase/auth'
+import {
+  getAuth,
+  getIdToken,
+  type Auth,
+  connectAuthEmulator,
+} from 'firebase/auth'
 import { getInstallations, getToken } from 'firebase/installations'
 
 /**
@@ -38,6 +43,11 @@ export const fetchWithFirebaseHeaders = async (
 ) => {
   const app = initializeApp(firebaseConfig)
   const auth = getAuth(app)
+  if (!auth.emulatorConfig) {
+    connectAuthEmulator(auth, 'http://127.0.0.1:9099', {
+      disableWarnings: true,
+    })
+  }
   const installations = getInstallations(app)
   const headers = new Headers(request.headers)
   const [authIdToken, installationToken] = await Promise.all([

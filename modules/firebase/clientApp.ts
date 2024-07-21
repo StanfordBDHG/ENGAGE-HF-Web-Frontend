@@ -6,7 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 import { initializeApp } from '@firebase/app'
-import { OAuthProvider, getAuth } from 'firebase/auth'
+import { OAuthProvider, getAuth, connectAuthEmulator } from 'firebase/auth'
 import { firebaseConfig } from './config'
 
 export const app = initializeApp(firebaseConfig)
@@ -17,3 +17,8 @@ export const authProvider = {
 }
 
 export const auth = getAuth()
+if (!auth.emulatorConfig) {
+  connectAuthEmulator(auth, 'http://127.0.0.1:9099', {
+    disableWarnings: true,
+  })
+}
