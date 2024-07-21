@@ -9,6 +9,7 @@
 import { Home, Users, Contact } from 'lucide-react'
 import { usePathname } from 'next/navigation'
 import { Role } from '@/modules/firebase/role'
+import { routes } from '@/modules/routes'
 import { MenuItem } from '@stanfordbdhg/design-system/molecules/DashboardLayout'
 
 interface MenuLinksProps {
@@ -27,10 +28,14 @@ export const MenuLinks = ({ role }: MenuLinksProps) => {
     <>
       <MenuItem {...hrefProps('/')} label="Home" icon={<Home />} />
       {role === Role.admin && (
-        <MenuItem {...hrefProps('/users')} label="Users" icon={<Users />} />
+        <MenuItem
+          {...hrefProps(routes.users.index)}
+          label="Users"
+          icon={<Users />}
+        />
       )}
       <MenuItem
-        {...hrefProps('/patients')}
+        {...hrefProps(routes.patients.index)}
         label="Patients"
         icon={<Contact />}
       />
