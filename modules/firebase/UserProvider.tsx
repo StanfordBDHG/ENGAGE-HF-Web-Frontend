@@ -8,12 +8,15 @@
 'use client'
 import { type UserInfo } from '@firebase/auth-types'
 import { createContext, type ReactNode, useContext } from 'react'
+import { type Role } from '@/modules/firebase/role'
 
-export const UserContext = createContext<UserInfo | undefined>(undefined)
+type Context = UserInfo & { role: Role }
+
+export const UserContext = createContext<Context | undefined>(undefined)
 
 interface UserContextProviderProps {
   children?: ReactNode
-  user: UserInfo
+  user: Context
 }
 
 export const UserContextProvider = ({
