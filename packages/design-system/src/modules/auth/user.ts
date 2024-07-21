@@ -18,4 +18,6 @@ export const getUserInfo = (user: User) => ({
 
 export type UserInfo = ReturnType<typeof getUserInfo>
 
-export const getUserName = (user: UserInfo) => user.displayName ?? user.email
+export const getUserName = (
+  user: Partial<Pick<UserInfo, 'displayName' | 'email'>>,
+) => user.displayName ?? user.email
