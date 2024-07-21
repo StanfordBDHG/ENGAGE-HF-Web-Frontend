@@ -17,10 +17,10 @@ import { DashboardLayout } from '../DashboardLayout'
 const getPatientsQuery = async () => {
   const { refs } = await getAuthenticatedOnlyApp()
   const userRole = await getUserRole()
-  if (userRole.role === Role.admin) return refs.users()
+  if (userRole.role === Role.admin) return refs.patients()
   if (userRole.role === Role.owner) {
     const organizationIds = userRole.organizations.docs.map((doc) => doc.id)
-    return query(refs.users(), where('organization', 'in', organizationIds))
+    return query(refs.patients(), where('organization', 'in', organizationIds))
   }
   if (userRole.role === Role.clinician) {
     const organizationId = userRole.clinician.data().organization
@@ -28,7 +28,7 @@ const getPatientsQuery = async () => {
       // TODO: Check if there is any reason for organization not to be defined
       throw new Error('')
     }
-    return query(refs.users(), where('organization', '==', organizationId))
+    return query(refs.patients(), where('organization', '==', organizationId))
   }
   // Other roles can't reach this point, so this should never execute
   throw new Error()

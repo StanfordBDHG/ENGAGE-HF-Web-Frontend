@@ -22,7 +22,7 @@ export interface Organization {
 
 export interface Admin {}
 
-export interface User {
+export interface Patient {
   GenderIdentityKey: string
   invitationCode: string
   clinician?: string
@@ -36,15 +36,15 @@ export interface Clinician {
 }
 
 export const collectionNames = {
-  users: 'users',
+  patients: 'patients',
   admins: 'admins',
   clinicians: 'clinicians',
   organizations: 'organizations',
 }
 
 export const getCollectionRefs = (db: Firestore) => ({
-  users: () =>
-    collection(db, collectionNames.users) as CollectionReference<User>,
+  patients: () =>
+    collection(db, collectionNames.patients) as CollectionReference<Patient>,
   admins: () =>
     collection(db, collectionNames.admins) as CollectionReference<Admin>,
   clinicians: () =>
