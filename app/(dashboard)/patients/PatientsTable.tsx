@@ -7,14 +7,10 @@
 //
 'use client'
 import { createColumnHelper } from '@tanstack/table-core'
-import { Pencil, Trash } from 'lucide-react'
 import { CopyText } from '@/packages/design-system/src/components/CopyText'
-import {
-  DataTable,
-  RowDropdownMenu,
-} from '@/packages/design-system/src/components/DataTable'
-import { DropdownMenuItem } from '@/packages/design-system/src/components/DropdownMenu'
+import { DataTable } from '@/packages/design-system/src/components/DataTable'
 import type { Patient } from './page'
+import { PatientMenu } from './PatientMenu'
 
 const columnHelper = createColumnHelper<Patient>()
 
@@ -33,19 +29,7 @@ const columns = [
   columnHelper.accessor('gender', { header: 'Gender' }),
   columnHelper.display({
     id: 'actions',
-    cell: () => (
-      //   TODO: Actions
-      <RowDropdownMenu>
-        <DropdownMenuItem>
-          <Pencil />
-          Edit
-        </DropdownMenuItem>
-        <DropdownMenuItem>
-          <Trash />
-          Delete
-        </DropdownMenuItem>
-      </RowDropdownMenu>
-    ),
+    cell: (props) => <PatientMenu patient={props.row.original} />,
   }),
 ]
 

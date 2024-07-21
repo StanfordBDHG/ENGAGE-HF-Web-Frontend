@@ -61,6 +61,10 @@ const getCallables = (functions: Functions) => ({
     Record<string, Result<UserInformation>>
   >(functions, 'getUsersInformation'),
   seedEmulator: httpsCallable(functions, 'seedEmulator'),
+  deleteUser: httpsCallable<{ userId: string }, string>(
+    functions,
+    'deleteUser',
+  ),
 })
 
 // it's mutable, because emulation should be triggerred once
