@@ -8,6 +8,8 @@ import { DropdownMenuItem } from '@/packages/design-system/src/components/Dropdo
 import { getUserName } from '@/packages/design-system/src/modules/auth/user'
 import { ConfirmDeleteDialog } from '@/packages/design-system/src/molecules/ConfirmDeleteDialog'
 import { useOpenState } from '@/packages/design-system/src/utils/useOpenState'
+import Link from 'next/link'
+import { routes } from '@/modules/routes'
 
 interface UserMenuProps {
   user: User
@@ -32,9 +34,11 @@ export const UserMenu = ({ user }: UserMenuProps) => {
         onDelete={handleDelete}
       />
       <RowDropdownMenu>
-        <DropdownMenuItem>
-          <Pencil />
-          Edit
+        <DropdownMenuItem asChild>
+          <Link href={routes.users.user(user.uid)}>
+            <Pencil />
+            Edit
+          </Link>
         </DropdownMenuItem>
         <DropdownMenuItem
           onClick={deleteConfirm.open}
