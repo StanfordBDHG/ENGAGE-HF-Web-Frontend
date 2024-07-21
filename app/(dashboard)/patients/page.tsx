@@ -7,7 +7,7 @@
 //
 import { getDoc, getDocs, query, where } from 'firebase/firestore'
 import { Contact } from 'lucide-react'
-import { getAuthenticatedOnlyApp, getUserRole } from '@/modules/firebase/guards'
+import { getAuthenticatedOnlyApp, getCurrentUserRole } from '@/modules/firebase/guards'
 import { Role } from '@/modules/firebase/role'
 import { mapUserData } from '@/modules/firebase/user'
 import { PageTitle } from '@/packages/design-system/src/molecules/DashboardLayout'
@@ -16,7 +16,7 @@ import { DashboardLayout } from '../DashboardLayout'
 
 const getPatientsQuery = async () => {
   const { refs, currentUser, docRefs } = await getAuthenticatedOnlyApp()
-  const userRole = await getUserRole()
+  const userRole = await getCurrentUserRole()
   if (userRole.role === Role.admin) return refs.users()
   if (userRole.role === Role.owner) {
     const organizationIds = userRole.organizations.docs.map((doc) => doc.id)
