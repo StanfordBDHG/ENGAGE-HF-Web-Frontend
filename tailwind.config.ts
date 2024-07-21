@@ -5,6 +5,7 @@
 //
 // SPDX-License-Identifier: MIT
 //
+import tailwindCssAnimate from 'tailwindcss-animate'
 import { tailwindColors } from '@stanfordbdhg/design-system'
 
 /** @type {import('tailwindcss').Config} */
@@ -17,5 +18,5 @@ module.exports = {
       colors: tailwindColors,
     },
   },
-  plugins: [],
+  plugins: [tailwindCssAnimate],
 }
