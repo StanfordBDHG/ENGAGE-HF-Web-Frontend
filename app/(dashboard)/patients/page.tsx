@@ -9,7 +9,7 @@ import { getDoc, getDocs, query, where } from 'firebase/firestore'
 import { Contact } from 'lucide-react'
 import { getAuthenticatedOnlyApp, getCurrentUserRole } from '@/modules/firebase/guards'
 import { Role } from '@/modules/firebase/role'
-import { mapUserData } from '@/modules/firebase/user'
+import { mapAuthData } from '@/modules/firebase/user'
 import { PageTitle } from '@/packages/design-system/src/molecules/DashboardLayout'
 import { PatientsTable } from './PatientsTable'
 import { DashboardLayout } from '../DashboardLayout'
@@ -44,7 +44,7 @@ const listPatients = async () => {
     ),
   )
 
-  return mapUserData(userIdsToGet, (authData, id) => {
+  return mapAuthData(userIdsToGet, (authData, id) => {
     const patient = patientsById.get(id)
     if (!patient) {
       console.error(`No patient found for user id ${id}`)

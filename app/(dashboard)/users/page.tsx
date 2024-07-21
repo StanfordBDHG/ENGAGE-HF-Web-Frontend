@@ -13,7 +13,7 @@ import {
   getCurrentUserRole,
 } from '@/modules/firebase/guards'
 import { Role } from '@/modules/firebase/role'
-import { mapUserData } from '@/modules/firebase/user'
+import { mapAuthData } from '@/modules/firebase/user'
 import { type Organization } from '@/modules/firebase/utils'
 import { PageTitle } from '@/packages/design-system/src/molecules/DashboardLayout'
 import { UsersTable } from './UsersTable'
@@ -72,7 +72,7 @@ const listUsers = async () => {
     ...ownersIds.values(),
   ]
 
-  return mapUserData(userIdsToGet, (authData, id) => ({
+  return mapAuthData(userIdsToGet, (authData, id) => ({
     uid: id,
     email: authData.email,
     displayName: authData.displayName,

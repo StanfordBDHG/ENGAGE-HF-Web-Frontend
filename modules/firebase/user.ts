@@ -9,7 +9,7 @@ import { chunk } from 'es-toolkit'
 import { getAuthenticatedOnlyApp } from '@/modules/firebase/guards'
 import { type UserAuthenticationInformation } from '@/modules/firebase/utils'
 
-export const mapUserData = async <T>(
+export const mapAuthData = async <T>(
   userIds: string[],
   callback: (userInformation: UserAuthenticationInformation, id: string) => T,
 ) => {
