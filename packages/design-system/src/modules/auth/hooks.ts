@@ -33,7 +33,7 @@ export const useRegisterAuthServiceWorker = (
         )
       })
     }
-  }, [firebaseOptions])
+  }, [emulate, firebaseOptions])
 }
 
 /**
