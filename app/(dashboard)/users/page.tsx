@@ -13,6 +13,7 @@ import {
   getUserRole,
 } from '@/modules/firebase/guards'
 import { Role } from '@/modules/firebase/role'
+import { mapUserData } from '@/modules/firebase/user'
 import { type Organization } from '@/modules/firebase/utils'
 import { PageTitle } from '@/packages/design-system/src/molecules/DashboardLayout'
 import { UsersTable } from './UsersTable'
@@ -50,7 +51,6 @@ const getOwnerData = async (organizations: QuerySnapshot<Organization>) => {
 }
 
 const listUsers = async () => {
-  const { callables } = await getAuthenticatedOnlyApp()
   const role = await getUserRole()
   const { adminIds, organizations, cliniciansQuery } =
     role.role === Role.admin ?
@@ -72,29 +72,16 @@ const listUsers = async () => {
     ...ownersIds.values(),
   ]
 
-  // TODO: It can take max 100 users. Batch/paginate? Use getting by id? Fetch all and match?
-  const usersRecord = await callables.getUsersInformation({
-    userIds: userIdsToGet,
-  })
-  return userIdsToGet
-    .map((id) => {
-      // authData might be undefined
-      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-      const authData = usersRecord.data[id]?.data?.auth
-      // TODO: At least log the error here
-      if (!authData) return null
-      return {
-        uid: id,
-        email: authData.email,
-        displayName: authData.displayName,
-        role:
-          adminIds.has(id) ? 'Admin'
-          : clinicianIds.has(id) ? 'Clinician'
-          : ownersIds.has(id) ? 'Owner'
-          : '-',
-      }
-    })
-    .filter(Boolean)
+  return mapUserData(userIdsToGet, (authData, id) => ({
+    uid: id,
+    email: authData.email,
+    displayName: authData.displayName,
+    role:
+      adminIds.has(id) ? 'Admin'
+      : clinicianIds.has(id) ? 'Clinician'
+      : ownersIds.has(id) ? 'Owner'
+      : '-',
+  }))
 }
 
 export type User = Awaited<ReturnType<typeof listUsers>>[number]

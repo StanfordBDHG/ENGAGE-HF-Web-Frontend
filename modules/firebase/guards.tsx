@@ -43,7 +43,7 @@ interface Result<T> {
   }
 }
 
-interface UserAuthenticationInformation {
+export interface UserAuthenticationInformation {
   displayName?: string
   email?: string
   phoneNumber?: string

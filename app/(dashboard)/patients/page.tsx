@@ -12,6 +12,7 @@ import { Role } from '@/modules/firebase/role'
 import { PageTitle } from '@/packages/design-system/src/molecules/DashboardLayout'
 import { PatientsTable } from './PatientsTable'
 import { DashboardLayout } from '../DashboardLayout'
+import { mapUserData } from '@/modules/firebase/user'
 
 const getPatientsQuery = async () => {
   const { refs } = await getAuthenticatedOnlyApp()
@@ -34,7 +35,6 @@ const getPatientsQuery = async () => {
 }
 
 const listPatients = async () => {
-  const { callables } = await getAuthenticatedOnlyApp()
   const patientsQuery = await getPatientsQuery()
   const patients = await getDocs(patientsQuery)
   const userIdsToGet = patients.docs.map((patient) => patient.id)
@@ -44,26 +44,19 @@ const listPatients = async () => {
     ),
   )
 
-  // TODO: It can take max 100 users. Batch/paginate? Use getting by id? Fetch all and match?
-  const usersRecord = await callables.getUsersInformation({
-    userIds: userIdsToGet,
+  return mapUserData(userIdsToGet, (authData, id) => {
+    const patient = patientsById.get(id)
+    if (!patient) {
+      console.error(`No patient found for user id ${id}`)
+      return null
+    }
+    return {
+      uid: id,
+      email: authData.email,
+      displayName: authData.displayName,
+      gender: patient.GenderIdentityKey,
+    }
   })
-  return userIdsToGet
-    .map((id) => {
-      // authData might be undefined
-      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-      const authData = usersRecord.data[id]?.data?.auth
-      const patient = patientsById.get(id)
-      // TODO: At least log the error here
-      if (!authData || !patient) return null
-      return {
-        uid: id,
-        email: authData.email,
-        displayName: authData.displayName,
-        gender: patient.GenderIdentityKey,
-      }
-    })
-    .filter(Boolean)
 }
 
 export type Patient = Awaited<ReturnType<typeof listPatients>>[number]
