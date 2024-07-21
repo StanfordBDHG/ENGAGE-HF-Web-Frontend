@@ -10,8 +10,10 @@ import {
   collection,
   type CollectionReference,
   doc,
-  DocumentReference,
+  type DocumentReference,
   type Firestore,
+  getDocs,
+  type Query,
 } from 'firebase/firestore'
 
 export interface Organization {
@@ -129,3 +131,11 @@ export const getCallables = (functions: Functions) => ({
     'deleteUser',
   ),
 })
+
+export const getDocsData = async <T>(query: Query<T>) => {
+  const docs = await getDocs(query)
+  return docs.docs.map((doc) => ({
+    id: doc.id,
+    ...doc.data(),
+  }))
+}
