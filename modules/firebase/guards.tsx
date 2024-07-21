@@ -61,35 +61,45 @@ export const getServerApp = async (firebaseOptions: FirebaseOptions) => {
 }
 
 export const getUserRole = async () => {
-  const { currentUser, db } = await getAuthenticatedOnlyApp()
+  const { currentUser, db, refs } = await getAuthenticatedOnlyApp()
   const adminDocRef = doc(db, collectionNames.admins, currentUser.uid)
-  const adminDoc = await getDoc(adminDocRef)
-  if (adminDoc.exists())
-    return {
-      role: Role.admin,
-    } as const
+  // Try-catches are necessary, because user might not have permissions to read collections
+  try {
+    const adminDoc = await getDoc(adminDocRef)
+    if (adminDoc.exists())
+      return {
+        role: Role.admin,
+      } as const
+  } catch (error) {}
+
   const clinicianDocRef = doc(
     db,
     collectionNames.clinicians,
     currentUser.uid,
   ) as DocumentReference<Clinician>
-  const clinicianDoc = await getDoc(clinicianDocRef)
-  if (clinicianDoc.exists())
-    return {
-      role: Role.clinician,
-      clinician: clinicianDoc,
-    } as const
-  const organizationsRef = getCollectionRefs(db).organizations()
+  try {
+    const clinicianDoc = await getDoc(clinicianDocRef)
+    if (clinicianDoc.exists())
+      return {
+        role: Role.clinician,
+        clinician: clinicianDoc,
+      } as const
+  } catch (error) {}
+
+  const organizationsRef = refs.organizations()
   const organizationsQuery = query(
     organizationsRef,
     where('owners', 'array-contains-any', [currentUser.uid]),
   )
-  const organizationsDocs = await getDocs(organizationsQuery)
-  if (!organizationsDocs.empty)
-    return {
-      role: Role.owner as const,
-      organizations: organizationsDocs,
-    } as const
+  try {
+    const organizationsDocs = await getDocs(organizationsQuery)
+    if (!organizationsDocs.empty)
+      return {
+        role: Role.owner as const,
+        organizations: organizationsDocs,
+      } as const
+  } catch (error) {}
+
   return { role: Role.user } as const
 }
 
