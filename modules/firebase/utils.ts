@@ -10,15 +10,6 @@ import {
   type CollectionReference,
   type Firestore,
 } from 'firebase/firestore'
-import { getApp, initializeApp } from 'firebase-admin/app'
-
-export const getAdminApp = () => {
-  try {
-    return getApp('adminApp')
-  } catch (error) {
-    return initializeApp({}, 'adminApp')
-  }
-}
 
 export interface Organization {
   id: string
