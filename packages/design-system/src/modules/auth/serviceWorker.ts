@@ -16,6 +16,8 @@ import {
 } from 'firebase/auth'
 import { getInstallations, getToken } from 'firebase/installations'
 
+type Config = FirebaseOptions & { emulate: boolean }
+
 /**
  * Get Firebase config from query string
  * */
@@ -28,7 +30,7 @@ export const getFirebaseConfig = () => {
       'Firebase Config object not found in service worker query string.',
     )
   }
-  return JSON.parse(serializedFirebaseConfig) as FirebaseOptions
+  return JSON.parse(serializedFirebaseConfig) as Config
 }
 
 export const getAuthIdToken = async (auth: Auth) => {
@@ -38,12 +40,12 @@ export const getAuthIdToken = async (auth: Auth) => {
 }
 
 export const fetchWithFirebaseHeaders = async (
-  firebaseConfig: FirebaseOptions,
+  firebaseConfig: Config,
   request: FetchEvent['request'],
 ) => {
   const app = initializeApp(firebaseConfig)
   const auth = getAuth(app)
-  if (!auth.emulatorConfig) {
+  if (firebaseConfig.emulate && !auth.emulatorConfig) {
     connectAuthEmulator(auth, 'http://127.0.0.1:9099', {
       disableWarnings: true,
     })
@@ -64,10 +66,7 @@ export const fetchWithFirebaseHeaders = async (
  * Appends Bearer token to every fetch request
  * This allows RSC and API endpoints to identify user
  * */
-export const handleFetchEvent = (
-  firebaseConfig: FirebaseOptions,
-  event: FetchEvent,
-) => {
+export const handleFetchEvent = (firebaseConfig: Config, event: FetchEvent) => {
   const { origin } = new URL(event.request.url)
   if (origin !== self.location.origin) return
   event.respondWith(fetchWithFirebaseHeaders(firebaseConfig, event.request))

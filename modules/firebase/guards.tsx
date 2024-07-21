@@ -26,6 +26,7 @@ import {
 } from 'firebase/firestore'
 import { headers } from 'next/headers'
 import { redirect } from 'next/navigation'
+import { env } from '@/env'
 import { firebaseConfig } from '@/modules/firebase/config'
 import { Role } from '@/modules/firebase/role'
 import {
@@ -61,7 +62,8 @@ const getCallables = (functions: Functions) => ({
   >(functions, 'getUsersInformation'),
 })
 
-let isEmulatorEnabled = false
+// it's mutable, because emulation should be triggerred once
+let enableEmulation = env.NEXT_PUBLIC_EMULATOR
 export const getServerApp = async (firebaseOptions: FirebaseOptions) => {
   const idToken = headers().get('Authorization')?.split('Bearer ').at(1)
 
@@ -71,16 +73,17 @@ export const getServerApp = async (firebaseOptions: FirebaseOptions) => {
   )
 
   const auth = getAuth(firebaseServerApp)
-  if (!auth.emulatorConfig) {
+  if (enableEmulation && !auth.emulatorConfig) {
     connectAuthEmulator(auth, 'http://127.0.0.1:9099')
   }
   await auth.authStateReady()
 
   const db = getFirestore(firebaseServerApp)
-  if (!isEmulatorEnabled) connectFirestoreEmulator(db, '127.0.0.1', 8080)
+  if (enableEmulation) connectFirestoreEmulator(db, '127.0.0.1', 8080)
   const functions = getFunctions(firebaseServerApp)
-  if (!isEmulatorEnabled) connectFunctionsEmulator(functions, '127.0.0.1', 5001)
-  isEmulatorEnabled = true
+  if (enableEmulation) connectFunctionsEmulator(functions, '127.0.0.1', 5001)
+  enableEmulation = false
+
   return {
     firebaseServerApp,
     currentUser: auth.currentUser,

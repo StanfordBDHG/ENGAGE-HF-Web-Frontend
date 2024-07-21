@@ -7,6 +7,7 @@
 //
 import { initializeApp } from '@firebase/app'
 import { OAuthProvider, getAuth, connectAuthEmulator } from 'firebase/auth'
+import { env } from '@/env'
 import { firebaseConfig } from './config'
 
 export const app = initializeApp(firebaseConfig)
@@ -17,7 +18,7 @@ export const authProvider = {
 }
 
 export const auth = getAuth()
-if (!auth.emulatorConfig) {
+if (env.NEXT_PUBLIC_EMULATOR && !auth.emulatorConfig) {
   connectAuthEmulator(auth, 'http://127.0.0.1:9099', {
     disableWarnings: true,
   })

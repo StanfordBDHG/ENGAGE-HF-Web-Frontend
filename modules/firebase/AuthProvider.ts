@@ -8,6 +8,7 @@
 'use client'
 import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
+import { env } from '@/env'
 import { routes } from '@/modules/routes'
 import {
   useAuthUser,
@@ -20,7 +21,7 @@ export const AuthProvider = () => {
   const router = useRouter()
   const user = useAuthUser(auth)
 
-  useRegisterAuthServiceWorker(firebaseConfig)
+  useRegisterAuthServiceWorker(firebaseConfig, env.NEXT_PUBLIC_EMULATOR)
 
   useEffect(() => {
     const isSignIn = window.location.pathname === routes.signIn
