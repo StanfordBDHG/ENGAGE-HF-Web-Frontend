@@ -41,5 +41,5 @@ export const mapUserData = async <T>(
     })
   })
   const results = await Promise.all(promises)
-  return results.flat(1).filter(Boolean)
+  return results.flat(1).filter(Boolean) as Array<Exclude<T, null | undefined>>
 }
