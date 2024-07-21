@@ -10,7 +10,7 @@ import { Users } from 'lucide-react'
 import {
   allowRoles,
   getAuthenticatedOnlyApp,
-  getUserRole,
+  getCurrentUserRole,
 } from '@/modules/firebase/guards'
 import { Role } from '@/modules/firebase/role'
 import { mapUserData } from '@/modules/firebase/user'
@@ -51,7 +51,7 @@ const getOwnerData = async (organizations: QuerySnapshot<Organization>) => {
 }
 
 const listUsers = async () => {
-  const role = await getUserRole()
+  const role = await getCurrentUserRole()
   const { adminIds, organizations, cliniciansQuery } =
     role.role === Role.admin ?
       await getAdminData()

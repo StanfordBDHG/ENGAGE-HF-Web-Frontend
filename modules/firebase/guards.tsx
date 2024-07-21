@@ -62,9 +62,9 @@ export const getServerApp = async (firebaseOptions: FirebaseOptions) => {
   }
 }
 
-export const getUserRole = async () => {
-  const { currentUser, refs, docRefs } = await getAuthenticatedOnlyApp()
-  const adminDocRef = docRefs.admin(currentUser.uid)
+export const getUserRole = async (userId: string) => {
+  const { refs, docRefs } = await getAuthenticatedOnlyApp()
+  const adminDocRef = docRefs.admin(userId)
   // Try-catches are necessary, because user might not have permissions to read collections
   try {
     const adminDoc = await getDoc(adminDocRef)
@@ -74,7 +74,7 @@ export const getUserRole = async () => {
       } as const
   } catch (error) {}
 
-  const clinicianDocRef = docRefs.clinician(currentUser.uid)
+  const clinicianDocRef = docRefs.clinician(userId)
   try {
     const clinicianDoc = await getDoc(clinicianDocRef)
     if (clinicianDoc.exists())
@@ -87,7 +87,7 @@ export const getUserRole = async () => {
   const organizationsRef = refs.organizations()
   const organizationsQuery = query(
     organizationsRef,
-    where('owners', 'array-contains-any', [currentUser.uid]),
+    where('owners', 'array-contains-any', [userId]),
   )
   try {
     const organizationsDocs = await getDocs(organizationsQuery)
@@ -99,6 +99,11 @@ export const getUserRole = async () => {
   } catch (error) {}
 
   return { role: Role.user } as const
+}
+
+export const getCurrentUserRole = async () => {
+  const { currentUser } = await getAuthenticatedOnlyApp()
+  return getUserRole(currentUser.uid)
 }
 
 /**
@@ -123,7 +128,7 @@ export const getAuthenticatedOnlyApp = async () => {
  * Redirects to 403 if user's role d
  * */
 export const allowRoles = async (roles: Role[]) => {
-  const { role } = await getUserRole()
+  const { role } = await getCurrentUserRole()
   // TODO: HTTP Error
   if (!roles.includes(role)) redirect(routes.home)
 }

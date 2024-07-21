@@ -7,7 +7,7 @@
 //
 import Link from 'next/link'
 import { LogoType } from '@/components/icons/LogoType'
-import { getAuthenticatedOnlyApp, getUserRole } from '@/modules/firebase/guards'
+import { getAuthenticatedOnlyApp, getCurrentUserRole } from '@/modules/firebase/guards'
 import { getUserInfo } from '@stanfordbdhg/design-system/modules/auth/user'
 import {
   DashboardLayout as DashboardLayoutBase,
@@ -21,7 +21,7 @@ interface DashboardLayoutProps
 
 export const DashboardLayout = async (props: DashboardLayoutProps) => {
   const { currentUser } = await getAuthenticatedOnlyApp()
-  const { role: userRole } = await getUserRole()
+  const { role: userRole } = await getCurrentUserRole()
   const user = <User user={getUserInfo(currentUser)} />
 
   return (
