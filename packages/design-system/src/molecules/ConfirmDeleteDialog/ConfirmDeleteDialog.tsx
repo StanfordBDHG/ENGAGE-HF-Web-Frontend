@@ -25,29 +25,27 @@ export const ConfirmDeleteDialog = ({
   onOpenChange,
   onDelete,
   ...props
-}: ConfirmDeleteDialogProps) => {
-  return (
-    <Dialog onOpenChange={onOpenChange} {...props}>
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>Deleting {entityName}</DialogTitle>
-          <DialogDescription>
-            Are you sure you want to proceed? This action cannot be undone.
-            {itemName && (
-              <>
-                <br />
-                <b className="font-medium text-foreground">{itemName}</b> will
-                be deleted forever.
-              </>
-            )}
-          </DialogDescription>
-        </DialogHeader>
-        <DialogFooter>
-          <Button onClick={onDelete} variant="destructive">
-            Delete {entityName}
-          </Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
-  )
-}
+}: ConfirmDeleteDialogProps) => (
+  <Dialog onOpenChange={onOpenChange} {...props}>
+    <DialogContent>
+      <DialogHeader>
+        <DialogTitle>Deleting {entityName}</DialogTitle>
+        <DialogDescription>
+          Are you sure you want to proceed? This action cannot be undone.
+          {itemName && (
+            <>
+              <br />
+              <b className="font-medium text-foreground">{itemName}</b> will be
+              deleted forever.
+            </>
+          )}
+        </DialogDescription>
+      </DialogHeader>
+      <DialogFooter>
+        <Button onClick={onDelete} variant="destructive">
+          Delete {entityName}
+        </Button>
+      </DialogFooter>
+    </DialogContent>
+  </Dialog>
+)
