@@ -12,6 +12,7 @@ import {
   doc,
   type DocumentReference,
   type Firestore,
+  getDoc,
   getDocs,
   type Query,
 } from 'firebase/firestore'
@@ -131,6 +132,17 @@ export const getCallables = (functions: Functions) => ({
     'deleteUser',
   ),
 })
+
+export const getDocData = async <T>(reference: DocumentReference<T>) => {
+  const doc = await getDoc(reference)
+  const data = doc.data()
+  return data ?
+      {
+        id: doc.id,
+        ...data,
+      }
+    : undefined
+}
 
 export const getDocsData = async <T>(query: Query<T>) => {
   const docs = await getDocs(query)

@@ -24,7 +24,7 @@ import { firebaseConfig } from '@/modules/firebase/config'
 import { Role } from '@/modules/firebase/role'
 import {
   getCallables,
-  getCollectionRefs,
+  getCollectionRefs, getDocData, getDocsData,
   getDocumentsRefs,
 } from '@/modules/firebase/utils'
 import { routes } from '@/modules/routes'
@@ -76,11 +76,11 @@ export const getUserRole = async (userId: string) => {
 
   const clinicianDocRef = docRefs.clinician(userId)
   try {
-    const clinicianDoc = await getDoc(clinicianDocRef)
-    if (clinicianDoc.exists())
+    const clinician = await getDocData(clinicianDocRef)
+    if (clinician)
       return {
         role: Role.clinician,
-        clinician: clinicianDoc,
+        clinician,
       } as const
   } catch (error) {}
 
@@ -90,11 +90,11 @@ export const getUserRole = async (userId: string) => {
     where('owners', 'array-contains-any', [userId]),
   )
   try {
-    const organizationsDocs = await getDocs(organizationsQuery)
-    if (!organizationsDocs.empty)
+    const organizations = await getDocsData(organizationsQuery)
+    if (organizations.length > 0)
       return {
         role: Role.owner as const,
-        organizations: organizationsDocs,
+        organizations,
       } as const
   } catch (error) {}
 
