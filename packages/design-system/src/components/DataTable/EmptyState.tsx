@@ -21,7 +21,7 @@ export const EmptyState = ({
   colSpan,
   globalFilter,
 }: EmptyStateProps) => (
-  <TableRow>
+  <TableRow isHoverable={false}>
     <TableCell colSpan={colSpan} className="h-24 text-center">
       <div className="flex-center gap-3 text-muted-foreground">
         {hasData ?
