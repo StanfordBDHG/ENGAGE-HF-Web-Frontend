@@ -134,8 +134,12 @@ export const getCallables = (functions: Functions) => ({
 
 export const getDocsData = async <T>(query: Query<T>) => {
   const docs = await getDocs(query)
-  return docs.docs.map((doc) => ({
-    id: doc.id,
-    ...doc.data(),
-  }))
+  return docs.docs.map((doc) => {
+    const data = doc.data()
+    if (!data) throw new Error(`No data for ${doc.id} ${doc.ref.path}`)
+    return {
+      id: doc.id,
+      ...data,
+    }
+  })
 }
