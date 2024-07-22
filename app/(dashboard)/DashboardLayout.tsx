@@ -20,7 +20,7 @@ import { MenuLinks } from './MenuLinks'
 import { User } from './User'
 
 interface DashboardLayoutProps
-  extends Pick<DashboardLayoutPropsBase, 'children' | 'title'> {}
+  extends Omit<DashboardLayoutPropsBase, 'aside' | 'mobile'> {}
 
 export const DashboardLayout = async (props: DashboardLayoutProps) => {
   const { currentUser } = await getAuthenticatedOnlyApp()
