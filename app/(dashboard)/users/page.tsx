@@ -5,6 +5,7 @@
 //
 // SPDX-License-Identifier: MIT
 //
+import { uniq } from 'es-toolkit'
 import { getDocs, query, type QuerySnapshot, where } from 'firebase/firestore'
 import { Users } from 'lucide-react'
 import {
@@ -66,12 +67,11 @@ const listUsers = async () => {
     organizations.docs.flatMap((organization) => organization.data().owners),
   )
 
-  const userIdsToGet = [
+  const userIdsToGet = uniq([
     ...adminIds.values(),
     ...clinicianIds.values(),
     ...ownersIds.values(),
-  ]
-
+  ])
   return mapAuthData(userIdsToGet, (authData, id) => ({
     uid: id,
     email: authData.email,
