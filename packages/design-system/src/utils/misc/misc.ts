@@ -40,3 +40,10 @@ export const copyToClipboard = async (value: string) => {
     console.log('Copying failed')
   }
 }
+
+/**
+ * Makes first letter uppercased
+ * @example upperFirst("lorem ipsum") => "Lorem ipsum"
+ * */
+export const upperFirst = (value: string) =>
+  `${value.slice(0, 1).toUpperCase()}${value.slice(1)}`

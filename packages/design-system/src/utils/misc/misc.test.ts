@@ -5,7 +5,7 @@
 //
 // SPDX-License-Identifier: MIT
 //
-import { not } from './misc'
+import { not, upperFirst } from './misc'
 
 describe('not', () => {
   it('negates value', () => {
@@ -13,5 +13,17 @@ describe('not', () => {
     expect(not(false)).toBe(true)
     expect(not('')).toBe(true)
     expect(not(5)).toBe(false)
+  })
+})
+
+describe('upperFirst', () => {
+  it('makes first letter of string uppercased', () => {
+    expect(upperFirst('lorem')).toBe('Lorem')
+    expect(upperFirst('LOREM')).toBe('LOREM')
+    expect(upperFirst('loReM')).toBe('LoReM')
+    expect(upperFirst('lorem ipsum')).toBe('Lorem ipsum')
+    expect(upperFirst('lorem IPSUM')).toBe('Lorem IPSUM')
+    expect(upperFirst('')).toBe('')
+    expect(upperFirst('l')).toBe('L')
   })
 })
