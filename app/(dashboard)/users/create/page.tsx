@@ -35,6 +35,7 @@ const CreateUserPage = async () => {
       user: { organization: form.organizationId },
     })
     redirect(routes.users.index)
+    // TODO: Confirmation message
   }
 
   return (

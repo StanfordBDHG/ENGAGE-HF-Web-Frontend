@@ -27,7 +27,12 @@ import { PageTitle } from '@/packages/design-system/src/molecules/DashboardLayou
 import { DashboardLayout } from '../../DashboardLayout'
 import { UserForm, type UserFormSchema } from '../UserForm'
 
-const UserPage = async ({ params }: { params: { id: string } }) => {
+interface UserPageProps {
+  params: { id: string }
+}
+
+const UserPage = async ({ params }: UserPageProps) => {
+  // TODO: Validate against patient
   await allowRoles([Role.admin, Role.owner])
   const { refs, docRefs } = await getAuthenticatedOnlyApp()
   const userId = params.id
