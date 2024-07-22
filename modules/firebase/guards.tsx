@@ -30,8 +30,6 @@ import {
 } from '@/modules/firebase/utils'
 import { routes } from '@/modules/routes'
 
-// it's mutable, because emulation should be triggerred once
-let enableEmulation = env.NEXT_PUBLIC_EMULATOR
 export const getServerApp = async (firebaseOptions: FirebaseOptions) => {
   const idToken = headers().get('Authorization')?.split('Bearer ').at(1)
 
@@ -41,16 +39,14 @@ export const getServerApp = async (firebaseOptions: FirebaseOptions) => {
   )
 
   const auth = getAuth(firebaseServerApp)
-  if (enableEmulation && !auth.emulatorConfig) {
-    connectAuthEmulator(auth, 'http://127.0.0.1:9099')
-  }
+  const enableEmulation = env.NEXT_PUBLIC_EMULATOR && !auth.emulatorConfig
+  if (enableEmulation) connectAuthEmulator(auth, 'http://127.0.0.1:9099')
   await auth.authStateReady()
 
   const db = getFirestore(firebaseServerApp)
   if (enableEmulation) connectFirestoreEmulator(db, '127.0.0.1', 8080)
   const functions = getFunctions(firebaseServerApp)
   if (enableEmulation) connectFunctionsEmulator(functions, '127.0.0.1', 5001)
-  enableEmulation = false
 
   return {
     firebaseServerApp,
