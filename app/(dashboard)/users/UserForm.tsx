@@ -59,7 +59,10 @@ export const UserForm = ({
       email: userInfo?.email ?? '',
       displayName: userInfo?.displayName ?? '',
       role: role ?? Role.clinician,
-      organizationId: user?.organization,
+      organizationId:
+        authUser.role === Role.owner ?
+          authUser.organization
+        : user?.organization,
       invitationCode: user?.invitationCode ?? '',
     },
   })
