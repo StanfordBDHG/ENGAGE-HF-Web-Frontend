@@ -10,7 +10,7 @@ import { type UserInfo } from '@firebase/auth-types'
 import { createContext, type ReactNode, useContext } from 'react'
 import { type Role } from '@/modules/firebase/role'
 
-type Context = UserInfo & { role: Role }
+type Context = UserInfo & { role: Role; organization?: string }
 
 export const UserContext = createContext<Context | undefined>(undefined)
 
