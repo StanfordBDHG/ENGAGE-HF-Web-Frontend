@@ -12,7 +12,6 @@ import { connectAuthEmulator, getAuth } from 'firebase/auth'
 import {
   connectFirestoreEmulator,
   getDoc,
-  getDocs,
   getFirestore,
   query,
   where,
@@ -24,7 +23,9 @@ import { firebaseConfig } from '@/modules/firebase/config'
 import { Role } from '@/modules/firebase/role'
 import {
   getCallables,
-  getCollectionRefs, getDocData, getDocsData,
+  getCollectionRefs,
+  getDocData,
+  getDocsData,
   getDocumentsRefs,
 } from '@/modules/firebase/utils'
 import { routes } from '@/modules/routes'

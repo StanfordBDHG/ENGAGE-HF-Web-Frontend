@@ -16,6 +16,7 @@ import {
   getDocs,
   type Query,
 } from 'firebase/firestore'
+import { updateDoc } from '@firebase/firestore'
 
 export interface Organization {
   id: string
@@ -150,7 +151,7 @@ export const getCallables = (functions: Functions) => ({
     'revokeAdmin',
   ),
   updateUserInformation: httpsCallable<
-    { userId?: string; data: { auth: UserInformation } },
+    { userId?: string; data: UserInformation },
     string
   >(functions, 'updateUserInformation'),
   deleteUser: httpsCallable<{ userId: string }, string>(
@@ -181,3 +182,8 @@ export const getDocsData = async <T>(query: Query<T>) => {
     }
   })
 }
+
+export const updateDocData = <T>(
+  reference: DocumentReference<T>,
+  data: Partial<T>,
+) => updateDoc(reference, data)
