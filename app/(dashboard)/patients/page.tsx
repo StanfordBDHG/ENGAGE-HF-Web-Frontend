@@ -6,13 +6,16 @@
 // SPDX-License-Identifier: MIT
 //
 import { getDoc, getDocs, query, where } from 'firebase/firestore'
-import { Contact } from 'lucide-react'
+import { Contact, UserPlus } from 'lucide-react'
+import Link from 'next/link'
 import {
   getAuthenticatedOnlyApp,
   getCurrentUserRole,
 } from '@/modules/firebase/guards'
 import { Role } from '@/modules/firebase/role'
 import { mapAuthData } from '@/modules/firebase/user'
+import { routes } from '@/modules/routes'
+import { Button } from '@/packages/design-system/src/components/Button'
 import { PageTitle } from '@/packages/design-system/src/molecules/DashboardLayout'
 import { PatientsTable } from './PatientsTable'
 import { DashboardLayout } from '../DashboardLayout'
@@ -69,7 +72,17 @@ const PatientsPage = async () => {
   const patients = await listPatients()
 
   return (
-    <DashboardLayout title={<PageTitle title="Patients" icon={<Contact />} />}>
+    <DashboardLayout
+      title={<PageTitle title="Patients" icon={<Contact />} />}
+      actions={
+        <Button asChild>
+          <Link href={routes.patients.create}>
+            <UserPlus />
+            Create Patient
+          </Link>
+        </Button>
+      }
+    >
       <PatientsTable data={patients} />
     </DashboardLayout>
   )

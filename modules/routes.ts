@@ -15,6 +15,8 @@ export const routes = {
   },
   patients: {
     index: '/patients',
+    patient: (patientId: string) => `/patients/${patientId}`,
+    create: '/patients/create',
   },
   signIn: '/sign-in',
 }

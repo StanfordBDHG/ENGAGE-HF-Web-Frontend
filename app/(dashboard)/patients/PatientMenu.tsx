@@ -1,7 +1,9 @@
 'use client'
 import { Pencil, Trash } from 'lucide-react'
+import Link from 'next/link'
 import { deletePatient } from '@/app/(dashboard)/patients/actions'
 import type { Patient } from '@/app/(dashboard)/patients/page'
+import { routes } from '@/modules/routes'
 import { RowDropdownMenu } from '@/packages/design-system/src/components/DataTable'
 import { DropdownMenuItem } from '@/packages/design-system/src/components/DropdownMenu'
 import { getUserName } from '@/packages/design-system/src/modules/auth/user'
@@ -30,9 +32,11 @@ export const PatientMenu = ({ patient }: PatientMenuProps) => {
         onDelete={handleDelete}
       />
       <RowDropdownMenu>
-        <DropdownMenuItem>
-          <Pencil />
-          Edit
+        <DropdownMenuItem asChild>
+          <Link href={routes.patients.patient(patient.uid)}>
+            <Pencil />
+            Edit
+          </Link>
         </DropdownMenuItem>
         <DropdownMenuItem onClick={deleteConfirm.open}>
           <Trash />
