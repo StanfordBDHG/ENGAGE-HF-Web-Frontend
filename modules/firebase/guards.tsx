@@ -65,29 +65,17 @@ export const getServerApp = async (firebaseOptions: FirebaseOptions) => {
 
 export const getUserRole = async (userId: string) => {
   const { refs, docRefs } = await getAuthenticatedOnlyApp()
-  const adminDocRef = docRefs.admin(userId)
   // Try-catches are necessary, because user might not have permissions to read collections
   try {
-    const adminDoc = await getDoc(adminDocRef)
+    const adminDoc = await getDoc(docRefs.admin(userId))
     if (adminDoc.exists())
       return {
         role: Role.admin,
       } as const
   } catch (error) {}
 
-  const clinicianDocRef = docRefs.clinician(userId)
-  try {
-    const clinician = await getDocData(clinicianDocRef)
-    if (clinician)
-      return {
-        role: Role.clinician,
-        clinician,
-      } as const
-  } catch (error) {}
-
-  const organizationsRef = refs.organizations()
   const organizationsQuery = query(
-    organizationsRef,
+    refs.organizations(),
     where('owners', 'array-contains-any', [userId]),
   )
   try {
@@ -96,6 +84,15 @@ export const getUserRole = async (userId: string) => {
       return {
         role: Role.owner as const,
         organizations,
+      } as const
+  } catch (error) {}
+
+  try {
+    const clinician = await getDocData(docRefs.clinician(userId))
+    if (clinician)
+      return {
+        role: Role.clinician,
+        clinician,
       } as const
   } catch (error) {}
 

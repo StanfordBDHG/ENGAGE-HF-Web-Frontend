@@ -76,8 +76,8 @@ const listUsers = async () => {
     displayName: authData.displayName,
     role:
       adminIds.has(id) ? Role.admin
-      : clinicianIds.has(id) ? Role.clinician
       : ownersIds.has(id) ? Role.owner
+      : clinicianIds.has(id) ? Role.clinician
       : undefined,
   }))
 }
