@@ -16,13 +16,23 @@ import { Field } from '@/packages/design-system/src/forms/Field'
 import { useForm } from '@/packages/design-system/src/forms/useForm'
 import { type UserInfo } from '@/packages/design-system/src/modules/auth/user'
 
-export const userFormSchema = z.object({
-  email: z.string().min(1, 'Email is required'),
-  displayName: z.string(),
-  invitationCode: z.string(),
-  organizationId: z.string().optional(),
-  role: z.nativeEnum(Role),
-})
+export const userFormSchema = z
+  .object({
+    email: z.string().min(1, 'Email is required'),
+    displayName: z.string(),
+    invitationCode: z.string(),
+    organizationId: z.string().optional(),
+    role: z.nativeEnum(Role),
+  })
+  .superRefine((schema, ctx) => {
+    if (schema.role !== Role.admin && !schema.organizationId) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: 'Organization is required',
+        path: ['organizationId'],
+      })
+    }
+  })
 
 export type UserFormSchema = z.infer<typeof userFormSchema>
 
@@ -41,6 +51,7 @@ export const UserForm = ({
   userInfo,
   onSubmit,
 }: UserFormProps) => {
+  const isEdit = !!user
   const authUser = useUser()
   const form = useForm({
     formSchema: userFormSchema,
@@ -71,12 +82,14 @@ export const UserForm = ({
         label="Display name"
         render={({ field }) => <Input {...field} />}
       />
-      <Field
-        control={form.control}
-        name="invitationCode"
-        label="Invitation code"
-        render={({ field }) => <Input {...field} />}
-      />
+      {isEdit && (
+        <Field
+          control={form.control}
+          name="invitationCode"
+          label="Invitation code"
+          render={({ field }) => <Input {...field} />}
+        />
+      )}
       {authUser.role === Role.admin && (
         <Field
           control={form.control}
@@ -127,12 +140,14 @@ export const UserForm = ({
                   </p>
                 </div>
               </SelectItem>
-              <SelectItem value={Role.admin} itemText="Admin">
-                <div className="flex flex-col">
-                  <b>Admin</b>
-                  <p>Admin can modify every organization and invite users</p>
-                </div>
-              </SelectItem>
+              {authUser.role === Role.admin && (
+                <SelectItem value={Role.admin} itemText="Admin">
+                  <div className="flex flex-col">
+                    <b>Admin</b>
+                    <p>Admin can modify every organization and invite users</p>
+                  </div>
+                </SelectItem>
+              )}
             </SelectContent>
           </Select>
         )}
