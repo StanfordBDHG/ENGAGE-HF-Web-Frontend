@@ -39,7 +39,7 @@ class ValidationError<
  * Wrapper over react-hook-form's useForm
  * Provides default types and custom functionalities
  * */
-export const useForm = <Schema extends z.AnyZodObject>({
+export const useForm = <Schema extends z.Schema>({
   formSchema,
   ...props
 }: UseFormProps<z.infer<Schema>> & {
