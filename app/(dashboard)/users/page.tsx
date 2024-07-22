@@ -7,7 +7,8 @@
 //
 import { uniq } from 'es-toolkit'
 import { getDocs, query, where } from 'firebase/firestore'
-import { Users } from 'lucide-react'
+import { Users, UserPlus } from 'lucide-react'
+import Link from 'next/link'
 import {
   allowRoles,
   getAuthenticatedOnlyApp,
@@ -16,6 +17,8 @@ import {
 import { Role } from '@/modules/firebase/role'
 import { mapAuthData } from '@/modules/firebase/user'
 import { getDocsData, type Organization } from '@/modules/firebase/utils'
+import { routes } from '@/modules/routes'
+import { Button } from '@/packages/design-system/src/components/Button'
 import { PageTitle } from '@/packages/design-system/src/molecules/DashboardLayout'
 import { UsersTable } from './UsersTable'
 import { DashboardLayout } from '../DashboardLayout'
@@ -89,7 +92,17 @@ const UsersPage = async () => {
   const users = await listUsers()
 
   return (
-    <DashboardLayout title={<PageTitle title="Users" icon={<Users />} />}>
+    <DashboardLayout
+      actions={
+        <Button asChild>
+          <Link href={routes.users.create}>
+            <UserPlus />
+            Create User
+          </Link>
+        </Button>
+      }
+      title={<PageTitle title="Users" icon={<Users />} />}
+    >
       <UsersTable data={users} />
     </DashboardLayout>
   )

@@ -158,6 +158,16 @@ export const getCallables = (functions: Functions) => ({
     functions,
     'deleteUser',
   ),
+  createInvitation: httpsCallable<
+    {
+      auth?: UserAuthenticationInformation
+      admin?: Admin
+      clinician?: Clinician
+      patient?: Patient
+      user?: User
+    },
+    undefined
+  >(functions, 'createInvitation'),
 })
 
 export const getDocData = async <T>(reference: DocumentReference<T>) => {
