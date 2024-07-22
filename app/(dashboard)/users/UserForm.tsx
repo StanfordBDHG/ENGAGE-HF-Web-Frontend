@@ -1,6 +1,8 @@
 'use client'
+import { z } from 'zod'
 import { Role } from '@/modules/firebase/role'
 import { useUser } from '@/modules/firebase/UserProvider'
+import { type Organization, type User } from '@/modules/firebase/utils'
 import { Button } from '@/packages/design-system/src/components/Button'
 import { Input } from '@/packages/design-system/src/components/Input'
 import {
@@ -12,24 +14,42 @@ import {
 } from '@/packages/design-system/src/components/Select'
 import { Field } from '@/packages/design-system/src/forms/Field'
 import { useForm } from '@/packages/design-system/src/forms/useForm'
-import type { Data } from './page'
-import { type EditUserFormSchema, editUserFormSchema } from './utils'
+import { type UserInfo } from '@/packages/design-system/src/modules/auth/user'
 
-interface EditUserDialogFormProps {
-  data: Data
-  onSubmit: (data: EditUserFormSchema) => Promise<void>
+export const userFormSchema = z.object({
+  email: z.string().min(1, 'Email is required'),
+  displayName: z.string(),
+  invitationCode: z.string(),
+  organizationId: z.string().optional(),
+  role: z.nativeEnum(Role),
+})
+
+export type UserFormSchema = z.infer<typeof userFormSchema>
+
+interface UserFormProps {
+  organizations: Array<Pick<Organization, 'name' | 'id'>>
+  userInfo?: Pick<UserInfo, 'email' | 'displayName' | 'uid'>
+  user?: Pick<User, 'organization' | 'invitationCode'>
+  role?: Role
+  onSubmit: (data: UserFormSchema) => Promise<void>
 }
 
-export const EditUserForm = ({ data, onSubmit }: EditUserDialogFormProps) => {
+export const UserForm = ({
+  organizations,
+  user,
+  role,
+  userInfo,
+  onSubmit,
+}: UserFormProps) => {
   const authUser = useUser()
   const form = useForm({
-    formSchema: editUserFormSchema,
+    formSchema: userFormSchema,
     defaultValues: {
-      email: data.authUser.email ?? '',
-      displayName: data.authUser.displayName ?? '',
-      role: data.role.role,
-      organizationId: data.user?.organization,
-      invitationCode: data.user?.invitationCode,
+      email: userInfo?.email ?? '',
+      displayName: userInfo?.displayName ?? '',
+      role: role ?? Role.clinician,
+      organizationId: user?.organization,
+      invitationCode: user?.invitationCode ?? '',
     },
   })
 
@@ -38,7 +58,7 @@ export const EditUserForm = ({ data, onSubmit }: EditUserDialogFormProps) => {
   })
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="mx-auto w-full max-w-2xl">
       <Field
         control={form.control}
         name="email"
@@ -68,7 +88,7 @@ export const EditUserForm = ({ data, onSubmit }: EditUserDialogFormProps) => {
                 <SelectValue placeholder="Organization" />
               </SelectTrigger>
               <SelectContent>
-                {data.organizations.map((organization) => (
+                {organizations.map((organization) => (
                   <SelectItem value={organization.id} key={organization.id}>
                     {organization.name}
                   </SelectItem>
@@ -86,7 +106,7 @@ export const EditUserForm = ({ data, onSubmit }: EditUserDialogFormProps) => {
           <Select
             onValueChange={field.onChange}
             {...field}
-            disabled={authUser.uid === data.authUser.id}
+            disabled={authUser.uid === userInfo?.uid}
           >
             <SelectTrigger>
               <SelectValue placeholder="Roles" />
@@ -117,7 +137,6 @@ export const EditUserForm = ({ data, onSubmit }: EditUserDialogFormProps) => {
           </Select>
         )}
       />
-
       <Button type="submit" isPending={form.formState.isSubmitting}>
         Save user
       </Button>

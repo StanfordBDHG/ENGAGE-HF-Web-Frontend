@@ -5,11 +5,10 @@
 //
 // SPDX-License-Identifier: MIT
 //
-import { setDoc } from '@firebase/firestore'
+import { deleteField, setDoc } from '@firebase/firestore'
 import { Users } from 'lucide-react'
 import { revalidatePath } from 'next/cache'
 import { notFound } from 'next/navigation'
-import { type EditUserFormSchema } from '@/app/(dashboard)/users/[id]/utils'
 import {
   allowRoles,
   getAuthenticatedOnlyApp,
@@ -25,65 +24,61 @@ import {
 import { routes } from '@/modules/routes'
 import { getUserName } from '@/packages/design-system/src/modules/auth/user'
 import { PageTitle } from '@/packages/design-system/src/molecules/DashboardLayout'
-import { EditUserForm } from './EditUserForm'
 import { DashboardLayout } from '../../DashboardLayout'
-
-const getData = async (userId: string) => {
-  const { refs, docRefs } = await getAuthenticatedOnlyApp()
-  const organizations = await getDocsData(refs.organizations())
-  const user = await getDocData(docRefs.user(userId))
-  const allAuthData = await mapAuthData([userId], (data, id) => ({
-    id,
-    ...data,
-  }))
-  const authUser = allAuthData.at(0)
-
-  if (!authUser) {
-    notFound()
-  }
-
-  return {
-    user:
-      user ?
-        { ...user, dateOfEnrollment: user.dateOfEnrollment.toJSON() }
-      : undefined,
-    organizations,
-    authUser,
-    role: await getUserRole(userId),
-  }
-}
-
-export type Data = Awaited<ReturnType<typeof getData>>
+import { UserForm, type UserFormSchema } from '../UserForm'
 
 const UserPage = async ({ params }: { params: { id: string } }) => {
   await allowRoles([Role.admin, Role.owner])
+  const { refs, docRefs } = await getAuthenticatedOnlyApp()
   const userId = params.id
-  const data = await getData(userId)
+  const allAuthData = await mapAuthData([userId], (data, id) => ({
+    uid: id,
+    ...data,
+  }))
+  const authUser = allAuthData.at(0)
+  if (!authUser) {
+    notFound()
+  }
+  const organizations = await getDocsData(refs.organizations())
+  const user = await getDocData(docRefs.user(userId))
 
-  const saveUser = async (form: EditUserFormSchema) => {
+  if (!user) {
+    throw new Error(
+      `Malfunction of the data, user doc doesn't exist for ${userId}`,
+    )
+  }
+
+  const { role } = await getUserRole(userId)
+
+  const updateUser = async (form: UserFormSchema) => {
     'use server'
     const { docRefs, callables } = await getAuthenticatedOnlyApp()
-    console.log(userId, form, data)
     await callables.updateUserInformation({
       userId,
-      data: { auth: { displayName: form.displayName, email: form.email } },
+      data: {
+        auth: {
+          displayName: form.displayName,
+          email: form.email,
+          phoneNumber: null,
+          photoURL: null,
+        },
+      },
     })
-    const user = docRefs.user(userId)
-    await updateDocData(user, {
+    const userRef = docRefs.user(userId)
+    await updateDocData(userRef, {
       invitationCode: form.invitationCode,
-      organization: form.organizationId,
+      organization: form.organizationId ?? deleteField(),
     })
-    const userRole = data.role.role
-    if (userRole === Role.admin && form.role !== Role.admin) {
+
+    if (role === Role.admin && form.role !== Role.admin) {
       await callables.revokeAdmin({ userId })
     } else if (
-      userRole === Role.owner &&
-      (form.role !== Role.owner ||
-        data.user?.organization !== form.organizationId)
+      role === Role.owner &&
+      (form.role !== Role.owner || user.organization !== form.organizationId)
     ) {
       await callables.revokeOwner({
         userId,
-        organizationId: data.user?.organization,
+        organizationId: user.organization,
       })
     }
     if (form.role === Role.admin) {
@@ -106,14 +101,18 @@ const UserPage = async ({ params }: { params: { id: string } }) => {
       title={
         <PageTitle
           title="Edit user"
-          subTitle={getUserName(data.authUser)}
+          subTitle={getUserName(authUser)}
           icon={<Users />}
         />
       }
     >
-      <div className="mx-auto w-full max-w-[800px]">
-        <EditUserForm data={data} onSubmit={saveUser} />
-      </div>
+      <UserForm
+        organizations={organizations}
+        role={role}
+        user={user}
+        userInfo={authUser}
+        onSubmit={updateUser}
+      />
     </DashboardLayout>
   )
 }

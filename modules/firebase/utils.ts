@@ -112,10 +112,10 @@ interface Result<T> {
 }
 
 export interface UserAuthenticationInformation {
-  displayName?: string
-  email?: string
-  phoneNumber?: string
-  photoURL?: string
+  displayName: string | null
+  email: string | null
+  phoneNumber: string | null
+  photoURL: string | null
 }
 
 interface UserInformation {
