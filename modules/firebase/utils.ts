@@ -5,6 +5,7 @@
 //
 // SPDX-License-Identifier: MIT
 //
+import { updateDoc } from '@firebase/firestore'
 import { type Functions, httpsCallable } from '@firebase/functions'
 import {
   collection,
@@ -16,7 +17,6 @@ import {
   getDocs,
   type Query,
 } from 'firebase/firestore'
-import { updateDoc } from '@firebase/firestore'
 
 export interface Organization {
   id: string

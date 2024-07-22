@@ -6,7 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 import { uniq } from 'es-toolkit'
-import { getDocs, query, type QuerySnapshot, where } from 'firebase/firestore'
+import { getDocs, query, where } from 'firebase/firestore'
 import { Users } from 'lucide-react'
 import {
   allowRoles,
@@ -15,7 +15,7 @@ import {
 } from '@/modules/firebase/guards'
 import { Role } from '@/modules/firebase/role'
 import { mapAuthData } from '@/modules/firebase/user'
-import { type Organization } from '@/modules/firebase/utils'
+import { getDocsData, type Organization } from '@/modules/firebase/utils'
 import { PageTitle } from '@/packages/design-system/src/molecules/DashboardLayout'
 import { UsersTable } from './UsersTable'
 import { DashboardLayout } from '../DashboardLayout'
@@ -23,7 +23,7 @@ import { DashboardLayout } from '../DashboardLayout'
 const getAdminData = async () => {
   const { refs } = await getAuthenticatedOnlyApp()
   const admins = await getDocs(refs.admins())
-  const organizations = await getDocs(refs.organizations())
+  const organizations = await getDocsData(refs.organizations())
 
   const adminIds = new Set(admins.docs.map((admin) => admin.id))
 
@@ -34,11 +34,9 @@ const getAdminData = async () => {
   }
 }
 
-const getOwnerData = async (organizations: QuerySnapshot<Organization>) => {
+const getOwnerData = async (organizations: Organization[]) => {
   const { refs } = await getAuthenticatedOnlyApp()
-  const organizationIds = organizations.docs.map(
-    (organization) => organization.id,
-  )
+  const organizationIds = organizations.map((organization) => organization.id)
   const cliniciansQuery = query(
     refs.clinicians(),
     where('organization', 'in', organizationIds),
@@ -64,7 +62,7 @@ const listUsers = async () => {
   const clinicianIds = new Set(clinicians.docs.map((clinician) => clinician.id))
 
   const ownersIds = new Set(
-    organizations.docs.flatMap((organization) => organization.data().owners),
+    organizations.flatMap((organization) => organization.owners),
   )
 
   const userIdsToGet = uniq([

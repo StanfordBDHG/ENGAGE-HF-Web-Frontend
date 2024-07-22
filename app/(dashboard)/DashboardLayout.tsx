@@ -7,7 +7,10 @@
 //
 import Link from 'next/link'
 import { LogoType } from '@/components/icons/LogoType'
-import { getAuthenticatedOnlyApp, getCurrentUserRole } from '@/modules/firebase/guards'
+import {
+  getAuthenticatedOnlyApp,
+  getCurrentUserRole,
+} from '@/modules/firebase/guards'
 import { getUserInfo } from '@stanfordbdhg/design-system/modules/auth/user'
 import {
   DashboardLayout as DashboardLayoutBase,

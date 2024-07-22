@@ -7,7 +7,10 @@
 //
 import { getDoc, getDocs, query, where } from 'firebase/firestore'
 import { Contact } from 'lucide-react'
-import { getAuthenticatedOnlyApp, getCurrentUserRole } from '@/modules/firebase/guards'
+import {
+  getAuthenticatedOnlyApp,
+  getCurrentUserRole,
+} from '@/modules/firebase/guards'
 import { Role } from '@/modules/firebase/role'
 import { mapAuthData } from '@/modules/firebase/user'
 import { PageTitle } from '@/packages/design-system/src/molecules/DashboardLayout'
@@ -19,7 +22,9 @@ const getPatientsQuery = async () => {
   const userRole = await getCurrentUserRole()
   if (userRole.role === Role.admin) return refs.users()
   if (userRole.role === Role.owner) {
-    const organizationIds = userRole.organizations.docs.map((doc) => doc.id)
+    const organizationIds = userRole.organizations.map(
+      (organization) => organization.id,
+    )
     return query(refs.users(), where('organization', 'in', organizationIds))
   }
   if (userRole.role === Role.clinician) {
