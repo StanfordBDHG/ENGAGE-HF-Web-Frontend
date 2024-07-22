@@ -5,7 +5,7 @@
 //
 // SPDX-License-Identifier: MIT
 //
-import { not, upperFirst } from './misc'
+import { not, times, upperFirst } from './misc'
 
 describe('not', () => {
   it('negates value', () => {
@@ -25,5 +25,12 @@ describe('upperFirst', () => {
     expect(upperFirst('lorem IPSUM')).toBe('Lorem IPSUM')
     expect(upperFirst('')).toBe('')
     expect(upperFirst('l')).toBe('L')
+  })
+})
+
+describe('times', () => {
+  it('generates array with provided length', () => {
+    expect(times(3, () => null)).toEqual([null, null, null])
+    expect(times(2, (index) => index)).toEqual([0, 1])
   })
 })
