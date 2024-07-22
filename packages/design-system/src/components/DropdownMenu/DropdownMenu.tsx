@@ -44,7 +44,7 @@ export const DropdownMenuSubTrigger = forwardRef<
     {...props}
   >
     {children}
-    <ChevronRight className="ml-auto h-4 w-4" />
+    <ChevronRight className="ml-auto size-4" />
   </RadixDropdownMenu.SubTrigger>
 ))
 DropdownMenuSubTrigger.displayName = RadixDropdownMenu.SubTrigger.displayName
@@ -113,9 +113,9 @@ export const DropdownMenuCheckboxItem = forwardRef<
     checked={checked}
     {...props}
   >
-    <span className="absolute left-2 flex h-3.5 w-3.5 items-center justify-center">
+    <span className="absolute left-2 flex size-3.5 items-center justify-center">
       <RadixDropdownMenu.ItemIndicator>
-        <Check className="h-4 w-4" />
+        <Check className="size-4" />
       </RadixDropdownMenu.ItemIndicator>
     </span>
     {children}
@@ -136,9 +136,9 @@ export const DropdownMenuRadioItem = forwardRef<
     )}
     {...props}
   >
-    <span className="absolute left-2 flex h-3.5 w-3.5 items-center justify-center">
+    <span className="absolute left-2 flex size-3.5 items-center justify-center">
       <RadixDropdownMenu.ItemIndicator>
-        <Circle className="h-2 w-2 fill-current" />
+        <Circle className="size-2 fill-current" />
       </RadixDropdownMenu.ItemIndicator>
     </span>
     {children}
