@@ -20,18 +20,18 @@ describe('Dialog', () => {
       </Dialog>,
     )
 
-    const getContent = () => screen.queryByText('Content')
+    const queryContent = () => screen.queryByText('Content')
 
-    expect(getContent()).not.toBeInTheDocument()
+    expect(queryContent()).not.toBeInTheDocument()
 
     const trigger = screen.getByRole('button', { name: 'Trigger' })
     fireEvent.click(trigger)
 
-    expect(getContent()).toBeInTheDocument()
+    expect(queryContent()).toBeInTheDocument()
 
     const closeButton = screen.getByRole('button', { name: 'Close' })
     fireEvent.click(closeButton)
 
-    expect(getContent()).not.toBeInTheDocument()
+    expect(queryContent()).not.toBeInTheDocument()
   })
 })
