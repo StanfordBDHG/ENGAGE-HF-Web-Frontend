@@ -78,7 +78,7 @@ const listUsers = async () => {
       adminIds.has(id) ? Role.admin
       : ownersIds.has(id) ? Role.owner
       : clinicianIds.has(id) ? Role.clinician
-      : undefined,
+      : Role.user, // this shouldn't be reachable
   }))
 }
 

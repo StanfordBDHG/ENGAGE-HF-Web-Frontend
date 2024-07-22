@@ -7,6 +7,7 @@
 //
 'use client'
 import { createColumnHelper } from '@tanstack/table-core'
+import { stringifyRole } from '@/modules/firebase/role'
 import { CopyText } from '@/packages/design-system/src/components/CopyText'
 import { DataTable } from '@/packages/design-system/src/components/DataTable'
 import type { User } from './page'
@@ -26,7 +27,10 @@ const columns = [
     cell: (props) => props.getValue() ?? '-',
   }),
   columnHelper.accessor('email', { header: 'Email' }),
-  columnHelper.accessor('role', { header: 'Role' }),
+  columnHelper.accessor('role', {
+    header: 'Role',
+    cell: (props) => stringifyRole(props.getValue()),
+  }),
   columnHelper.display({
     id: 'actions',
     cell: (props) => <UserMenu user={props.row.original} />,
