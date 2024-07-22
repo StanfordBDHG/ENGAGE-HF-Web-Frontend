@@ -122,11 +122,37 @@ interface UserInformation {
 }
 
 export const getCallables = (functions: Functions) => ({
+  seedEmulator: httpsCallable(functions, 'seedEmulator'),
   getUsersInformation: httpsCallable<
     { userIds?: string[] },
     Record<string, Result<UserInformation>>
   >(functions, 'getUsersInformation'),
-  seedEmulator: httpsCallable(functions, 'seedEmulator'),
+  grantOwner: httpsCallable<
+    {
+      userId?: string
+      organizationId?: string
+    },
+    string
+  >(functions, 'grantOwner'),
+  revokeOwner: httpsCallable<
+    {
+      userId?: string
+      organizationId?: string
+    },
+    string
+  >(functions, 'revokeOwner'),
+  grantAdmin: httpsCallable<{ userId?: string }, string>(
+    functions,
+    'grantAdmin',
+  ),
+  revokeAdmin: httpsCallable<{ userId?: string }, string>(
+    functions,
+    'revokeAdmin',
+  ),
+  updateUserInformation: httpsCallable<
+    { userId?: string; data: { auth: UserInformation } },
+    string
+  >(functions, 'updateUserInformation'),
   deleteUser: httpsCallable<{ userId: string }, string>(
     functions,
     'deleteUser',
