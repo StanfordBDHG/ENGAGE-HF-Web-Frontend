@@ -76,9 +76,9 @@ const PatientsPage = async () => {
       title={<PageTitle title="Patients" icon={<Contact />} />}
       actions={
         <Button asChild>
-          <Link href={routes.patients.create}>
+          <Link href={routes.patients.invite}>
             <UserPlus />
-            Create Patient
+            Invite Patient
           </Link>
         </Button>
       }

@@ -95,9 +95,9 @@ const UsersPage = async () => {
     <DashboardLayout
       actions={
         <Button asChild>
-          <Link href={routes.users.create}>
+          <Link href={routes.users.invite}>
             <UserPlus />
-            Create User
+            Invite User
           </Link>
         </Button>
       }

@@ -11,12 +11,12 @@ export const routes = {
   users: {
     index: '/users',
     user: (userId: string) => `/users/${userId}`,
-    create: '/users/create',
+    invite: '/users/invite',
   },
   patients: {
     index: '/patients',
     patient: (patientId: string) => `/patients/${patientId}`,
-    create: '/patients/create',
+    invite: '/patients/invite',
   },
   signIn: '/sign-in',
 }

@@ -5,20 +5,22 @@
 //
 // SPDX-License-Identifier: MIT
 //
-import { Contact } from 'lucide-react'
+import { Users } from 'lucide-react'
 import { redirect } from 'next/navigation'
-import { getAuthenticatedOnlyApp } from '@/modules/firebase/guards'
+import { UserForm, type UserFormSchema } from '@/app/(dashboard)/users/UserForm'
+import { allowRoles, getAuthenticatedOnlyApp } from '@/modules/firebase/guards'
+import { Role } from '@/modules/firebase/role'
 import { getDocsData } from '@/modules/firebase/utils'
 import { routes } from '@/modules/routes'
 import { PageTitle } from '@/packages/design-system/src/molecules/DashboardLayout'
 import { DashboardLayout } from '../../DashboardLayout'
-import { PatientForm, type PatientFormSchema } from '../PatientForm'
 
-const CreatePatientPage = async () => {
+const InviteUserPage = async () => {
+  await allowRoles([Role.admin, Role.owner])
   const { refs } = await getAuthenticatedOnlyApp()
   const organizations = await getDocsData(refs.organizations())
 
-  const createPatient = async (form: PatientFormSchema) => {
+  const inviteUser = async (form: UserFormSchema) => {
     'use server'
     const { callables } = await getAuthenticatedOnlyApp()
     await callables.createInvitation({
@@ -28,21 +30,19 @@ const CreatePatientPage = async () => {
         phoneNumber: null,
         photoURL: null,
       },
-      // TODO
-      patient: {},
+      admin: form.role === Role.admin ? {} : undefined,
+      clinician: form.role === Role.clinician ? {} : undefined,
       user: { organization: form.organizationId },
     })
-    redirect(routes.patients.index)
+    redirect(routes.users.index)
     // TODO: Confirmation message
   }
 
   return (
-    <DashboardLayout
-      title={<PageTitle title="Create patient" icon={<Contact />} />}
-    >
-      <PatientForm organizations={organizations} onSubmit={createPatient} />
+    <DashboardLayout title={<PageTitle title="Invite user" icon={<Users />} />}>
+      <UserForm organizations={organizations} onSubmit={inviteUser} />
     </DashboardLayout>
   )
 }
 
-export default CreatePatientPage
+export default InviteUserPage
