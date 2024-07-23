@@ -45,14 +45,14 @@ const getPatientsQuery = async () => {
 const listPatients = async () => {
   const patientsQuery = await getPatientsQuery()
   const patients = await getDocs(patientsQuery)
-  const userIdsToGet = patients.docs.map((patient) => patient.id)
+  const userIds = patients.docs.map((patient) => patient.id)
   const patientsById = new Map(
     patients.docs.map(
       (patient) => [patient.id, { id: patient.id, ...patient.data() }] as const,
     ),
   )
 
-  return mapAuthData(userIdsToGet, (authData, id) => {
+  return mapAuthData({ userIds }, ({ auth }, id) => {
     const patient = patientsById.get(id)
     if (!patient) {
       console.error(`No patient found for user id ${id}`)
@@ -60,8 +60,8 @@ const listPatients = async () => {
     }
     return {
       uid: id,
-      email: authData.email,
-      displayName: authData.displayName,
+      email: auth.email,
+      displayName: auth.displayName,
     }
   })
 }

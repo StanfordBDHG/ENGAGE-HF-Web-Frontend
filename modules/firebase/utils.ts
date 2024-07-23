@@ -139,14 +139,22 @@ export interface UserAuthenticationInformation {
   photoURL: string | null
 }
 
-interface UserInformation {
+export interface UserInformation {
   auth: UserAuthenticationInformation
+  user?: User
+}
+
+export interface GetUsersInformationInput {
+  userIds: string[]
+  includeClinicianData?: boolean
+  includePatientData?: boolean
+  includeUserData?: boolean
 }
 
 export const getCallables = (functions: Functions) => ({
   seedEmulator: httpsCallable(functions, 'seedEmulator'),
   getUsersInformation: httpsCallable<
-    { userIds?: string[] },
+    GetUsersInformationInput,
     Record<string, Result<UserInformation>>
   >(functions, 'getUsersInformation'),
   grantOwner: httpsCallable<

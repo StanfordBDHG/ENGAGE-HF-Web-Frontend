@@ -33,11 +33,11 @@ const PatientPage = async ({ params }: PatientPageProps) => {
   // TODO: Validate against non-patient
   const { refs, docRefs } = await getAuthenticatedOnlyApp()
   const userId = params.id
-  const allAuthData = await mapAuthData([userId], (data, id) => ({
+  const allAuthData = await mapAuthData({ userIds: [userId] }, (data, id) => ({
     uid: id,
     ...data,
   }))
-  const authUser = allAuthData.at(0)
+  const authUser = allAuthData.at(0)?.auth
   if (!authUser) {
     notFound()
   }
