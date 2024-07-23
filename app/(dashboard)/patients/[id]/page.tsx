@@ -13,7 +13,7 @@ import {
   PatientForm,
   type PatientFormSchema,
 } from '@/app/(dashboard)/patients/PatientForm'
-import { getAuthenticatedOnlyApp, getUserRole } from '@/modules/firebase/guards'
+import { getAuthenticatedOnlyApp } from '@/modules/firebase/guards'
 import { mapAuthData } from '@/modules/firebase/user'
 import {
   getDocData,

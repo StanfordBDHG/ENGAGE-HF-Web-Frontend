@@ -14,11 +14,9 @@ SPDX-License-Identifier: MIT
 [![Deployment](https://github.com/StanfordBDHG/ENGAGE-HF-Web-Frontend/actions/workflows/main.yml/badge.svg)](https://github.com/StanfordBDHG/ENGAGE-HF-Web-Frontend/actions/workflows/main.yml)
 [![codecov](https://codecov.io/gh/StanfordBDHG/ENGAGE-HF-Web-Frontend/graph/badge.svg?token=PsKyNz7Woe)](https://codecov.io/gh/StanfordBDHG/ENGAGE-HF-Web-Frontend)
 
-
 ## How To Use ENGAGE-HF Web Frontend
 
 The ENGAGE-HF Web Frontend repository contains a Next.js project providing automated GitHub Actions and setups for code linting, testing & test coverage reports, docker deployments, a docker compose setup, local packages for modular deployment.
-
 
 ## Getting Started
 
@@ -53,7 +51,6 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 You can edit the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-
 ## Docker
 
 1. [Install Docker](https://docs.docker.com/get-docker/) on your machine.
@@ -67,16 +64,13 @@ The `docker-compose.yml` setup contains a production-ready setup using a reverse
 
 Every version of the application on the `main` branch is automatically packaged into docker images using the `main` tag. Every release is also published using the `latest` and respective version tags.
 
-
 ## Deployment
 
 This repository contains all necessary files to deploy the web frontend to Google Cloud Firebase ([Stanford mHealth Platform](https://med.stanford.edu/mhealth.html)).
 
-
 ### Deployment Configuration
 
 ...
-
 
 ### Stanford SSO Setup
 
@@ -84,6 +78,7 @@ The ENGAGE-HF web page uses Stanford single sign on (SSO) as a mechanism to allo
 
 The [Stanford SAML and OIDC Configuration Manager](https://spdb-prod.iam.stanford.edu) needs to be configured using an OIDC configuration.
 You will use the Client ID and Client secret from the configuration to set up the OIDC authentication in Firebase Authentication.
+
 - Subject Type: `public`
 - Token Endpoint Auth: `client_secret_basic`
 - Grant Type: `refresh_token (authorization_code always enabled)`
@@ -92,12 +87,12 @@ You will use the Client ID and Client secret from the configuration to set up th
 
 You will need to configure [Firebase Authentication with Identity Platform to use OpenID connect in web apps](https://firebase.google.com/docs/auth/web/openid-connect).
 You need to configure the OpenID Connect Sign-in provider as follows:
+
 - Grant Type: `Code flow`
 - Name: `Stanford`
 - Client ID: Client ID obtained from your OIDC configuration from the [Stanford SAML and OIDC Configuration Manager](https://spdb-prod.iam.stanford.edu).
 - Issuer (URL): `https://login.stanford.edu`
 - Client secret: Client ID obtained from your OIDC configuration from the [Stanford SAML and OIDC Configuration Manager](https://spdb-prod.iam.stanford.edu).
-
 
 ## Learn More
 
@@ -108,11 +103,9 @@ To learn more about Next.js, take a look at the following resources:
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
 
-
 ## License
 
 This project is licensed under the MIT License. See [Licenses](https://github.com/StanfordBDHG/ENGAGE-HF-Web-Frontend/tree/main/LICENSES) for more information.
-
 
 ## Contributors
 
