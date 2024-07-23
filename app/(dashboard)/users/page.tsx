@@ -25,15 +25,15 @@ import { DashboardLayout } from '../DashboardLayout'
 
 const getAdminData = async () => {
   const { refs } = await getAuthenticatedOnlyApp()
-  const admins = await getDocs(refs.admins())
-  const organizations = await getDocsData(refs.organizations())
 
+  const admins = await getDocs(refs.admins())
   const adminIds = new Set(admins.docs.map((admin) => admin.id))
 
   return {
     adminIds,
-    organizations,
+    organizations: await getDocsData(refs.organizations()),
     cliniciansQuery: refs.clinicians(),
+    invitationsQuery: refs.invitations(),
   }
 }
 
@@ -49,40 +49,75 @@ const getOwnerData = async (organizations: Organization[]) => {
     adminIds: new Set<string>(),
     organizations,
     cliniciansQuery,
+    invitationsQuery: query(
+      refs.invitations(),
+      where('user.organization', 'in', organizationIds),
+    ),
   }
 }
 
 const listUsers = async () => {
   const role = await getCurrentUserRole()
-  const { adminIds, organizations, cliniciansQuery } =
+  const { adminIds, organizations, cliniciansQuery, invitationsQuery } =
     role.role === Role.admin ?
       await getAdminData()
-      // Non-null assertion is fine here
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    : await getOwnerData(role.organizations!)
+    : await getOwnerData(role.organizations ?? [])
+
+  const organizationMap = new Map(
+    organizations.map(
+      (organization) => [organization.id, organization] as const,
+    ),
+  )
 
   const clinicians = await getDocs(cliniciansQuery)
   const clinicianIds = new Set(clinicians.docs.map((clinician) => clinician.id))
+
+  const invitations = await getDocsData(
+    query(invitationsQuery, where('patient', '==', null)),
+  )
 
   const ownersIds = new Set(
     organizations.flatMap((organization) => organization.owners),
   )
 
-  const userIdsToGet = uniq([
+  const userIds = uniq([
     ...adminIds.values(),
     ...clinicianIds.values(),
     ...ownersIds.values(),
   ])
-  return mapAuthData(userIdsToGet, (authData, id) => ({
-    uid: id,
-    email: authData.email,
-    displayName: authData.displayName,
+
+  const users = await mapAuthData(
+    { userIds, includeUserData: true },
+    ({ auth, user }, id) => ({
+      resourceId: id,
+      uid: id,
+      email: auth.email,
+      displayName: auth.displayName,
+      organization: organizationMap.get(user?.organization ?? ''),
+      isInvitation: false,
+      role:
+        adminIds.has(id) ? Role.admin
+        : ownersIds.has(id) ? Role.owner
+        : clinicianIds.has(id) ? Role.clinician
+        : Role.user, // this shouldn't be reachable
+    }),
+  )
+
+  const invitedUsers = invitations.map((invitation) => ({
+    resourceId: invitation.id,
+    uid: invitation.userId,
+    email: invitation.auth?.email,
+    displayName: invitation.auth?.displayName,
+    organization: organizationMap.get(invitation.user?.organization ?? ''),
+    isInvitation: true,
     role:
-      adminIds.has(id) ? Role.admin
-      : ownersIds.has(id) ? Role.owner
-      : clinicianIds.has(id) ? Role.clinician
-      : Role.user, // this shouldn't be reachable
+      invitation.patient ? Role.user
+      : invitation.admin ? Role.admin
+      : invitation.clinician ? Role.clinician
+      : Role.owner, // owner is the only Role that's left
   }))
+
+  return [...invitedUsers, ...users]
 }
 
 export type User = Awaited<ReturnType<typeof listUsers>>[number]
