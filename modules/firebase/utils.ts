@@ -51,8 +51,18 @@ export interface Patient {
 
 export interface Clinician {}
 
+export interface Invitation {
+  userId?: string
+  auth?: UserAuthenticationInformation
+  admin?: Admin
+  clinician?: Clinician
+  patient?: Patient
+  user?: User
+}
+
 export const collectionNames = {
   patients: 'patients',
+  invitations: 'invitations',
   users: 'users',
   admins: 'admins',
   clinicians: 'clinicians',
@@ -64,6 +74,11 @@ export const getCollectionRefs = (db: Firestore) => ({
     collection(db, collectionNames.patients) as CollectionReference<Patient>,
   users: () =>
     collection(db, collectionNames.users) as CollectionReference<User>,
+  invitations: () =>
+    collection(
+      db,
+      collectionNames.invitations,
+    ) as CollectionReference<Invitation>,
   admins: () =>
     collection(db, collectionNames.admins) as CollectionReference<Admin>,
   clinicians: () =>
@@ -89,6 +104,12 @@ export const getDocumentsRefs = (db: Firestore) => ({
     doc(db, collectionNames.users, ...segments) as DocumentReference<User>,
   admin: (...segments: string[]) =>
     doc(db, collectionNames.admins, ...segments) as DocumentReference<Admin>,
+  invitation: (...segments: string[]) =>
+    doc(
+      db,
+      collectionNames.invitations,
+      ...segments,
+    ) as DocumentReference<Invitation>,
   clinician: (...segments: string[]) =>
     doc(
       db,
