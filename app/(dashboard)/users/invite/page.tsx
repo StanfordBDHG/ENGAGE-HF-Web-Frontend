@@ -32,6 +32,7 @@ const InviteUserPage = async () => {
       },
       admin: form.role === Role.admin ? {} : undefined,
       clinician: form.role === Role.clinician ? {} : undefined,
+      patient: undefined,
       user: { organization: form.organizationId },
     })
     redirect(routes.users.index)
