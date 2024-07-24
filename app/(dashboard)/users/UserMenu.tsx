@@ -8,7 +8,7 @@
 'use client'
 import { Pencil, Trash } from 'lucide-react'
 import Link from 'next/link'
-import { deleteUser } from '@/app/(dashboard)/users/actions'
+import { deleteInvitation, deleteUser } from '@/app/(dashboard)/users/actions'
 import type { User } from '@/app/(dashboard)/users/page'
 import { useUser } from '@/modules/firebase/UserProvider'
 import { routes } from '@/modules/routes'
@@ -27,7 +27,11 @@ export const UserMenu = ({ user }: UserMenuProps) => {
   const deleteConfirm = useOpenState()
 
   const handleDelete = async () => {
-    await deleteUser({ userId: user.uid })
+    if (user.resourceType === 'user') {
+      await deleteUser({ userId: user.resourceId })
+    } else {
+      await deleteInvitation({ invitationId: user.resourceId })
+    }
     deleteConfirm.close()
   }
 
@@ -36,7 +40,7 @@ export const UserMenu = ({ user }: UserMenuProps) => {
       <ConfirmDeleteDialog
         open={deleteConfirm.isOpen}
         onOpenChange={deleteConfirm.setIsOpen}
-        entityName="user"
+        entityName={user.resourceType}
         itemName={getUserName(user)}
         onDelete={handleDelete}
       />

@@ -6,6 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 'use server'
+import { deleteDoc } from '@firebase/firestore'
 import { revalidatePath } from 'next/cache'
 import { getAuthenticatedOnlyApp } from '@/modules/firebase/guards'
 import { routes } from '@/modules/routes'
@@ -13,6 +14,14 @@ import { routes } from '@/modules/routes'
 export const deleteUser = async (payload: { userId: string }) => {
   const { callables } = await getAuthenticatedOnlyApp()
   await callables.deleteUser(payload)
+  revalidatePath(routes.users.index)
+  return 'success'
+}
+
+export const deleteInvitation = async (payload: { invitationId: string }) => {
+  const { docRefs } = await getAuthenticatedOnlyApp()
+  // TODO: https://github.com/StanfordBDHG/ENGAGE-HF-Firebase/issues/38
+  await deleteDoc(docRefs.invitation(payload.invitationId))
   revalidatePath(routes.users.index)
   return 'success'
 }
