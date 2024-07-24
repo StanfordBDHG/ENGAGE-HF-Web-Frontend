@@ -27,7 +27,7 @@ export const MenuLinks = ({ role }: MenuLinksProps) => {
   return (
     <>
       <MenuItem {...hrefProps('/')} label="Home" icon={<Home />} />
-      {role === Role.admin && (
+      {[Role.admin, Role.owner].includes(role) && (
         <MenuItem
           {...hrefProps(routes.users.index)}
           label="Users"
