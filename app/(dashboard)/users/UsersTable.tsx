@@ -18,7 +18,9 @@ import type { User } from './page'
 import { UserMenu } from './UserMenu'
 
 const columnHelper = createColumnHelper<User>()
-
+const columnIds = {
+  organization: 'organization',
+}
 const columns = [
   columnHelper.accessor(
     (user) => (user.resourceType === 'invitation' ? 'invitation' : user.uid),
@@ -50,6 +52,7 @@ const columns = [
     cell: (props) => stringifyRole(props.getValue()),
   }),
   columnHelper.accessor('organization.name', {
+    id: columnIds.organization,
     header: 'Organization',
   }),
   columnHelper.display({
@@ -68,7 +71,7 @@ export const UsersTable = ({ data }: UsersDataTableProps) => {
     () =>
       user.role === Role.admin ?
         columns
-      : columns.filter((column) => column.id !== 'organization.name'),
+      : columns.filter((column) => column.id !== columnIds.organization),
     [user.role],
   )
   return <DataTable columns={visibleColumns} data={data} entityName="users" />
