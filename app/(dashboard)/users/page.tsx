@@ -52,6 +52,7 @@ const getOwnerData = async (organizations: Organization[]) => {
     invitationsQuery: query(
       refs.invitations(),
       where('user.organization', 'in', organizationIds),
+      where('admin', '==', null),
     ),
   }
 }
