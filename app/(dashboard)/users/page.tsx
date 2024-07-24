@@ -91,11 +91,11 @@ const listUsers = async () => {
     { userIds, includeUserData: true },
     ({ auth, user }, id) => ({
       resourceId: id,
+      resourceType: 'user' as const,
       uid: id,
       email: auth.email,
       displayName: auth.displayName,
       organization: organizationMap.get(user?.organization ?? ''),
-      isInvitation: false,
       role:
         adminIds.has(id) ? Role.admin
         : ownersIds.has(id) ? Role.owner
@@ -106,11 +106,11 @@ const listUsers = async () => {
 
   const invitedUsers = invitations.map((invitation) => ({
     resourceId: invitation.id,
+    resourceType: 'invitation' as const,
     uid: invitation.userId,
     email: invitation.auth?.email,
     displayName: invitation.auth?.displayName,
     organization: organizationMap.get(invitation.user?.organization ?? ''),
-    isInvitation: true,
     role:
       invitation.patient ? Role.user
       : invitation.admin ? Role.admin

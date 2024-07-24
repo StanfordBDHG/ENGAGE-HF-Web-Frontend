@@ -22,16 +22,20 @@ const columnHelper = createColumnHelper<User>()
 const columns = [
   columnHelper.accessor('uid', {
     header: 'Id',
-    cell: (props) =>
-      props.row.original.isInvitation ?
-        <Tooltip tooltip="User hasn't logged in yet">
-          <div className="flex items-center gap-2">
-            <Mail className="size-5 text-muted-foreground" />
-            Invitation
-          </div>
-        </Tooltip>
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      : <CopyText className="max-w-[7rem]">{props.getValue()!}</CopyText>,
+    cell: (props) => {
+      const user = props.row.original
+      return (
+        user.resourceType === 'invitation' ?
+          <Tooltip tooltip="User hasn't logged in yet">
+            <div className="flex items-center gap-2">
+              <Mail className="size-5 text-muted-foreground" />
+              Invitation
+            </div>
+          </Tooltip>
+        : user.uid ? <CopyText className="max-w-[7rem]">{user.uid}</CopyText>
+        : '-'
+      )
+    },
   }),
   columnHelper.accessor('displayName', {
     header: 'Name',
