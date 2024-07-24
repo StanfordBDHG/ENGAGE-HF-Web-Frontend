@@ -45,12 +45,15 @@ export const UserMenu = ({ user }: UserMenuProps) => {
         onDelete={handleDelete}
       />
       <RowDropdownMenu>
-        <DropdownMenuItem asChild>
-          <Link href={routes.users.user(user.uid)}>
-            <Pencil />
-            Edit
-          </Link>
-        </DropdownMenuItem>
+        {/* TODO: Support editing invitations */}
+        {user.resourceType === 'user' && (
+          <DropdownMenuItem asChild>
+            <Link href={routes.users.user(user.resourceId)}>
+              <Pencil />
+              Edit
+            </Link>
+          </DropdownMenuItem>
+        )}
         <DropdownMenuItem
           onClick={deleteConfirm.open}
           disabled={authUser.uid === user.uid}
