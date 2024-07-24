@@ -20,7 +20,7 @@ export const UserMenuItem = forwardRef<HTMLButtonElement, UserMenuItemProps>(
   ({ name, img, ...props }, ref) => (
     <Button
       variant="ghost"
-      className="mt-auto !p-2 transition xl:w-full xl:justify-start xl:self-start"
+      className="mb-2 mt-auto !p-2 transition xl:mb-0 xl:w-full xl:justify-start xl:self-start"
       ref={ref}
       {...props}
     >
