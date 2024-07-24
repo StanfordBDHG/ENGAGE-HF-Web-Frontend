@@ -18,6 +18,11 @@ import { Role } from '@/modules/firebase/role'
 import { mapAuthData } from '@/modules/firebase/user'
 import { getDocsData, type Organization } from '@/modules/firebase/utils'
 import { routes } from '@/modules/routes'
+import {
+  getNonAdminInvitations,
+  parseAuthToUser,
+  parseInvitationToUser,
+} from '@/modules/user/queries'
 import { Button } from '@/packages/design-system/src/components/Button'
 import { PageTitle } from '@/packages/design-system/src/molecules/DashboardLayout'
 import { UsersTable } from './UsersTable'
@@ -49,11 +54,7 @@ const getOwnerData = async (organizations: Organization[]) => {
     adminIds: new Set<string>(),
     organizations,
     cliniciansQuery,
-    invitationsQuery: query(
-      refs.invitations(),
-      where('user.organization', 'in', organizationIds),
-      where('admin', '==', null),
-    ),
+    invitationsQuery: getNonAdminInvitations(organizationIds),
   }
 }
 
@@ -90,11 +91,7 @@ const listUsers = async () => {
   const users = await mapAuthData(
     { userIds, includeUserData: true },
     ({ auth, user }, id) => ({
-      resourceId: id,
-      resourceType: 'user' as const,
-      uid: id,
-      email: auth.email,
-      displayName: auth.displayName,
+      ...parseAuthToUser(id, auth),
       organization: organizationMap.get(user?.organization ?? ''),
       role:
         adminIds.has(id) ? Role.admin
@@ -104,19 +101,9 @@ const listUsers = async () => {
     }),
   )
 
-  const invitedUsers = invitations.map((invitation) => ({
-    resourceId: invitation.id,
-    resourceType: 'invitation' as const,
-    uid: invitation.userId,
-    email: invitation.auth?.email,
-    displayName: invitation.auth?.displayName,
-    organization: organizationMap.get(invitation.user?.organization ?? ''),
-    role:
-      invitation.patient ? Role.user
-      : invitation.admin ? Role.admin
-      : invitation.clinician ? Role.clinician
-      : Role.owner, // owner is the only Role that's left
-  }))
+  const invitedUsers = invitations.map((invitation) =>
+    parseInvitationToUser(invitation, organizationMap),
+  )
 
   return [...invitedUsers, ...users]
 }
