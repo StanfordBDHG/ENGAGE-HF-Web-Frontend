@@ -32,7 +32,6 @@ interface UserPageProps {
 }
 
 const UserPage = async ({ params }: UserPageProps) => {
-  // TODO: Validate against patient
   await allowRoles([Role.admin, Role.owner])
   const { refs, docRefs } = await getAuthenticatedOnlyApp()
   const userId = params.id
@@ -41,7 +40,8 @@ const UserPage = async ({ params }: UserPageProps) => {
     ...data,
   }))
   const authUser = allAuthData.at(0)?.auth
-  if (!authUser) {
+  const { role } = await getUserRole(userId)
+  if (!authUser || role === Role.user) {
     notFound()
   }
   const organizations = await getDocsData(refs.organizations())
@@ -52,8 +52,6 @@ const UserPage = async ({ params }: UserPageProps) => {
       `Malfunction of the data, user doc doesn't exist for ${userId}`,
     )
   }
-
-  const { role } = await getUserRole(userId)
 
   const updateUser = async (form: UserFormSchema) => {
     'use server'
