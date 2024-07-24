@@ -8,7 +8,9 @@
 'use client'
 import { createColumnHelper } from '@tanstack/table-core'
 import { Mail } from 'lucide-react'
-import { stringifyRole } from '@/modules/firebase/role'
+import { useMemo } from 'react'
+import { Role, stringifyRole } from '@/modules/firebase/role'
+import { useUser } from '@/modules/firebase/UserProvider'
 import { CopyText } from '@/packages/design-system/src/components/CopyText'
 import { DataTable } from '@/packages/design-system/src/components/DataTable'
 import { Tooltip } from '@/packages/design-system/src/components/Tooltip'
@@ -40,6 +42,9 @@ const columns = [
     header: 'Role',
     cell: (props) => stringifyRole(props.getValue()),
   }),
+  columnHelper.accessor('organization.name', {
+    header: 'Organization',
+  }),
   columnHelper.display({
     id: 'actions',
     cell: (props) => <UserMenu user={props.row.original} />,
@@ -50,6 +55,14 @@ interface UsersDataTableProps {
   data: User[]
 }
 
-export const UsersTable = ({ data }: UsersDataTableProps) => (
-  <DataTable columns={columns} data={data} entityName="users" />
-)
+export const UsersTable = ({ data }: UsersDataTableProps) => {
+  const user = useUser()
+  const visibleColumns = useMemo(
+    () =>
+      user.role === Role.admin ?
+        columns
+      : columns.filter((column) => column.id !== 'organization.name'),
+    [user.role],
+  )
+  return <DataTable columns={visibleColumns} data={data} entityName="users" />
+}
