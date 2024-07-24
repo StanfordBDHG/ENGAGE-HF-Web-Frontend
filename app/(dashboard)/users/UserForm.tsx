@@ -163,7 +163,7 @@ export const UserForm = ({
         )}
       />
       <Button type="submit" isPending={form.formState.isSubmitting}>
-        {isEdit ? 'Edit' : 'Create'} user
+        {isEdit ? 'Edit' : 'Invite'} user
       </Button>
     </form>
   )
