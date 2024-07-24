@@ -8,7 +8,7 @@
 'use client'
 import { createColumnHelper } from '@tanstack/table-core'
 import { useMemo } from 'react'
-import { Role } from '@/modules/firebase/role'
+import { Role, stringifyRole } from '@/modules/firebase/role'
 import { useUser } from '@/modules/firebase/UserProvider'
 import { createSharedUserColumns } from '@/modules/user/table'
 import { DataTable } from '@/packages/design-system/src/components/DataTable'
@@ -24,6 +24,10 @@ const columns = [
   userColumns.id,
   userColumns.displayName,
   userColumns.email,
+  columnHelper.accessor('role', {
+    header: 'Role',
+    cell: (props) => stringifyRole(props.getValue()),
+  }),
   columnHelper.accessor('organization.name', {
     id: columnIds.organization,
     header: 'Organization',
