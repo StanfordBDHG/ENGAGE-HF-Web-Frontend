@@ -20,23 +20,26 @@ import { UserMenu } from './UserMenu'
 const columnHelper = createColumnHelper<User>()
 
 const columns = [
-  columnHelper.accessor('uid', {
-    header: 'Id',
-    cell: (props) => {
-      const user = props.row.original
-      return (
-        user.resourceType === 'invitation' ?
-          <Tooltip tooltip="User hasn't logged in yet">
-            <div className="flex items-center gap-2">
-              <Mail className="size-5 text-muted-foreground" />
-              Invitation
-            </div>
-          </Tooltip>
-        : user.uid ? <CopyText className="max-w-[7rem]">{user.uid}</CopyText>
-        : '-'
-      )
+  columnHelper.accessor(
+    (user) => (user.resourceType === 'invitation' ? 'invitation' : user.uid),
+    {
+      header: 'Id',
+      cell: (props) => {
+        const user = props.row.original
+        return (
+          user.resourceType === 'invitation' ?
+            <Tooltip tooltip="User hasn't logged in yet">
+              <div className="flex items-center gap-2">
+                <Mail className="size-5 text-muted-foreground" />
+                Invitation
+              </div>
+            </Tooltip>
+          : user.uid ? <CopyText className="max-w-[7rem]">{user.uid}</CopyText>
+          : '-'
+        )
+      },
     },
-  }),
+  ),
   columnHelper.accessor('displayName', {
     header: 'Name',
     cell: (props) => props.getValue() ?? '-',
