@@ -42,7 +42,7 @@ const getOwnerData = async (organizations: Organization[]) => {
   const organizationIds = organizations.map((organization) => organization.id)
   const cliniciansQuery = query(
     refs.clinicians(),
-    where('organization', 'in', organizationIds),
+    where('organization', 'in', organizationIds), // TODO: NO LONGER EXISTS
   )
 
   return {
