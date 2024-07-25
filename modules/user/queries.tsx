@@ -4,7 +4,7 @@ import { Role } from '@/modules/firebase/role'
 import {
   type Invitation,
   type Organization,
-  UserAuthenticationInformation,
+  type UserAuthenticationInformation,
 } from '@/modules/firebase/utils'
 
 export const getNonAdminInvitations = async (organizationIds: string[]) => {
@@ -17,7 +17,7 @@ export const getNonAdminInvitations = async (organizationIds: string[]) => {
 }
 
 export const parseInvitationToUser = (
-  invitation: Invitation,
+  invitation: Invitation & { id: string },
   organizationMap: Map<string, Organization>,
 ) => ({
   resourceId: invitation.id,

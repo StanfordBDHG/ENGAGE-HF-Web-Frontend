@@ -8,7 +8,10 @@
 'use client'
 import { Pencil, Trash } from 'lucide-react'
 import Link from 'next/link'
-import { deletePatient } from '@/app/(dashboard)/patients/actions'
+import {
+  deletePatient,
+  deleteInvitation,
+} from '@/app/(dashboard)/patients/actions'
 import type { Patient } from '@/app/(dashboard)/patients/page'
 import { routes } from '@/modules/routes'
 import { RowDropdownMenu } from '@/packages/design-system/src/components/DataTable'
@@ -25,7 +28,11 @@ export const PatientMenu = ({ patient }: PatientMenuProps) => {
   const deleteConfirm = useOpenState()
 
   const handleDelete = async () => {
-    await deletePatient({ userId: patient.uid })
+    if (patient.resourceType === 'user') {
+      await deletePatient({ userId: patient.resourceId })
+    } else {
+      await deleteInvitation({ invitationId: patient.resourceId })
+    }
     deleteConfirm.close()
   }
 
@@ -39,12 +46,14 @@ export const PatientMenu = ({ patient }: PatientMenuProps) => {
         onDelete={handleDelete}
       />
       <RowDropdownMenu>
-        <DropdownMenuItem asChild>
-          <Link href={routes.patients.patient(patient.uid)}>
-            <Pencil />
-            Edit
-          </Link>
-        </DropdownMenuItem>
+        {patient.resourceType === 'user' && (
+          <DropdownMenuItem asChild>
+            <Link href={routes.patients.patient(patient.resourceId)}>
+              <Pencil />
+              Edit
+            </Link>
+          </DropdownMenuItem>
+        )}
         <DropdownMenuItem onClick={deleteConfirm.open}>
           <Trash />
           Delete
