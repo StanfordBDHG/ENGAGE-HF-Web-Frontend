@@ -41,18 +41,8 @@ const PatientPage = async ({ params }: PatientPageProps) => {
   if (!authUser) {
     notFound()
   }
-  const organizations = await getDocsData(refs.organizations())
-  const user = await getDocData(docRefs.user(userId))
-  const patient = await getDocData(docRefs.patient(userId))
-
-  if (!user)
-    throw new Error(
-      `Malfunction of the data, user doc doesn't exist for ${userId}`,
-    )
-  if (!patient)
-    throw new Error(
-      `Malfunction of the data, patient doc doesn't exist for ${userId}`,
-    )
+  const user = await getDocDataOrThrow(docRefs.user(userId))
+  const patient = await getDocDataOrThrow(docRefs.patient(userId))
 
   const updatePatient = async (form: PatientFormSchema) => {
     'use server'

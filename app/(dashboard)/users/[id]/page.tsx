@@ -18,6 +18,7 @@ import { Role } from '@/modules/firebase/role'
 import { mapAuthData } from '@/modules/firebase/user'
 import {
   getDocData,
+  getDocDataOrThrow,
   getDocsData,
   updateDocData,
 } from '@/modules/firebase/utils'
@@ -45,13 +46,7 @@ const UserPage = async ({ params }: UserPageProps) => {
     notFound()
   }
   const organizations = await getDocsData(refs.organizations())
-  const user = await getDocData(docRefs.user(userId))
-
-  if (!user) {
-    throw new Error(
-      `Malfunction of the data, user doc doesn't exist for ${userId}`,
-    )
-  }
+  const user = await getDocDataOrThrow(docRefs.user(userId))
 
   const updateUser = async (form: UserFormSchema) => {
     'use server'
