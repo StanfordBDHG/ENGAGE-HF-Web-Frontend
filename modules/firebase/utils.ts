@@ -210,6 +210,15 @@ export const getDocData = async <T>(reference: DocumentReference<T>) => {
     : undefined
 }
 
+export const getDocDataOrThrow = async <T>(reference: DocumentReference<T>) => {
+  const doc = await getDoc(reference)
+  const data = doc.data()
+  if (!data) {
+    throw new Error(`Doc not found: ${reference.path}`)
+  }
+  return data
+}
+
 export const getDocsData = async <T>(query: Query<T>) => {
   const docs = await getDocs(query)
   return docs.docs.map((doc) => {
