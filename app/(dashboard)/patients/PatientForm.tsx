@@ -27,6 +27,7 @@ export const patientFormSchema = z.object({
   email: z.string().min(1, 'Email is required'),
   displayName: z.string(),
   invitationCode: z.string(),
+  clinician: z.string(),
   organizationId: z.string().optional(),
 })
 
@@ -34,6 +35,10 @@ export type PatientFormSchema = z.infer<typeof patientFormSchema>
 
 interface PatientFormProps {
   organizations: Array<Pick<Organization, 'name' | 'id'>>
+  clinicians: Array<{
+    id: string
+    name: string
+  }>
   userInfo?: Pick<UserInfo, 'email' | 'displayName' | 'uid'>
   user?: Pick<User, 'organization' | 'invitationCode'>
   onSubmit: (data: PatientFormSchema) => Promise<void>
@@ -42,6 +47,7 @@ interface PatientFormProps {
 export const PatientForm = ({
   organizations,
   user,
+  clinicians,
   userInfo,
   onSubmit,
 }: PatientFormProps) => {
@@ -107,6 +113,25 @@ export const PatientForm = ({
           )}
         />
       )}
+      <Field
+        control={form.control}
+        name="clinician"
+        label="Clinician"
+        render={({ field }) => (
+          <Select onValueChange={field.onChange} {...field}>
+            <SelectTrigger>
+              <SelectValue placeholder="Clinician" />
+            </SelectTrigger>
+            <SelectContent>
+              {clinicians.map((clinician) => (
+                <SelectItem value={clinician.id} key={clinician.id}>
+                  {clinician.name}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        )}
+      />
       <Button type="submit" isPending={form.formState.isSubmitting}>
         {isEdit ? 'Edit' : 'Invite'} patient
       </Button>

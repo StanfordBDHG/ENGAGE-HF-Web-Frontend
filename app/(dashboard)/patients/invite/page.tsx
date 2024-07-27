@@ -7,17 +7,14 @@
 //
 import { Contact } from 'lucide-react'
 import { redirect } from 'next/navigation'
+import { getFormProps } from '@/app/(dashboard)/patients/utils'
 import { getAuthenticatedOnlyApp } from '@/modules/firebase/guards'
-import { getDocsData } from '@/modules/firebase/utils'
 import { routes } from '@/modules/routes'
 import { PageTitle } from '@/packages/design-system/src/molecules/DashboardLayout'
 import { DashboardLayout } from '../../DashboardLayout'
 import { PatientForm, type PatientFormSchema } from '../PatientForm'
 
 const InvitePatientPage = async () => {
-  const { refs } = await getAuthenticatedOnlyApp()
-  const organizations = await getDocsData(refs.organizations())
-
   const invitePatient = async (form: PatientFormSchema) => {
     'use server'
     const { callables } = await getAuthenticatedOnlyApp()
@@ -29,7 +26,10 @@ const InvitePatientPage = async () => {
         photoURL: null,
       },
       // TODO
-      patient: {},
+      patient: {
+        clinician: form.clinician,
+        dateOfBirth: form.dateOfBirth,
+      },
       user: { organization: form.organizationId },
     })
     redirect(routes.patients.index)
@@ -40,7 +40,7 @@ const InvitePatientPage = async () => {
     <DashboardLayout
       title={<PageTitle title="Invite patient" icon={<Contact />} />}
     >
-      <PatientForm organizations={organizations} onSubmit={invitePatient} />
+      <PatientForm onSubmit={invitePatient} {...await getFormProps()} />
     </DashboardLayout>
   )
 }

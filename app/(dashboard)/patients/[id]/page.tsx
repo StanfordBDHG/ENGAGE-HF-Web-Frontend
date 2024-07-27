@@ -13,32 +13,30 @@ import {
   PatientForm,
   type PatientFormSchema,
 } from '@/app/(dashboard)/patients/PatientForm'
-import { getAuthenticatedOnlyApp } from '@/modules/firebase/guards'
+import { getFormProps } from '@/app/(dashboard)/patients/utils'
+import { getAuthenticatedOnlyApp, getUserRole } from '@/modules/firebase/guards'
 import { mapAuthData } from '@/modules/firebase/user'
-import {
-  getDocData,
-  getDocsData,
-  updateDocData,
-} from '@/modules/firebase/utils'
+import { getDocDataOrThrow, updateDocData } from '@/modules/firebase/utils'
 import { routes } from '@/modules/routes'
 import { getUserName } from '@/packages/design-system/src/modules/auth/user'
 import { PageTitle } from '@/packages/design-system/src/molecules/DashboardLayout'
 import { DashboardLayout } from '../../DashboardLayout'
+import { Role } from '@/modules/firebase/role'
 
 interface PatientPageProps {
   params: { id: string }
 }
 
 const PatientPage = async ({ params }: PatientPageProps) => {
-  // TODO: Validate against non-patient
-  const { refs, docRefs } = await getAuthenticatedOnlyApp()
+  const { docRefs } = await getAuthenticatedOnlyApp()
   const userId = params.id
   const allAuthData = await mapAuthData({ userIds: [userId] }, (data, id) => ({
     uid: id,
     ...data,
   }))
   const authUser = allAuthData.at(0)?.auth
-  if (!authUser) {
+  const userRole = await getUserRole(userId)
+  if (!authUser || userRole.role !== Role.user) {
     notFound()
   }
   const user = await getDocDataOrThrow(docRefs.user(userId))
@@ -78,10 +76,10 @@ const PatientPage = async ({ params }: PatientPageProps) => {
       }
     >
       <PatientForm
-        organizations={organizations}
         user={user}
         userInfo={authUser}
         onSubmit={updatePatient}
+        {...await getFormProps()}
       />
     </DashboardLayout>
   )
