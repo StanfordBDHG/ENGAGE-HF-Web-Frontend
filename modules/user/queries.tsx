@@ -1,7 +1,11 @@
 import { query, where } from 'firebase/firestore'
-import { getAuthenticatedOnlyApp } from '@/modules/firebase/guards'
+import {
+  getAuthenticatedOnlyApp,
+  getCurrentUserRole,
+} from '@/modules/firebase/guards'
 import { Role } from '@/modules/firebase/role'
 import {
+  getDocsData,
   type Invitation,
   type Organization,
   type UserAuthenticationInformation,
@@ -43,3 +47,9 @@ export const parseAuthToUser = (
   email: auth.email,
   displayName: auth.displayName,
 })
+
+export const getUserOrganizations = async () => {
+  const { refs, currentUser } = await getAuthenticatedOnlyApp()
+  const { role } = await getCurrentUserRole()
+  if (role === Role.admin) return getDocsData(refs.organizations())
+}
