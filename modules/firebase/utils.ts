@@ -27,7 +27,11 @@ export interface Organization {
   owners: string[]
 }
 
-export interface Admin {}
+export interface Invitation {
+  userId?: string
+  auth?: UserAuth
+  user?: User
+}
 
 export interface UserMessagesSettings {
   dailyRemindersAreActive?: boolean
@@ -35,43 +39,38 @@ export interface UserMessagesSettings {
   medicationRemindersAreActive?: boolean
 }
 
+export enum UserType {
+  admin = 'admin',
+  clinician = 'clinician',
+  patient = 'patient',
+}
+
 export interface User {
-  dateOfEnrollment: Date
-  invitationCode: string
+  type?: UserType
+  dateOfBirth?: Date
+  clinician?: string
+  dateOfEnrollment?: Date
+  invitationCode?: string
   messagesSettings?: UserMessagesSettings
   organization?: string
   language?: string
   timeZone?: string
 }
 
-export interface Patient {
-  dateOfBirth: Date
-  clinician?: string
-}
-
-export interface Clinician {}
-
-export interface Invitation {
-  userId?: string
-  auth?: UserAuthenticationInformation
-  admin?: Admin
-  clinician?: Clinician
-  patient?: Patient
-  user?: User
+export interface UserAuth {
+  displayName?: string
+  email?: string
+  phoneNumber?: string
+  photoURL?: string
 }
 
 export const collectionNames = {
-  patients: 'patients',
   invitations: 'invitations',
   users: 'users',
-  admins: 'admins',
-  clinicians: 'clinicians',
   organizations: 'organizations',
 }
 
 export const getCollectionRefs = (db: Firestore) => ({
-  patients: () =>
-    collection(db, collectionNames.patients) as CollectionReference<Patient>,
   users: () =>
     collection(db, collectionNames.users) as CollectionReference<User>,
   invitations: () =>
@@ -79,13 +78,6 @@ export const getCollectionRefs = (db: Firestore) => ({
       db,
       collectionNames.invitations,
     ) as CollectionReference<Invitation>,
-  admins: () =>
-    collection(db, collectionNames.admins) as CollectionReference<Admin>,
-  clinicians: () =>
-    collection(
-      db,
-      collectionNames.clinicians,
-    ) as CollectionReference<Clinician>,
   organizations: () =>
     collection(
       db,
@@ -94,28 +86,14 @@ export const getCollectionRefs = (db: Firestore) => ({
 })
 
 export const getDocumentsRefs = (db: Firestore) => ({
-  patient: (...segments: string[]) =>
-    doc(
-      db,
-      collectionNames.patients,
-      ...segments,
-    ) as DocumentReference<Patient>,
   user: (...segments: string[]) =>
     doc(db, collectionNames.users, ...segments) as DocumentReference<User>,
-  admin: (...segments: string[]) =>
-    doc(db, collectionNames.admins, ...segments) as DocumentReference<Admin>,
   invitation: (...segments: string[]) =>
     doc(
       db,
       collectionNames.invitations,
       ...segments,
     ) as DocumentReference<Invitation>,
-  clinician: (...segments: string[]) =>
-    doc(
-      db,
-      collectionNames.clinicians,
-      ...segments,
-    ) as DocumentReference<Clinician>,
   organization: (...segments: string[]) =>
     doc(
       db,
@@ -153,50 +131,46 @@ export interface GetUsersInformationInput {
 
 export const getCallables = (functions: Functions) => ({
   seedEmulator: httpsCallable(functions, 'seedEmulator'),
+  createInvitation: httpsCallable<
+    {
+      auth: {
+        displayName?: string
+        email: string
+        phoneNumber?: string
+        photoURL?: string
+      }
+      user: {
+        type: UserType
+        organization?: string
+        clinician?: string
+        language?: string
+        timeZone?: string
+      }
+    },
+    { code: string }
+  >(functions, 'createInvitation'),
   getUsersInformation: httpsCallable<
-    GetUsersInformationInput,
+    { includeUserData?: string; userIds: string[] },
     Record<string, Result<UserInformation>>
   >(functions, 'getUsersInformation'),
-  grantOwner: httpsCallable<
-    {
-      userId?: string
-      organizationId?: string
-    },
-    string
-  >(functions, 'grantOwner'),
-  revokeOwner: httpsCallable<
-    {
-      userId?: string
-      organizationId?: string
-    },
-    string
-  >(functions, 'revokeOwner'),
-  grantAdmin: httpsCallable<{ userId?: string }, string>(
-    functions,
-    'grantAdmin',
-  ),
-  revokeAdmin: httpsCallable<{ userId?: string }, string>(
-    functions,
-    'revokeAdmin',
-  ),
-  updateUserInformation: httpsCallable<
-    { userId?: string; data: UserInformation },
-    string
-  >(functions, 'updateUserInformation'),
-  deleteUser: httpsCallable<{ userId: string }, string>(
+  deleteUser: httpsCallable<{ userId: string }, undefined>(
     functions,
     'deleteUser',
   ),
-  createInvitation: httpsCallable<
+  updateUserInformation: httpsCallable<
     {
-      auth?: UserAuthenticationInformation
-      admin?: Admin
-      clinician?: Clinician
-      patient?: Patient
-      user?: User
+      userId: string
+      data: {
+        auth: {
+          displayName?: string
+          email?: string
+          phoneNumber?: string
+          photoURL?: string
+        }
+      }
     },
     undefined
-  >(functions, 'createInvitation'),
+  >(functions, 'updateUserInformation'),
 })
 
 export const getDocData = async <T>(reference: DocumentReference<T>) => {
