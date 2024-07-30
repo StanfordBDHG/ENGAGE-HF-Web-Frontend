@@ -131,7 +131,6 @@ export interface GetUsersInformationInput {
 }
 
 export const getCallables = (functions: Functions) => ({
-  seedEmulator: httpsCallable(functions, 'seedEmulator'),
   createInvitation: httpsCallable<
     {
       auth: {
