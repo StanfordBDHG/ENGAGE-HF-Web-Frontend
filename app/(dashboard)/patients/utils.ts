@@ -10,7 +10,6 @@ import { getAuthenticatedOnlyApp } from '@/modules/firebase/guards'
 import { mapAuthData } from '@/modules/firebase/user'
 import { getDocsData, UserType } from '@/modules/firebase/utils'
 
-
 export const getUserClinicians = async () => {
   const { user, refs } = await getAuthenticatedOnlyApp()
   let usersQuery = query(
