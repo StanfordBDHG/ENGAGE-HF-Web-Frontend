@@ -9,6 +9,7 @@ import { query, where } from 'firebase/firestore'
 import { getAuthenticatedOnlyApp } from '@/modules/firebase/guards'
 import { mapAuthData } from '@/modules/firebase/user'
 import { getDocsData, UserType } from '@/modules/firebase/utils'
+import { getUserOrganizations } from '@/modules/user/queries'
 
 export const getUserClinicians = async () => {
   const { user, refs } = await getAuthenticatedOnlyApp()
@@ -33,10 +34,7 @@ export const getUserClinicians = async () => {
   )
 }
 
-export const getFormProps = async () => {
-  const { refs } = await getAuthenticatedOnlyApp()
-  return {
-    clinicians: await getUserClinicians(),
-    organizations: await getDocsData(refs.organizations()),
-  }
-}
+export const getFormProps = async () => ({
+  clinicians: await getUserClinicians(),
+  organizations: await getUserOrganizations(),
+})
