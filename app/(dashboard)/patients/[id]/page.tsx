@@ -5,7 +5,7 @@
 //
 // SPDX-License-Identifier: MIT
 //
-import { deleteField, updateDoc } from '@firebase/firestore'
+import { updateDoc } from '@firebase/firestore'
 import { Contact } from 'lucide-react'
 import { revalidatePath } from 'next/cache'
 import { notFound } from 'next/navigation'
@@ -53,11 +53,12 @@ const PatientPage = async ({ params }: PatientPageProps) => {
       },
     })
     const userRef = docRefs.user(userId)
+    const clinician = await getDocDataOrThrow(docRefs.user(form.clinician))
     await updateDoc(userRef, {
       invitationCode: form.invitationCode,
-      organization: form.organizationId ?? deleteField(),
+      clinician: form.clinician,
+      organization: clinician.organization,
     })
-    // TODO: Update patient
     revalidatePath(routes.users.index)
   }
 
