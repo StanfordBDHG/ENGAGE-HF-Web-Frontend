@@ -16,6 +16,8 @@ import { DashboardLayout } from '../../DashboardLayout'
 import { PatientForm, type PatientFormSchema } from '../PatientForm'
 
 const InvitePatientPage = async () => {
+  const { user, currentUser } = await getAuthenticatedOnlyApp()
+
   const invitePatient = async (form: PatientFormSchema) => {
     'use server'
     const { callables, docRefs } = await getAuthenticatedOnlyApp()
@@ -39,7 +41,13 @@ const InvitePatientPage = async () => {
     <DashboardLayout
       title={<PageTitle title="Invite patient" icon={<Contact />} />}
     >
-      <PatientForm onSubmit={invitePatient} {...await getFormProps()} />
+      <PatientForm
+        onSubmit={invitePatient}
+        clinicianPreselectId={
+          user.type === UserType.admin ? undefined : currentUser.uid
+        }
+        {...await getFormProps()}
+      />
     </DashboardLayout>
   )
 }

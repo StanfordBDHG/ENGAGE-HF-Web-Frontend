@@ -42,6 +42,7 @@ interface PatientFormProps {
   userInfo?: Pick<UserInfo, 'email' | 'displayName' | 'uid'>
   user?: Pick<User, 'organization' | 'invitationCode' | 'clinician'>
   onSubmit: (data: PatientFormSchema) => Promise<void>
+  clinicianPreselectId?: string
 }
 
 export const PatientForm = ({
@@ -49,6 +50,7 @@ export const PatientForm = ({
   clinicians,
   userInfo,
   onSubmit,
+  clinicianPreselectId,
 }: PatientFormProps) => {
   const isEdit = !!user
   const form = useForm({
@@ -57,7 +59,7 @@ export const PatientForm = ({
       email: userInfo?.email ?? '',
       displayName: userInfo?.displayName ?? '',
       invitationCode: user?.invitationCode ?? '',
-      clinician: user?.clinician ?? '',
+      clinician: user?.clinician ?? clinicianPreselectId ?? '',
     },
   })
 
