@@ -7,7 +7,10 @@
 //
 'use client'
 import { createColumnHelper } from '@tanstack/table-core'
-import { createSharedUserColumns } from '@/modules/user/table'
+import { useMemo } from 'react'
+import { useUser } from '@/modules/firebase/UserProvider'
+import { UserType } from '@/modules/firebase/utils'
+import { createSharedUserColumns, userColumnIds } from '@/modules/user/table'
 import { DataTable } from '@/packages/design-system/src/components/DataTable'
 import type { Patient } from './page'
 import { PatientMenu } from './PatientMenu'
@@ -29,6 +32,16 @@ interface PatientsDataTableProps {
   data: Patient[]
 }
 
-export const PatientsTable = ({ data }: PatientsDataTableProps) => (
-  <DataTable columns={columns} data={data} entityName="patients" />
-)
+export const PatientsTable = ({ data }: PatientsDataTableProps) => {
+  const user = useUser()
+  const visibleColumns = useMemo(
+    () =>
+      user.user.type === UserType.admin ?
+        columns
+      : columns.filter((column) => column.id !== userColumnIds.organization),
+    [user.user.type],
+  )
+  return (
+    <DataTable columns={visibleColumns} data={data} entityName="patients" />
+  )
+}

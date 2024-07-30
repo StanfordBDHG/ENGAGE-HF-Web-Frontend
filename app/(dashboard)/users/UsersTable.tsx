@@ -11,15 +11,12 @@ import { useMemo } from 'react'
 import { stringifyType } from '@/modules/firebase/role'
 import { useUser } from '@/modules/firebase/UserProvider'
 import { UserType } from '@/modules/firebase/utils'
-import { createSharedUserColumns } from '@/modules/user/table'
+import { createSharedUserColumns, userColumnIds } from '@/modules/user/table'
 import { DataTable } from '@/packages/design-system/src/components/DataTable'
 import type { User } from './page'
 import { UserMenu } from './UserMenu'
 
 const columnHelper = createColumnHelper<User>()
-const columnIds = {
-  organization: 'organization',
-}
 const userColumns = createSharedUserColumns<User>()
 const columns = [
   userColumns.id,
@@ -32,10 +29,7 @@ const columns = [
       return value ? stringifyType(value) : '-'
     },
   }),
-  columnHelper.accessor('organization.name', {
-    id: columnIds.organization,
-    header: 'Organization',
-  }),
+  userColumns.organization,
   columnHelper.display({
     id: 'actions',
     cell: (props) => <UserMenu user={props.row.original} />,
@@ -52,7 +46,7 @@ export const UsersTable = ({ data }: UsersDataTableProps) => {
     () =>
       user.user.type === UserType.admin ?
         columns
-      : columns.filter((column) => column.id !== columnIds.organization),
+      : columns.filter((column) => column.id !== userColumnIds.organization),
     [user.user.type],
   )
   return <DataTable columns={visibleColumns} data={data} entityName="users" />
