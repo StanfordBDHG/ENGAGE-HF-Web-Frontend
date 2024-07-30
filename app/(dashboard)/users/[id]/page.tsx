@@ -5,23 +5,13 @@
 //
 // SPDX-License-Identifier: MIT
 //
-import { deleteField, setDoc } from '@firebase/firestore'
+import { deleteField, updateDoc } from '@firebase/firestore'
 import { Users } from 'lucide-react'
 import { revalidatePath } from 'next/cache'
 import { notFound } from 'next/navigation'
-import {
-  allowRoles,
-  getAuthenticatedOnlyApp,
-  getUserRole,
-} from '@/modules/firebase/guards'
-import { Role } from '@/modules/firebase/role'
+import { allowTypes, getAuthenticatedOnlyApp } from '@/modules/firebase/guards'
 import { mapAuthData } from '@/modules/firebase/user'
-import {
-  getDocData,
-  getDocDataOrThrow,
-  getDocsData,
-  updateDocData,
-} from '@/modules/firebase/utils'
+import { getDocData, getDocsData, UserType } from '@/modules/firebase/utils'
 import { routes } from '@/modules/routes'
 import { getUserName } from '@/packages/design-system/src/modules/auth/user'
 import { PageTitle } from '@/packages/design-system/src/molecules/DashboardLayout'
@@ -33,20 +23,20 @@ interface UserPageProps {
 }
 
 const UserPage = async ({ params }: UserPageProps) => {
-  await allowRoles([Role.admin, Role.owner])
+  await allowTypes([UserType.admin, UserType.owner])
   const { refs, docRefs } = await getAuthenticatedOnlyApp()
   const userId = params.id
   const allAuthData = await mapAuthData({ userIds: [userId] }, (data, id) => ({
     uid: id,
-    ...data,
+    email: data.auth.email,
+    displayName: data.auth.displayName,
   }))
-  const authUser = allAuthData.at(0)?.auth
-  const { role } = await getUserRole(userId)
-  if (!authUser || role === Role.user) {
+  const authUser = allAuthData.at(0)
+  const user = await getDocData(docRefs.user(userId))
+  if (!authUser || !user || user.type === UserType.patient) {
     notFound()
   }
   const organizations = await getDocsData(refs.organizations())
-  const user = await getDocDataOrThrow(docRefs.user(userId))
 
   const updateUser = async (form: UserFormSchema) => {
     'use server'
@@ -57,40 +47,15 @@ const UserPage = async ({ params }: UserPageProps) => {
         auth: {
           displayName: form.displayName,
           email: form.email,
-          phoneNumber: null,
-          photoURL: null,
         },
       },
     })
     const userRef = docRefs.user(userId)
-    await updateDocData(userRef, {
+    await updateDoc(userRef, {
       invitationCode: form.invitationCode,
       organization: form.organizationId ?? deleteField(),
+      type: form.type,
     })
-
-    if (role === Role.admin && form.role !== Role.admin) {
-      await callables.revokeAdmin({ userId })
-    } else if (
-      role === Role.owner &&
-      (form.role !== Role.owner || user.organization !== form.organizationId)
-    ) {
-      await callables.revokeOwner({
-        userId,
-        organizationId: user.organization,
-      })
-    }
-    if (form.role === Role.admin) {
-      await callables.grantAdmin({ userId })
-    } else if (form.role === Role.owner) {
-      await callables.grantOwner({
-        userId,
-        organizationId: form.organizationId,
-      })
-    } else {
-      const ref = docRefs.clinician(userId)
-      const clinician = await getDocData(ref)
-      if (!clinician) await setDoc(ref, {})
-    }
     revalidatePath(routes.users.index)
   }
 
@@ -106,7 +71,7 @@ const UserPage = async ({ params }: UserPageProps) => {
     >
       <UserForm
         organizations={organizations}
-        role={role}
+        type={user.type}
         user={user}
         userInfo={authUser}
         onSubmit={updateUser}

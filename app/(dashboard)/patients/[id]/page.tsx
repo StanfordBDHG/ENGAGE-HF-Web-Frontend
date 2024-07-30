@@ -5,7 +5,7 @@
 //
 // SPDX-License-Identifier: MIT
 //
-import { deleteField } from '@firebase/firestore'
+import { deleteField, updateDoc } from '@firebase/firestore'
 import { Contact } from 'lucide-react'
 import { revalidatePath } from 'next/cache'
 import { notFound } from 'next/navigation'
@@ -14,14 +14,13 @@ import {
   type PatientFormSchema,
 } from '@/app/(dashboard)/patients/PatientForm'
 import { getFormProps } from '@/app/(dashboard)/patients/utils'
-import { getAuthenticatedOnlyApp, getUserRole } from '@/modules/firebase/guards'
+import { getAuthenticatedOnlyApp } from '@/modules/firebase/guards'
 import { mapAuthData } from '@/modules/firebase/user'
-import { getDocDataOrThrow, updateDocData } from '@/modules/firebase/utils'
+import { getDocDataOrThrow, UserType } from '@/modules/firebase/utils'
 import { routes } from '@/modules/routes'
 import { getUserName } from '@/packages/design-system/src/modules/auth/user'
 import { PageTitle } from '@/packages/design-system/src/molecules/DashboardLayout'
 import { DashboardLayout } from '../../DashboardLayout'
-import { Role } from '@/modules/firebase/role'
 
 interface PatientPageProps {
   params: { id: string }
@@ -32,15 +31,14 @@ const PatientPage = async ({ params }: PatientPageProps) => {
   const userId = params.id
   const allAuthData = await mapAuthData({ userIds: [userId] }, (data, id) => ({
     uid: id,
-    ...data,
+    email: data.auth.email,
+    displayName: data.auth.displayName,
   }))
-  const authUser = allAuthData.at(0)?.auth
-  const userRole = await getUserRole(userId)
-  if (!authUser || userRole.role !== Role.user) {
+  const authUser = allAuthData.at(0)
+  const user = await getDocDataOrThrow(docRefs.user(userId))
+  if (!authUser || user.type !== UserType.patient) {
     notFound()
   }
-  const user = await getDocDataOrThrow(docRefs.user(userId))
-  const patient = await getDocDataOrThrow(docRefs.patient(userId))
 
   const updatePatient = async (form: PatientFormSchema) => {
     'use server'
@@ -51,13 +49,11 @@ const PatientPage = async ({ params }: PatientPageProps) => {
         auth: {
           displayName: form.displayName,
           email: form.email,
-          phoneNumber: null,
-          photoURL: null,
         },
       },
     })
     const userRef = docRefs.user(userId)
-    await updateDocData(userRef, {
+    await updateDoc(userRef, {
       invitationCode: form.invitationCode,
       organization: form.organizationId ?? deleteField(),
     })

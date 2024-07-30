@@ -8,15 +8,15 @@
 'use client'
 import { Home, Users, Contact } from 'lucide-react'
 import { usePathname } from 'next/navigation'
-import { Role } from '@/modules/firebase/role'
+import { UserType } from '@/modules/firebase/utils'
 import { routes } from '@/modules/routes'
 import { MenuItem } from '@stanfordbdhg/design-system/molecules/DashboardLayout'
 
 interface MenuLinksProps {
-  role: Role
+  userType: UserType
 }
 
-export const MenuLinks = ({ role }: MenuLinksProps) => {
+export const MenuLinks = ({ userType }: MenuLinksProps) => {
   const pathname = usePathname()
 
   const hrefProps = (href: string) => ({
@@ -27,7 +27,7 @@ export const MenuLinks = ({ role }: MenuLinksProps) => {
   return (
     <>
       <MenuItem {...hrefProps('/')} label="Home" icon={<Home />} />
-      {[Role.admin, Role.owner].includes(role) && (
+      {[UserType.admin, UserType.owner].includes(userType) && (
         <MenuItem
           {...hrefProps(routes.users.index)}
           label="Users"

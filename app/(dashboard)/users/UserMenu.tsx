@@ -56,7 +56,7 @@ export const UserMenu = ({ user }: UserMenuProps) => {
         )}
         <DropdownMenuItem
           onClick={deleteConfirm.open}
-          disabled={authUser.uid === user.uid}
+          disabled={authUser.auth.uid === user.uid}
         >
           <Trash />
           Delete

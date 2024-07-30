@@ -5,7 +5,6 @@
 //
 // SPDX-License-Identifier: MIT
 //
-import { updateDoc } from '@firebase/firestore'
 import { type Functions, httpsCallable } from '@firebase/functions'
 import {
   collection,
@@ -43,10 +42,11 @@ export enum UserType {
   admin = 'admin',
   clinician = 'clinician',
   patient = 'patient',
+  owner = 'owner',
 }
 
 export interface User {
-  type?: UserType
+  type: UserType
   dateOfBirth?: Date
   clinician?: string
   dateOfEnrollment?: Date
@@ -87,7 +87,10 @@ export const getCollectionRefs = (db: Firestore) => ({
 
 export const getDocumentsRefs = (db: Firestore) => ({
   user: (...segments: string[]) =>
-    doc(db, collectionNames.users, ...segments) as DocumentReference<User>,
+    doc(db, collectionNames.users, ...segments) as DocumentReference<
+      User,
+      User
+    >,
   invitation: (...segments: string[]) =>
     doc(
       db,
@@ -124,8 +127,6 @@ export interface UserInformation {
 
 export interface GetUsersInformationInput {
   userIds: string[]
-  includeClinicianData?: boolean
-  includePatientData?: boolean
   includeUserData?: boolean
 }
 
@@ -150,7 +151,7 @@ export const getCallables = (functions: Functions) => ({
     { code: string }
   >(functions, 'createInvitation'),
   getUsersInformation: httpsCallable<
-    { includeUserData?: string; userIds: string[] },
+    GetUsersInformationInput,
     Record<string, Result<UserInformation>>
   >(functions, 'getUsersInformation'),
   deleteUser: httpsCallable<{ userId: string }, undefined>(
@@ -204,8 +205,3 @@ export const getDocsData = async <T>(query: Query<T>) => {
     }
   })
 }
-
-export const updateDocData = <T>(
-  reference: DocumentReference<T>,
-  data: Partial<T>,
-) => updateDoc(reference, data)

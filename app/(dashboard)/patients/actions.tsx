@@ -20,7 +20,6 @@ export const deletePatient = async (payload: { userId: string }) => {
 
 export const deleteInvitation = async (payload: { invitationId: string }) => {
   const { docRefs } = await getAuthenticatedOnlyApp()
-  // TODO: https://github.com/StanfordBDHG/ENGAGE-HF-Firebase/issues/38
   await deleteDoc(docRefs.invitation(payload.invitationId))
   revalidatePath(routes.patients.index)
   return 'success'

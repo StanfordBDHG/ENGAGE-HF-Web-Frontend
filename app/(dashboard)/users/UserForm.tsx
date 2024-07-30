@@ -7,9 +7,12 @@
 //
 'use client'
 import { z } from 'zod'
-import { Role } from '@/modules/firebase/role'
 import { useUser } from '@/modules/firebase/UserProvider'
-import { type Organization, type User } from '@/modules/firebase/utils'
+import {
+  type Organization,
+  type User,
+  UserType,
+} from '@/modules/firebase/utils'
 import { Button } from '@/packages/design-system/src/components/Button'
 import { Input } from '@/packages/design-system/src/components/Input'
 import {
@@ -29,10 +32,10 @@ export const userFormSchema = z
     displayName: z.string(),
     invitationCode: z.string(),
     organizationId: z.string().optional(),
-    role: z.nativeEnum(Role),
+    type: z.nativeEnum(UserType),
   })
   .superRefine((schema, ctx) => {
-    if (schema.role !== Role.admin && !schema.organizationId) {
+    if (schema.type !== UserType.admin && !schema.organizationId) {
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
         message: 'Organization is required',
@@ -47,14 +50,14 @@ interface UserFormProps {
   organizations: Array<Pick<Organization, 'name' | 'id'>>
   userInfo?: Pick<UserInfo, 'email' | 'displayName' | 'uid'>
   user?: Pick<User, 'organization' | 'invitationCode'>
-  role?: Role
+  type?: UserType
   onSubmit: (data: UserFormSchema) => Promise<void>
 }
 
 export const UserForm = ({
   organizations,
   user,
-  role,
+  type,
   userInfo,
   onSubmit,
 }: UserFormProps) => {
@@ -65,10 +68,10 @@ export const UserForm = ({
     defaultValues: {
       email: userInfo?.email ?? '',
       displayName: userInfo?.displayName ?? '',
-      role: role ?? Role.clinician,
+      type: type ?? UserType.clinician,
       organizationId:
-        authUser.role === Role.owner ?
-          authUser.organization
+        authUser.user.type === UserType.owner ?
+          authUser.user.organization
         : user?.organization,
       invitationCode: user?.invitationCode ?? '',
     },
@@ -100,7 +103,7 @@ export const UserForm = ({
           render={({ field }) => <Input {...field} />}
         />
       )}
-      {authUser.role === Role.admin && (
+      {authUser.user.type === UserType.admin && (
         <Field
           control={form.control}
           name="organizationId"
@@ -123,25 +126,25 @@ export const UserForm = ({
       )}
       <Field
         control={form.control}
-        name="role"
-        label="Role"
+        name="type"
+        label="Type"
         render={({ field }) => (
           <Select
             onValueChange={field.onChange}
             {...field}
-            disabled={authUser.uid === userInfo?.uid}
+            disabled={authUser.auth.uid === userInfo?.uid}
           >
             <SelectTrigger>
               <SelectValue placeholder="Roles" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value={Role.clinician} itemText="Clinician">
+              <SelectItem value={UserType.clinician} itemText="Clinician">
                 <div className="flex flex-col">
                   <b>Clinician</b>
                   <p>Clinician can access their organization data </p>
                 </div>
               </SelectItem>
-              <SelectItem value={Role.owner} itemText="Organization owner">
+              <SelectItem value={UserType.owner} itemText="Organization owner">
                 <div className="flex flex-col">
                   <b>Organization owner</b>
                   <p>
@@ -150,8 +153,8 @@ export const UserForm = ({
                   </p>
                 </div>
               </SelectItem>
-              {authUser.role === Role.admin && (
-                <SelectItem value={Role.admin} itemText="Admin">
+              {authUser.user.type === UserType.admin && (
+                <SelectItem value={UserType.admin} itemText="Admin">
                   <div className="flex flex-col">
                     <b>Admin</b>
                     <p>Admin can modify every organization and invite users</p>

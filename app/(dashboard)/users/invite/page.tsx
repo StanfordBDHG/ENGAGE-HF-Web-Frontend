@@ -8,15 +8,14 @@
 import { Users } from 'lucide-react'
 import { redirect } from 'next/navigation'
 import { UserForm, type UserFormSchema } from '@/app/(dashboard)/users/UserForm'
-import { allowRoles, getAuthenticatedOnlyApp } from '@/modules/firebase/guards'
-import { Role } from '@/modules/firebase/role'
-import { getDocsData } from '@/modules/firebase/utils'
+import { allowTypes, getAuthenticatedOnlyApp } from '@/modules/firebase/guards'
+import { getDocsData, UserType } from '@/modules/firebase/utils'
 import { routes } from '@/modules/routes'
 import { PageTitle } from '@/packages/design-system/src/molecules/DashboardLayout'
 import { DashboardLayout } from '../../DashboardLayout'
 
 const InviteUserPage = async () => {
-  await allowRoles([Role.admin, Role.owner])
+  await allowTypes([UserType.admin, UserType.owner])
   const { refs } = await getAuthenticatedOnlyApp()
   const organizations = await getDocsData(refs.organizations())
 
@@ -27,13 +26,11 @@ const InviteUserPage = async () => {
       auth: {
         displayName: form.displayName,
         email: form.email,
-        phoneNumber: null,
-        photoURL: null,
       },
-      admin: form.role === Role.admin ? {} : undefined,
-      clinician: form.role === Role.clinician ? {} : undefined,
-      patient: undefined,
-      user: { organization: form.organizationId },
+      user: {
+        ...(form.organizationId ? { organization: form.organizationId } : {}),
+        type: form.type,
+      },
     })
     redirect(routes.users.index)
     // TODO: Confirmation message

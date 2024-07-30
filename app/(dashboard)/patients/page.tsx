@@ -10,14 +10,14 @@ import { Contact, UserPlus } from 'lucide-react'
 import Link from 'next/link'
 import {
   getAuthenticatedOnlyApp,
-  getCurrentUserRole,
+  getCurrentUserType,
 } from '@/modules/firebase/guards'
-import { Role } from '@/modules/firebase/role'
 import { mapAuthData } from '@/modules/firebase/user'
-import { getDocData, getDocsData } from '@/modules/firebase/utils'
+import { getDocData, getDocsData, UserType } from '@/modules/firebase/utils'
 import { routes } from '@/modules/routes'
 import {
   getNonAdminInvitations,
+  getUserOrganizationsMap,
   parseAuthToUser,
   parseInvitationToUser,
 } from '@/modules/user/queries'
@@ -28,18 +28,15 @@ import { DashboardLayout } from '../DashboardLayout'
 
 const getData = async () => {
   const { refs, currentUser, docRefs } = await getAuthenticatedOnlyApp()
-  const userRole = await getCurrentUserRole()
   const user = await getDocData(docRefs.user(currentUser.uid))
   const organizationId = user?.organization
-  // TODO: Check if there is any reason for organization not to be defined
   if (!organizationId)
-    throw new Error('Clinician/admin without organization id')
+    throw new Error('Clinician/owner without organization id')
   return {
     patientsQuery: query(
       refs.users(),
       where('organization', '==', organizationId),
     ),
-    organizations: userRole.organizations ?? [],
     invitationsQuery: await getNonAdminInvitations([organizationId]),
   }
 }
@@ -48,43 +45,31 @@ const getAdminData = async () => {
   const { refs } = await getAuthenticatedOnlyApp()
   return {
     patientsQuery: refs.users(),
-    organizations: await getDocsData(refs.organizations()),
     invitationsQuery: refs.invitations(),
   }
 }
 
 const listPatients = async () => {
-  const userRole = await getCurrentUserRole()
-  const { patientsQuery, organizations, invitationsQuery } =
-    userRole.role === Role.admin ? await getAdminData() : await getData()
-  const patients = await getDocsData(patientsQuery)
+  const userRole = await getCurrentUserType()
+  const { patientsQuery, invitationsQuery } =
+    userRole === UserType.admin ? await getAdminData() : await getData()
+  const patients = await getDocsData(
+    query(patientsQuery, where('type', '==', UserType.patient)),
+  )
 
   const userIds = patients.map((patient) => patient.id)
-  const patientsById = new Map(
-    patients.map((patient) => [patient.id, patient] as const),
-  )
-  const organizationMap = new Map(
-    organizations.map(
-      (organization) => [organization.id, organization] as const,
-    ),
-  )
+  const organizationMap = await getUserOrganizationsMap()
+
   const invitations = await getDocsData(
-    query(invitationsQuery, where('patient', '==', null)),
+    query(invitationsQuery, where('user.type', '==', UserType.patient)),
   )
 
   const patientsData = await mapAuthData(
     { userIds, includeUserData: true },
-    ({ auth, user }, id) => {
-      const patient = patientsById.get(id)
-      if (!patient) {
-        console.error(`No patient found for user id ${id}`)
-        return null
-      }
-      return {
-        ...parseAuthToUser(id, auth),
-        organization: organizationMap.get(user?.organization ?? ''),
-      }
-    },
+    ({ auth, user }, id) => ({
+      ...parseAuthToUser(id, auth),
+      organization: organizationMap.get(user?.organization ?? ''),
+    }),
   )
 
   const invitedUsers = invitations.map((invitation) =>

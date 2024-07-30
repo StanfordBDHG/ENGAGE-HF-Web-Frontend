@@ -6,12 +6,9 @@
 // SPDX-License-Identifier: MIT
 //
 import { type ReactNode } from 'react'
-import {
-  getAuthenticatedOnlyApp,
-  getCurrentUserRole,
-} from '@/modules/firebase/guards'
+import { getAuthenticatedOnlyApp } from '@/modules/firebase/guards'
 import { UserContextProvider } from '@/modules/firebase/UserProvider'
-import { getDocData } from '@/modules/firebase/utils'
+import { getDocDataOrThrow } from '@/modules/firebase/utils'
 import { getUserInfo } from '@/packages/design-system/src/modules/auth/user'
 
 interface DashboardLayoutProps {
@@ -22,14 +19,12 @@ export const dynamic = 'force-dynamic'
 
 const DashboardLayout = async ({ children }: DashboardLayoutProps) => {
   const { currentUser, docRefs } = await getAuthenticatedOnlyApp()
-  const { role } = await getCurrentUserRole()
-  const user = await getDocData(docRefs.user(currentUser.uid))
+  const user = await getDocDataOrThrow(docRefs.user(currentUser.uid))
   return (
     <UserContextProvider
       user={{
-        ...getUserInfo(currentUser),
-        organization: user?.organization,
-        role,
+        auth: getUserInfo(currentUser),
+        user,
       }}
     >
       {children}

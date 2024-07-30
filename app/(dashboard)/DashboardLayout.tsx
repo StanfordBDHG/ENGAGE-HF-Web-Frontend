@@ -7,10 +7,7 @@
 //
 import Link from 'next/link'
 import { LogoType } from '@/components/icons/LogoType'
-import {
-  getAuthenticatedOnlyApp,
-  getCurrentUserRole,
-} from '@/modules/firebase/guards'
+import { getAuthenticatedOnlyApp } from '@/modules/firebase/guards'
 import { getUserInfo } from '@stanfordbdhg/design-system/modules/auth/user'
 import {
   DashboardLayout as DashboardLayoutBase,
@@ -23,8 +20,8 @@ interface DashboardLayoutProps
   extends Omit<DashboardLayoutPropsBase, 'aside' | 'mobile'> {}
 
 export const DashboardLayout = async (props: DashboardLayoutProps) => {
-  const { currentUser } = await getAuthenticatedOnlyApp()
-  const { role: userRole } = await getCurrentUserRole()
+  const { currentUser, user: userDoc } = await getAuthenticatedOnlyApp()
+  const role = userDoc.type
   const user = <User user={getUserInfo(currentUser)} />
 
   return (
@@ -35,7 +32,7 @@ export const DashboardLayout = async (props: DashboardLayoutProps) => {
             <LogoType className="!h-auto !w-full px-2 xl:px-8" />
           </Link>
           <nav className="mt-9 flex flex-col gap-1 xl:w-full">
-            <MenuLinks role={userRole} />
+            <MenuLinks userType={role} />
           </nav>
           {user}
         </>
@@ -43,7 +40,7 @@ export const DashboardLayout = async (props: DashboardLayoutProps) => {
       mobile={
         <>
           <nav className="mt-9 flex flex-col gap-1 px-4">
-            <MenuLinks role={userRole} />
+            <MenuLinks userType={role} />
           </nav>
           {user}
         </>

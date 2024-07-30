@@ -1,14 +1,12 @@
 import { query, where } from 'firebase/firestore'
+import { getAuthenticatedOnlyApp } from '@/modules/firebase/guards'
 import {
-  getAuthenticatedOnlyApp,
-  getCurrentUserRole,
-} from '@/modules/firebase/guards'
-import { Role } from '@/modules/firebase/role'
-import {
+  getDocDataOrThrow,
   getDocsData,
   type Invitation,
   type Organization,
   type UserAuthenticationInformation,
+  UserType,
 } from '@/modules/firebase/utils'
 
 export const getNonAdminInvitations = async (organizationIds: string[]) => {
@@ -16,7 +14,7 @@ export const getNonAdminInvitations = async (organizationIds: string[]) => {
   return query(
     refs.invitations(),
     where('user.organization', 'in', organizationIds),
-    where('admin', '==', null),
+    where('user.type', '!=', UserType.admin),
   )
 }
 
@@ -30,11 +28,7 @@ export const parseInvitationToUser = (
   email: invitation.auth?.email,
   displayName: invitation.auth?.displayName,
   organization: organizationMap.get(invitation.user?.organization ?? ''),
-  role:
-    invitation.patient ? Role.user
-    : invitation.admin ? Role.admin
-    : invitation.clinician ? Role.clinician
-    : Role.owner,
+  type: invitation.user?.type,
 })
 
 export const parseAuthToUser = (
@@ -48,8 +42,19 @@ export const parseAuthToUser = (
   displayName: auth.displayName,
 })
 
-export const getUserOrganizations = async () => {
-  const { refs, currentUser } = await getAuthenticatedOnlyApp()
-  const { role } = await getCurrentUserRole()
-  if (role === Role.admin) return getDocsData(refs.organizations())
+export const getUserOrganizationsMap = async () => {
+  const { user, refs, docRefs } = await getAuthenticatedOnlyApp()
+  let organizations: Array<Organization & { id: string }> = []
+  if (user.type === UserType.admin) {
+    organizations = await getDocsData(refs.organizations())
+  } else if (user.organization) {
+    organizations = [
+      await getDocDataOrThrow(docRefs.organization(user.organization)),
+    ]
+  }
+  return new Map(
+    organizations.map(
+      (organization) => [organization.id, organization] as const,
+    ),
+  )
 }

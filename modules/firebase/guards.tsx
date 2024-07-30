@@ -9,24 +9,17 @@ import { type User } from '@firebase/auth-types'
 import { connectFunctionsEmulator, getFunctions } from '@firebase/functions'
 import { type FirebaseOptions, initializeServerApp } from 'firebase/app'
 import { connectAuthEmulator, getAuth } from 'firebase/auth'
-import {
-  connectFirestoreEmulator,
-  getDoc,
-  getFirestore,
-  query,
-  where,
-} from 'firebase/firestore'
+import { connectFirestoreEmulator, getFirestore } from 'firebase/firestore'
 import { headers } from 'next/headers'
 import { redirect } from 'next/navigation'
 import { env } from '@/env'
 import { firebaseConfig } from '@/modules/firebase/config'
-import { Role } from '@/modules/firebase/role'
 import {
   getCallables,
   getCollectionRefs,
-  getDocData,
-  getDocsData,
+  getDocDataOrThrow,
   getDocumentsRefs,
+  type UserType,
 } from '@/modules/firebase/utils'
 import { routes } from '@/modules/routes'
 
@@ -60,42 +53,12 @@ export const getServerApp = async (firebaseOptions: FirebaseOptions) => {
 }
 
 export const getUserRole = async (userId: string) => {
-  const { refs, docRefs } = await getAuthenticatedOnlyApp()
-  // Try-catches are necessary, because user might not have permissions to read collections
-  try {
-    const adminDoc = await getDoc(docRefs.admin(userId))
-    if (adminDoc.exists())
-      return {
-        role: Role.admin,
-      } as const
-  } catch (error) {}
-
-  const organizationsQuery = query(
-    refs.organizations(),
-    where('owners', 'array-contains-any', [userId]),
-  )
-  try {
-    const organizations = await getDocsData(organizationsQuery)
-    if (organizations.length > 0)
-      return {
-        role: Role.owner as const,
-        organizations,
-      } as const
-  } catch (error) {}
-
-  try {
-    const clinician = await getDocData(docRefs.clinician(userId))
-    if (clinician)
-      return {
-        role: Role.clinician,
-        clinician,
-      } as const
-  } catch (error) {}
-
-  return { role: Role.user } as const
+  const { docRefs } = await getAuthenticatedOnlyApp()
+  const user = await getDocDataOrThrow(docRefs.user(userId))
+  return user.type
 }
 
-export const getCurrentUserRole = async () => {
+export const getCurrentUserType = async () => {
   const { currentUser } = await getAuthenticatedOnlyApp()
   return getUserRole(currentUser.uid)
 }
@@ -115,14 +78,17 @@ export const getUnauthenticatedOnlyApp = async () => {
 export const getAuthenticatedOnlyApp = async () => {
   const firebaseApp = await getServerApp(firebaseConfig)
   if (!firebaseApp.currentUser) redirect(routes.signIn)
-  return firebaseApp as typeof firebaseApp & { currentUser: User }
+  const { docRefs, currentUser } = firebaseApp
+  const user = await getDocDataOrThrow(docRefs.user(currentUser.uid))
+  const result = { ...firebaseApp, user }
+  return result as typeof result & { currentUser: User }
 }
 
 /**
  * Redirects to 403 if user's role d
  * */
-export const allowRoles = async (roles: Role[]) => {
-  const { role } = await getCurrentUserRole()
+export const allowTypes = async (types: UserType[]) => {
+  const type = await getCurrentUserType()
   // TODO: HTTP Error
-  if (!roles.includes(role)) redirect(routes.home)
+  if (!types.includes(type)) redirect(routes.home)
 }
