@@ -49,7 +49,7 @@ export const parseAuthToUser = (
   displayName: auth.displayName,
 })
 
-export const getUserOrganizationsMap = async () => {
+export const getUserOrganizations = async () => {
   const { user, refs, docRefs } = await getAuthenticatedOnlyApp()
   let organizations: Array<Organization & { id: string }> = []
   if (user.type === UserType.admin) {
@@ -59,6 +59,11 @@ export const getUserOrganizationsMap = async () => {
       await getDocDataOrThrow(docRefs.organization(user.organization)),
     ]
   }
+  return organizations
+}
+
+export const getUserOrganizationsMap = async () => {
+  const organizations = await getUserOrganizations()
   return new Map(
     organizations.map(
       (organization) => [organization.id, organization] as const,

@@ -9,15 +9,15 @@ import { Users } from 'lucide-react'
 import { redirect } from 'next/navigation'
 import { UserForm, type UserFormSchema } from '@/app/(dashboard)/users/UserForm'
 import { allowTypes, getAuthenticatedOnlyApp } from '@/modules/firebase/guards'
-import { getDocsData, UserType } from '@/modules/firebase/utils'
+import { UserType } from '@/modules/firebase/utils'
 import { routes } from '@/modules/routes'
+import { getUserOrganizations } from '@/modules/user/queries'
 import { PageTitle } from '@/packages/design-system/src/molecules/DashboardLayout'
 import { DashboardLayout } from '../../DashboardLayout'
 
 const InviteUserPage = async () => {
   await allowTypes([UserType.admin, UserType.owner])
-  const { refs } = await getAuthenticatedOnlyApp()
-  const organizations = await getDocsData(refs.organizations())
+  const organizations = await getUserOrganizations()
 
   const inviteUser = async (form: UserFormSchema) => {
     'use server'
