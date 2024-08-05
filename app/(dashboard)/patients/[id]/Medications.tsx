@@ -13,7 +13,7 @@ import {
 import { Field } from '@/packages/design-system/src/forms/Field'
 import { useForm } from '@/packages/design-system/src/forms/useForm'
 import { type Data } from './page'
-import { Plus, Check } from 'lucide-react'
+import { Plus, Check, Trash } from 'lucide-react'
 import { Button } from '@/packages/design-system/src/components/Button'
 import {
   Table,
@@ -22,6 +22,7 @@ import {
   TableRow,
   TableBody,
 } from '@/packages/design-system/src/components/Table'
+import { Tooltip } from '@/packages/design-system/src/components/Tooltip'
 
 export const quantityOptions = [
   { label: '0.25 tbl.', value: 0.25 },
@@ -138,6 +139,15 @@ export const Medications = ({
                   medicationValue.frequencyPerDay *
                   medicationValue.quantity,
               })) ?? []
+
+            const removeMedication = () => {
+              form.setValue(
+                'medications',
+                formValues.medications.filter(
+                  (medication) => medication.id !== medicationValue.id,
+                ),
+              )
+            }
 
             const nestedKey = <T extends string>(key: T) =>
               `medications.${index}.${key}` as const
@@ -308,6 +318,18 @@ export const Medications = ({
                       ))}
                     </div>
                   }
+                </TableCell>
+                <TableCell>
+                  <Tooltip tooltip="Delete">
+                    <Button
+                      aria-label="Delete"
+                      size="sm"
+                      variant="destructive"
+                      onClick={removeMedication}
+                    >
+                      <Trash className="size-4" />
+                    </Button>
+                  </Tooltip>
                 </TableCell>
               </TableRow>
             )
