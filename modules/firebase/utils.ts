@@ -18,6 +18,7 @@ import {
 } from 'firebase/firestore'
 import {
   type FHIRMedication,
+  type FHIRMedicationRequest,
   type MedicationClass,
 } from '@/modules/firebase/models/medication'
 
@@ -75,6 +76,7 @@ export const collectionNames = {
   medications: 'medications',
   medicationClasses: 'medicationClasses',
   drugs: 'drugs',
+  medicationRequests: 'medicationRequests',
 }
 
 export const getCollectionRefs = (db: Firestore) => ({
@@ -100,6 +102,11 @@ export const getCollectionRefs = (db: Firestore) => ({
       db,
       `/${collectionNames.medications}/${medicationId}/${collectionNames.drugs}`,
     ) as CollectionReference<FHIRMedication>,
+  medicationRequests: (userId: string) =>
+    collection(
+      db,
+      `/${collectionNames.users}/${userId}/${collectionNames.medicationRequests}`,
+    ) as CollectionReference<FHIRMedicationRequest>,
   medicationClasses: () =>
     collection(
       db,
@@ -125,6 +132,11 @@ export const getDocumentsRefs = (db: Firestore) => ({
       collectionNames.organizations,
       ...segments,
     ) as DocumentReference<Organization>,
+  medicationRequest: (userId: string, medicationRequestId: string) =>
+    doc(
+      db,
+      `/${collectionNames.users}/${userId}/${collectionNames.medicationRequests}/${medicationRequestId}`,
+    ) as DocumentReference<FHIRMedicationRequest>,
 })
 
 interface Result<T> {
