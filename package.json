@@ -38,6 +38,7 @@
     "@radix-ui/react-select": "^2.1.1",
     "@radix-ui/react-separator": "^1.0.3",
     "@radix-ui/react-slot": "^1.0.2",
+    "@radix-ui/react-tabs": "^1.1.0",
     "@radix-ui/react-tooltip": "^1.1.2",
     "@stanfordbdhg/design-system": "file:./packages/design-system",
     "@t3-oss/env-nextjs": "^0.10.1",
