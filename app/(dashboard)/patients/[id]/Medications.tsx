@@ -23,6 +23,7 @@ import {
   TableBody,
 } from '@/packages/design-system/src/components/Table'
 import { Tooltip } from '@/packages/design-system/src/components/Tooltip'
+import { useMemo } from 'react'
 
 export const quantityOptions = [
   { label: '0.25 tbl.', value: 0.25 },
@@ -41,8 +42,8 @@ const formSchema = z.object({
   medications: z.array(
     z.object({
       id: z.string(),
-      medication: z.string(),
-      drug: z.string(),
+      medication: z.string({ required_error: 'Medication is required' }),
+      drug: z.string({ required_error: 'Drug is required' }),
       quantity: z.number().min(0),
       frequencyPerDay: z.number().min(0),
     }),
@@ -68,16 +69,14 @@ export const Medications = ({
 
   const formValues = form.watch()
 
-  // TODO: Use map
-  const findMedication = (id: string) => {
-    for (const medicationClass of medicationsTree) {
-      for (const medication of medicationClass.medications) {
-        if (medication.id === id) {
-          return medication
-        }
-      }
-    }
-  }
+  const medicationsMap = useMemo(() => {
+    const entries = medicationsTree.flatMap((medicationClass) =>
+      medicationClass.medications.map(
+        (medication) => [medication.id, medication] as const,
+      ),
+    )
+    return new Map(entries)
+  }, [medicationsTree])
 
   const addMedication = () =>
     form.setValue('medications', [
@@ -122,7 +121,7 @@ export const Medications = ({
         <TableBody>
           {formValues.medications.map((medicationValue, index) => {
             const isDrugSelected = !!medicationValue.drug
-            const selectedMedication = findMedication(
+            const selectedMedication = medicationsMap.get(
               medicationValue.medication,
             )
             const selectedDrug =
@@ -201,7 +200,7 @@ export const Medications = ({
                       <Select
                         disabled={!medicationValue.medication}
                         onValueChange={(id) => {
-                          const medication = findMedication(id)
+                          const medication = medicationsMap.get(id)
                           if (!isDrugSelected) {
                             // Drug selected for the first time, infer frequency and quantity
                             form.setValue(
