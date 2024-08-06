@@ -24,6 +24,7 @@ import {
 } from '@/packages/design-system/src/components/Table'
 import { Tooltip } from '@/packages/design-system/src/components/Tooltip'
 import { useMemo } from 'react'
+import { Card } from '@/packages/design-system/src/components/Card'
 
 export const quantityOptions = [
   { label: '0.25 tbl.', value: 0.25 },
@@ -96,8 +97,8 @@ export const Medications = ({
   })
 
   return (
-    <>
-      <header className="my-4 flex justify-end gap-2">
+    <Card>
+      <header className="my-4 flex justify-end gap-2 px-4">
         <Button size="sm" variant="secondary" onClick={addMedication}>
           <Plus />
           Add medication
@@ -109,7 +110,7 @@ export const Medications = ({
       </header>
       <Table className="table-fixed">
         <TableHeader>
-          <TableRow>
+          <TableRow isHoverable={false}>
             <TableCell>Medication</TableCell>
             <TableCell>Drug</TableCell>
             <TableCell className="w-[130px]">Quantity</TableCell>
@@ -336,6 +337,6 @@ export const Medications = ({
           })}
         </TableBody>
       </Table>
-    </>
+    </Card>
   )
 }

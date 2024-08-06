@@ -222,7 +222,7 @@ const PatientPage = async ({ params }: PatientPageProps) => {
       }
     >
       <Tabs defaultValue="medication">
-        <TabsList className="w-full">
+        <TabsList className="w-full mb-6">
           <TabsTrigger value="information" className="grow">
             Information
           </TabsTrigger>
@@ -230,7 +230,7 @@ const PatientPage = async ({ params }: PatientPageProps) => {
             Medication
           </TabsTrigger>
         </TabsList>
-        <TabsContent value="information" className="mt-6">
+        <TabsContent value="information">
           <PatientForm
             user={user}
             userInfo={authUser}

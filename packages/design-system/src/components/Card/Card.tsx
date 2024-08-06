@@ -13,7 +13,7 @@ import { forwardRef, type HTMLAttributes } from 'react'
 export const cardVariants = {}
 
 export const cardVariance = cva(
-  'rounded-lg border bg-card text-card-foreground shadow-sm',
+  'rounded-md border bg-card text-card-foreground shadow-sm',
   { variants: cardVariants },
 )
 
