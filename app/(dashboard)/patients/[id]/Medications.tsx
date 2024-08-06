@@ -68,6 +68,7 @@ export const Medications = ({
 
   const formValues = form.watch()
 
+  // TODO: Use map
   const findMedication = (id: string) => {
     for (const medicationClass of medicationsTree) {
       for (const medication of medicationClass.medications) {
@@ -107,15 +108,15 @@ export const Medications = ({
           Save
         </Button>
       </header>
-      <Table>
+      <Table className="table-fixed">
         <TableHeader>
           <TableRow>
             <TableCell>Medication</TableCell>
             <TableCell>Drug</TableCell>
-            <TableCell>Quantity</TableCell>
-            <TableCell>Frequency</TableCell>
-            <TableCell>Daily dosage</TableCell>
-            <TableCell />
+            <TableCell className="w-[130px]">Quantity</TableCell>
+            <TableCell className="w-[190px]">Frequency</TableCell>
+            <TableCell className="w-[190px]">Daily dosage</TableCell>
+            <TableCell className="w-[75px]" />
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -153,7 +154,7 @@ export const Medications = ({
               `medications.${index}.${key}` as const
 
             return (
-              <TableRow key={medicationValue.id}>
+              <TableRow key={`${medicationValue.id}-${index}`}>
                 <TableCell>
                   <Field
                     control={form.control}
@@ -324,10 +325,10 @@ export const Medications = ({
                     <Button
                       aria-label="Delete"
                       size="sm"
-                      variant="destructive"
+                      variant="ghost"
                       onClick={removeMedication}
                     >
-                      <Trash className="size-4" />
+                      <Trash className="size-4 text-destructive" />
                     </Button>
                   </Tooltip>
                 </TableCell>
