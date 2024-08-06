@@ -1,5 +1,5 @@
 import { SearchX, ListX } from 'lucide-react'
-import { HTMLProps } from 'react'
+import { type HTMLProps } from 'react'
 import { cn } from '../../utils/className'
 
 interface EmptyStateProps extends HTMLProps<HTMLDivElement> {

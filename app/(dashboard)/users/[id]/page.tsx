@@ -16,11 +16,11 @@ import {
   UserType,
 } from '@/modules/firebase/utils'
 import { routes } from '@/modules/routes'
+import { getUserData } from '@/modules/user/queries'
 import { getUserName } from '@/packages/design-system/src/modules/auth/user'
 import { PageTitle } from '@/packages/design-system/src/molecules/DashboardLayout'
 import { DashboardLayout } from '../../DashboardLayout'
 import { UserForm, type UserFormSchema } from '../UserForm'
-import { getUserData } from '@/modules/user/queries'
 
 interface UserPageProps {
   params: { id: string }

@@ -1,7 +1,12 @@
 'use client'
+import { Plus, Check, Trash } from 'lucide-react'
+import { useMemo } from 'react'
 import { z } from 'zod'
-import { MedicationsData } from '@/app/(dashboard)/patients/utils'
+import { type MedicationsData } from '@/app/(dashboard)/patients/utils'
 import { parseLocalizedText } from '@/modules/firebase/localizedText'
+import { Button } from '@/packages/design-system/src/components/Button'
+import { Card } from '@/packages/design-system/src/components/Card'
+import { EmptyState } from '@/packages/design-system/src/components/EmptyState'
 import {
   Select,
   SelectContent,
@@ -11,10 +16,6 @@ import {
   SelectGroup,
   SelectLabel,
 } from '@/packages/design-system/src/components/Select'
-import { Field } from '@/packages/design-system/src/forms/Field'
-import { useForm } from '@/packages/design-system/src/forms/useForm'
-import { Plus, Check, Trash } from 'lucide-react'
-import { Button } from '@/packages/design-system/src/components/Button'
 import {
   Table,
   TableCell,
@@ -23,9 +24,8 @@ import {
   TableBody,
 } from '@/packages/design-system/src/components/Table'
 import { Tooltip } from '@/packages/design-system/src/components/Tooltip'
-import { useMemo } from 'react'
-import { Card } from '@/packages/design-system/src/components/Card'
-import { EmptyState } from '@/packages/design-system/src/components/EmptyState'
+import { Field } from '@/packages/design-system/src/forms/Field'
+import { useForm } from '@/packages/design-system/src/forms/useForm'
 
 export const quantityOptions = [
   { label: '0.25 tbl.', value: 0.25 },

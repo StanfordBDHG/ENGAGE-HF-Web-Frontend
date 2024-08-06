@@ -18,25 +18,25 @@ import {
   getMedicationsData,
 } from '@/app/(dashboard)/patients/utils'
 import { getAuthenticatedOnlyApp } from '@/modules/firebase/guards'
+import { getMedicationRequestData } from '@/modules/firebase/models/medication'
 import {
   getDocDataOrThrow,
   getDocsData,
-  ResourceType,
+  type ResourceType,
   UserType,
 } from '@/modules/firebase/utils'
 import { routes } from '@/modules/routes'
-import { getUserName } from '@/packages/design-system/src/modules/auth/user'
-import { PageTitle } from '@/packages/design-system/src/molecules/DashboardLayout'
-import { DashboardLayout } from '../../DashboardLayout'
-import { Medications, MedicationsFormSchema } from '../Medications'
+import { getUserData } from '@/modules/user/queries'
 import {
   Tabs,
   TabsContent,
   TabsList,
   TabsTrigger,
 } from '@/packages/design-system/src/components/Tabs'
-import { getMedicationRequestData } from '@/modules/firebase/models/medication'
-import { getUserData } from '@/modules/user/queries'
+import { getUserName } from '@/packages/design-system/src/modules/auth/user'
+import { PageTitle } from '@/packages/design-system/src/molecules/DashboardLayout'
+import { DashboardLayout } from '../../DashboardLayout'
+import { Medications, type MedicationsFormSchema } from '../Medications'
 
 const getUserMedications = async (payload: {
   userId: string
@@ -52,9 +52,9 @@ const getUserMedications = async (payload: {
       medication: reference?.at(1) ?? '',
       drug: reference?.at(3) ?? '',
       frequencyPerDay:
-        request?.dosageInstruction?.at(0)?.timing?.repeat?.frequency ?? 1,
+        request.dosageInstruction?.at(0)?.timing?.repeat?.frequency ?? 1,
       quantity:
-        request?.dosageInstruction?.at(0)?.doseAndRate?.at(0)?.doseQuantity
+        request.dosageInstruction?.at(0)?.doseAndRate?.at(0)?.doseQuantity
           ?.value ?? 1,
     }
   })
@@ -120,6 +120,8 @@ const PatientPage = async ({ params }: PatientPageProps) => {
     const medicationRequests = await getDocsData(
       refs.medicationRequests({ userId, resourceType }),
     )
+    // async is required to match types
+    // eslint-disable-next-line @typescript-eslint/require-await
     await runTransaction(db, async (transaction) => {
       medicationRequests.forEach((medication) => {
         transaction.delete(
