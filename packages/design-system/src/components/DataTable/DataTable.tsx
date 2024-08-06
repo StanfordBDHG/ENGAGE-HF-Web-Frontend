@@ -132,7 +132,6 @@ export const DataTable = <Data,>({
               entityName={entityName}
               colSpan={columns.length}
               globalFilter={globalFilter}
-              hasData={!!data.length}
             />
           : rows.map((row) => (
               <TableRow
