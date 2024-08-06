@@ -19,7 +19,6 @@ import { type TableOptions } from '@tanstack/table-core'
 import { useState } from 'react'
 import { useDebouncedCallback } from 'use-debounce'
 import { fuzzyFilter } from './DataTable.utils'
-import { EmptyState } from './EmptyState'
 import { GlobalFilterInput } from './GlobalFilterInput'
 import { ToggleSortButton } from './ToggleSortButton'
 import { cn } from '../../utils/className'
@@ -34,6 +33,7 @@ import {
   TableHeader,
   TableRow,
 } from '../Table'
+import { TableEmptyState } from '../Table/TableEmptyState'
 
 export interface DataTableProps<Data>
   extends PartialSome<TableOptions<Data>, 'getCoreRowModel' | 'filterFns'> {
@@ -128,10 +128,10 @@ export const DataTable = <Data,>({
         </TableHeader>
         <TableBody>
           {!rows.length ?
-            <EmptyState
+            <TableEmptyState
               entityName={entityName}
               colSpan={columns.length}
-              globalFilter={globalFilter}
+              textFilter={globalFilter}
             />
           : rows.map((row) => (
               <TableRow

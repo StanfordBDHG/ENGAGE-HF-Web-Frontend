@@ -9,7 +9,7 @@ import { SearchX, ListX } from 'lucide-react'
 import { type HTMLProps } from 'react'
 import { cn } from '../../utils/className'
 
-interface EmptyStateProps extends HTMLProps<HTMLDivElement> {
+export interface EmptyStateProps extends HTMLProps<HTMLDivElement> {
   entityName?: string
   textFilter?: string
 }
