@@ -18,9 +18,7 @@ import {
   getMedicationsData,
 } from '@/app/(dashboard)/patients/utils'
 import { getAuthenticatedOnlyApp } from '@/modules/firebase/guards'
-import { mapAuthData } from '@/modules/firebase/user'
 import {
-  getDocData,
   getDocDataOrThrow,
   getDocsData,
   ResourceType,
@@ -38,6 +36,7 @@ import {
   TabsTrigger,
 } from '@/packages/design-system/src/components/Tabs'
 import { getMedicationRequestData } from '@/modules/firebase/models/medication'
+import { getUserData } from '@/modules/user/queries'
 
 const getUserMedications = async (payload: {
   userId: string
@@ -68,36 +67,6 @@ interface PatientPageProps {
 enum Tab {
   information = 'information',
   medications = 'medications',
-}
-
-const getUserData = async (userId: string) => {
-  const { docRefs } = await getAuthenticatedOnlyApp()
-  const user = await getDocData(docRefs.user(userId))
-  if (user) {
-    const allAuthData = await mapAuthData(
-      { userIds: [userId] },
-      (data, id) => ({
-        uid: id,
-        email: data.auth.email,
-        displayName: data.auth.displayName,
-      }),
-    )
-    const authUser = allAuthData.at(0)
-    return { user, authUser, resourceType: 'user' as const }
-  }
-  const invitation = await getDocData(docRefs.invitation(userId))
-  return {
-    user: invitation?.user,
-    authUser:
-      invitation?.auth ?
-        {
-          uid: userId,
-          email: invitation.auth.email ?? null,
-          displayName: invitation.auth.displayName ?? null,
-        }
-      : undefined,
-    resourceType: 'invitation' as const,
-  }
 }
 
 const PatientPage = async ({ params }: PatientPageProps) => {
