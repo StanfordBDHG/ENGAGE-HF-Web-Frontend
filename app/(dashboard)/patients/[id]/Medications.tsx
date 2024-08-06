@@ -132,7 +132,7 @@ export const Medications = ({
                 )
               : undefined
 
-            const dailyDosage =
+            const dailyDosages =
               selectedDrug?.ingredients.map((drug) => ({
                 name: drug.name,
                 dosage:
@@ -306,13 +306,13 @@ export const Medications = ({
                     )}
                   />
                 </TableCell>
-                <TableCell>
-                  {dailyDosage.length === 0 ?
+                <TableCell className="font-medium">
+                  {dailyDosages.length === 0 ?
                     '-'
-                  : dailyDosage.length === 1 ?
-                    `${dailyDosage.at(0)?.dosage}mg`
+                  : dailyDosages.length === 1 ?
+                    `${dailyDosages.at(0)?.dosage}mg`
                   : <div>
-                      {dailyDosage.map((dosage) => (
+                      {dailyDosages.map((dosage) => (
                         <div key={dosage.name}>
                           {dosage.name} - {dosage.dosage}mg
                         </div>
