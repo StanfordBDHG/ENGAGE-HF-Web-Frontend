@@ -22,7 +22,7 @@ const InviteUserPage = async () => {
   const inviteUser = async (form: UserFormSchema) => {
     'use server'
     const { callables } = await getAuthenticatedOnlyApp()
-    await callables.createInvitation({
+    const result = await callables.createInvitation({
       auth: {
         displayName: form.displayName,
         email: form.email,
@@ -32,8 +32,7 @@ const InviteUserPage = async () => {
         type: form.type,
       },
     })
-    redirect(routes.users.index)
-    // TODO: Confirmation message
+    redirect(routes.users.user(result.data.code))
   }
 
   return (

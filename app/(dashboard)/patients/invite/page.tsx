@@ -22,7 +22,7 @@ const InvitePatientPage = async () => {
     'use server'
     const { callables, docRefs } = await getAuthenticatedOnlyApp()
     const clinician = await getDocDataOrThrow(docRefs.user(form.clinician))
-    await callables.createInvitation({
+    const result = await callables.createInvitation({
       auth: {
         displayName: form.displayName,
         email: form.email,
@@ -33,8 +33,7 @@ const InvitePatientPage = async () => {
         organization: clinician.organization,
       },
     })
-    redirect(routes.patients.index)
-    // TODO: Confirmation message
+    redirect(routes.patients.patient(result.data.code))
   }
 
   return (
