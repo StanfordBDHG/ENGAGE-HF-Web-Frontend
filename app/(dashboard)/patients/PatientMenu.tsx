@@ -46,14 +46,12 @@ export const PatientMenu = ({ patient }: PatientMenuProps) => {
         onDelete={handleDelete}
       />
       <RowDropdownMenu>
-        {patient.resourceType === 'user' && (
-          <DropdownMenuItem asChild>
-            <Link href={routes.patients.patient(patient.resourceId)}>
-              <Pencil />
-              Edit
-            </Link>
-          </DropdownMenuItem>
-        )}
+        <DropdownMenuItem asChild>
+          <Link href={routes.patients.patient(patient.resourceId)}>
+            <Pencil />
+            Edit
+          </Link>
+        </DropdownMenuItem>
         <DropdownMenuItem onClick={deleteConfirm.open}>
           <Trash />
           Delete

@@ -20,15 +20,17 @@ import {
 import { getAuthenticatedOnlyApp } from '@/modules/firebase/guards'
 import { mapAuthData } from '@/modules/firebase/user'
 import {
+  getDocData,
   getDocDataOrThrow,
   getDocsData,
+  ResourceType,
   UserType,
 } from '@/modules/firebase/utils'
 import { routes } from '@/modules/routes'
 import { getUserName } from '@/packages/design-system/src/modules/auth/user'
 import { PageTitle } from '@/packages/design-system/src/molecules/DashboardLayout'
-import { Medications, MedicationsFormSchema } from '../Medications'
 import { DashboardLayout } from '../../DashboardLayout'
+import { Medications, MedicationsFormSchema } from '../Medications'
 import {
   Tabs,
   TabsContent,
@@ -37,9 +39,12 @@ import {
 } from '@/packages/design-system/src/components/Tabs'
 import { getMedicationRequestData } from '@/modules/firebase/models/medication'
 
-const getUserMedications = async (userId: string) => {
+const getUserMedications = async (payload: {
+  userId: string
+  resourceType: ResourceType
+}) => {
   const { refs } = await getAuthenticatedOnlyApp()
-  const medicationRequests = await getDocsData(refs.medicationRequests(userId))
+  const medicationRequests = await getDocsData(refs.medicationRequests(payload))
   return medicationRequests.map((request) => {
     // TODO: Implement stronger mechanism
     const reference = request.medicationReference?.reference?.split('/')
@@ -65,39 +70,78 @@ enum Tab {
   medications = 'medications',
 }
 
-const PatientPage = async ({ params }: PatientPageProps) => {
+const getUserData = async (userId: string) => {
   const { docRefs } = await getAuthenticatedOnlyApp()
+  const user = await getDocData(docRefs.user(userId))
+  if (user) {
+    const allAuthData = await mapAuthData(
+      { userIds: [userId] },
+      (data, id) => ({
+        uid: id,
+        email: data.auth.email,
+        displayName: data.auth.displayName,
+      }),
+    )
+    const authUser = allAuthData.at(0)
+    return { user, authUser, resourceType: 'user' as const }
+  }
+  const invitation = await getDocData(docRefs.invitation(userId))
+  return {
+    user: invitation?.user,
+    authUser:
+      invitation?.auth ?
+        {
+          uid: userId,
+          email: invitation.auth.email ?? null,
+          displayName: invitation.auth.displayName ?? null,
+        }
+      : undefined,
+    resourceType: 'invitation' as const,
+  }
+}
+
+const PatientPage = async ({ params }: PatientPageProps) => {
   const userId = params.id
-  const allAuthData = await mapAuthData({ userIds: [userId] }, (data, id) => ({
-    uid: id,
-    email: data.auth.email,
-    displayName: data.auth.displayName,
-  }))
-  const authUser = allAuthData.at(0)
-  const user = await getDocDataOrThrow(docRefs.user(userId))
-  if (!authUser || user.type !== UserType.patient) {
+  const { user, authUser, resourceType } = await getUserData(userId)
+  if (!user || !authUser || user.type !== UserType.patient) {
     notFound()
   }
 
   const updatePatient = async (form: PatientFormSchema) => {
     'use server'
     const { docRefs, callables } = await getAuthenticatedOnlyApp()
-    await callables.updateUserInformation({
-      userId,
-      data: {
-        auth: {
-          displayName: form.displayName,
-          email: form.email,
-        },
-      },
-    })
-    const userRef = docRefs.user(userId)
     const clinician = await getDocDataOrThrow(docRefs.user(form.clinician))
-    await updateDoc(userRef, {
+    const authData = {
+      displayName: form.displayName,
+      email: form.email,
+    }
+    const userData = {
       invitationCode: form.invitationCode,
       clinician: form.clinician,
       organization: clinician.organization,
-    })
+    }
+    if (resourceType === 'user') {
+      await callables.updateUserInformation({
+        userId,
+        data: {
+          auth: authData,
+        },
+      })
+      await updateDoc(docRefs.user(userId), userData)
+    } else {
+      const invitation = await getDocDataOrThrow(docRefs.invitation(userId))
+      await updateDoc(docRefs.invitation(userId), {
+        auth: {
+          ...invitation.auth,
+          ...authData,
+        },
+        user: {
+          ...invitation.user,
+          ...userData,
+        },
+      })
+    }
+
     revalidatePath(routes.users.index)
   }
 
@@ -105,15 +149,25 @@ const PatientPage = async ({ params }: PatientPageProps) => {
     'use server'
     const { docRefs, db, refs } = await getAuthenticatedOnlyApp()
     const medicationRequests = await getDocsData(
-      refs.medicationRequests(userId),
+      refs.medicationRequests({ userId, resourceType }),
     )
     await runTransaction(db, async (transaction) => {
       medicationRequests.forEach((medication) => {
-        transaction.delete(docRefs.medicationRequest(userId, medication.id))
+        transaction.delete(
+          docRefs.medicationRequest({
+            userId,
+            medicationRequestId: medication.id,
+            resourceType,
+          }),
+        )
       })
       form.medications.forEach((medication) => {
         transaction.set(
-          docRefs.medicationRequest(userId, medication.id),
+          docRefs.medicationRequest({
+            userId,
+            medicationRequestId: medication.id,
+            resourceType,
+          }),
           getMedicationRequestData(medication),
         )
       })
@@ -152,7 +206,7 @@ const PatientPage = async ({ params }: PatientPageProps) => {
             {...await getMedicationsData()}
             onSave={saveMedications}
             defaultValues={{
-              medications: await getUserMedications(userId),
+              medications: await getUserMedications({ userId, resourceType }),
             }}
           />
         </TabsContent>

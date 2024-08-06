@@ -79,6 +79,13 @@ export const collectionNames = {
   medicationRequests: 'medicationRequests',
 }
 
+export type ResourceType = 'invitation' | 'user'
+
+export const userPath = (resourceType: ResourceType) =>
+  resourceType === 'invitation' ?
+    collectionNames.invitations
+  : collectionNames.users
+
 export const getCollectionRefs = (db: Firestore) => ({
   users: () =>
     collection(db, collectionNames.users) as CollectionReference<User>,
@@ -102,10 +109,16 @@ export const getCollectionRefs = (db: Firestore) => ({
       db,
       `/${collectionNames.medications}/${medicationId}/${collectionNames.drugs}`,
     ) as CollectionReference<FHIRMedication>,
-  medicationRequests: (userId: string) =>
+  medicationRequests: ({
+    userId,
+    resourceType,
+  }: {
+    userId: string
+    resourceType: ResourceType
+  }) =>
     collection(
       db,
-      `/${collectionNames.users}/${userId}/${collectionNames.medicationRequests}`,
+      `/${userPath(resourceType)}/${userId}/${collectionNames.medicationRequests}`,
     ) as CollectionReference<FHIRMedicationRequest>,
   medicationClasses: () =>
     collection(
@@ -121,21 +134,28 @@ export const getDocumentsRefs = (db: Firestore) => ({
       User
     >,
   invitation: (...segments: string[]) =>
-    doc(
-      db,
-      collectionNames.invitations,
-      ...segments,
-    ) as DocumentReference<Invitation>,
+    doc(db, collectionNames.invitations, ...segments) as DocumentReference<
+      Invitation,
+      Invitation
+    >,
   organization: (...segments: string[]) =>
     doc(
       db,
       collectionNames.organizations,
       ...segments,
     ) as DocumentReference<Organization>,
-  medicationRequest: (userId: string, medicationRequestId: string) =>
+  medicationRequest: ({
+    userId,
+    medicationRequestId,
+    resourceType,
+  }: {
+    userId: string
+    medicationRequestId: string
+    resourceType: ResourceType
+  }) =>
     doc(
       db,
-      `/${collectionNames.users}/${userId}/${collectionNames.medicationRequests}/${medicationRequestId}`,
+      `/${userPath(resourceType)}/${userId}/${collectionNames.medicationRequests}/${medicationRequestId}`,
     ) as DocumentReference<FHIRMedicationRequest>,
 })
 
