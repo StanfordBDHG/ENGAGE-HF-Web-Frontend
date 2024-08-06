@@ -111,7 +111,7 @@ const PatientPage = async ({ params }: PatientPageProps) => {
       })
     }
 
-    revalidatePath(routes.users.index)
+    revalidatePath(routes.patients.index)
   }
 
   const saveMedications = async (form: MedicationsFormSchema) => {
