@@ -95,3 +95,13 @@ export const getMedicationRequestData = (medication: {
     },
   ],
 })
+
+export const getMedicationRequestMedicationIds = (
+  request: FHIRMedicationRequest,
+) => {
+  const reference = request.medicationReference?.reference?.split('/')
+  return {
+    medicationId: reference?.at(1),
+    drugId: reference?.at(3),
+  }
+}

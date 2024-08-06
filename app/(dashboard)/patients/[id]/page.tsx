@@ -18,7 +18,10 @@ import {
   getMedicationsData,
 } from '@/app/(dashboard)/patients/utils'
 import { getAuthenticatedOnlyApp } from '@/modules/firebase/guards'
-import { getMedicationRequestData } from '@/modules/firebase/models/medication'
+import {
+  getMedicationRequestData,
+  getMedicationRequestMedicationIds,
+} from '@/modules/firebase/models/medication'
 import {
   getDocDataOrThrow,
   getDocsData,
@@ -45,12 +48,11 @@ const getUserMedications = async (payload: {
   const { refs } = await getAuthenticatedOnlyApp()
   const medicationRequests = await getDocsData(refs.medicationRequests(payload))
   return medicationRequests.map((request) => {
-    // TODO: Implement stronger mechanism
-    const reference = request.medicationReference?.reference?.split('/')
+    const ids = getMedicationRequestMedicationIds(request)
     return {
       id: request.id,
-      medication: reference?.at(1) ?? '',
-      drug: reference?.at(3) ?? '',
+      medication: ids.medicationId ?? '',
+      drug: ids.drugId ?? '',
       frequencyPerDay:
         request.dosageInstruction?.at(0)?.timing?.repeat?.frequency ?? 1,
       quantity:

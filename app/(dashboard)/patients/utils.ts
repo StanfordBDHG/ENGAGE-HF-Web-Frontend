@@ -40,7 +40,6 @@ export const getFormProps = async () => ({
   organizations: await getUserOrganizations(),
 })
 
-// TODO: Cache this
 export const getMedicationsData = async () => {
   const { refs } = await getAuthenticatedOnlyApp()
   const medicationClasses = await getDocsData(refs.medicationClasses())

@@ -89,6 +89,5 @@ export const getAuthenticatedOnlyApp = async () => {
  * */
 export const allowTypes = async (types: UserType[]) => {
   const type = await getCurrentUserType()
-  // TODO: HTTP Error
   if (!types.includes(type)) redirect(routes.home)
 }
