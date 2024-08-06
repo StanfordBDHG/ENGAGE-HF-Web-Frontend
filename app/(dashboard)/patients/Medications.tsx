@@ -1,5 +1,6 @@
 'use client'
 import { z } from 'zod'
+import { MedicationsData } from '@/app/(dashboard)/patients/utils'
 import { parseLocalizedText } from '@/modules/firebase/localizedText'
 import {
   Select,
@@ -12,7 +13,6 @@ import {
 } from '@/packages/design-system/src/components/Select'
 import { Field } from '@/packages/design-system/src/forms/Field'
 import { useForm } from '@/packages/design-system/src/forms/useForm'
-import { type Data } from './page'
 import { Plus, Check, Trash } from 'lucide-react'
 import { Button } from '@/packages/design-system/src/components/Button'
 import {
@@ -53,13 +53,13 @@ const formSchema = z.object({
 
 export type MedicationsFormSchema = z.infer<typeof formSchema>
 
-interface MedicationsProps extends Data {
+interface MedicationsProps extends MedicationsData {
   onSave: (data: MedicationsFormSchema) => Promise<void>
   defaultValues?: MedicationsFormSchema
 }
 
 export const Medications = ({
-  medicationsTree,
+  medications: medications,
   onSave,
   defaultValues,
 }: MedicationsProps) => {
@@ -71,13 +71,13 @@ export const Medications = ({
   const formValues = form.watch()
 
   const medicationsMap = useMemo(() => {
-    const entries = medicationsTree.flatMap((medicationClass) =>
+    const entries = medications.flatMap((medicationClass) =>
       medicationClass.medications.map(
         (medication) => [medication.id, medication] as const,
       ),
     )
     return new Map(entries)
-  }, [medicationsTree])
+  }, [medications])
 
   const addMedication = () =>
     form.setValue('medications', [
@@ -172,7 +172,7 @@ export const Medications = ({
                           <SelectValue placeholder="Medication" />
                         </SelectTrigger>
                         <SelectContent>
-                          {medicationsTree.map((medicationClass) => (
+                          {medications.map((medicationClass) => (
                             <SelectGroup key={medicationClass.id}>
                               <SelectLabel>
                                 {parseLocalizedText(medicationClass.name)}

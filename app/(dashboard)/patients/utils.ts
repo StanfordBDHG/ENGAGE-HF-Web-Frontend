@@ -5,6 +5,7 @@
 //
 // SPDX-License-Identifier: MIT
 //
+import { groupBy } from 'es-toolkit'
 import { query, where } from 'firebase/firestore'
 import { getAuthenticatedOnlyApp } from '@/modules/firebase/guards'
 import { mapAuthData } from '@/modules/firebase/user'
@@ -38,3 +39,86 @@ export const getFormProps = async () => ({
   clinicians: await getUserClinicians(),
   organizations: await getUserOrganizations(),
 })
+
+// TODO: Cache this
+export const getMedicationsData = async () => {
+  const { refs } = await getAuthenticatedOnlyApp()
+  const medicationClasses = await getDocsData(refs.medicationClasses())
+  const medicationsDocs = await getDocsData(refs.medications())
+
+  const prefix = 'medicationClasses'
+
+  const getMedications = medicationsDocs.map(async (doc) => {
+    const medicationClassExtension = doc.extension?.find((extension) =>
+      extension.valueReference?.reference?.startsWith(prefix),
+    )
+    const medicationClassId =
+      medicationClassExtension?.valueReference?.reference?.slice(
+        prefix.length + 1,
+      )
+
+    const drugsDocs = await getDocsData(refs.drugs(doc.id))
+    const dosageInstruction = doc.extension
+      ?.find(
+        (extension) =>
+          extension.valueMedicationRequest &&
+          extension.url.endsWith('/targetDailyDose'),
+      )
+      ?.valueMedicationRequest?.dosageInstruction?.at(0)
+
+    return {
+      id: doc.id,
+      name: doc.code?.coding?.at(0)?.display ?? '',
+      medicationClassId,
+      dosage: {
+        frequencyPerDay: dosageInstruction?.timing?.repeat?.period ?? 1,
+        quantity:
+          dosageInstruction?.doseAndRate?.at(0)?.doseQuantity?.value ?? 1,
+      },
+      drugs: drugsDocs
+        .map((drug) => ({
+          id: drug.id,
+          medicationId: doc.id,
+          medicationClassId,
+          name: drug.code?.coding?.at(0)?.display ?? '',
+          ingredients:
+            drug.ingredient?.map((ingredient) => {
+              const name =
+                ingredient.itemCodeableConcept?.coding?.at(0)?.display ?? ''
+              const unit = ingredient.strength?.numerator?.unit ?? ''
+              const strength =
+                (ingredient.strength?.numerator?.value ?? 1) /
+                (ingredient.strength?.denominator?.value ?? 1)
+              return {
+                name,
+                strength,
+                unit,
+              }
+            }) ?? [],
+        }))
+        .sort((a, b) => {
+          const name = a.name.localeCompare(b.name)
+          return name === 0 ?
+              (a.ingredients.at(0)?.strength ?? 0) -
+                (b.ingredients.at(0)?.strength ?? 0)
+            : name
+        }),
+    }
+  })
+
+  const formattedMedications = await Promise.all(getMedications)
+  const medicationsByClass = groupBy(
+    formattedMedications,
+    (medication) => medication.medicationClassId ?? '',
+  )
+
+  const medications = medicationClasses.map((medicationClass) => ({
+    id: medicationClass.id,
+    name: medicationClass.name,
+    medications: medicationsByClass[medicationClass.id] ?? [],
+  }))
+
+  return { medications }
+}
+
+export type MedicationsData = Awaited<ReturnType<typeof getMedicationsData>>

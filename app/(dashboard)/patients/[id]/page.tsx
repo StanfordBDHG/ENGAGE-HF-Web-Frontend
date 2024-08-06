@@ -13,7 +13,10 @@ import {
   PatientForm,
   type PatientFormSchema,
 } from '@/app/(dashboard)/patients/PatientForm'
-import { getFormProps } from '@/app/(dashboard)/patients/utils'
+import {
+  getFormProps,
+  getMedicationsData,
+} from '@/app/(dashboard)/patients/utils'
 import { getAuthenticatedOnlyApp } from '@/modules/firebase/guards'
 import { mapAuthData } from '@/modules/firebase/user'
 import {
@@ -24,97 +27,15 @@ import {
 import { routes } from '@/modules/routes'
 import { getUserName } from '@/packages/design-system/src/modules/auth/user'
 import { PageTitle } from '@/packages/design-system/src/molecules/DashboardLayout'
-import { Medications, MedicationsFormSchema } from './Medications'
+import { Medications, MedicationsFormSchema } from '../Medications'
 import { DashboardLayout } from '../../DashboardLayout'
-import { groupBy } from 'es-toolkit'
 import {
-  TabsList,
   Tabs,
   TabsContent,
+  TabsList,
   TabsTrigger,
 } from '@/packages/design-system/src/components/Tabs'
 import { getMedicationRequestData } from '@/modules/firebase/models/medication'
-
-// TODO: Cache this
-const getMedicationsData = async () => {
-  const { refs } = await getAuthenticatedOnlyApp()
-  const medicationClasses = await getDocsData(refs.medicationClasses())
-  const medicationsDocs = await getDocsData(refs.medications())
-
-  const prefix = 'medicationClasses'
-
-  const getMedications = medicationsDocs.map(async (doc) => {
-    const medicationClassExtension = doc.extension?.find((extension) =>
-      extension.valueReference?.reference?.startsWith(prefix),
-    )
-    const medicationClassId =
-      medicationClassExtension?.valueReference?.reference?.slice(
-        prefix.length + 1,
-      )
-
-    const drugsDocs = await getDocsData(refs.drugs(doc.id))
-    const dosageInstruction = doc.extension
-      ?.find(
-        (extension) =>
-          extension.valueMedicationRequest &&
-          extension.url.endsWith('/targetDailyDose'),
-      )
-      ?.valueMedicationRequest?.dosageInstruction?.at(0)
-
-    return {
-      id: doc.id,
-      name: doc.code?.coding?.at(0)?.display ?? '',
-      medicationClassId,
-      dosage: {
-        frequencyPerDay: dosageInstruction?.timing?.repeat?.period ?? 1,
-        quantity:
-          dosageInstruction?.doseAndRate?.at(0)?.doseQuantity?.value ?? 1,
-      },
-      drugs: drugsDocs
-        .map((drug) => ({
-          id: drug.id,
-          medicationId: doc.id,
-          medicationClassId,
-          name: drug.code?.coding?.at(0)?.display ?? '',
-          ingredients:
-            drug.ingredient?.map((ingredient) => {
-              const name =
-                ingredient.itemCodeableConcept?.coding?.at(0)?.display ?? ''
-              const unit = ingredient.strength?.numerator?.unit ?? ''
-              const strength =
-                (ingredient.strength?.numerator?.value ?? 1) /
-                (ingredient.strength?.denominator?.value ?? 1)
-              return {
-                name,
-                strength,
-                unit,
-              }
-            }) ?? [],
-        }))
-        .sort((a, b) => {
-          const name = a.name.localeCompare(b.name)
-          return name === 0 ?
-              (a.ingredients.at(0)?.strength ?? 0) -
-                (b.ingredients.at(0)?.strength ?? 0)
-            : name
-        }),
-    }
-  })
-
-  const formattedMedications = await Promise.all(getMedications)
-  const medicationsByClass = groupBy(
-    formattedMedications,
-    (medication) => medication.medicationClassId ?? '',
-  )
-
-  const medicationsTree = medicationClasses.map((medicationClass) => ({
-    id: medicationClass.id,
-    name: medicationClass.name,
-    medications: medicationsByClass[medicationClass.id] ?? [],
-  }))
-
-  return { medicationsTree }
-}
 
 const getUserMedications = async (userId: string) => {
   const { refs } = await getAuthenticatedOnlyApp()
@@ -135,10 +56,13 @@ const getUserMedications = async (userId: string) => {
   })
 }
 
-export type Data = Awaited<ReturnType<typeof getMedicationsData>>
-
 interface PatientPageProps {
   params: { id: string }
+}
+
+enum Tab {
+  information = 'information',
+  medications = 'medications',
 }
 
 const PatientPage = async ({ params }: PatientPageProps) => {
@@ -206,16 +130,16 @@ const PatientPage = async ({ params }: PatientPageProps) => {
         />
       }
     >
-      <Tabs defaultValue="medication">
+      <Tabs defaultValue={Tab.information}>
         <TabsList className="mb-6 w-full">
-          <TabsTrigger value="information" className="grow">
+          <TabsTrigger value={Tab.information} className="grow">
             Information
           </TabsTrigger>
-          <TabsTrigger value="medication" className="grow">
-            Medication
+          <TabsTrigger value={Tab.medications} className="grow">
+            Medications
           </TabsTrigger>
         </TabsList>
-        <TabsContent value="information">
+        <TabsContent value={Tab.information}>
           <PatientForm
             user={user}
             userInfo={authUser}
@@ -223,7 +147,7 @@ const PatientPage = async ({ params }: PatientPageProps) => {
             {...await getFormProps()}
           />
         </TabsContent>
-        <TabsContent value="medication">
+        <TabsContent value={Tab.medications}>
           <Medications
             {...await getMedicationsData()}
             onSave={saveMedications}
