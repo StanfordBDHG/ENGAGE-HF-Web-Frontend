@@ -12,7 +12,7 @@ import {
   type ElementRef,
   forwardRef,
 } from 'react'
-import { cn } from '../../../dist/utils/className'
+import { cn } from '../../utils/className'
 
 export const Tabs = TabsPrimitive.Root
 
