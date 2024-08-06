@@ -5,7 +5,7 @@
 //
 // SPDX-License-Identifier: MIT
 //
-import { setDoc, updateDoc } from '@firebase/firestore'
+import { runTransaction, updateDoc } from '@firebase/firestore'
 import { Contact } from 'lucide-react'
 import { revalidatePath } from 'next/cache'
 import { notFound } from 'next/navigation'
@@ -33,6 +33,7 @@ import {
   TabsContent,
   TabsTrigger,
 } from '@/packages/design-system/src/components/Tabs'
+import { getMedicationRequestData } from '@/modules/firebase/models/medication'
 
 // TODO: Cache this
 const getMedicationsData = async () => {
@@ -178,37 +179,21 @@ const PatientPage = async ({ params }: PatientPageProps) => {
 
   const saveMedications = async (form: MedicationsFormSchema) => {
     'use server'
-    const { docRefs } = await getAuthenticatedOnlyApp()
-    // TODO: Handle removing previous data, probably a transaction
-    const promises = form.medications.map(async (medication) => {
-      await setDoc(docRefs.medicationRequest(userId, medication.id), {
-        medicationReference: {
-          reference: `medications/${medication.medication}/drugs/${medication.drug}`,
-        },
-        dosageInstruction: [
-          {
-            timing: {
-              repeat: {
-                frequency: medication.frequencyPerDay,
-                period: 1,
-                periodUnit: 'd',
-              },
-            },
-            doseAndRate: [
-              {
-                doseQuantity: {
-                  code: '{tbl}',
-                  system: 'http://unitsofmeasure.org',
-                  unit: 'tbl.',
-                  value: medication.quantity,
-                },
-              },
-            ],
-          },
-        ],
+    const { docRefs, db, refs } = await getAuthenticatedOnlyApp()
+    const medicationRequests = await getDocsData(
+      refs.medicationRequests(userId),
+    )
+    await runTransaction(db, async (transaction) => {
+      medicationRequests.forEach((medication) => {
+        transaction.delete(docRefs.medicationRequest(userId, medication.id))
+      })
+      form.medications.forEach((medication) => {
+        transaction.set(
+          docRefs.medicationRequest(userId, medication.id),
+          getMedicationRequestData(medication),
+        )
       })
     })
-    await Promise.all(promises)
   }
 
   return (
@@ -222,7 +207,7 @@ const PatientPage = async ({ params }: PatientPageProps) => {
       }
     >
       <Tabs defaultValue="medication">
-        <TabsList className="w-full mb-6">
+        <TabsList className="mb-6 w-full">
           <TabsTrigger value="information" className="grow">
             Information
           </TabsTrigger>

@@ -63,3 +63,35 @@ export interface MedicationClass {
   name: LocalizedText
   videoPath: string
 }
+
+export const getMedicationRequestData = (medication: {
+  medication: string
+  drug: string
+  frequencyPerDay: number
+  quantity: number
+}): FHIRMedicationRequest => ({
+  medicationReference: {
+    reference: `medications/${medication.medication}/drugs/${medication.drug}`,
+  },
+  dosageInstruction: [
+    {
+      timing: {
+        repeat: {
+          frequency: medication.frequencyPerDay,
+          period: 1,
+          periodUnit: 'd',
+        },
+      },
+      doseAndRate: [
+        {
+          doseQuantity: {
+            code: '{tbl}',
+            system: 'http://unitsofmeasure.org',
+            unit: 'tbl.',
+            value: medication.quantity,
+          },
+        },
+      ],
+    },
+  ],
+})
