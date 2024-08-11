@@ -29,7 +29,7 @@ export const patientFormSchema = z.object({
   email: z.string().min(1, 'Email is required'),
   displayName: z.string(),
   invitationCode: z.string(),
-  clinician: z.string(),
+  clinician: z.string().min(1, 'Clinician is required'),
   dateOfBirth: z.date().optional(),
 })
 
