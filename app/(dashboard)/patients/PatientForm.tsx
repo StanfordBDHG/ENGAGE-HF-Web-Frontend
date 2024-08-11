@@ -9,6 +9,7 @@
 import { z } from 'zod'
 import { type User } from '@/modules/firebase/utils'
 import { Button } from '@/packages/design-system/src/components/Button'
+import { DatePicker } from '@/packages/design-system/src/components/DatePicker'
 import { Input } from '@/packages/design-system/src/components/Input'
 import {
   Select,
@@ -29,6 +30,7 @@ export const patientFormSchema = z.object({
   displayName: z.string(),
   invitationCode: z.string(),
   clinician: z.string(),
+  dateOfBirth: z.date().optional(),
 })
 
 export type PatientFormSchema = z.infer<typeof patientFormSchema>
@@ -40,7 +42,10 @@ interface PatientFormProps {
     email: string | null
   }>
   userInfo?: Pick<UserInfo, 'email' | 'displayName' | 'uid'>
-  user?: Pick<User, 'organization' | 'invitationCode' | 'clinician'>
+  user?: Pick<
+    User,
+    'organization' | 'invitationCode' | 'clinician' | 'dateOfBirth'
+  >
   onSubmit: (data: PatientFormSchema) => Promise<void>
   clinicianPreselectId?: string
 }
@@ -60,6 +65,7 @@ export const PatientForm = ({
       displayName: userInfo?.displayName ?? '',
       invitationCode: user?.invitationCode ?? '',
       clinician: user?.clinician ?? clinicianPreselectId ?? '',
+      dateOfBirth: user?.dateOfBirth ? new Date(user.dateOfBirth) : undefined,
     },
   })
 
@@ -80,6 +86,18 @@ export const PatientForm = ({
         name="displayName"
         label="Display name"
         render={({ field }) => <Input {...field} />}
+      />
+      <Field
+        control={form.control}
+        name="dateOfBirth"
+        label="Date of Birth"
+        render={({ field }) => (
+          <DatePicker
+            mode="single"
+            selected={field.value}
+            onSelect={(date) => field.onChange(date)}
+          />
+        )}
       />
       {isEdit && (
         <Field

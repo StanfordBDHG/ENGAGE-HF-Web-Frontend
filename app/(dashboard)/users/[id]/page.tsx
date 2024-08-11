@@ -5,7 +5,7 @@
 //
 // SPDX-License-Identifier: MIT
 //
-import { deleteField, updateDoc } from '@firebase/firestore'
+import { updateDoc } from '@firebase/firestore'
 import { Users } from 'lucide-react'
 import { revalidatePath } from 'next/cache'
 import { notFound } from 'next/navigation'
@@ -45,8 +45,9 @@ const UserPage = async ({ params }: UserPageProps) => {
     }
     const userData = {
       invitationCode: form.invitationCode,
-      organization: form.organizationId ?? deleteField(),
+      organization: form.organizationId,
       type: form.type,
+      dateOfBirth: form.dateOfBirth?.toISOString(),
     }
     if (resourceType === 'user') {
       await callables.updateUserInformation({

@@ -90,6 +90,7 @@ const PatientPage = async ({ params }: PatientPageProps) => {
       invitationCode: form.invitationCode,
       clinician: form.clinician,
       organization: clinician.organization,
+      dateOfBirth: form.dateOfBirth?.toISOString(),
     }
     if (resourceType === 'user') {
       await callables.updateUserInformation({

@@ -30,6 +30,7 @@ const InviteUserPage = async () => {
       user: {
         ...(form.organizationId ? { organization: form.organizationId } : {}),
         type: form.type,
+        dateOfBirth: form.dateOfBirth?.toISOString(),
       },
     })
     redirect(routes.users.user(result.data.id))

@@ -14,6 +14,7 @@ import {
   UserType,
 } from '@/modules/firebase/utils'
 import { Button } from '@/packages/design-system/src/components/Button'
+import { DatePicker } from '@/packages/design-system/src/components/DatePicker'
 import { Input } from '@/packages/design-system/src/components/Input'
 import {
   Select,
@@ -31,6 +32,7 @@ export const userFormSchema = z
     email: z.string().min(1, 'Email is required'),
     displayName: z.string(),
     invitationCode: z.string(),
+    dateOfBirth: z.date().optional(),
     organizationId: z.string().optional(),
     type: z.nativeEnum(UserType),
   })
@@ -49,7 +51,7 @@ export type UserFormSchema = z.infer<typeof userFormSchema>
 interface UserFormProps {
   organizations: Array<Pick<Organization, 'name' | 'id'>>
   userInfo?: Pick<UserInfo, 'email' | 'displayName' | 'uid'>
-  user?: Pick<User, 'organization' | 'invitationCode'>
+  user?: Pick<User, 'organization' | 'invitationCode' | 'dateOfBirth'>
   type?: UserType
   onSubmit: (data: UserFormSchema) => Promise<void>
 }
@@ -74,6 +76,7 @@ export const UserForm = ({
           authUser.user.organization
         : user?.organization,
       invitationCode: user?.invitationCode ?? '',
+      dateOfBirth: user?.dateOfBirth ? new Date(user.dateOfBirth) : undefined,
     },
   })
 
@@ -94,6 +97,18 @@ export const UserForm = ({
         name="displayName"
         label="Display name"
         render={({ field }) => <Input {...field} />}
+      />
+      <Field
+        control={form.control}
+        name="dateOfBirth"
+        label="Date of Birth"
+        render={({ field }) => (
+          <DatePicker
+            mode="single"
+            selected={field.value}
+            onSelect={(date) => field.onChange(date)}
+          />
+        )}
       />
       {isEdit && (
         <Field
