@@ -199,6 +199,7 @@ export const getCallables = (functions: Functions) => ({
         clinician?: string
         language?: string
         timeZone?: string
+        dateOfBirth?: string
       }
     },
     { id: string }
