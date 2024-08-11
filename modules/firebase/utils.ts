@@ -201,7 +201,7 @@ export const getCallables = (functions: Functions) => ({
         timeZone?: string
       }
     },
-    { code: string }
+    { id: string }
   >(functions, 'createInvitation'),
   getUsersInformation: httpsCallable<
     GetUsersInformationInput,

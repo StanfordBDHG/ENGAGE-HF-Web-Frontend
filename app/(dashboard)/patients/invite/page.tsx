@@ -33,7 +33,7 @@ const InvitePatientPage = async () => {
         organization: clinician.organization,
       },
     })
-    redirect(routes.patients.patient(result.data.code))
+    redirect(routes.patients.patient(result.data.id))
   }
 
   return (

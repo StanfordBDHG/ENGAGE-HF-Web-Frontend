@@ -32,7 +32,7 @@ const InviteUserPage = async () => {
         type: form.type,
       },
     })
-    redirect(routes.users.user(result.data.code))
+    redirect(routes.users.user(result.data.id))
   }
 
   return (
