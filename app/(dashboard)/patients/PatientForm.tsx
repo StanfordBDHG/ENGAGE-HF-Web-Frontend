@@ -26,7 +26,7 @@ import {
 } from '@/packages/design-system/src/modules/auth/user'
 
 export const patientFormSchema = z.object({
-  email: z.string().min(1, 'Email is required'),
+  email: z.string().email().min(1, 'Email is required'),
   displayName: z.string(),
   invitationCode: z.string(),
   clinician: z.string().min(1, 'Clinician is required'),

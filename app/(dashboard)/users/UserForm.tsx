@@ -29,7 +29,7 @@ import { type UserInfo } from '@/packages/design-system/src/modules/auth/user'
 
 export const userFormSchema = z
   .object({
-    email: z.string().min(1, 'Email is required'),
+    email: z.string().email().min(1, 'Email is required'),
     displayName: z.string(),
     invitationCode: z.string(),
     dateOfBirth: z.date().optional(),
