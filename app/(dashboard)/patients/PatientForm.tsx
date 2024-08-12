@@ -96,6 +96,7 @@ export const PatientForm = ({
             mode="single"
             selected={field.value}
             onSelect={(date) => field.onChange(date)}
+            defaultMonth={field.value}
             toYear={new Date().getFullYear()}
           />
         )}
