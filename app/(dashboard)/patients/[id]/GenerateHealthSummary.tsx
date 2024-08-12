@@ -1,5 +1,6 @@
 'use client'
 import { kebabCase } from 'es-toolkit'
+import { Download } from 'lucide-react'
 import { useState } from 'react'
 import { callables } from '@/modules/firebase/clientApp'
 import { type ResourceType } from '@/modules/firebase/utils'
@@ -54,6 +55,7 @@ export const GenerateHealthSummary = ({
           className="disabled:pointer-events-auto"
           isPending={isPending}
         >
+          <Download />
           Export Health Summary
         </Button>
       </Tooltip>
