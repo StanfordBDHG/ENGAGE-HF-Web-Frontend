@@ -23,11 +23,16 @@ export const Calendar = ({
   <DayPicker
     showOutsideDays={showOutsideDays}
     className={cn('p-3', className)}
+    captionLayout="dropdown-buttons"
+    fromYear={1900}
+    toYear={2100}
     classNames={{
       months: 'flex flex-col sm:flex-row space-y-4 sm:space-x-4 sm:space-y-0',
       month: 'space-y-4',
       caption: 'flex justify-center pt-1 relative items-center',
       caption_label: 'text-sm font-medium',
+      vhidden: 'hidden',
+      caption_dropdowns: 'hide-all-hidden flex gap-2 text-sm items-center',
       nav: 'space-x-1 flex items-center',
       nav_button: cn(
         buttonVariance({ variant: 'outline' }),
