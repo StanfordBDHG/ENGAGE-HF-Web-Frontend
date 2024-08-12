@@ -107,6 +107,7 @@ export const UserForm = ({
             mode="single"
             selected={field.value}
             onSelect={(date) => field.onChange(date)}
+            toYear={new Date().getFullYear()}
           />
         )}
       />
