@@ -52,7 +52,7 @@ export enum UserType {
 
 export interface User {
   type: UserType
-  dateOfBirth?: string
+  dateOfBirth?: string | null
   clinician?: string
   dateOfEnrollment?: string
   invitationCode?: string
@@ -199,7 +199,7 @@ export const getCallables = (functions: Functions) => ({
         clinician?: string
         language?: string
         timeZone?: string
-        dateOfBirth?: string
+        dateOfBirth?: string | null
       }
     },
     { id: string }
