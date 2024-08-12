@@ -50,22 +50,20 @@ export const GenerateHealthSummary = ({
   }
 
   return (
-    <div className="my-4">
-      <Tooltip
-        open={resourceType === 'invitation' ? undefined : false}
-        tooltip="This user has not logged in to the application yet"
+    <Tooltip
+      open={resourceType === 'invitation' ? undefined : false}
+      tooltip="This user has not logged in to the application yet"
+    >
+      <Button
+        type="submit"
+        disabled={resourceType === 'invitation'}
+        onClick={downloadHealthSummary}
+        className="disabled:pointer-events-auto"
+        isPending={isPending}
       >
-        <Button
-          type="submit"
-          disabled={resourceType === 'invitation'}
-          onClick={downloadHealthSummary}
-          className="disabled:pointer-events-auto"
-          isPending={isPending}
-        >
-          <Download />
-          Export Health Summary
-        </Button>
-      </Tooltip>
-    </div>
+        <Download />
+        Export Health Summary
+      </Button>
+    </Tooltip>
   )
 }

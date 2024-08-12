@@ -160,12 +160,14 @@ const PatientPage = async ({ params }: PatientPageProps) => {
           icon={<Contact />}
         />
       }
+      actions={
+        <GenerateHealthSummary
+          userId={userId}
+          resourceType={resourceType}
+          userName={userName}
+        />
+      }
     >
-      <GenerateHealthSummary
-        userId={userId}
-        resourceType={resourceType}
-        userName={userName}
-      />
       <Tabs defaultValue={Tab.information}>
         <TabsList className="mb-6 w-full">
           <TabsTrigger value={Tab.information} className="grow">
