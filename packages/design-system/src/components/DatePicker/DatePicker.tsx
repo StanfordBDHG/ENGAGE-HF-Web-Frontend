@@ -24,7 +24,7 @@ export const DatePicker = (props: DatePickerProps) => {
         <Button
           variant="outline"
           className={cn(
-            '!w-full !justify-start !bg-surface-primary !text-left',
+            '!w-full !justify-start !bg-surface-primary !text-left !text-sm',
             !selected && '!text-muted-foreground',
           )}
         >
