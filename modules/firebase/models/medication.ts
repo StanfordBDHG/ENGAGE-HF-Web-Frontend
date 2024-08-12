@@ -12,6 +12,8 @@ import {
   type FHIRElement,
   type FHIRRatio,
   type FHIRReference,
+  type FHIRPeriod,
+  type FHIRResource,
 } from './baseTypes.js'
 
 export interface FHIRMedication extends FHIRElement {
@@ -62,6 +64,32 @@ export type LocalizedText = string | Record<string, string>
 export interface MedicationClass {
   name: LocalizedText
   videoPath: string
+}
+
+export interface FHIRObservationComponent {
+  code: FHIRCodeableConcept
+  valueQuantity?: FHIRSimpleQuantity
+}
+
+export enum FHIRObservationStatus {
+  registered = 'registered',
+  preliminary = 'preliminary',
+  final = 'final',
+  amended = 'amended',
+  corrected = 'corrected',
+  cancelled = 'cancelled',
+  entered_in_error = 'entered-in-error',
+  unknown = 'unknown',
+}
+
+export interface FHIRObservation extends FHIRResource {
+  status: FHIRObservationStatus
+  code: FHIRCodeableConcept
+  component?: FHIRObservationComponent[]
+  valueQuantity?: FHIRSimpleQuantity
+  effectivePeriod?: FHIRPeriod
+  effectiveDateTime?: string
+  effectiveInstant?: string
 }
 
 export const getMedicationRequestData = (medication: {

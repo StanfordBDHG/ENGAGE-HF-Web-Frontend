@@ -38,6 +38,10 @@ export interface FHIRPeriod {
   end?: string
 }
 
+export interface FHIRResource extends FHIRElement {
+  resourceType: string
+}
+
 export interface FHIRRatio {
   numerator?: FHIRSimpleQuantity
   denominator?: FHIRSimpleQuantity

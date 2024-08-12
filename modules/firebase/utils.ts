@@ -20,6 +20,7 @@ import {
   type FHIRMedication,
   type FHIRMedicationRequest,
   type MedicationClass,
+  type FHIRObservation,
 } from '@/modules/firebase/models/medication'
 
 export interface Organization {
@@ -77,6 +78,9 @@ export const collectionNames = {
   medicationClasses: 'medicationClasses',
   drugs: 'drugs',
   medicationRequests: 'medicationRequests',
+  creatinineObservations: 'creatinineObservations',
+  eGfrObservations: 'eGfrObservations',
+  potassiumObservations: 'potassiumObservations',
 }
 
 export type ResourceType = 'invitation' | 'user'
@@ -125,6 +129,39 @@ export const getCollectionRefs = (db: Firestore) => ({
       db,
       collectionNames.medicationClasses,
     ) as CollectionReference<MedicationClass>,
+  potassiumObservations: ({
+    userId,
+    resourceType,
+  }: {
+    userId: string
+    resourceType: ResourceType
+  }) =>
+    collection(
+      db,
+      `/${userPath(resourceType)}/${userId}/${collectionNames.potassiumObservations}`,
+    ) as CollectionReference<FHIRObservation>,
+  creatinineObservations: ({
+    userId,
+    resourceType,
+  }: {
+    userId: string
+    resourceType: ResourceType
+  }) =>
+    collection(
+      db,
+      `/${userPath(resourceType)}/${userId}/${collectionNames.creatinineObservations}`,
+    ) as CollectionReference<FHIRObservation>,
+  eGfrObservations: ({
+    userId,
+    resourceType,
+  }: {
+    userId: string
+    resourceType: ResourceType
+  }) =>
+    collection(
+      db,
+      `/${userPath(resourceType)}/${userId}/${collectionNames.eGfrObservations}`,
+    ) as CollectionReference<FHIRObservation>,
 })
 
 export const getDocumentsRefs = (db: Firestore) => ({
