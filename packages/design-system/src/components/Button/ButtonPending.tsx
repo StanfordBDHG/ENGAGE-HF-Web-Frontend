@@ -8,8 +8,11 @@
 import { Loader2 } from 'lucide-react'
 import { forwardRef, type HTMLAttributes } from 'react'
 import { cn } from '../../utils/className'
+import type { ButtonProps } from '../Button'
 
-interface ButtonPendingProps extends HTMLAttributes<HTMLSpanElement> {
+interface ButtonPendingProps
+  extends HTMLAttributes<HTMLSpanElement>,
+    Pick<ButtonProps, 'size'> {
   isPending?: boolean
 }
 
@@ -18,8 +21,12 @@ interface ButtonPendingProps extends HTMLAttributes<HTMLSpanElement> {
  * It's separated from Button to prevent redundant markup when unnecessary
  * */
 export const ButtonPending = forwardRef<HTMLSpanElement, ButtonPendingProps>(
-  ({ children, isPending, className, ...props }, ref) => (
-    <span className={cn('relative', className)} ref={ref} {...props}>
+  ({ children, isPending, className, size, ...props }, ref) => (
+    <span
+      className={cn('inline-flex-center relative', className)}
+      ref={ref}
+      {...props}
+    >
       {isPending && (
         <div
           className="absolute -top-0.5 left-1/2 -translate-x-1/2"
@@ -29,7 +36,15 @@ export const ButtonPending = forwardRef<HTMLSpanElement, ButtonPendingProps>(
           <Loader2 className="animate-spin" />
         </div>
       )}
-      <span className={cn(isPending && 'invisible')}>{children}</span>
+      <span
+        className={cn(
+          'inline-flex-center',
+          size === 'lg' ? 'gap-2.5' : 'gap-2',
+          isPending && 'invisible ',
+        )}
+      >
+        {children}
+      </span>
     </span>
   ),
 )

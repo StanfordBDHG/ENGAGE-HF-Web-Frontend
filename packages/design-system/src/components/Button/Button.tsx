@@ -72,7 +72,9 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         {...props}
       >
         {isPending !== undefined ?
-          <ButtonPending isPending={isPending}>{children}</ButtonPending>
+          <ButtonPending size={size} isPending={isPending}>
+            {children}
+          </ButtonPending>
         : children}
       </Comp>
     )
