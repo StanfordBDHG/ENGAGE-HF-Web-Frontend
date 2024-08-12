@@ -230,7 +230,7 @@ export const getCallables = (functions: Functions) => ({
     {
       userId: string
     },
-    Buffer
+    { content: string }
   >(functions, 'exportHealthSummary'),
 })
 
