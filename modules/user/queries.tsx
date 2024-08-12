@@ -93,7 +93,13 @@ export const getUserData = async (userId: string) => {
   }
   const invitation = await getDocData(docRefs.invitation(userId))
   return {
-    user: invitation?.user,
+    user:
+      invitation?.user ?
+        {
+          ...invitation.user,
+          invitationCode: invitation.id,
+        }
+      : undefined,
     authUser:
       invitation?.auth ?
         {
