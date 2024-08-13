@@ -171,7 +171,7 @@ const PatientPage = async ({ params }: PatientPageProps) => {
         />
       }
     >
-      <Tabs defaultValue={Tab.labs}>
+      <Tabs defaultValue={Tab.information}>
         <TabsList className="mb-6 w-full">
           <TabsTrigger value={Tab.information} className="grow">
             Information
