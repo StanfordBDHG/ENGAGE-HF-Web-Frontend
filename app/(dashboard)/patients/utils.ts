@@ -9,7 +9,11 @@ import { groupBy } from 'es-toolkit'
 import { query, where } from 'firebase/firestore'
 import { getAuthenticatedOnlyApp } from '@/modules/firebase/guards'
 import { mapAuthData } from '@/modules/firebase/user'
-import { getDocsData, UserType } from '@/modules/firebase/utils'
+import {
+  getDocsData,
+  type ResourceType,
+  UserType,
+} from '@/modules/firebase/utils'
 import { getUserOrganizations } from '@/modules/user/queries'
 
 export const getUserClinicians = async () => {
@@ -120,4 +124,36 @@ export const getMedicationsData = async () => {
   return { medications }
 }
 
+export const getLabsData = async ({
+  userId,
+  resourceType,
+}: {
+  userId: string
+  resourceType: ResourceType
+}) => {
+  const { refs } = await getAuthenticatedOnlyApp()
+  const rawObservations = await Promise.all(
+    [
+      { type: 'Creatinine', getRef: refs.creatinineObservations },
+      { type: 'eGFR', getRef: refs.eGfrObservations },
+      { type: 'Potassium', getRef: refs.potassiumObservations },
+    ].map(async (resource) => ({
+      data: await getDocsData(resource.getRef({ userId, resourceType })),
+      type: resource.type,
+    })),
+  )
+
+  const observations = rawObservations.flatMap((observations) =>
+    observations.data.map((observation) => ({
+      effectiveDateTime: observation.effectiveDateTime,
+      value: observation.valueQuantity?.value,
+      unit: observation.valueQuantity?.unit,
+      type: observations.type,
+    })),
+  )
+
+  return { observations }
+}
+
+export type LabsData = Awaited<ReturnType<typeof getLabsData>>
 export type MedicationsData = Awaited<ReturnType<typeof getMedicationsData>>

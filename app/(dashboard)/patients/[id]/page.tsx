@@ -15,6 +15,7 @@ import {
 } from '@/app/(dashboard)/patients/PatientForm'
 import {
   getFormProps,
+  getLabsData,
   getMedicationsData,
 } from '@/app/(dashboard)/patients/utils'
 import { getAuthenticatedOnlyApp } from '@/modules/firebase/guards'
@@ -39,6 +40,7 @@ import {
 import { getUserName } from '@/packages/design-system/src/modules/auth/user'
 import { PageTitle } from '@/packages/design-system/src/molecules/DashboardLayout'
 import { GenerateHealthSummary } from './GenerateHealthSummary'
+import { Labs } from './Labs'
 import { DashboardLayout } from '../../DashboardLayout'
 import { Medications, type MedicationsFormSchema } from '../Medications'
 
@@ -70,6 +72,7 @@ interface PatientPageProps {
 enum Tab {
   information = 'information',
   medications = 'medications',
+  labs = 'labs',
 }
 
 const PatientPage = async ({ params }: PatientPageProps) => {
@@ -168,13 +171,16 @@ const PatientPage = async ({ params }: PatientPageProps) => {
         />
       }
     >
-      <Tabs defaultValue={Tab.information}>
+      <Tabs defaultValue={Tab.labs}>
         <TabsList className="mb-6 w-full">
           <TabsTrigger value={Tab.information} className="grow">
             Information
           </TabsTrigger>
           <TabsTrigger value={Tab.medications} className="grow">
             Medications
+          </TabsTrigger>
+          <TabsTrigger value={Tab.labs} className="grow">
+            Labs
           </TabsTrigger>
         </TabsList>
         <TabsContent value={Tab.information}>
@@ -193,6 +199,9 @@ const PatientPage = async ({ params }: PatientPageProps) => {
               medications: await getUserMedications({ userId, resourceType }),
             }}
           />
+        </TabsContent>
+        <TabsContent value={Tab.labs}>
+          <Labs {...await getLabsData({ userId, resourceType })} />
         </TabsContent>
       </Tabs>
     </DashboardLayout>
