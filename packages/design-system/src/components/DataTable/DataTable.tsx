@@ -16,7 +16,7 @@ import {
   useReactTable,
 } from '@tanstack/react-table'
 import { type TableOptions } from '@tanstack/table-core'
-import { useState } from 'react'
+import { type ReactNode, useState } from 'react'
 import { useDebouncedCallback } from 'use-debounce'
 import { fuzzyFilter } from './DataTable.utils'
 import { GlobalFilterInput } from './GlobalFilterInput'
@@ -46,6 +46,7 @@ export interface DataTableProps<Data>
    * */
   entityName?: string
   pageSize?: number
+  header?: ReactNode
 }
 
 export const DataTable = <Data,>({
@@ -54,6 +55,7 @@ export const DataTable = <Data,>({
   entityName,
   data,
   pageSize = 50,
+  header,
   ...props
 }: DataTableProps<Data>) => {
   const [sorting, setSorting] = useState<SortingState>([])
@@ -95,11 +97,12 @@ export const DataTable = <Data,>({
   const pageCount = table.getPageCount()
   return (
     <div className={cn('rounded-md border bg-surface-primary', className)}>
-      <header className="flex border-b p-4">
+      <header className="flex items-center border-b p-4">
         <GlobalFilterInput
           onChange={(event) => setGlobalFilterDebounced(event.target.value)}
           entityName={entityName}
         />
+        {header}
       </header>
       <Table>
         <TableHeader>

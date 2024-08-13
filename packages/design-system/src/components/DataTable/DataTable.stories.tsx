@@ -8,6 +8,7 @@
 import { type Meta, type StoryObj } from '@storybook/react'
 import { DataTable } from './DataTable'
 import { peopleColumns, peopleData, type Person } from './DataTable.mocks'
+import { Button } from '../Button'
 
 const meta: Meta<typeof DataTable> = {
   title: 'Components/DataTable',
@@ -34,5 +35,18 @@ export const Paginated: Story = {
   args: {
     ...Default.args,
     pageSize: 2,
+  },
+}
+
+export const HeaderAction: Story = {
+  args: {
+    ...Default.args,
+    header: (
+      <>
+        <Button className="ml-auto" size="sm">
+          Action
+        </Button>
+      </>
+    ),
   },
 }
