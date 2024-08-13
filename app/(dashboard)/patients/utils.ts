@@ -146,6 +146,7 @@ export const getLabsData = async ({
 
   const observations = rawObservations.flatMap((observations) =>
     observations.data.map((observation) => ({
+      id: observation.id,
       effectiveDateTime: observation.effectiveDateTime,
       value: observation.valueQuantity?.value,
       unit: observation.valueQuantity?.unit,
@@ -153,8 +154,9 @@ export const getLabsData = async ({
     })),
   )
 
-  return { observations }
+  return { observations, userId, resourceType }
 }
 
 export type LabsData = Awaited<ReturnType<typeof getLabsData>>
+export type Observation = LabsData['observations'][number]
 export type MedicationsData = Awaited<ReturnType<typeof getMedicationsData>>
