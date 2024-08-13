@@ -53,3 +53,11 @@ export const upperFirst = (value: string) =>
  * */
 export const times = <T>(length: number, callback: (index: number) => T) =>
   new Array(length).fill(undefined).map((_, index) => callback(index))
+
+/**
+ * Utility to dynamically resolve strategy pattern
+ */
+export const strategy = <T extends string | number | symbol, F>(
+  record: Record<T, F>,
+  enumValue: T,
+) => record[enumValue]
