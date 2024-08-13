@@ -10,13 +10,12 @@ import { query, where } from 'firebase/firestore'
 import { getAuthenticatedOnlyApp } from '@/modules/firebase/guards'
 import { mapAuthData } from '@/modules/firebase/user'
 import {
-  type getCollectionRefs,
   getDocsData,
+  ObservationType,
   type ResourceType,
   UserType,
 } from '@/modules/firebase/utils'
 import { getUserOrganizations } from '@/modules/user/queries'
-import { strategy } from '@/packages/design-system/src/utils/misc'
 
 export const getUserClinicians = async () => {
   const { user, refs } = await getAuthenticatedOnlyApp()
@@ -126,25 +125,6 @@ export const getMedicationsData = async () => {
   return { medications }
 }
 
-export enum ObservationType {
-  creatinine = 'creatinine',
-  eGFR = 'eGFR',
-  potassium = 'potassium',
-}
-
-export const observationTypeToCollection = (
-  refs: ReturnType<typeof getCollectionRefs>,
-  type: ObservationType,
-) =>
-  strategy(
-    {
-      [ObservationType.eGFR]: refs.eGfrObservations,
-      [ObservationType.potassium]: refs.potassiumObservations,
-      [ObservationType.creatinine]: refs.creatinineObservations,
-    },
-    type,
-  )
-
 export const getLabsData = async ({
   userId,
   resourceType,
@@ -155,11 +135,10 @@ export const getLabsData = async ({
   const { refs } = await getAuthenticatedOnlyApp()
   const rawObservations = await Promise.all(
     Object.values(ObservationType).map(async (type) => {
-      const observationCollection = observationTypeToCollection(refs, type)
       return {
         type,
         data: await getDocsData(
-          observationCollection({ userId, resourceType }),
+          refs.userObservation({ userId, resourceType, observationType: type }),
         ),
       }
     }),
