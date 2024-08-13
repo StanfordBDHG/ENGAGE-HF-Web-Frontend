@@ -7,9 +7,7 @@
 //
 'use client'
 import { createColumnHelper } from '@tanstack/table-core'
-import { Plus } from 'lucide-react'
 import { type LabsData } from '@/app/(dashboard)/patients/utils'
-import { Button } from '@/packages/design-system/src/components/Button'
 import { DataTable } from '@/packages/design-system/src/components/DataTable'
 
 interface LabsProps extends LabsData {}
@@ -39,18 +37,5 @@ const columns = [
 ]
 
 export const Labs = ({ observations }: LabsProps) => {
-  return (
-    <DataTable
-      columns={columns}
-      data={observations}
-      header={
-        <>
-          <Button size="sm" variant="secondary" className="ml-auto">
-            <Plus />
-            Add observation
-          </Button>
-        </>
-      }
-    />
-  )
+  return <DataTable columns={columns} data={observations} />
 }
