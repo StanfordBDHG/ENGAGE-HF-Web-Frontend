@@ -40,7 +40,7 @@ export const ButtonPending = forwardRef<HTMLSpanElement, ButtonPendingProps>(
         className={cn(
           'inline-flex-center',
           size === 'lg' ? 'gap-2.5' : 'gap-2',
-          isPending && 'invisible ',
+          isPending && 'invisible',
         )}
       >
         {children}
