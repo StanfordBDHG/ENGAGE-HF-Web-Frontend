@@ -11,7 +11,7 @@ import { tailwindColors } from '@stanfordbdhg/design-system'
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
-    './{app,pages,components,packages/design-system,modules}/**/*.{js,ts,jsx,tsx,mdx}',
+    './{app,pages,components,packages/design-system/src,modules}/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
     extend: {
