@@ -19,7 +19,7 @@
     "buildServiceWorker": "npx esbuild authServiceWorker.ts --bundle --outfile=public/authServiceWorker.js",
     "start": "next start",
     "lint": "eslint .",
-    "lint:fix": "eslint . --fix & prettier --write .",
+    "lint:fix": "eslint . --fix",
     "lint:ci": "npm run prebuild && eslint --output-file eslint_report.json --format json .",
     "pretest": "npm run prebuild",
     "test": "jest",
