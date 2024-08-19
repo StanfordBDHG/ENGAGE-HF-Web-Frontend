@@ -6,6 +6,8 @@
 // SPDX-License-Identifier: MIT
 //
 'use client'
+import { Dialog } from '@radix-ui/react-dialog'
+import { type ComponentProps } from 'react'
 import { z } from 'zod'
 import {
   getObservationTypeUnits,
@@ -15,6 +17,11 @@ import { type Observation } from '@/app/(dashboard)/patients/utils'
 import { ObservationType } from '@/modules/firebase/utils'
 import { Button } from '@/packages/design-system/src/components/Button'
 import { DatePicker } from '@/packages/design-system/src/components/DatePicker'
+import {
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from '@/packages/design-system/src/components/Dialog'
 import { Input } from '@/packages/design-system/src/components/Input'
 import {
   Select,
@@ -25,13 +32,6 @@ import {
 } from '@/packages/design-system/src/components/Select'
 import { Field } from '@/packages/design-system/src/forms/Field'
 import { useForm } from '@/packages/design-system/src/forms/useForm'
-import { ComponentProps } from 'react'
-import { Dialog } from '@radix-ui/react-dialog'
-import {
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from '@/packages/design-system/src/components/Dialog'
 
 export const labFormSchema = z.object({
   type: z.nativeEnum(ObservationType),

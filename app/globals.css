@@ -42,7 +42,7 @@ SPDX-License-Identifier: MIT
     @apply focus-ring transition-opacity hover:opacity-60;
   }
 
-  .hide-all-hidden [aria-hidden="true"] {
+  .hide-all-hidden [aria-hidden='true'] {
     display: none;
   }
 }
