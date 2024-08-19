@@ -38,11 +38,10 @@ interface ConfirmDeleteDialogProps extends ComponentProps<typeof Dialog> {
 export const ConfirmDeleteDialog = ({
   entityName,
   itemName,
-  onOpenChange,
   onDelete,
   ...props
 }: ConfirmDeleteDialogProps) => (
-  <Dialog onOpenChange={onOpenChange} {...props}>
+  <Dialog {...props}>
     <DialogContent>
       <DialogHeader>
         <DialogTitle>Deleting {entityName}</DialogTitle>
