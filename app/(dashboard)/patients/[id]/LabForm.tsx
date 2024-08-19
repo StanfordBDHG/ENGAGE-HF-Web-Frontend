@@ -6,7 +6,6 @@
 // SPDX-License-Identifier: MIT
 //
 'use client'
-import { Dialog } from '@radix-ui/react-dialog'
 import { type ComponentProps } from 'react'
 import { z } from 'zod'
 import {
@@ -18,6 +17,7 @@ import { ObservationType } from '@/modules/firebase/utils'
 import { Button } from '@/packages/design-system/src/components/Button'
 import { DatePicker } from '@/packages/design-system/src/components/DatePicker'
 import {
+  Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
