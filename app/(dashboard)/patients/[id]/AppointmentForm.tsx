@@ -99,6 +99,7 @@ export const AppointmentForm = ({
             onSelect={(date) => field.onChange(date)}
             defaultMonth={field.value}
             fromDate={new Date()}
+            showTimePicker
           />
         )}
       />
@@ -113,6 +114,7 @@ export const AppointmentForm = ({
             onSelect={(date) => field.onChange(date)}
             defaultMonth={field.value}
             fromDate={new Date()}
+            showTimePicker
           />
         )}
       />
