@@ -168,7 +168,14 @@ export const updateAllergy = async (
   return 'success'
 }
 
-const getAppointmentData = (payload: AppointmentFormSchema) => ({})
+const getAppointmentData = (payload: AppointmentFormSchema) => ({
+  status: payload.status,
+  start: payload.start.toISOString(),
+  end: payload.end.toISOString(),
+  comment: payload.comment,
+  patientInstruction: payload.patientInstruction,
+  participant: [],
+})
 
 export const createAppointment = async (
   payload: {
@@ -182,7 +189,10 @@ export const createAppointment = async (
       userId: payload.userId,
       resourceType: payload.resourceType,
     }),
-    getAppointmentData(payload),
+    {
+      created: new Date().toISOString(),
+      ...getAppointmentData(payload),
+    },
   )
   revalidatePath(routes.patients.patient(payload.userId))
   return 'success'
@@ -203,6 +213,7 @@ export const updateAppointment = async (
       appointmentId: payload.appointmentId,
     }),
     getAppointmentData(payload),
+    { mergeFields: ['created'] },
   )
   revalidatePath(routes.patients.patient(payload.userId))
   return 'success'
