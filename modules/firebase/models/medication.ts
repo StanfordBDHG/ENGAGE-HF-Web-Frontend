@@ -119,6 +119,32 @@ export interface FHIRObservation extends FHIRResource {
   effectiveInstant?: string
 }
 
+export enum FHIRAppointmentStatus {
+  proposed = 'proposed',
+  pending = 'pending',
+  booked = 'booked',
+  arrived = 'arrived',
+  fulfilled = 'fulfilled',
+  cancelled = 'cancelled',
+  noshow = 'noshow',
+  enterdInError = 'entered-in-error',
+  checkedIn = 'checked-in',
+  waitlist = 'waitlist',
+}
+
+export interface FHIRAppointment {
+  status: FHIRObservationStatus
+  created: Date
+  start: Date
+  end: Date
+  comment: string | null
+  patientInstruction: string | null
+  participant: Array<{
+    actor: FHIRReference<unknown> | null
+    type: FHIRCodeableConcept | null
+  }>
+}
+
 export const getMedicationRequestData = (medication: {
   medication: string
   drug: string

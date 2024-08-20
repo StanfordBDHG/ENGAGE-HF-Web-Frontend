@@ -22,6 +22,7 @@ import {
   type MedicationClass,
   type FHIRObservation,
   type FHIRAllergyIntolerance,
+  type FHIRAppointment,
 } from '@/modules/firebase/models/medication'
 import { strategy } from '@/packages/design-system/src/utils/misc'
 
@@ -80,6 +81,7 @@ export const collectionNames = {
   medicationClasses: 'medicationClasses',
   drugs: 'drugs',
   medicationRequests: 'medicationRequests',
+  appointments: 'appointments',
   allergyIntolerances: 'allergyIntolerances',
   creatinineObservations: 'creatinineObservations',
   eGfrObservations: 'eGfrObservations',
@@ -147,6 +149,17 @@ export const getCollectionRefs = (db: Firestore) => ({
       db,
       `/${userPath(resourceType)}/${userId}/${collectionNames.medicationRequests}`,
     ) as CollectionReference<FHIRMedicationRequest>,
+  appointments: ({
+    userId,
+    resourceType,
+  }: {
+    userId: string
+    resourceType: ResourceType
+  }) =>
+    collection(
+      db,
+      `/${userPath(resourceType)}/${userId}/${collectionNames.appointments}`,
+    ) as CollectionReference<FHIRAppointment>,
   allergyIntolerances: ({
     userId,
     resourceType,
@@ -208,6 +221,19 @@ export const getDocumentsRefs = (db: Firestore) => ({
       db,
       `/${userPath(resourceType)}/${userId}/${collectionNames.medicationRequests}/${medicationRequestId}`,
     ) as DocumentReference<FHIRMedicationRequest>,
+  appointment: ({
+    userId,
+    appointmentId,
+    resourceType,
+  }: {
+    userId: string
+    appointmentId: string
+    resourceType: ResourceType
+  }) =>
+    doc(
+      db,
+      `/${userPath(resourceType)}/${userId}/${collectionNames.appointments}/${appointmentId}`,
+    ) as DocumentReference<FHIRAppointment>,
   allergyIntolerance: ({
     userId,
     allergyIntoleranceId,
