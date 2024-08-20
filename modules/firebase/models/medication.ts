@@ -133,10 +133,10 @@ export enum FHIRAppointmentStatus {
 }
 
 export interface FHIRAppointment {
-  status: FHIRObservationStatus
-  created: Date
-  start: Date
-  end: Date
+  status: FHIRAppointmentStatus
+  created: string
+  start: string
+  end: string
   comment: string | null
   patientInstruction: string | null
   participant: Array<{

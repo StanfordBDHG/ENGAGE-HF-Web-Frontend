@@ -9,12 +9,14 @@ import { runTransaction, updateDoc } from '@firebase/firestore'
 import { Contact } from 'lucide-react'
 import { revalidatePath } from 'next/cache'
 import { notFound } from 'next/navigation'
+import { Appointments } from '@/app/(dashboard)/patients/[id]/Appointments'
 import {
   PatientForm,
   type PatientFormSchema,
 } from '@/app/(dashboard)/patients/PatientForm'
 import {
   getAllergiesData,
+  getAppointmentsData,
   getFormProps,
   getLabsData,
   getMedicationsData,
@@ -76,6 +78,7 @@ enum Tab {
   medications = 'medications',
   allergies = 'allergies',
   labs = 'labs',
+  appointments = 'appointments',
 }
 
 const PatientPage = async ({ params }: PatientPageProps) => {
@@ -188,6 +191,9 @@ const PatientPage = async ({ params }: PatientPageProps) => {
           <TabsTrigger value={Tab.labs} className="grow">
             Labs
           </TabsTrigger>
+          <TabsTrigger value={Tab.appointments} className="grow">
+            Appointments
+          </TabsTrigger>
         </TabsList>
         <TabsContent value={Tab.information}>
           <PatientForm
@@ -211,6 +217,11 @@ const PatientPage = async ({ params }: PatientPageProps) => {
         </TabsContent>
         <TabsContent value={Tab.labs}>
           <Labs {...await getLabsData({ userId, resourceType })} />
+        </TabsContent>
+        <TabsContent value={Tab.appointments}>
+          <Appointments
+            {...await getAppointmentsData({ userId, resourceType })}
+          />
         </TabsContent>
       </Tabs>
     </DashboardLayout>

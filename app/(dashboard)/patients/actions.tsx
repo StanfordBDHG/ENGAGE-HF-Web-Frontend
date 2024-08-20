@@ -9,6 +9,7 @@
 import { addDoc, deleteDoc, setDoc } from '@firebase/firestore'
 import { revalidatePath } from 'next/cache'
 import { type AllergyFormSchema } from '@/app/(dashboard)/patients/[id]/AllergyForm'
+import { type AppointmentFormSchema } from '@/app/(dashboard)/patients/[id]/AppointmentForm'
 import { type LabFormSchema } from '@/app/(dashboard)/patients/[id]/LabForm'
 import { getUnitOfObservationType } from '@/app/(dashboard)/patients/clientUtils'
 import { getAuthenticatedOnlyApp } from '@/modules/firebase/guards'
@@ -52,6 +53,17 @@ export const deleteAllergy = async (payload: {
 }) => {
   const { docRefs } = await getAuthenticatedOnlyApp()
   await deleteDoc(docRefs.allergyIntolerance(payload))
+  revalidatePath(routes.patients.patient(payload.userId))
+  return 'success'
+}
+
+export const deleteAppointment = async (payload: {
+  appointmentId: string
+  userId: string
+  resourceType: ResourceType
+}) => {
+  const { docRefs } = await getAuthenticatedOnlyApp()
+  await deleteDoc(docRefs.appointment(payload))
   revalidatePath(routes.patients.patient(payload.userId))
   return 'success'
 }
@@ -151,6 +163,46 @@ export const updateAllergy = async (
       allergyIntoleranceId: payload.allergyIntoleranceId,
     }),
     getAllergyData(payload),
+  )
+  revalidatePath(routes.patients.patient(payload.userId))
+  return 'success'
+}
+
+const getAppointmentData = (payload: AppointmentFormSchema) => ({})
+
+export const createAppointment = async (
+  payload: {
+    userId: string
+    resourceType: ResourceType
+  } & AppointmentFormSchema,
+) => {
+  const { refs } = await getAuthenticatedOnlyApp()
+  await addDoc(
+    refs.appointments({
+      userId: payload.userId,
+      resourceType: payload.resourceType,
+    }),
+    getAppointmentData(payload),
+  )
+  revalidatePath(routes.patients.patient(payload.userId))
+  return 'success'
+}
+
+export const updateAppointment = async (
+  payload: {
+    userId: string
+    resourceType: ResourceType
+    appointmentId: string
+  } & AppointmentFormSchema,
+) => {
+  const { docRefs } = await getAuthenticatedOnlyApp()
+  await setDoc(
+    docRefs.appointment({
+      userId: payload.userId,
+      resourceType: payload.resourceType,
+      appointmentId: payload.appointmentId,
+    }),
+    getAppointmentData(payload),
   )
   revalidatePath(routes.patients.patient(payload.userId))
   return 'success'
