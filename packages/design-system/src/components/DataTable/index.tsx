@@ -7,3 +7,4 @@
 //
 export * from './DataTable'
 export * from './RowDropdownMenu'
+export * from './DataTable.columns'

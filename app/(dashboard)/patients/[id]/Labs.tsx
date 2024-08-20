@@ -14,7 +14,10 @@ import { LabMenu } from '@/app/(dashboard)/patients/[id]/LabMenu'
 import { createObservation } from '@/app/(dashboard)/patients/actions'
 import type { LabsData, Observation } from '@/app/(dashboard)/patients/utils'
 import { Button } from '@/packages/design-system/src/components/Button'
-import { DataTable } from '@/packages/design-system/src/components/DataTable'
+import {
+  DataTable,
+  localeDateStringColumn,
+} from '@/packages/design-system/src/components/DataTable'
 import { useOpenState } from '@/packages/design-system/src/utils/useOpenState'
 
 interface LabsProps extends LabsData {}
@@ -28,11 +31,7 @@ export const Labs = ({ observations, userId, resourceType }: LabsProps) => {
     () => [
       columnHelper.accessor('effectiveDateTime', {
         header: 'Date',
-        cell: (props) => {
-          const value = props.getValue()
-          const date = value ? new Date(value) : undefined
-          return date?.toLocaleDateString() ?? ''
-        },
+        cell: localeDateStringColumn,
       }),
       columnHelper.accessor('type', {
         header: 'Type',
