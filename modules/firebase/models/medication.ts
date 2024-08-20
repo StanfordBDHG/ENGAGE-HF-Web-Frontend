@@ -39,6 +39,25 @@ export interface FHIRDosage extends FHIRElement {
   doseAndRate?: FHIRDosageDoseAndRate[]
 }
 
+export enum FHIRAllergyIntoleranceType {
+  allergy = 'allergy',
+  intolerance = 'intolerance',
+  financial = 'financial',
+  preference = 'preference',
+}
+
+export enum FHIRAllergyIntoleranceCriticality {
+  low = 'low',
+  high = 'high',
+  unableToAssess = 'unable-to-assess',
+}
+
+export interface FHIRAllergyIntolerance {
+  type: FHIRAllergyIntoleranceType
+  criticality: FHIRAllergyIntoleranceCriticality | null
+  code: null
+}
+
 export interface FHIRDosageDoseAndRate extends FHIRElement {
   type?: FHIRCodeableConcept
   doseQuantity?: FHIRSimpleQuantity
