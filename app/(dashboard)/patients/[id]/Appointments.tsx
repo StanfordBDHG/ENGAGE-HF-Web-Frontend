@@ -20,8 +20,8 @@ import { stringifyAppointmentStatus } from '@/modules/firebase/models/medication
 import { Button } from '@/packages/design-system/src/components/Button'
 import {
   DataTable,
-  localeDateStringColumn,
-  localeDateTimeStringColumn,
+  dateColumn,
+  dateTimeColumn,
 } from '@/packages/design-system/src/components/DataTable'
 import { useOpenState } from '@/packages/design-system/src/utils/useOpenState'
 
@@ -40,7 +40,7 @@ export const Appointments = ({
     () => [
       columnHelper.accessor('created', {
         header: 'Created',
-        cell: localeDateStringColumn,
+        cell: dateColumn,
       }),
       columnHelper.accessor('status', {
         header: 'Status',
@@ -48,11 +48,11 @@ export const Appointments = ({
       }),
       columnHelper.accessor('start', {
         header: 'Start',
-        cell: localeDateTimeStringColumn,
+        cell: dateTimeColumn,
       }),
       columnHelper.accessor('end', {
         header: 'End',
-        cell: localeDateTimeStringColumn,
+        cell: dateTimeColumn,
       }),
       columnHelper.display({
         id: 'actions',

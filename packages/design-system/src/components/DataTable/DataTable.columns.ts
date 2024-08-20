@@ -8,17 +8,13 @@
 import { type CellContext } from '@tanstack/react-table'
 import { type Nil } from '../../utils/misc'
 
-export const localeDateStringColumn = <T>(
-  props: CellContext<T, Nil<string>>,
-) => {
+export const dateColumn = <T>(props: CellContext<T, Nil<string>>) => {
   const value = props.getValue()
   const date = value ? new Date(value) : undefined
   return date?.toLocaleDateString() ?? ''
 }
 
-export const localeDateTimeStringColumn = <T>(
-  props: CellContext<T, Nil<string>>,
-) => {
+export const dateTimeColumn = <T>(props: CellContext<T, Nil<string>>) => {
   const value = props.getValue()
   const date = value ? new Date(value) : undefined
   return date ?

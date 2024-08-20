@@ -16,7 +16,7 @@ import type { LabsData, Observation } from '@/app/(dashboard)/patients/utils'
 import { Button } from '@/packages/design-system/src/components/Button'
 import {
   DataTable,
-  localeDateStringColumn,
+  dateColumn,
 } from '@/packages/design-system/src/components/DataTable'
 import { useOpenState } from '@/packages/design-system/src/utils/useOpenState'
 
@@ -31,7 +31,7 @@ export const Labs = ({ observations, userId, resourceType }: LabsProps) => {
     () => [
       columnHelper.accessor('effectiveDateTime', {
         header: 'Date',
-        cell: localeDateStringColumn,
+        cell: dateColumn,
       }),
       columnHelper.accessor('type', {
         header: 'Type',
