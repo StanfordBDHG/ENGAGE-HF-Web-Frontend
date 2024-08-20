@@ -157,6 +157,22 @@ export const getLabsData = async ({
   return { observations, userId, resourceType }
 }
 
+export const getAllergiesData = async ({
+  userId,
+  resourceType,
+}: {
+  userId: string
+  resourceType: ResourceType
+}) => {
+  const { refs } = await getAuthenticatedOnlyApp()
+  const allergyIntolerances = await getDocsData(
+    refs.allergyIntolerances({ userId, resourceType }),
+  )
+  return { allergyIntolerances, userId, resourceType }
+}
+
+export type AllergiesData = Awaited<ReturnType<typeof getAllergiesData>>
+export type Allergy = AllergiesData['allergyIntolerances'][number]
 export type LabsData = Awaited<ReturnType<typeof getLabsData>>
 export type Observation = LabsData['observations'][number]
 export type MedicationsData = Awaited<ReturnType<typeof getMedicationsData>>

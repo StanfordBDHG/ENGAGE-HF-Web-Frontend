@@ -14,6 +14,7 @@ import {
   type PatientFormSchema,
 } from '@/app/(dashboard)/patients/PatientForm'
 import {
+  getAllergiesData,
   getFormProps,
   getLabsData,
   getMedicationsData,
@@ -206,7 +207,7 @@ const PatientPage = async ({ params }: PatientPageProps) => {
           />
         </TabsContent>
         <TabsContent value={Tab.allergies}>
-          <Allergies />
+          <Allergies {...await getAllergiesData({ userId, resourceType })} />
         </TabsContent>
         <TabsContent value={Tab.labs}>
           <Labs {...await getLabsData({ userId, resourceType })} />

@@ -8,6 +8,7 @@
 'use server'
 import { addDoc, deleteDoc, setDoc } from '@firebase/firestore'
 import { revalidatePath } from 'next/cache'
+import { type AllergyFormSchema } from '@/app/(dashboard)/patients/[id]/AllergyForm'
 import { type LabFormSchema } from '@/app/(dashboard)/patients/[id]/LabForm'
 import { getUnitOfObservationType } from '@/app/(dashboard)/patients/clientUtils'
 import { getAuthenticatedOnlyApp } from '@/modules/firebase/guards'
@@ -40,6 +41,17 @@ export const deleteObservation = async (payload: {
 }) => {
   const { docRefs } = await getAuthenticatedOnlyApp()
   await deleteDoc(docRefs.userObservation(payload))
+  revalidatePath(routes.patients.patient(payload.userId))
+  return 'success'
+}
+
+export const deleteAllergy = async (payload: {
+  allergyIntoleranceId: string
+  userId: string
+  resourceType: ResourceType
+}) => {
+  const { docRefs } = await getAuthenticatedOnlyApp()
+  await deleteDoc(docRefs.allergyIntolerance(payload))
   revalidatePath(routes.patients.patient(payload.userId))
   return 'success'
 }
@@ -95,6 +107,49 @@ export const updateObservation = async (
       observationId: payload.observationId,
     }),
     getObservationData(payload),
+  )
+  revalidatePath(routes.patients.patient(payload.userId))
+  return 'success'
+}
+
+const getAllergyData = (payload: AllergyFormSchema) => ({
+  type: payload.type,
+  criticality: payload.criticality,
+})
+
+export const createAllergy = async (
+  payload: {
+    userId: string
+    resourceType: ResourceType
+  } & AllergyFormSchema,
+) => {
+  const { refs } = await getAuthenticatedOnlyApp()
+  await addDoc(
+    refs.allergyIntolerances({
+      userId: payload.userId,
+      resourceType: payload.resourceType,
+    }),
+    getAllergyData(payload),
+  )
+  revalidatePath(routes.patients.patient(payload.userId))
+  return 'success'
+}
+
+export const updateAllergy = async (
+  payload: {
+    userId: string
+    resourceType: ResourceType
+    allergyIntoleranceId: string
+  } & AllergyFormSchema,
+) => {
+  const { docRefs } = await getAuthenticatedOnlyApp()
+  await setDoc(
+    docRefs.allergyIntolerance({
+      userId: payload.userId,
+      resourceType: payload.resourceType,
+      allergyIntoleranceId: payload.allergyIntoleranceId,
+    }),
+    getAllergyData(payload),
   )
   revalidatePath(routes.patients.patient(payload.userId))
   return 'success'

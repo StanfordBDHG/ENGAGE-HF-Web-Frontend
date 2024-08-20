@@ -21,7 +21,7 @@ import {
   type FHIRMedicationRequest,
   type MedicationClass,
   type FHIRObservation,
-  FHIRAllergyIntolerance,
+  type FHIRAllergyIntolerance,
 } from '@/modules/firebase/models/medication'
 import { strategy } from '@/packages/design-system/src/utils/misc'
 
