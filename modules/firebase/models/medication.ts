@@ -132,6 +132,9 @@ export enum FHIRAppointmentStatus {
   waitlist = 'waitlist',
 }
 
+export const stringifyAppointmentStatus = (status: FHIRAppointmentStatus) =>
+  startCase(status)
+
 export interface FHIRAppointment {
   status: FHIRAppointmentStatus
   created: string

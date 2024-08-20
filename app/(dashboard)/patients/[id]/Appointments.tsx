@@ -16,8 +16,13 @@ import type {
   AppointmentsData,
   Appointment,
 } from '@/app/(dashboard)/patients/utils'
+import { stringifyAppointmentStatus } from '@/modules/firebase/models/medication'
 import { Button } from '@/packages/design-system/src/components/Button'
-import { DataTable } from '@/packages/design-system/src/components/DataTable'
+import {
+  DataTable,
+  localeDateStringColumn,
+  localeDateTimeStringColumn,
+} from '@/packages/design-system/src/components/DataTable'
 import { useOpenState } from '@/packages/design-system/src/utils/useOpenState'
 
 interface AppointmentsProps extends AppointmentsData {}
@@ -35,11 +40,19 @@ export const Appointments = ({
     () => [
       columnHelper.accessor('created', {
         header: 'Created',
-        cell: (props) => {
-          const value = props.getValue()
-          const date = value ? new Date(value) : undefined
-          return date?.toLocaleDateString() ?? ''
-        },
+        cell: localeDateStringColumn,
+      }),
+      columnHelper.accessor('status', {
+        header: 'Status',
+        cell: (props) => stringifyAppointmentStatus(props.getValue()),
+      }),
+      columnHelper.accessor('start', {
+        header: 'Start',
+        cell: localeDateTimeStringColumn,
+      }),
+      columnHelper.accessor('end', {
+        header: 'End',
+        cell: localeDateTimeStringColumn,
       }),
       columnHelper.display({
         id: 'actions',
