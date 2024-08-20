@@ -115,6 +115,7 @@ export const updateObservation = async (
 const getAllergyData = (payload: AllergyFormSchema) => ({
   type: payload.type,
   criticality: payload.criticality,
+  code: null,
 })
 
 export const createAllergy = async (
