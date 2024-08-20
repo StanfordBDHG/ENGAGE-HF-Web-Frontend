@@ -15,3 +15,13 @@ export const localeDateStringColumn = <T>(
   const date = value ? new Date(value) : undefined
   return date?.toLocaleDateString() ?? ''
 }
+
+export const localeDateTimeStringColumn = <T>(
+  props: CellContext<T, Nil<string>>,
+) => {
+  const value = props.getValue()
+  const date = value ? new Date(value) : undefined
+  return date ?
+      `${date.toLocaleDateString()} ${date.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' })}`
+    : ''
+}
