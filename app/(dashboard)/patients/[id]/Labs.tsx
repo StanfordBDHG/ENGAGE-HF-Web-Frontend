@@ -74,6 +74,7 @@ export const Labs = ({ observations, userId, resourceType }: LabsProps) => {
       <DataTable
         columns={columns}
         data={observations}
+        entityName="observations"
         header={
           <>
             <Button

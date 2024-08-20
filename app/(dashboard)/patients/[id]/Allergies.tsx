@@ -73,6 +73,7 @@ export const Allergies = ({
       <DataTable
         columns={columns}
         data={allergyIntolerances}
+        entityName="allergies"
         header={
           <>
             <Button

@@ -85,6 +85,7 @@ export const Appointments = ({
       <DataTable
         columns={columns}
         data={appointments}
+        entityName="appointments"
         header={
           <>
             <Button
