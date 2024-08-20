@@ -62,7 +62,7 @@ export const LabMenu = ({
       <ConfirmDeleteDialog
         open={deleteConfirm.isOpen}
         onOpenChange={deleteConfirm.setIsOpen}
-        entityName="observation"
+        entityName="lab"
         onDelete={handleDelete}
       />
       <RowDropdownMenu>

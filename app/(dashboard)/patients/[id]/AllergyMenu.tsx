@@ -61,7 +61,7 @@ export const AllergyMenu = ({
       <ConfirmDeleteDialog
         open={deleteConfirm.isOpen}
         onOpenChange={deleteConfirm.setIsOpen}
-        entityName="observation"
+        entityName="allergy"
         onDelete={handleDelete}
       />
       <RowDropdownMenu>
