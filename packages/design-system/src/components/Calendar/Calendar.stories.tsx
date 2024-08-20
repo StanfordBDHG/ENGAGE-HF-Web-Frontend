@@ -20,3 +20,10 @@ export const Default = () => {
   const [date, setDate] = useState<Date | undefined>(new Date())
   return <Calendar mode="single" selected={date} onSelect={setDate} />
 }
+
+export const WithTimePicker = () => {
+  const [date, setDate] = useState<Date | undefined>(new Date())
+  return (
+    <Calendar mode="single" selected={date} onSelect={setDate} showTimePicker />
+  )
+}

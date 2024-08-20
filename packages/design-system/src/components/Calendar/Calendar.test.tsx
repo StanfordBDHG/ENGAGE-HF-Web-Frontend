@@ -5,7 +5,7 @@
 //
 // SPDX-License-Identifier: MIT
 //
-import { render, screen } from '@testing-library/react'
+import { fireEvent, render, screen } from '@testing-library/react'
 import '@testing-library/jest-dom'
 import { Calendar } from '.'
 
@@ -23,5 +23,25 @@ describe('Calendar', () => {
       name: '24',
     })
     expect(goTo24th).toBeInTheDocument()
+  })
+
+  it('supports time selection', () => {
+    const date = new Date(2024, 6, 27, 12, 0)
+    const onSelect = jest.fn()
+    render(
+      <Calendar
+        mode="single"
+        selected={date}
+        onSelect={onSelect}
+        showTimePicker
+      />,
+    )
+
+    const timeInput = screen.getByTestId('dateInput')
+    fireEvent.change(timeInput, { target: { value: '01:01' } })
+
+    expect(onSelect).toHaveBeenCalledWith(
+      new Date(date.getFullYear(), date.getMonth(), date.getDate(), 1, 1),
+    )
   })
 })
