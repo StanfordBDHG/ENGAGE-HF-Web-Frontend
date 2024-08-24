@@ -344,8 +344,8 @@ export const getDocData = async <T>(reference: DocumentReference<T>) => {
   const data = doc.data()
   return data ?
       {
-        id: doc.id,
         ...data,
+        id: doc.id,
       }
     : undefined
 }
@@ -365,8 +365,8 @@ export const getDocsData = async <T>(query: Query<T>) => {
     const data = doc.data()
     if (!data) throw new Error(`No data for ${doc.id} ${doc.ref.path}`)
     return {
-      id: doc.id,
       ...data,
+      id: doc.id,
     }
   })
 }
