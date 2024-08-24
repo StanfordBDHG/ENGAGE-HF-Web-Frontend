@@ -63,7 +63,7 @@ export const stringifyIntoleranceCriticality = (
 export interface FHIRAllergyIntolerance {
   type: FHIRAllergyIntoleranceType
   criticality: FHIRAllergyIntoleranceCriticality | null
-  code: null
+  code: FHIRCodeableConcept
 }
 
 export interface FHIRDosageDoseAndRate extends FHIRElement {

@@ -127,7 +127,14 @@ export const updateObservation = async (
 const getAllergyData = (payload: AllergyFormSchema) => ({
   type: payload.type,
   criticality: payload.criticality,
-  code: null,
+  code: {
+    coding: [
+      {
+        system: 'http://www.nlm.nih.gov/research/umls/rxnorm',
+        code: payload.medication,
+      },
+    ],
+  },
 })
 
 export const createAllergy = async (
