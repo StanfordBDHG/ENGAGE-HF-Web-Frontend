@@ -9,8 +9,8 @@
 import { Plus, Check, Trash } from 'lucide-react'
 import { useMemo } from 'react'
 import { z } from 'zod'
+import { MedicationSelect } from '@/app/(dashboard)/patients/MedicationSelect'
 import { type MedicationsData } from '@/app/(dashboard)/patients/utils'
-import { parseLocalizedText } from '@/modules/firebase/localizedText'
 import { Button } from '@/packages/design-system/src/components/Button'
 import { Card } from '@/packages/design-system/src/components/Card'
 import { EmptyState } from '@/packages/design-system/src/components/EmptyState'
@@ -20,8 +20,6 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-  SelectGroup,
-  SelectLabel,
 } from '@/packages/design-system/src/components/Select'
 import {
   Table,
@@ -171,36 +169,14 @@ export const Medications = ({
                       checkEmptyError
                       name={nestedKey('medication')}
                       render={({ field }) => (
-                        <Select
+                        <MedicationSelect
+                          medications={medications}
                           onValueChange={(value) => {
                             field.onChange(value)
                             form.setValue(nestedKey('drug'), '')
                           }}
                           {...field}
-                        >
-                          <SelectTrigger>
-                            <SelectValue placeholder="Medication" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            {medications.map((medicationClass) => (
-                              <SelectGroup key={medicationClass.id}>
-                                <SelectLabel>
-                                  {parseLocalizedText(medicationClass.name)}
-                                </SelectLabel>
-                                {medicationClass.medications.map(
-                                  (medication) => (
-                                    <SelectItem
-                                      value={medication.id}
-                                      key={medication.id}
-                                    >
-                                      {medication.name}
-                                    </SelectItem>
-                                  ),
-                                )}
-                              </SelectGroup>
-                            ))}
-                          </SelectContent>
-                        </Select>
+                        />
                       )}
                     />
                   </TableCell>
