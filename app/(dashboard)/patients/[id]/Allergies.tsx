@@ -12,6 +12,7 @@ import { useMemo } from 'react'
 import { AllergyFormDialog } from '@/app/(dashboard)/patients/[id]/AllergyForm'
 import { AllergyMenu } from '@/app/(dashboard)/patients/[id]/AllergyMenu'
 import { createAllergy } from '@/app/(dashboard)/patients/actions'
+import { useMedicationsMap } from '@/app/(dashboard)/patients/clientUtils'
 import { stringifyAllergyType } from '@/modules/firebase/models/allergy'
 import { Button } from '@/packages/design-system/src/components/Button'
 import { DataTable } from '@/packages/design-system/src/components/DataTable'
@@ -21,7 +22,6 @@ import {
   type Allergy,
   type MedicationsData,
 } from '../utils'
-import { useMedicationsMap } from '@/app/(dashboard)/patients/clientUtils'
 
 interface AllergiesProps extends AllergiesData, MedicationsData {}
 
@@ -62,7 +62,7 @@ export const Allergies = ({
         ),
       }),
     ],
-    [medications, resourceType, userId],
+    [medications, medicationsMap, resourceType, userId],
   )
 
   /*

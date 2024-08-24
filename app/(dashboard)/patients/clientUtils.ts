@@ -5,10 +5,10 @@
 //
 // SPDX-License-Identifier: MIT
 //
+import { useMemo } from 'react'
+import { type MedicationsData } from '@/app/(dashboard)/patients/utils'
 import { ObservationType } from '@/modules/firebase/utils'
 import { strategy } from '@/packages/design-system/src/utils/misc'
-import { useMemo } from 'react'
-import { MedicationsData } from '@/app/(dashboard)/patients/utils'
 
 export const getObservationTypeUnits = (observationType: ObservationType) =>
   strategy(

@@ -7,8 +7,8 @@
 //
 'use client'
 import { Plus, Check, Trash } from 'lucide-react'
-import { useMemo } from 'react'
 import { z } from 'zod'
+import { useMedicationsMap } from '@/app/(dashboard)/patients/clientUtils'
 import { MedicationSelect } from '@/app/(dashboard)/patients/MedicationSelect'
 import { type MedicationsData } from '@/app/(dashboard)/patients/utils'
 import { Button } from '@/packages/design-system/src/components/Button'
@@ -31,7 +31,6 @@ import {
 import { Tooltip } from '@/packages/design-system/src/components/Tooltip'
 import { Field } from '@/packages/design-system/src/forms/Field'
 import { useForm } from '@/packages/design-system/src/forms/useForm'
-import { useMedicationsMap } from '@/app/(dashboard)/patients/clientUtils'
 
 export const quantityOptions = [
   { label: '0.25 tbl.', value: 0.25 },
