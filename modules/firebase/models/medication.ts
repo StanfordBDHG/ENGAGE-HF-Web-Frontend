@@ -143,12 +143,14 @@ export const getMedicationRequestData = (medication: {
   drug: string
   frequencyPerDay: number
   quantity: number
+  instructions: string
 }): FHIRMedicationRequest => ({
   medicationReference: {
     reference: `medications/${medication.medication}/drugs/${medication.drug}`,
   },
   dosageInstruction: [
     {
+      text: medication.instructions,
       timing: {
         repeat: {
           frequency: medication.frequencyPerDay,

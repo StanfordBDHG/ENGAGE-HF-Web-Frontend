@@ -56,15 +56,14 @@ const getUserMedications = async (payload: {
   const medicationRequests = await getDocsData(refs.medicationRequests(payload))
   return medicationRequests.map((request) => {
     const ids = getMedicationRequestMedicationIds(request)
+    const dosage = request.dosageInstruction?.at(0)
     return {
       id: request.id,
       medication: ids.medicationId ?? '',
       drug: ids.drugId ?? '',
-      frequencyPerDay:
-        request.dosageInstruction?.at(0)?.timing?.repeat?.frequency ?? 1,
-      quantity:
-        request.dosageInstruction?.at(0)?.doseAndRate?.at(0)?.doseQuantity
-          ?.value ?? 1,
+      frequencyPerDay: dosage?.timing?.repeat?.frequency ?? 1,
+      quantity: dosage?.doseAndRate?.at(0)?.doseQuantity?.value ?? 1,
+      instructions: dosage?.text ?? '',
     }
   })
 }
@@ -178,7 +177,7 @@ const PatientPage = async ({ params }: PatientPageProps) => {
         />
       }
     >
-      <Tabs defaultValue={Tab.information}>
+      <Tabs defaultValue={Tab.medications}>
         <TabsList className="mb-6 w-full">
           <TabsTrigger value={Tab.information} className="grow">
             Information

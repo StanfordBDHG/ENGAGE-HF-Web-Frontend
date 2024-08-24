@@ -59,7 +59,7 @@ const formSchema = z.object({
   medications: z.array(
     z.object({
       id: z.string(),
-      instruction: z.string(),
+      instructions: z.string(),
       medication: z.string({ required_error: 'Medication is required' }),
       drug: z.string({ required_error: 'Drug is required' }),
       quantity: z.number().min(0),
@@ -97,7 +97,7 @@ export const Medications = ({
         // `undefined` doesn't get submitted anywhere
         medication: undefined as unknown as string,
         drug: undefined as unknown as string,
-        instruction: '',
+        instructions: '',
         quantity: 1,
         frequencyPerDay: 1,
       },
@@ -326,9 +326,9 @@ export const Medications = ({
                           size="sm"
                           className="relative -left-3"
                         >
-                          {medicationValue.instruction && (
+                          {medicationValue.instructions && (
                             <span className="max-w-[70px] truncate">
-                              {medicationValue.instruction}
+                              {medicationValue.instructions}
                             </span>
                           )}
                           <Pencil className="size-4 opacity-80" />
@@ -340,8 +340,7 @@ export const Medications = ({
                         </DialogHeader>
                         <Field
                           control={form.control}
-                          checkEmptyError
-                          name={nestedKey('instruction')}
+                          name={nestedKey('instructions')}
                           render={({ field }) => <Textarea {...field} />}
                         />
                         <DialogFooter>
