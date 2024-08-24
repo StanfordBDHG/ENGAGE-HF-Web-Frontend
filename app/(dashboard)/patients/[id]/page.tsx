@@ -160,6 +160,7 @@ const PatientPage = async ({ params }: PatientPageProps) => {
 
   const userName = getUserName(authUser) ?? ''
 
+  const medications = await getMedicationsData()
   return (
     <DashboardLayout
       title={
@@ -205,7 +206,7 @@ const PatientPage = async ({ params }: PatientPageProps) => {
         </TabsContent>
         <TabsContent value={Tab.medications}>
           <Medications
-            {...await getMedicationsData()}
+            {...medications}
             onSave={saveMedications}
             defaultValues={{
               medications: await getUserMedications({ userId, resourceType }),
@@ -213,7 +214,10 @@ const PatientPage = async ({ params }: PatientPageProps) => {
           />
         </TabsContent>
         <TabsContent value={Tab.allergies}>
-          <Allergies {...await getAllergiesData({ userId, resourceType })} />
+          <Allergies
+            {...medications}
+            {...await getAllergiesData({ userId, resourceType })}
+          />
         </TabsContent>
         <TabsContent value={Tab.labs}>
           <Labs {...await getLabsData({ userId, resourceType })} />

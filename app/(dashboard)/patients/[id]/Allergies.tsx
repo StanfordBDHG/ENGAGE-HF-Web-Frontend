@@ -19,13 +19,18 @@ import {
 import { Button } from '@/packages/design-system/src/components/Button'
 import { DataTable } from '@/packages/design-system/src/components/DataTable'
 import { useOpenState } from '@/packages/design-system/src/utils/useOpenState'
-import { type AllergiesData, type Allergy } from '../utils'
+import {
+  type AllergiesData,
+  type Allergy,
+  type MedicationsData,
+} from '../utils'
 
-interface AllergiesProps extends AllergiesData {}
+interface AllergiesProps extends AllergiesData, MedicationsData {}
 
 const columnHelper = createColumnHelper<Allergy>()
 
 export const Allergies = ({
+  medications,
   allergyIntolerances,
   userId,
   resourceType,
@@ -49,12 +54,21 @@ export const Allergies = ({
             allergy={props.row.original}
             userId={userId}
             resourceType={resourceType}
+            medications={medications}
           />
         ),
       }),
     ],
-    [resourceType, userId],
+    [medications, resourceType, userId],
   )
+
+  /*
+   * Notes:
+   * * remove preference from Allergies
+   * * remove unable to assess
+   *
+   * * add provider text field
+   * */
 
   return (
     <>
@@ -69,6 +83,7 @@ export const Allergies = ({
         }}
         open={createDialog.isOpen}
         onOpenChange={createDialog.setIsOpen}
+        medications={medications}
       />
       <DataTable
         columns={columns}

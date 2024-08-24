@@ -12,14 +12,17 @@ import {
   deleteAllergy,
   updateAllergy,
 } from '@/app/(dashboard)/patients/actions'
-import { type Allergy } from '@/app/(dashboard)/patients/utils'
+import {
+  type Allergy,
+  type MedicationsData,
+} from '@/app/(dashboard)/patients/utils'
 import { type ResourceType } from '@/modules/firebase/utils'
 import { RowDropdownMenu } from '@/packages/design-system/src/components/DataTable'
 import { DropdownMenuItem } from '@/packages/design-system/src/components/DropdownMenu'
 import { ConfirmDeleteDialog } from '@/packages/design-system/src/molecules/ConfirmDeleteDialog'
 import { useOpenState } from '@/packages/design-system/src/utils/useOpenState'
 
-interface AllergyMenuProps {
+interface AllergyMenuProps extends MedicationsData {
   userId: string
   resourceType: ResourceType
   allergy: Allergy
@@ -29,6 +32,7 @@ export const AllergyMenu = ({
   userId,
   resourceType,
   allergy,
+  medications,
 }: AllergyMenuProps) => {
   const deleteConfirm = useOpenState()
   const editAllergy = useOpenState()
@@ -57,6 +61,7 @@ export const AllergyMenu = ({
         open={editAllergy.isOpen}
         onOpenChange={editAllergy.setIsOpen}
         allergy={allergy}
+        medications={medications}
       />
       <ConfirmDeleteDialog
         open={deleteConfirm.isOpen}

@@ -8,7 +8,11 @@
 'use client'
 import { type ComponentProps } from 'react'
 import { z } from 'zod'
-import { type Allergy } from '@/app/(dashboard)/patients/utils'
+import { MedicationSelect } from '@/app/(dashboard)/patients/MedicationSelect'
+import {
+  type Allergy,
+  type MedicationsData,
+} from '@/app/(dashboard)/patients/utils'
 import {
   FHIRAllergyIntoleranceCriticality,
   FHIRAllergyIntoleranceType,
@@ -33,18 +37,23 @@ import { Field } from '@/packages/design-system/src/forms/Field'
 import { useForm } from '@/packages/design-system/src/forms/useForm'
 
 export const allergyFormSchema = z.object({
+  medication: z.string(),
   type: z.nativeEnum(FHIRAllergyIntoleranceType),
   criticality: z.nativeEnum(FHIRAllergyIntoleranceCriticality),
 })
 
 export type AllergyFormSchema = z.infer<typeof allergyFormSchema>
 
-interface AllergyFormProps {
+interface AllergyFormProps extends MedicationsData {
   allergy?: Allergy
   onSubmit: (data: AllergyFormSchema) => Promise<void>
 }
 
-export const AllergyForm = ({ allergy, onSubmit }: AllergyFormProps) => {
+export const AllergyForm = ({
+  allergy,
+  onSubmit,
+  medications,
+}: AllergyFormProps) => {
   const isEdit = !!allergy
   const form = useForm({
     formSchema: allergyFormSchema,
@@ -61,6 +70,18 @@ export const AllergyForm = ({ allergy, onSubmit }: AllergyFormProps) => {
 
   return (
     <form onSubmit={handleSubmit}>
+      <Field
+        control={form.control}
+        name="medication"
+        label="Medication"
+        render={({ field }) => (
+          <MedicationSelect
+            medications={medications}
+            onValueChange={field.onChange}
+            {...field}
+          />
+        )}
+      />
       <Field
         control={form.control}
         name="type"
