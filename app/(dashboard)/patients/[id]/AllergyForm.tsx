@@ -68,18 +68,6 @@ export const AllergyForm = ({
     <form onSubmit={handleSubmit}>
       <Field
         control={form.control}
-        name="medication"
-        label="Medication"
-        render={({ field }) => (
-          <MedicationSelect
-            medications={medications}
-            onValueChange={field.onChange}
-            {...field}
-          />
-        )}
-      />
-      <Field
-        control={form.control}
         name="type"
         label="Type"
         render={({ field }) => (
@@ -95,6 +83,18 @@ export const AllergyForm = ({
               ))}
             </SelectContent>
           </Select>
+        )}
+      />
+      <Field
+        control={form.control}
+        name="medication"
+        label="Medication"
+        render={({ field }) => (
+          <MedicationSelect
+            medications={medications}
+            onValueChange={field.onChange}
+            {...field}
+          />
         )}
       />
       <Button type="submit" isPending={form.formState.isSubmitting}>
