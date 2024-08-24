@@ -6,13 +6,22 @@
 // SPDX-License-Identifier: MIT
 //
 'use client'
-import { Plus, Check, Trash } from 'lucide-react'
+import { Plus, Check, Trash, Pencil } from 'lucide-react'
 import { z } from 'zod'
 import { useMedicationsMap } from '@/app/(dashboard)/patients/clientUtils'
 import { MedicationSelect } from '@/app/(dashboard)/patients/MedicationSelect'
 import { type MedicationsData } from '@/app/(dashboard)/patients/utils'
 import { Button } from '@/packages/design-system/src/components/Button'
 import { Card } from '@/packages/design-system/src/components/Card'
+import {
+  Dialog,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+  DialogClose,
+} from '@/packages/design-system/src/components/Dialog'
 import { EmptyState } from '@/packages/design-system/src/components/EmptyState'
 import {
   Select,
@@ -28,6 +37,7 @@ import {
   TableRow,
   TableBody,
 } from '@/packages/design-system/src/components/Table'
+import { Textarea } from '@/packages/design-system/src/components/Textarea'
 import { Tooltip } from '@/packages/design-system/src/components/Tooltip'
 import { Field } from '@/packages/design-system/src/forms/Field'
 import { useForm } from '@/packages/design-system/src/forms/useForm'
@@ -49,6 +59,7 @@ const formSchema = z.object({
   medications: z.array(
     z.object({
       id: z.string(),
+      instruction: z.string(),
       medication: z.string({ required_error: 'Medication is required' }),
       drug: z.string({ required_error: 'Drug is required' }),
       quantity: z.number().min(0),
@@ -86,6 +97,7 @@ export const Medications = ({
         // `undefined` doesn't get submitted anywhere
         medication: undefined as unknown as string,
         drug: undefined as unknown as string,
+        instruction: '',
         quantity: 1,
         frequencyPerDay: 1,
       },
@@ -117,7 +129,8 @@ export const Medications = ({
               <TableCell className="w-[130px]">Quantity</TableCell>
               <TableCell className="w-[190px]">Frequency</TableCell>
               <TableCell className="w-[190px]">Daily dosage</TableCell>
-              <TableCell className="w-[75px]" />
+              <TableCell className="w-[120px]">Instructions</TableCell>
+              <TableCell className="w-[75px]"></TableCell>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -304,6 +317,40 @@ export const Medications = ({
                         ))}
                       </div>
                     }
+                  </TableCell>
+                  <TableCell>
+                    <Dialog>
+                      <DialogTrigger asChild>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="relative -left-3"
+                        >
+                          {medicationValue.instruction && (
+                            <span className="max-w-[70px] truncate">
+                              {medicationValue.instruction}
+                            </span>
+                          )}
+                          <Pencil className="size-4 opacity-80" />
+                        </Button>
+                      </DialogTrigger>
+                      <DialogContent>
+                        <DialogHeader>
+                          <DialogTitle>Modify instructions</DialogTitle>
+                        </DialogHeader>
+                        <Field
+                          control={form.control}
+                          checkEmptyError
+                          name={nestedKey('instruction')}
+                          render={({ field }) => <Textarea {...field} />}
+                        />
+                        <DialogFooter>
+                          <DialogClose>
+                            <Button>Close</Button>
+                          </DialogClose>
+                        </DialogFooter>
+                      </DialogContent>
+                    </Dialog>
                   </TableCell>
                   <TableCell>
                     <Tooltip tooltip="Delete">
