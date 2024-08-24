@@ -31,6 +31,7 @@ import {
 import { Tooltip } from '@/packages/design-system/src/components/Tooltip'
 import { Field } from '@/packages/design-system/src/forms/Field'
 import { useForm } from '@/packages/design-system/src/forms/useForm'
+import { useMedicationsMap } from '@/app/(dashboard)/patients/clientUtils'
 
 export const quantityOptions = [
   { label: '0.25 tbl.', value: 0.25 },
@@ -65,7 +66,7 @@ interface MedicationsProps extends MedicationsData {
 }
 
 export const Medications = ({
-  medications: medications,
+  medications,
   onSave,
   defaultValues,
 }: MedicationsProps) => {
@@ -76,14 +77,7 @@ export const Medications = ({
 
   const formValues = form.watch()
 
-  const medicationsMap = useMemo(() => {
-    const entries = medications.flatMap((medicationClass) =>
-      medicationClass.medications.map(
-        (medication) => [medication.id, medication] as const,
-      ),
-    )
-    return new Map(entries)
-  }, [medications])
+  const medicationsMap = useMedicationsMap(medications)
 
   const addMedication = () =>
     form.setValue('medications', [
