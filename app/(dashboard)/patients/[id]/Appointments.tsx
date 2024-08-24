@@ -16,7 +16,6 @@ import type {
   AppointmentsData,
   Appointment,
 } from '@/app/(dashboard)/patients/utils'
-import { stringifyAppointmentStatus } from '@/modules/firebase/models/medication'
 import { Button } from '@/packages/design-system/src/components/Button'
 import {
   DataTable,
@@ -42,16 +41,12 @@ export const Appointments = ({
         header: 'Created',
         cell: dateColumn,
       }),
-      columnHelper.accessor('status', {
-        header: 'Status',
-        cell: (props) => stringifyAppointmentStatus(props.getValue()),
+      columnHelper.accessor('providerName', {
+        header: 'Provider name',
+        cell: (props) => props.getValue(),
       }),
       columnHelper.accessor('start', {
         header: 'Start',
-        cell: dateTimeColumn,
-      }),
-      columnHelper.accessor('end', {
-        header: 'End',
         cell: dateTimeColumn,
       }),
       columnHelper.display({

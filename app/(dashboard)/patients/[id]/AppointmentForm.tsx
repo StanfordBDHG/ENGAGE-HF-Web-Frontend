@@ -9,10 +9,6 @@
 import { type ComponentProps } from 'react'
 import { z } from 'zod'
 import { type Appointment } from '@/app/(dashboard)/patients/utils'
-import {
-  FHIRAppointmentStatus,
-  stringifyAppointmentStatus,
-} from '@/modules/firebase/models/medication'
 import { Button } from '@/packages/design-system/src/components/Button'
 import { DatePicker } from '@/packages/design-system/src/components/DatePicker'
 import {
@@ -21,23 +17,16 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/packages/design-system/src/components/Dialog'
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/packages/design-system/src/components/Select'
+import { Input } from '@/packages/design-system/src/components/Input'
 import { Textarea } from '@/packages/design-system/src/components/Textarea'
 import { Field } from '@/packages/design-system/src/forms/Field'
 import { useForm } from '@/packages/design-system/src/forms/useForm'
 
 export const appointmentFormSchema = z.object({
-  status: z.nativeEnum(FHIRAppointmentStatus),
   start: z.date(),
-  end: z.date(),
   comment: z.string().nullable(),
   patientInstruction: z.string().nullable(),
+  providerName: z.string(),
 })
 
 export type AppointmentFormSchema = z.infer<typeof appointmentFormSchema>
@@ -55,11 +44,10 @@ export const AppointmentForm = ({
   const form = useForm({
     formSchema: appointmentFormSchema,
     defaultValues: {
-      status: appointment?.status,
       start: appointment ? new Date(appointment.start) : undefined,
-      end: appointment ? new Date(appointment.end) : undefined,
       comment: appointment?.comment ?? null,
       patientInstruction: appointment?.patientInstruction ?? null,
+      providerName: appointment?.providerName ?? '',
     },
   })
 
@@ -69,25 +57,6 @@ export const AppointmentForm = ({
 
   return (
     <form onSubmit={handleSubmit}>
-      <Field
-        control={form.control}
-        name="status"
-        label="Status"
-        render={({ field }) => (
-          <Select onValueChange={field.onChange} {...field}>
-            <SelectTrigger>
-              <SelectValue placeholder="Status" />
-            </SelectTrigger>
-            <SelectContent>
-              {Object.values(FHIRAppointmentStatus).map((status) => (
-                <SelectItem key={status} value={status}>
-                  {stringifyAppointmentStatus(status)}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        )}
-      />
       <Field
         control={form.control}
         name="start"
@@ -105,18 +74,9 @@ export const AppointmentForm = ({
       />
       <Field
         control={form.control}
-        name="end"
-        label="End"
-        render={({ field }) => (
-          <DatePicker
-            mode="single"
-            selected={field.value}
-            onSelect={(date) => field.onChange(date)}
-            defaultMonth={field.value}
-            fromDate={new Date()}
-            showTimePicker
-          />
-        )}
+        name="providerName"
+        label="Provider"
+        render={({ field }) => <Input {...field} />}
       />
       <Field
         control={form.control}

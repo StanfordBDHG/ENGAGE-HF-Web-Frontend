@@ -9,6 +9,7 @@ import { groupBy } from 'es-toolkit'
 import { query, where } from 'firebase/firestore'
 import { getAuthenticatedOnlyApp } from '@/modules/firebase/guards'
 import { AllergyType } from '@/modules/firebase/models/allergy'
+import { ExtensionURL } from '@/modules/firebase/models/baseTypes'
 import {
   type FHIRAllergyIntolerance,
   FHIRAllergyIntoleranceCriticality,
@@ -205,9 +206,15 @@ export const getAppointmentsData = async ({
   resourceType: ResourceType
 }) => {
   const { refs } = await getAuthenticatedOnlyApp()
-  const appointments = await getDocsData(
+  const rawAppointments = await getDocsData(
     refs.appointments({ userId, resourceType }),
   )
+  const appointments = rawAppointments.map((appointment) => ({
+    ...appointment,
+    providerName: appointment.extension?.find(
+      (extension) => extension.url === (ExtensionURL.providerName as string),
+    )?.valueString,
+  }))
   return { appointments, userId, resourceType }
 }
 

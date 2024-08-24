@@ -7,6 +7,7 @@
 //
 'use server'
 import { addDoc, deleteDoc, setDoc } from '@firebase/firestore'
+import { addHours } from 'date-fns'
 import { revalidatePath } from 'next/cache'
 import { type AllergyFormSchema } from '@/app/(dashboard)/patients/[id]/AllergyForm'
 import { type AppointmentFormSchema } from '@/app/(dashboard)/patients/[id]/AppointmentForm'
@@ -14,9 +15,11 @@ import { type LabFormSchema } from '@/app/(dashboard)/patients/[id]/LabForm'
 import { getUnitOfObservationType } from '@/app/(dashboard)/patients/clientUtils'
 import { getAuthenticatedOnlyApp } from '@/modules/firebase/guards'
 import { AllergyType } from '@/modules/firebase/models/allergy'
+import { ExtensionURL } from '@/modules/firebase/models/baseTypes'
 import {
   FHIRAllergyIntoleranceCriticality,
   FHIRAllergyIntoleranceType,
+  FHIRAppointmentStatus,
   FHIRObservationStatus,
 } from '@/modules/firebase/models/medication'
 import {
@@ -193,13 +196,28 @@ export const updateAllergy = async (
   return 'success'
 }
 
-const getAppointmentData = (payload: AppointmentFormSchema) => ({
-  status: payload.status,
+const getAppointmentData = (
+  payload: AppointmentFormSchema & { userId: string },
+) => ({
+  status: FHIRAppointmentStatus.booked,
   start: payload.start.toISOString(),
-  end: payload.end.toISOString(),
+  end: addHours(payload.start, 1).toISOString(),
   comment: payload.comment,
   patientInstruction: payload.patientInstruction,
-  participant: [],
+  extension: [
+    { url: ExtensionURL.providerName, valueString: payload.providerName },
+  ],
+  participant: [
+    {
+      actor: {
+        display: null,
+        type: null,
+        identifier: null,
+        reference: `users/${payload.userId}`,
+      },
+      type: null,
+    },
+  ],
 })
 
 export const createAppointment = async (
@@ -238,7 +256,7 @@ export const updateAppointment = async (
       appointmentId: payload.appointmentId,
     }),
     getAppointmentData(payload),
-    { mergeFields: ['created'] },
+    { merge: true },
   )
   revalidatePath(routes.patients.patient(payload.userId))
   return 'success'
