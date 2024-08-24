@@ -5,8 +5,6 @@
 //
 // SPDX-License-Identifier: MIT
 //
-
-import { startCase } from 'es-toolkit'
 import {
   type FHIRSimpleQuantity,
   type FHIRCodeableConcept,
@@ -15,6 +13,7 @@ import {
   type FHIRReference,
   type FHIRPeriod,
   type FHIRResource,
+  type FHIRExtension,
 } from './baseTypes.js'
 
 export interface FHIRMedication extends FHIRElement {
@@ -125,10 +124,8 @@ export enum FHIRAppointmentStatus {
   waitlist = 'waitlist',
 }
 
-export const stringifyAppointmentStatus = (status: FHIRAppointmentStatus) =>
-  startCase(status)
-
 export interface FHIRAppointment {
+  extension?: FHIRExtension[]
   status: FHIRAppointmentStatus
   created: string
   start: string
