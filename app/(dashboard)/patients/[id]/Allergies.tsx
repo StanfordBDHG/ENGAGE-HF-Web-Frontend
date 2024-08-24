@@ -65,11 +65,6 @@ export const Allergies = ({
     [medications, medicationsMap, resourceType, userId],
   )
 
-  /*
-   * Notes:
-   * * add provider text field
-   * */
-
   return (
     <>
       <AllergyFormDialog
