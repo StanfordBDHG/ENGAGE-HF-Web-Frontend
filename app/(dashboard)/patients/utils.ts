@@ -8,6 +8,12 @@
 import { groupBy } from 'es-toolkit'
 import { query, where } from 'firebase/firestore'
 import { getAuthenticatedOnlyApp } from '@/modules/firebase/guards'
+import { AllergyType } from '@/modules/firebase/models/allergy'
+import {
+  type FHIRAllergyIntolerance,
+  FHIRAllergyIntoleranceCriticality,
+  FHIRAllergyIntoleranceType,
+} from '@/modules/firebase/models/medication'
 import { mapAuthData } from '@/modules/firebase/user'
 import {
   getDocsData,
@@ -157,6 +163,21 @@ export const getLabsData = async ({
   return { observations, userId, resourceType }
 }
 
+export const getAllergyType = (allergy: FHIRAllergyIntolerance) => {
+  if (
+    allergy.type === FHIRAllergyIntoleranceType.allergy &&
+    allergy.criticality === FHIRAllergyIntoleranceCriticality.high
+  )
+    return AllergyType.severeAllergy
+  if (allergy.type === FHIRAllergyIntoleranceType.allergy)
+    return AllergyType.allergy
+  if (allergy.type === FHIRAllergyIntoleranceType.intolerance)
+    return AllergyType.intolerance
+  if (allergy.type === FHIRAllergyIntoleranceType.financial)
+    return AllergyType.financial
+  return AllergyType.preference
+}
+
 export const getAllergiesData = async ({
   userId,
   resourceType,
@@ -165,9 +186,14 @@ export const getAllergiesData = async ({
   resourceType: ResourceType
 }) => {
   const { refs } = await getAuthenticatedOnlyApp()
-  const allergyIntolerances = await getDocsData(
+  const rawAllergies = await getDocsData(
     refs.allergyIntolerances({ userId, resourceType }),
   )
+  const allergyIntolerances = rawAllergies.map((allergy) => ({
+    id: allergy.id,
+    type: getAllergyType(allergy),
+    medication: allergy.code.coding?.at(0)?.code,
+  }))
   return { allergyIntolerances, userId, resourceType }
 }
 

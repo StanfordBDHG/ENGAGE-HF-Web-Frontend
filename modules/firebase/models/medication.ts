@@ -47,18 +47,11 @@ export enum FHIRAllergyIntoleranceType {
   preference = 'preference',
 }
 
-export const stringifyIntoleranceType = (type: FHIRAllergyIntoleranceType) =>
-  startCase(type)
-
 export enum FHIRAllergyIntoleranceCriticality {
   low = 'low',
   high = 'high',
   unableToAssess = 'unable-to-assess',
 }
-
-export const stringifyIntoleranceCriticality = (
-  criticality: FHIRAllergyIntoleranceCriticality | null,
-) => (criticality ? startCase(criticality) : '')
 
 export interface FHIRAllergyIntolerance {
   type: FHIRAllergyIntoleranceType

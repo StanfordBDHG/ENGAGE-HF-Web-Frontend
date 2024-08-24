@@ -13,7 +13,12 @@ import { type AppointmentFormSchema } from '@/app/(dashboard)/patients/[id]/Appo
 import { type LabFormSchema } from '@/app/(dashboard)/patients/[id]/LabForm'
 import { getUnitOfObservationType } from '@/app/(dashboard)/patients/clientUtils'
 import { getAuthenticatedOnlyApp } from '@/modules/firebase/guards'
-import { FHIRObservationStatus } from '@/modules/firebase/models/medication'
+import { AllergyType } from '@/modules/firebase/models/allergy'
+import {
+  FHIRAllergyIntoleranceCriticality,
+  FHIRAllergyIntoleranceType,
+  FHIRObservationStatus,
+} from '@/modules/firebase/models/medication'
 import {
   type ObservationType,
   type ResourceType,
@@ -125,8 +130,21 @@ export const updateObservation = async (
 }
 
 const getAllergyData = (payload: AllergyFormSchema) => ({
-  type: payload.type,
-  criticality: payload.criticality,
+  type:
+    (
+      payload.type === AllergyType.severeAllergy ||
+      payload.type === AllergyType.allergy
+    ) ?
+      FHIRAllergyIntoleranceType.allergy
+    : payload.type === AllergyType.financial ?
+      FHIRAllergyIntoleranceType.financial
+    : payload.type === AllergyType.intolerance ?
+      FHIRAllergyIntoleranceType.intolerance
+    : FHIRAllergyIntoleranceType.preference,
+  criticality:
+    payload.type === AllergyType.severeAllergy ?
+      FHIRAllergyIntoleranceCriticality.high
+    : null,
   code: {
     coding: [
       {

@@ -14,11 +14,9 @@ import {
   type MedicationsData,
 } from '@/app/(dashboard)/patients/utils'
 import {
-  FHIRAllergyIntoleranceCriticality,
-  FHIRAllergyIntoleranceType,
-  stringifyIntoleranceCriticality,
-  stringifyIntoleranceType,
-} from '@/modules/firebase/models/medication'
+  AllergyType,
+  stringifyAllergyType,
+} from '@/modules/firebase/models/allergy'
 import { Button } from '@/packages/design-system/src/components/Button'
 import {
   Dialog,
@@ -38,8 +36,7 @@ import { useForm } from '@/packages/design-system/src/forms/useForm'
 
 export const allergyFormSchema = z.object({
   medication: z.string(),
-  type: z.nativeEnum(FHIRAllergyIntoleranceType),
-  criticality: z.nativeEnum(FHIRAllergyIntoleranceCriticality),
+  type: z.nativeEnum(AllergyType),
 })
 
 export type AllergyFormSchema = z.infer<typeof allergyFormSchema>
@@ -58,9 +55,8 @@ export const AllergyForm = ({
   const form = useForm({
     formSchema: allergyFormSchema,
     defaultValues: {
-      type: allergy?.type ?? FHIRAllergyIntoleranceType.allergy,
-      criticality:
-        allergy?.criticality ?? FHIRAllergyIntoleranceCriticality.high,
+      type: allergy?.type,
+      medication: allergy?.medication,
     },
   })
 
@@ -92,32 +88,11 @@ export const AllergyForm = ({
               <SelectValue placeholder="Type" />
             </SelectTrigger>
             <SelectContent>
-              {Object.values(FHIRAllergyIntoleranceType).map((type) => (
+              {Object.values(AllergyType).map((type) => (
                 <SelectItem key={type} value={type}>
-                  {stringifyIntoleranceType(type)}
+                  {stringifyAllergyType(type)}
                 </SelectItem>
               ))}
-            </SelectContent>
-          </Select>
-        )}
-      />
-      <Field
-        control={form.control}
-        name="criticality"
-        label="Criticality"
-        render={({ field }) => (
-          <Select onValueChange={field.onChange} {...field}>
-            <SelectTrigger>
-              <SelectValue placeholder="Criticality" />
-            </SelectTrigger>
-            <SelectContent>
-              {Object.values(FHIRAllergyIntoleranceCriticality).map(
-                (criticality) => (
-                  <SelectItem key={criticality} value={criticality}>
-                    {stringifyIntoleranceCriticality(criticality)}
-                  </SelectItem>
-                ),
-              )}
             </SelectContent>
           </Select>
         )}

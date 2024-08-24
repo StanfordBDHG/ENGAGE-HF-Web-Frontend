@@ -12,10 +12,7 @@ import { useMemo } from 'react'
 import { AllergyFormDialog } from '@/app/(dashboard)/patients/[id]/AllergyForm'
 import { AllergyMenu } from '@/app/(dashboard)/patients/[id]/AllergyMenu'
 import { createAllergy } from '@/app/(dashboard)/patients/actions'
-import {
-  stringifyIntoleranceCriticality,
-  stringifyIntoleranceType,
-} from '@/modules/firebase/models/medication'
+import { stringifyAllergyType } from '@/modules/firebase/models/allergy'
 import { Button } from '@/packages/design-system/src/components/Button'
 import { DataTable } from '@/packages/design-system/src/components/DataTable'
 import { useOpenState } from '@/packages/design-system/src/utils/useOpenState'
@@ -24,6 +21,7 @@ import {
   type Allergy,
   type MedicationsData,
 } from '../utils'
+import { useMedicationsMap } from '@/app/(dashboard)/patients/clientUtils'
 
 interface AllergiesProps extends AllergiesData, MedicationsData {}
 
@@ -37,15 +35,20 @@ export const Allergies = ({
 }: AllergiesProps) => {
   const createDialog = useOpenState()
 
+  const medicationsMap = useMedicationsMap(medications)
+
   const columns = useMemo(
     () => [
       columnHelper.accessor('type', {
         header: 'Type',
-        cell: (props) => stringifyIntoleranceType(props.getValue()),
+        cell: (props) => stringifyAllergyType(props.getValue()),
       }),
-      columnHelper.accessor('criticality', {
-        header: 'Criticality',
-        cell: (props) => stringifyIntoleranceCriticality(props.getValue()),
+      columnHelper.accessor('medication', {
+        header: 'Medication',
+        cell: (props) => {
+          const medication = props.getValue()
+          return medication ? medicationsMap.get(medication)?.name : ''
+        },
       }),
       columnHelper.display({
         id: 'actions',
@@ -64,9 +67,6 @@ export const Allergies = ({
 
   /*
    * Notes:
-   * * remove preference from Allergies
-   * * remove unable to assess
-   *
    * * add provider text field
    * */
 
