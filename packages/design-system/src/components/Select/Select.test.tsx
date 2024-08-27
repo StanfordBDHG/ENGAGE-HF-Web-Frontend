@@ -6,8 +6,8 @@
 // SPDX-License-Identifier: MIT
 //
 import { render, screen } from '@testing-library/react'
-import '@testing-library/jest-dom'
 import { userEvent } from '@testing-library/user-event'
+import { vitest } from 'vitest'
 import {
   Select,
   SelectContent,
@@ -32,9 +32,9 @@ class MockPointerEvent extends Event {
 
 // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-explicit-any
 window.PointerEvent = MockPointerEvent as any
-window.HTMLElement.prototype.scrollIntoView = jest.fn()
-window.HTMLElement.prototype.releasePointerCapture = jest.fn()
-window.HTMLElement.prototype.hasPointerCapture = jest.fn()
+window.HTMLElement.prototype.scrollIntoView = vitest.fn()
+window.HTMLElement.prototype.releasePointerCapture = vitest.fn()
+window.HTMLElement.prototype.hasPointerCapture = vitest.fn()
 
 describe('Select', () => {
   it('renders accessible select', async () => {

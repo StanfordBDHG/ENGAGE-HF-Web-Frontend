@@ -5,7 +5,6 @@
 //
 // SPDX-License-Identifier: MIT
 //
-'use client'
 import { Menu } from 'lucide-react'
 import { type ReactNode } from 'react'
 import { Button } from '../../components/Button'

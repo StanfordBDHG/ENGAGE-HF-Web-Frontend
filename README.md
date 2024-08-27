@@ -33,15 +33,15 @@ npm install
 Create an `.env.local` file or inject the following environment variables required for the Google Firebase Setup:
 
 ```
-NEXT_PUBLIC_FIREBASE_API_KEY=
-NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=
-NEXT_PUBLIC_FIREBASE_PROJECT_ID=
-NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=
-NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=
-NEXT_PUBLIC_FIREBASE_APP_ID=
+VITE_PUBLIC_FIREBASE_API_KEY=
+VITE_PUBLIC_FIREBASE_AUTH_DOMAIN=
+VITE_PUBLIC_FIREBASE_PROJECT_ID=
+VITE_PUBLIC_FIREBASE_STORAGE_BUCKET=
+VITE_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=
+VITE_PUBLIC_FIREBASE_APP_ID=
 ```
 
-3. Start the Next.js Application
+3. Start the Vite Application
 
 ```bash
 npm run dev
@@ -93,15 +93,6 @@ You need to configure the OpenID Connect Sign-in provider as follows:
 - Client ID: Client ID obtained from your OIDC configuration from the [Stanford SAML and OIDC Configuration Manager](https://spdb-prod.iam.stanford.edu).
 - Issuer (URL): `https://login.stanford.edu`
 - Client secret: Client ID obtained from your OIDC configuration from the [Stanford SAML and OIDC Configuration Manager](https://spdb-prod.iam.stanford.edu).
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
 
 ## License
 

@@ -6,7 +6,6 @@
 // SPDX-License-Identifier: MIT
 //
 import { fireEvent, render, screen, within } from '@testing-library/react'
-import '@testing-library/jest-dom'
 import { userEvent } from '@testing-library/user-event'
 import { peopleColumns, peopleData } from './DataTable.mocks'
 import { DataTable } from '.'

@@ -6,16 +6,16 @@
 // SPDX-License-Identifier: MIT
 //
 import { render, screen } from '@testing-library/react'
-import '@testing-library/jest-dom'
 import { userEvent } from '@testing-library/user-event'
 import { type Auth } from 'firebase/auth'
+import { vitest } from 'vitest'
 import { EmailPasswordForm } from './EmailPasswordForm'
 import { Providers } from '../../../../tests/Providers'
 
 const authMock = {} as Auth
-const signInWithEmailAndPasswordMock = jest.fn()
+const signInWithEmailAndPasswordMock = vitest.fn()
 
-jest.mock('firebase/auth')
+vitest.mock('firebase/auth')
 
 const getEmailField = () => screen.getByLabelText('Email')
 const getPasswordField = () => screen.getByLabelText('Password')
@@ -43,7 +43,7 @@ class InvalidCredsError extends Error {
 
 describe('EmailPasswordForm', () => {
   beforeEach(() => {
-    jest.resetAllMocks()
+    vitest.resetAllMocks()
   })
 
   it('calls signIn function', async () => {

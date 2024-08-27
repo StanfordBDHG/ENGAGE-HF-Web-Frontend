@@ -7,7 +7,6 @@
 //
 import { action } from '@storybook/addon-actions'
 import { type Meta } from '@storybook/react'
-import Link from 'next/link'
 import {
   Pagination,
   PaginationContent,
@@ -65,24 +64,24 @@ export const Links = () => (
     <PaginationContent>
       <PaginationItemContainer>
         <PaginationPrevious asChild>
-          <Link href="/prev">
+          <a href="/prev">
             <PaginationPreviousIcon />
-          </Link>
+          </a>
         </PaginationPrevious>
       </PaginationItemContainer>
       <PaginationItemContainer>
         <PaginationItem asChild>
-          <Link href="/1">1</Link>
+          <a href="/1">1</a>
         </PaginationItem>
       </PaginationItemContainer>
       <PaginationItemContainer>
         <PaginationItem asChild isActive>
-          <Link href="/2">2</Link>
+          <a href="/2">2</a>
         </PaginationItem>
       </PaginationItemContainer>
       <PaginationItemContainer>
         <PaginationItem asChild>
-          <Link href="/3">3</Link>
+          <a href="/3">3</a>
         </PaginationItem>
       </PaginationItemContainer>
       <PaginationItemContainer>
@@ -90,9 +89,9 @@ export const Links = () => (
       </PaginationItemContainer>
       <PaginationItemContainer>
         <PaginationNext asChild>
-          <Link href="/next">
+          <a href="/next">
             <PaginationNextIcon />
-          </Link>
+          </a>
         </PaginationNext>
       </PaginationItemContainer>
     </PaginationContent>

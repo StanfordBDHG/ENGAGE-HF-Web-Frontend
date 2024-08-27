@@ -10,8 +10,7 @@ import {
   usePagination,
   type UsePaginationProps,
 } from '@nextui-org/use-pagination'
-import Link from 'next/link'
-import { type Url } from '../../../utils/misc'
+import { Link } from '@tanstack/react-router'
 import {
   Pagination,
   PaginationContent,
@@ -30,7 +29,7 @@ export interface LinkPaginationProps extends UsePaginationProps {
    * Currently selected page, 1-based
    * */
   page: number
-  getHref: (page: number) => Url
+  getHref: (page: number) => string
 }
 
 /**
@@ -59,7 +58,7 @@ export const LinkPagination = ({
             return (
               <PaginationItemContainer key={rangePage}>
                 <PaginationPrevious asChild>
-                  <Link href={getHref(activePage - 1)}>
+                  <Link to={getHref(activePage - 1)}>
                     <PaginationPreviousIcon />
                   </Link>
                 </PaginationPrevious>
@@ -71,7 +70,7 @@ export const LinkPagination = ({
             return (
               <PaginationItemContainer key={rangePage}>
                 <PaginationNext asChild>
-                  <Link href={getHref(activePage + 1)}>
+                  <Link to={getHref(activePage + 1)}>
                     <PaginationNextIcon />
                   </Link>
                 </PaginationNext>
@@ -87,7 +86,7 @@ export const LinkPagination = ({
           return (
             <PaginationItemContainer key={rangePage}>
               <PaginationItem isActive={rangePage === page}>
-                <Link href={getHref(rangePage)}>{rangePage}</Link>
+                <Link to={getHref(rangePage)}>{rangePage}</Link>
               </PaginationItem>
             </PaginationItemContainer>
           )

@@ -6,12 +6,12 @@
 // SPDX-License-Identifier: MIT
 //
 import { fireEvent, render, screen } from '@testing-library/react'
-import '@testing-library/jest-dom'
+import { vitest } from 'vitest'
 import { DatePicker } from '.'
 
 describe('DatePicker', () => {
   it('renders date picker', () => {
-    const onSelect = jest.fn()
+    const onSelect = vitest.fn()
     render(
       <DatePicker mode="single" selected={undefined} onSelect={onSelect} />,
     )

@@ -6,16 +6,16 @@
 // SPDX-License-Identifier: MIT
 //
 import { fireEvent, render, screen } from '@testing-library/react'
-import '@testing-library/jest-dom'
 import { type Auth, type AuthProvider } from 'firebase/auth'
+import { vitest } from 'vitest'
 import { SignInForm } from './SignInForm'
 import { Providers } from '../../../tests/Providers'
 
 const authMock = {} as Auth
 const providerMock = {} as AuthProvider
 const providersMock = [{ name: 'Lorem', provider: providerMock }]
-const signInWithPopupMock = jest.fn()
-const signInWithEmailAndPasswordMock = jest.fn()
+const signInWithPopupMock = vitest.fn()
+const signInWithEmailAndPasswordMock = vitest.fn()
 
 const defaultProps = {
   enableEmailPassword: false,
@@ -25,11 +25,11 @@ const defaultProps = {
   signInWithPopup: signInWithPopupMock,
 }
 
-jest.mock('firebase/auth')
+vitest.mock('firebase/auth')
 
 describe('SignInForm', () => {
   beforeEach(() => {
-    jest.resetAllMocks()
+    vitest.resetAllMocks()
   })
 
   it('renders SSO providers and calls signInWithPopup', () => {

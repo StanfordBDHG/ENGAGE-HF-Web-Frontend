@@ -5,7 +5,6 @@
 //
 // SPDX-License-Identifier: MIT
 //
-'use client'
 import * as RadixTooltip from '@radix-ui/react-tooltip'
 import {
   type ComponentPropsWithoutRef,

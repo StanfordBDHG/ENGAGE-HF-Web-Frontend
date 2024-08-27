@@ -6,7 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 import { chunk } from 'es-toolkit'
-import { getAuthenticatedOnlyApp } from '@/modules/firebase/guards'
+import { callables } from '@/modules/firebase/guards'
 import {
   type GetUsersInformationInput,
   type UserInformation,
@@ -16,8 +16,6 @@ export const mapAuthData = async <T>(
   input: GetUsersInformationInput,
   callback: (userInformation: UserInformation, id: string) => T,
 ) => {
-  const { callables } = await getAuthenticatedOnlyApp()
-
   const chunks = chunk(input.userIds, 100)
   if (chunks.length > 5) {
     // If we reach that stage, we should implement server side pagination

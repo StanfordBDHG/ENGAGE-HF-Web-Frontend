@@ -5,7 +5,6 @@
 //
 // SPDX-License-Identifier: MIT
 //
-'use client'
 import * as RadixDropdownMenu from '@radix-ui/react-dropdown-menu'
 import { Check, ChevronRight, Circle } from 'lucide-react'
 import {

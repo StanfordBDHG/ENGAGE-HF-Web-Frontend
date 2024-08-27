@@ -5,7 +5,6 @@
 //
 // SPDX-License-Identifier: MIT
 //
-'use client'
 import { forwardRef, type HTMLProps } from 'react'
 import { cn } from '../../utils/className'
 

@@ -5,7 +5,6 @@
 //
 // SPDX-License-Identifier: MIT
 //
-'use client'
 import { isDate, set } from 'date-fns'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { DayPicker, type DayPickerSingleProps } from 'react-day-picker'

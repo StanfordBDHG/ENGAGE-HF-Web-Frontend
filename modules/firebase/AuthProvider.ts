@@ -5,32 +5,28 @@
 //
 // SPDX-License-Identifier: MIT
 //
-'use client'
-import { useRouter } from 'next/navigation'
-import { useEffect } from 'react'
-import { env } from '@/env'
+import { useNavigate } from '@tanstack/react-router'
+import { type ReactNode, useEffect } from 'react'
+import { auth } from '@/modules/firebase/guards'
 import { routes } from '@/modules/routes'
-import {
-  useAuthUser,
-  useRegisterAuthServiceWorker,
-} from '@stanfordbdhg/design-system/modules/auth/hooks'
-import { auth } from './clientApp'
-import { firebaseConfig } from './config'
+import { useAuthUser } from '@/packages/design-system/src/modules/auth/hooks'
 
-export const AuthProvider = () => {
-  const router = useRouter()
+interface AuthProviderProps {
+  children?: ReactNode
+}
+
+export const AuthProvider = ({ children }: AuthProviderProps) => {
+  const navigate = useNavigate()
   const user = useAuthUser(auth)
-
-  useRegisterAuthServiceWorker(firebaseConfig, env.NEXT_PUBLIC_EMULATOR)
 
   useEffect(() => {
     const isSignIn = window.location.pathname === routes.signIn
     if (isSignIn && user) {
-      window.location.assign(routes.home)
+      void navigate({ to: routes.home })
     } else if (!isSignIn && user === null) {
-      window.location.assign(routes.signIn)
+      void navigate({ to: routes.signIn })
     }
-  }, [router, user])
+  }, [navigate, user])
 
-  return null
+  return user !== undefined ? children : null
 }

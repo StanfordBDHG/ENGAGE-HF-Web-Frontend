@@ -5,7 +5,6 @@
 //
 // SPDX-License-Identifier: MIT
 //
-'use client'
 export * from './DashboardLayout'
 export * from './MenuItem'
 export * from './PageTitle'

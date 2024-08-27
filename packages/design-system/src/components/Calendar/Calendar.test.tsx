@@ -6,13 +6,13 @@
 // SPDX-License-Identifier: MIT
 //
 import { fireEvent, render, screen } from '@testing-library/react'
-import '@testing-library/jest-dom'
+import { vitest } from 'vitest'
 import { Calendar } from '.'
 
 describe('Calendar', () => {
   it('renders calendar', () => {
     const date = new Date(2024, 6, 27)
-    const onSelect = jest.fn()
+    const onSelect = vitest.fn()
     render(<Calendar mode="single" selected={date} onSelect={onSelect} />)
 
     const goToPrevMonth = screen.getByRole('button', {
@@ -27,7 +27,7 @@ describe('Calendar', () => {
 
   it('supports time selection', () => {
     const date = new Date(2024, 6, 27, 12, 0)
-    const onSelect = jest.fn()
+    const onSelect = vitest.fn()
     render(
       <Calendar
         mode="single"

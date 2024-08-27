@@ -5,5 +5,4 @@
 //
 // SPDX-License-Identifier: MIT
 //
-'use client'
 export * from './Calendar'

@@ -5,34 +5,20 @@
 //
 // SPDX-License-Identifier: MIT
 //
-'use client'
-import { type UserInfo } from '@firebase/auth-types'
-import { createContext, type ReactNode, useContext } from 'react'
-import { type User } from '@/modules/firebase/utils'
+import { queryOptions, useSuspenseQuery } from '@tanstack/react-query'
+import { getCurrentUser } from '@/modules/firebase/guards'
+import { getUserInfo } from '@/packages/design-system/src/modules/auth/user'
 
-interface Context {
-  auth: UserInfo
-  user: User
-}
+export const currentUserQueryOptions = () =>
+  queryOptions({
+    queryKey: ['getUser'],
+    queryFn: async () => {
+      const { currentUser, user } = await getCurrentUser()
+      return {
+        auth: getUserInfo(currentUser),
+        user,
+      }
+    },
+  })
 
-export const UserContext = createContext<Context | undefined>(undefined)
-
-interface UserContextProviderProps {
-  children?: ReactNode
-  user: Context
-}
-
-export const UserContextProvider = ({
-  children,
-  user,
-}: UserContextProviderProps) => (
-  <UserContext.Provider value={user}>{children}</UserContext.Provider>
-)
-
-export const useUser = () => {
-  const value = useContext(UserContext)
-  if (!value) {
-    throw new Error('Rendered user context without provider')
-  }
-  return value
-}
+export const useUser = () => useSuspenseQuery(currentUserQueryOptions()).data

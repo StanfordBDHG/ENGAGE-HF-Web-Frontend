@@ -5,14 +5,14 @@
 //
 // SPDX-License-Identifier: MIT
 //
-import { fireEvent, render, screen } from '@testing-library/react'
-import '@testing-library/jest-dom'
-import { PageTitle, DashboardLayout, MenuItem } from '.'
+import { fireEvent, screen } from '@testing-library/react'
+import { renderWithProviders } from '@/modules/tests/helpers'
+import { DashboardLayout, MenuItem, PageTitle } from '.'
 
 describe('DashboardLayout', () => {
   it('renders functional dashboard', () => {
     const menuLinks = <MenuItem href="/home" label="Home" isActive />
-    render(
+    renderWithProviders(
       <DashboardLayout
         aside={menuLinks}
         mobile={menuLinks}

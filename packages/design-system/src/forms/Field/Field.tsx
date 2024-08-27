@@ -5,7 +5,6 @@
 //
 // SPDX-License-Identifier: MIT
 //
-'use client'
 import type { ReactElement, ReactNode } from 'react'
 import {
   Controller,

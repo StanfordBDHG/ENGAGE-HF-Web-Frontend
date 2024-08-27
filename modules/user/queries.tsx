@@ -5,8 +5,10 @@
 //
 // SPDX-License-Identifier: MIT
 //
+import { queryOptions } from '@tanstack/react-query'
 import { query, where } from 'firebase/firestore'
-import { getAuthenticatedOnlyApp } from '@/modules/firebase/guards'
+import { queryClient } from '@/app/ReactQueryClientProvider'
+import { docRefs, getCurrentUser, refs } from '@/modules/firebase/guards'
 import { mapAuthData } from '@/modules/firebase/user'
 import {
   getDocData,
@@ -18,14 +20,12 @@ import {
   UserType,
 } from '@/modules/firebase/utils'
 
-export const getNonAdminInvitations = async (organizationIds: string[]) => {
-  const { refs } = await getAuthenticatedOnlyApp()
-  return query(
+export const getNonAdminInvitations = (organizationIds: string[]) =>
+  query(
     refs.invitations(),
     where('user.organization', 'in', organizationIds),
     where('user.type', '!=', UserType.admin),
   )
-}
 
 export const parseInvitationToUser = (
   invitation: Invitation & { id: string },
@@ -51,21 +51,27 @@ export const parseAuthToUser = (
   displayName: auth.displayName,
 })
 
-export const getUserOrganizations = async () => {
-  const { user, refs, docRefs } = await getAuthenticatedOnlyApp()
-  let organizations: Array<Organization & { id: string }> = []
-  if (user.type === UserType.admin) {
-    organizations = await getDocsData(refs.organizations())
-  } else if (user.organization) {
-    organizations = [
-      await getDocDataOrThrow(docRefs.organization(user.organization)),
-    ]
-  }
-  return organizations
-}
+export const userOrganizationQueryOptions = () =>
+  queryOptions({
+    queryKey: ['userOrganizations'],
+    queryFn: async () => {
+      const { user } = await getCurrentUser()
+      let organizations: Array<Organization & { id: string }> = []
+      if (user.type === UserType.admin) {
+        organizations = await getDocsData(refs.organizations())
+      } else if (user.organization) {
+        organizations = [
+          await getDocDataOrThrow(docRefs.organization(user.organization)),
+        ]
+      }
+      return organizations
+    },
+  })
 
 export const getUserOrganizationsMap = async () => {
-  const organizations = await getUserOrganizations()
+  const organizations = await queryClient.ensureQueryData(
+    userOrganizationQueryOptions(),
+  )
   return new Map(
     organizations.map(
       (organization) => [organization.id, organization] as const,
@@ -77,7 +83,6 @@ export const getUserOrganizationsMap = async () => {
  * Gets user or invitation data
  * */
 export const getUserData = async (userId: string) => {
-  const { docRefs } = await getAuthenticatedOnlyApp()
   const user = await getDocData(docRefs.user(userId))
   if (user) {
     const allAuthData = await mapAuthData(

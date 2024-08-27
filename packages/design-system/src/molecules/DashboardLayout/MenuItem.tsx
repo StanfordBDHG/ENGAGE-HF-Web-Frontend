@@ -5,7 +5,7 @@
 //
 // SPDX-License-Identifier: MIT
 //
-import Link from 'next/link'
+import { Link } from '@tanstack/react-router'
 import { type ReactNode } from 'react'
 import { Tooltip } from '../../components/Tooltip'
 import { cn } from '../../utils/className'
@@ -26,7 +26,7 @@ export const MenuItem = ({ href, icon, isActive, label }: MenuItemProps) => (
     className="hidden lg:block xl:hidden"
   >
     <Link
-      href={href}
+      to={href}
       className={cn(
         'focus-ring flex items-center gap-3 rounded-lg p-2 font-medium no-underline transition xl:w-full xl:self-start',
         isActive ?

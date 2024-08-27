@@ -5,8 +5,6 @@
 //
 // SPDX-License-Identifier: MIT
 //
-'use client'
-
 import * as SelectPrimitive from '@radix-ui/react-select'
 import { Check, ChevronDown, ChevronUp } from 'lucide-react'
 import {

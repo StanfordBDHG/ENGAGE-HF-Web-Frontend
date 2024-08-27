@@ -5,7 +5,6 @@
 //
 // SPDX-License-Identifier: MIT
 //
-'use client'
 import { forwardRef } from 'react'
 import { Avatar } from '../../components/Avatar'
 import { Button, type ButtonProps } from '../../components/Button'

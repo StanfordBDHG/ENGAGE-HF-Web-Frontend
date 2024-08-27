@@ -5,15 +5,17 @@
 //
 // SPDX-License-Identifier: MIT
 //
-import { render, screen } from '@testing-library/react'
-import '@testing-library/jest-dom'
+import { screen } from '@testing-library/react'
+import { renderWithProviders } from '@/modules/tests/helpers'
 import { LinkPagination } from './LinkPagination'
 
 describe('LinkPagination', () => {
   const getHref = (page: number) => `/${page}`
 
   it('renders two pages closest to active, ellipses, first and last page', () => {
-    render(<LinkPagination total={20} page={10} getHref={getHref} />)
+    renderWithProviders(
+      <LinkPagination total={20} page={10} getHref={getHref} />,
+    )
 
     const pages = [
       { name: /prev/i, page: 9 }, // prev button,
@@ -36,21 +38,21 @@ describe('LinkPagination', () => {
   })
 
   it('doesnt render previous page button when at first page', () => {
-    render(<LinkPagination total={2} page={1} getHref={getHref} />)
+    renderWithProviders(<LinkPagination total={2} page={1} getHref={getHref} />)
 
     const prevButton = screen.queryByRole('link', { name: /prev/i })
     expect(prevButton).not.toBeInTheDocument()
   })
 
   it('doesnt render next page button when at last page', () => {
-    render(<LinkPagination total={2} page={2} getHref={getHref} />)
+    renderWithProviders(<LinkPagination total={2} page={2} getHref={getHref} />)
 
     const nextButton = screen.queryByRole('link', { name: /next/i })
     expect(nextButton).not.toBeInTheDocument()
   })
 
   it('renders more siblings when sibling prop passed', () => {
-    render(
+    renderWithProviders(
       <LinkPagination total={20} page={10} siblings={3} getHref={getHref} />,
     )
 

@@ -6,35 +6,8 @@
 // SPDX-License-Identifier: MIT
 //
 import type { User } from '@firebase/auth-types'
-import { type FirebaseOptions } from 'firebase/app'
 import { type Auth, onAuthStateChanged } from 'firebase/auth'
 import { useEffect, useState } from 'react'
-
-/**
- * Registers Auth Service Worker
- * */
-export const useRegisterAuthServiceWorker = (
-  firebaseOptions: FirebaseOptions,
-  emulate = false,
-) => {
-  useEffect(() => {
-    if ('serviceWorker' in navigator) {
-      const serializedFirebaseConfig = encodeURIComponent(
-        JSON.stringify({
-          ...firebaseOptions,
-          emulate,
-        }),
-      )
-      const serviceWorkerUrl = `/authServiceWorker.js?firebaseConfig=${serializedFirebaseConfig}`
-
-      navigator.serviceWorker.register(serviceWorkerUrl).catch(() => {
-        console.error(
-          'Registering service worker failed. Make sure public/authServiceWorker.js exists',
-        )
-      })
-    }
-  }, [emulate, firebaseOptions])
-}
 
 /**
  * Returns currently authenticated user

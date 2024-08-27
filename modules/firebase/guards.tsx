@@ -5,13 +5,13 @@
 //
 // SPDX-License-Identifier: MIT
 //
-import { type User } from '@firebase/auth-types'
+import { initializeApp } from '@firebase/app'
 import { connectFunctionsEmulator, getFunctions } from '@firebase/functions'
-import { type FirebaseOptions, initializeServerApp } from 'firebase/app'
-import { connectAuthEmulator, getAuth } from 'firebase/auth'
+import { queryOptions } from '@tanstack/react-query'
+import { redirect } from '@tanstack/react-router'
+import { connectAuthEmulator, getAuth, OAuthProvider } from 'firebase/auth'
 import { connectFirestoreEmulator, getFirestore } from 'firebase/firestore'
-import { headers } from 'next/headers'
-import { redirect } from 'next/navigation'
+import { queryClient } from '@/app/ReactQueryClientProvider'
 import { env } from '@/env'
 import { firebaseConfig } from '@/modules/firebase/config'
 import {
@@ -21,73 +21,53 @@ import {
   getDocumentsRefs,
   type UserType,
 } from '@/modules/firebase/utils'
-import { routes } from '@/modules/routes'
 
-export const getServerApp = async (firebaseOptions: FirebaseOptions) => {
-  const idToken = headers().get('Authorization')?.split('Bearer ').at(1)
+const firebaseApp = initializeApp(firebaseConfig)
 
-  const firebaseServerApp = initializeServerApp(
-    firebaseOptions,
-    idToken ? { authIdToken: idToken } : {},
-  )
+export const auth = getAuth(firebaseApp)
+const enableEmulation = env.VITE_PUBLIC_EMULATOR
+if (enableEmulation)
+  connectAuthEmulator(auth, 'http://127.0.0.1:9099', { disableWarnings: true })
 
-  const auth = getAuth(firebaseServerApp)
-  const enableEmulation = env.NEXT_PUBLIC_EMULATOR && !auth.emulatorConfig
-  if (enableEmulation) connectAuthEmulator(auth, 'http://127.0.0.1:9099')
-  await auth.authStateReady()
-
-  const db = getFirestore(firebaseServerApp)
-  if (enableEmulation) connectFirestoreEmulator(db, '127.0.0.1', 8080)
-  const functions = getFunctions(firebaseServerApp)
-  if (enableEmulation) connectFunctionsEmulator(functions, '127.0.0.1', 5001)
-
-  return {
-    firebaseServerApp,
-    currentUser: auth.currentUser,
-    db,
-    functions,
-    callables: getCallables(functions),
-    refs: getCollectionRefs(db),
-    docRefs: getDocumentsRefs(db),
-  }
+export const authProvider = {
+  stanford: new OAuthProvider('oidc.stanford'),
+  apple: new OAuthProvider('apple.com'),
 }
 
-export const getUserRole = async (userId: string) => {
-  const { docRefs } = await getAuthenticatedOnlyApp()
-  const user = await getDocDataOrThrow(docRefs.user(userId))
+export const db = getFirestore(firebaseApp)
+if (enableEmulation) connectFirestoreEmulator(db, '127.0.0.1', 8080)
+const functions = getFunctions(firebaseApp)
+if (enableEmulation) connectFunctionsEmulator(functions, '127.0.0.1', 5001)
+
+export const callables = getCallables(functions)
+export const refs = getCollectionRefs(db)
+export const docRefs = getDocumentsRefs(db)
+
+export const getCurrentUserType = async () => {
+  const { user } = await getCurrentUser()
   return user.type
 }
 
-export const getCurrentUserType = async () => {
-  const { currentUser } = await getAuthenticatedOnlyApp()
-  return getUserRole(currentUser.uid)
+export const userQueryOptions = (opts: { id: string }) =>
+  queryOptions({
+    queryKey: ['user', opts],
+    queryFn: () => getDocDataOrThrow(docRefs.user(opts.id)),
+  })
+
+export const getCurrentUser = async () => {
+  if (!auth.currentUser) throw new Error('UNAUTHENTICATED')
+  const user = await queryClient.ensureQueryData(
+    userQueryOptions({ id: auth.currentUser.uid }),
+  )
+  return {
+    currentUser: auth.currentUser,
+    user,
+  }
 }
 
-/**
- * Redirects to home if authenticated
- * */
-export const getUnauthenticatedOnlyApp = async () => {
-  const firebaseApp = await getServerApp(firebaseConfig)
-  if (firebaseApp.currentUser) redirect(routes.home)
-  return firebaseApp
-}
-
-/**
- * Redirects to signIn if not authenticated
- * */
-export const getAuthenticatedOnlyApp = async () => {
-  const firebaseApp = await getServerApp(firebaseConfig)
-  if (!firebaseApp.currentUser) redirect(routes.signIn)
-  const { docRefs, currentUser } = firebaseApp
-  const user = await getDocDataOrThrow(docRefs.user(currentUser.uid))
-  const result = { ...firebaseApp, user }
-  return result as typeof result & { currentUser: User }
-}
-
-/**
- * Redirects to 403 if user's role d
- * */
-export const allowTypes = async (types: UserType[]) => {
+export const ensureType = async (types: UserType[]) => {
   const type = await getCurrentUserType()
-  if (!types.includes(type)) redirect(routes.home)
+  if (!types.includes(type)) {
+    throw redirect({ to: '/' })
+  }
 }

@@ -5,7 +5,6 @@
 //
 // SPDX-License-Identifier: MIT
 //
-'use client'
 import { format, isDate } from 'date-fns'
 import { Calendar as CalendarIcon } from 'lucide-react'
 import { type ComponentProps } from 'react'

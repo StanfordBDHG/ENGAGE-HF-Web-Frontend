@@ -5,6 +5,5 @@
 //
 // SPDX-License-Identifier: MIT
 //
-'use client'
 export * from './Separator'
 export * from './SeparatorText'

@@ -5,12 +5,11 @@
 //
 // SPDX-License-Identifier: MIT
 //
-import Image from 'next/image'
 import { LogoType } from '@/components/icons/LogoType'
 import {
   type AsideBrandLayoutProps,
   AsideBrandLayout,
-} from '@stanfordbdhg/design-system/molecules/AsideBrandLayout'
+} from '@/packages/design-system/src/molecules/AsideBrandLayout'
 
 export const AsideEngageLayout = (
   props: Omit<AsideBrandLayoutProps, 'aside'>,
@@ -19,11 +18,10 @@ export const AsideEngageLayout = (
     aside={
       <>
         <LogoType className="h-auto w-80 text-primary" />
-        <Image
+        <img
           src="/stanfordbiodesign.png"
           alt="Stanford Biodesign Logo"
-          width={317}
-          height={117}
+          className="h-[117px] w-[317px]"
         />
       </>
     }

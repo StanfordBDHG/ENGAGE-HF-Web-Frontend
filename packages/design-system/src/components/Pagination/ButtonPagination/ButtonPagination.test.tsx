@@ -6,12 +6,12 @@
 // SPDX-License-Identifier: MIT
 //
 import { fireEvent, render, screen } from '@testing-library/react'
-import '@testing-library/jest-dom'
+import { vitest } from 'vitest'
 import { ButtonPagination } from './ButtonPagination'
 
 describe('ButtonPagination', () => {
   it('renders one sibling to active, ellipses, first and last page; buttons are functional', () => {
-    const onPageChange = jest.fn()
+    const onPageChange = vitest.fn()
     render(
       <ButtonPagination total={20} page={10} onPageChange={onPageChange} />,
     )
@@ -38,14 +38,14 @@ describe('ButtonPagination', () => {
   })
 
   it('doesnt render previous page button when at first page', () => {
-    render(<ButtonPagination total={2} page={1} onPageChange={jest.fn()} />)
+    render(<ButtonPagination total={2} page={1} onPageChange={vitest.fn()} />)
 
     const prevButton = screen.queryByRole('button', { name: /prev/i })
     expect(prevButton).not.toBeInTheDocument()
   })
 
   it('doesnt render next page button when at last page', () => {
-    render(<ButtonPagination total={2} page={2} onPageChange={jest.fn()} />)
+    render(<ButtonPagination total={2} page={2} onPageChange={vitest.fn()} />)
 
     const nextButton = screen.queryByRole('button', { name: /next/i })
     expect(nextButton).not.toBeInTheDocument()
@@ -57,7 +57,7 @@ describe('ButtonPagination', () => {
         total={20}
         page={10}
         siblings={3}
-        onPageChange={jest.fn()}
+        onPageChange={vitest.fn()}
       />,
     )
 

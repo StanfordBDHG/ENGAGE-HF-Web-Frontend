@@ -6,16 +6,16 @@
 // SPDX-License-Identifier: MIT
 //
 import { fireEvent, render, screen } from '@testing-library/react'
-import '@testing-library/jest-dom'
+import { vitest } from 'vitest'
 import { ConfirmDeleteDialog } from '.'
 
 describe('ConfirmDeleteDialog', () => {
   it('renders dialog with confirm delete button', () => {
-    const onDelete = jest.fn()
+    const onDelete = vitest.fn()
     render(
       <ConfirmDeleteDialog
         open={true}
-        onOpenChange={jest.fn()}
+        onOpenChange={vitest.fn()}
         onDelete={onDelete}
         entityName="user"
       />,

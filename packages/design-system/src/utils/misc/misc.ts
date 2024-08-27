@@ -37,7 +37,7 @@ export const copyToClipboard = async (value: string) => {
     await navigator.clipboard.writeText(value)
     toast('Copied to clipboard')
   } catch (error) {
-    console.log('Copying failed')
+    console.info('Copying failed')
   }
 }
 
