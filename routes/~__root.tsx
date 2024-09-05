@@ -7,7 +7,6 @@
 //
 import '../app/globals.css'
 import { createRootRoute, Outlet, redirect } from '@tanstack/react-router'
-import { TanStackRouterDevtools } from '@tanstack/router-devtools'
 import { NextIntlClientProvider } from 'next-intl'
 import { useLayoutEffect } from 'react'
 import { ReactQueryClientProvider } from '@/app/ReactQueryClientProvider'
@@ -34,7 +33,6 @@ const Root = () => {
   return (
     <AuthProvider>
       <ReactQueryClientProvider>
-        <TanStackRouterDevtools />
         <NextIntlClientProvider
           locale="en"
           timeZone="Europe/Warsaw"
