@@ -24,6 +24,7 @@ jobs:
     secrets: inherit
   dockerimage:
     name: Docker Build and Push
+    needs: [buildandtest]
     uses: StanfordBDHG/.github/.github/workflows/docker-build-and-push.yml@v2
     with:
       imageName: stanfordbdhg/engagehfwebfrontend
@@ -31,3 +32,11 @@ jobs:
     permissions:
       contents: read
       packages: write
+  deploy:
+    name: Deploy Firebase Project
+    uses: StanfordBDHG/.github/.github/workflows/firebase-deploy.yml@v2
+    needs: [buildandtest]
+    permissions:
+      contents: read
+    secrets:
+      GOOGLE_APPLICATION_CREDENTIALS_BASE64: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS_BASE64 }}
