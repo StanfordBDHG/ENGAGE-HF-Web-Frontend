@@ -7,6 +7,13 @@
 //
 import { type Functions, httpsCallable } from '@firebase/functions'
 import {
+  type FHIRMedication,
+  type invitationConverter,
+  type organizationConverter,
+  type userConverter,
+  UserType,
+} from '@stanfordbdhg/engagehf-models'
+import {
   collection,
   type CollectionReference,
   doc,
@@ -16,8 +23,8 @@ import {
   getDocs,
   type Query,
 } from 'firebase/firestore'
+import { type z } from 'zod'
 import {
-  type FHIRMedication,
   type FHIRMedicationRequest,
   type MedicationClass,
   type FHIRObservation,
@@ -26,52 +33,17 @@ import {
 } from '@/modules/firebase/models/medication'
 import { strategy } from '@/packages/design-system/src/utils/misc'
 
-export interface Organization {
+export type Organization = z.output<
+  typeof organizationConverter.value.schema
+> & { id: string }
+
+export type Invitation = z.output<typeof invitationConverter.value.schema> & {
   id: string
-  name: string
-  contactName: string
-  phoneNumber: string
-  emailAddress: string
-  owners: string[]
 }
 
-export interface Invitation {
-  userId?: string
-  auth?: UserAuth
-  user?: User
-}
+export { UserType }
 
-export interface UserMessagesSettings {
-  dailyRemindersAreActive?: boolean
-  textNotificationsAreActive?: boolean
-  medicationRemindersAreActive?: boolean
-}
-
-export enum UserType {
-  admin = 'admin',
-  clinician = 'clinician',
-  patient = 'patient',
-  owner = 'owner',
-}
-
-export interface User {
-  type: UserType
-  dateOfBirth?: string | null
-  clinician?: string
-  dateOfEnrollment?: string
-  invitationCode?: string
-  messagesSettings?: UserMessagesSettings
-  organization?: string
-  language?: string
-  timeZone?: string
-}
-
-export interface UserAuth {
-  displayName?: string
-  email?: string
-  phoneNumber?: string
-  photoURL?: string
-}
+export type User = z.output<typeof userConverter.value.schema> & { id: string }
 
 export const collectionNames = {
   invitations: 'invitations',
