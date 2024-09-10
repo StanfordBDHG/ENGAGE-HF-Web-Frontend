@@ -6,137 +6,39 @@
 // SPDX-License-Identifier: MIT
 //
 import {
-  type FHIRSimpleQuantity,
-  type FHIRCodeableConcept,
-  type FHIRElement,
-  type FHIRRatio,
-  type FHIRReference,
-  type FHIRPeriod,
-  type FHIRResource,
-  type FHIRExtension,
-} from './baseTypes.js'
+  type fhirAllergyIntoleranceConverter,
+  type fhirAppointmentConverter,
+  type fhirMedicationRequestConverter,
+  type fhirObservationConverter,
+  type medicationClassConverter,
+} from '@stanfordbdhg/engagehf-models'
 
-export interface FHIRMedication extends FHIRElement {
-  code?: FHIRCodeableConcept
-  form?: FHIRCodeableConcept
-  ingredient?: FHIRMedicationIngredient[]
-}
+export {
+  FHIRAllergyIntoleranceCriticality,
+  FHIRAllergyIntoleranceType,
+  FHIRAppointmentStatus,
+  FHIRObservationStatus,
+  FHIRExtensionUrl,
+} from '@stanfordbdhg/engagehf-models'
 
-export interface FHIRMedicationIngredient {
-  strength?: FHIRRatio
-  itemCodeableConcept?: FHIRCodeableConcept
-}
+export type FHIRMedicationRequest = ReturnType<
+  typeof fhirMedicationRequestConverter.value.encode
+>
 
-export interface FHIRMedicationRequest extends FHIRElement {
-  medicationReference?: FHIRReference<FHIRMedication>
-  dosageInstruction?: FHIRDosage[]
-}
-
-export interface FHIRDosage extends FHIRElement {
-  text?: string
-  patientInstruction?: string
-  timing?: FHIRTiming
-  doseAndRate?: FHIRDosageDoseAndRate[]
-}
-
-export enum FHIRAllergyIntoleranceType {
-  allergy = 'allergy',
-  intolerance = 'intolerance',
-  financial = 'financial',
-  preference = 'preference',
-}
-
-export enum FHIRAllergyIntoleranceCriticality {
-  low = 'low',
-  high = 'high',
-  unableToAssess = 'unable-to-assess',
-}
-
-export interface FHIRAllergyIntolerance {
-  type: FHIRAllergyIntoleranceType
-  criticality: FHIRAllergyIntoleranceCriticality | null
-  code: FHIRCodeableConcept
-}
-
-export interface FHIRDosageDoseAndRate extends FHIRElement {
-  type?: FHIRCodeableConcept
-  doseQuantity?: FHIRSimpleQuantity
-  maxDosePerPeriod?: FHIRRatio
-  maxDosePerAdministration?: FHIRSimpleQuantity
-  maxDosePerLifetime?: FHIRSimpleQuantity
-}
-
-export interface FHIRTiming extends FHIRElement {
-  repeat?: FHIRTimingRepeat
-  code?: FHIRCodeableConcept
-}
-
-export interface FHIRTimingRepeat {
-  frequency?: number
-  period?: number
-  periodUnit?: string
-  timeOfDay?: string[]
-}
+export type MedicationClass = ReturnType<
+  typeof medicationClassConverter.value.encode
+>
+export type FHIRObservation = ReturnType<
+  typeof fhirObservationConverter.value.encode
+>
+export type FHIRAllergyIntolerance = ReturnType<
+  typeof fhirAllergyIntoleranceConverter.value.encode
+>
+export type FHIRAppointment = ReturnType<
+  typeof fhirAppointmentConverter.value.encode
+>
 
 export type LocalizedText = string | Record<string, string>
-
-export interface MedicationClass {
-  name: LocalizedText
-  videoPath: string
-}
-
-export interface FHIRObservationComponent {
-  code: FHIRCodeableConcept
-  valueQuantity?: FHIRSimpleQuantity
-}
-
-export enum FHIRObservationStatus {
-  registered = 'registered',
-  preliminary = 'preliminary',
-  final = 'final',
-  amended = 'amended',
-  corrected = 'corrected',
-  cancelled = 'cancelled',
-  entered_in_error = 'entered-in-error',
-  unknown = 'unknown',
-}
-
-export interface FHIRObservation extends FHIRResource {
-  status: FHIRObservationStatus
-  code: FHIRCodeableConcept
-  component?: FHIRObservationComponent[]
-  valueQuantity?: FHIRSimpleQuantity
-  effectivePeriod?: FHIRPeriod
-  effectiveDateTime?: string
-  effectiveInstant?: string
-}
-
-export enum FHIRAppointmentStatus {
-  proposed = 'proposed',
-  pending = 'pending',
-  booked = 'booked',
-  arrived = 'arrived',
-  fulfilled = 'fulfilled',
-  cancelled = 'cancelled',
-  noshow = 'noshow',
-  enterdInError = 'entered-in-error',
-  checkedIn = 'checked-in',
-  waitlist = 'waitlist',
-}
-
-export interface FHIRAppointment {
-  extension?: FHIRExtension[]
-  status: FHIRAppointmentStatus
-  created: string
-  start: string
-  end: string
-  comment: string | null
-  patientInstruction: string | null
-  participant: Array<{
-    actor: FHIRReference<unknown> | null
-    type: FHIRCodeableConcept | null
-  }>
-}
 
 export const getMedicationRequestData = (medication: {
   medication: string
@@ -145,6 +47,7 @@ export const getMedicationRequestData = (medication: {
   quantity: number
   instructions: string
 }): FHIRMedicationRequest => ({
+  resourceType: 'MedicationRequest',
   medicationReference: {
     reference: `medications/${medication.medication}/drugs/${medication.drug}`,
   },
@@ -175,7 +78,7 @@ export const getMedicationRequestData = (medication: {
 export const getMedicationRequestMedicationIds = (
   request: FHIRMedicationRequest,
 ) => {
-  const reference = request.medicationReference?.reference?.split('/')
+  const reference = request.medicationReference?.reference.split('/')
   return {
     medicationId: reference?.at(1),
     drugId: reference?.at(3),

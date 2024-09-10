@@ -6,6 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 import { type UserInfo as AuthUserInfo } from '@firebase/auth-types'
+import { type Nil } from '@/packages/design-system/src/utils/misc'
 
 export const getUserInfo = (user: AuthUserInfo) => ({
   displayName: user.displayName,
@@ -18,6 +19,8 @@ export const getUserInfo = (user: AuthUserInfo) => ({
 
 export type UserInfo = ReturnType<typeof getUserInfo>
 
-export const getUserName = (
-  user: Partial<Pick<UserInfo, 'displayName' | 'email' | 'uid'>>,
-) => user.displayName ?? user.email ?? user.uid
+export const getUserName = (user: {
+  displayName?: Nil<string>
+  email?: Nil<string>
+  uid?: Nil<string>
+}) => user.displayName ?? user.email ?? user.uid

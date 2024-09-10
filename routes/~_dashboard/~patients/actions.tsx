@@ -9,12 +9,12 @@ import { addDoc, setDoc } from '@firebase/firestore'
 import { addHours } from 'date-fns'
 import { docRefs, refs } from '@/modules/firebase/guards'
 import { AllergyType } from '@/modules/firebase/models/allergy'
-import { ExtensionURL } from '@/modules/firebase/models/baseTypes'
 import {
   FHIRAllergyIntoleranceCriticality,
   FHIRAllergyIntoleranceType,
   FHIRAppointmentStatus,
   FHIRObservationStatus,
+  FHIRExtensionUrl,
 } from '@/modules/firebase/models/medication'
 import { type ResourceType } from '@/modules/firebase/utils'
 import { getUnitOfObservationType } from '@/routes/~_dashboard/~patients/clientUtils'
@@ -73,6 +73,7 @@ export const updateObservation = async (
 }
 
 const getAllergyData = (payload: AllergyFormSchema) => ({
+  resourceType: 'Allergy',
   type:
     (
       payload.type === AllergyType.severeAllergy ||
@@ -133,13 +134,17 @@ export const updateAllergy = async (
 const getAppointmentData = (
   payload: AppointmentFormSchema & { userId: string },
 ) => ({
+  resourceType: 'Appointment',
   status: FHIRAppointmentStatus.booked,
   start: payload.start.toISOString(),
   end: addHours(payload.start, 1).toISOString(),
   comment: payload.comment,
   patientInstruction: payload.patientInstruction,
   extension: [
-    { url: ExtensionURL.providerName, valueString: payload.providerName },
+    {
+      url: FHIRExtensionUrl.providerName as string,
+      valueString: payload.providerName,
+    },
   ],
   participant: [
     {

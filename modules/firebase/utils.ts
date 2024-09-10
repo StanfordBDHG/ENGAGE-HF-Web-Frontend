@@ -23,7 +23,6 @@ import {
   getDocs,
   type Query,
 } from 'firebase/firestore'
-import { type z } from 'zod'
 import {
   type FHIRMedicationRequest,
   type MedicationClass,
@@ -33,17 +32,17 @@ import {
 } from '@/modules/firebase/models/medication'
 import { strategy } from '@/packages/design-system/src/utils/misc'
 
-export type Organization = z.output<
-  typeof organizationConverter.value.schema
+export type Organization = ReturnType<
+  typeof organizationConverter.value.encode
 > & { id: string }
 
-export type Invitation = z.output<typeof invitationConverter.value.schema> & {
-  id: string
-}
+export type Invitation = ReturnType<typeof invitationConverter.value.encode>
 
 export { UserType }
 
-export type User = z.output<typeof userConverter.value.schema> & { id: string }
+export type User = ReturnType<typeof userConverter.value.encode> & {
+  id: string
+}
 
 export const collectionNames = {
   invitations: 'invitations',

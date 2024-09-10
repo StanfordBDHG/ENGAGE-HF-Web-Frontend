@@ -13,7 +13,7 @@ import { type Nil } from '@/packages/design-system/src/utils/misc'
 
 interface SharedUser {
   resourceType: 'invitation' | 'user'
-  uid: string | undefined
+  uid: Nil<string>
   displayName: Nil<string>
   email: Nil<string>
   organization: Nil<{ name: string }>
