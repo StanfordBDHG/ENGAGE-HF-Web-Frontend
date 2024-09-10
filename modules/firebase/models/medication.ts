@@ -10,6 +10,7 @@ import {
   type fhirAppointmentConverter,
   type fhirMedicationRequestConverter,
   type fhirObservationConverter,
+  type InferEncoded,
   type medicationClassConverter,
 } from '@stanfordbdhg/engagehf-models'
 
@@ -21,22 +22,16 @@ export {
   FHIRExtensionUrl,
 } from '@stanfordbdhg/engagehf-models'
 
-export type FHIRMedicationRequest = ReturnType<
-  typeof fhirMedicationRequestConverter.value.encode
+export type FHIRMedicationRequest = InferEncoded<
+  typeof fhirMedicationRequestConverter
 >
 
-export type MedicationClass = ReturnType<
-  typeof medicationClassConverter.value.encode
+export type MedicationClass = InferEncoded<typeof medicationClassConverter>
+export type FHIRObservation = InferEncoded<typeof fhirObservationConverter>
+export type FHIRAllergyIntolerance = InferEncoded<
+  typeof fhirAllergyIntoleranceConverter
 >
-export type FHIRObservation = ReturnType<
-  typeof fhirObservationConverter.value.encode
->
-export type FHIRAllergyIntolerance = ReturnType<
-  typeof fhirAllergyIntoleranceConverter.value.encode
->
-export type FHIRAppointment = ReturnType<
-  typeof fhirAppointmentConverter.value.encode
->
+export type FHIRAppointment = InferEncoded<typeof fhirAppointmentConverter>
 
 export type LocalizedText = string | Record<string, string>
 
@@ -47,22 +42,30 @@ export const getMedicationRequestData = (medication: {
   quantity: number
   instructions: string
 }): FHIRMedicationRequest => ({
+  id: null,
+  extension: null,
   resourceType: 'MedicationRequest',
   medicationReference: {
     reference: `medications/${medication.medication}/drugs/${medication.drug}`,
+    type: null,
+    display: null,
+    identifier: null,
   },
   dosageInstruction: [
     {
       text: medication.instructions,
       timing: {
+        code: null,
         repeat: {
           frequency: medication.frequencyPerDay,
           period: 1,
           periodUnit: 'd',
+          timeOfDay: null,
         },
       },
       doseAndRate: [
         {
+          type: null,
           doseQuantity: {
             code: '{tbl}',
             system: 'http://unitsofmeasure.org',
@@ -71,6 +74,7 @@ export const getMedicationRequestData = (medication: {
           },
         },
       ],
+      patientInstruction: null,
     },
   ],
 })
