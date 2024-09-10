@@ -58,7 +58,7 @@ export const LabForm = ({ observation, onSubmit }: LabFormProps) => {
           new Date(observation.effectiveDateTime)
         : new Date(),
       unit: observation?.unit ?? getUnitOfObservationType(defaultType).unit,
-      value: observation?.value,
+      value: observation?.value ?? undefined,
     },
   })
 

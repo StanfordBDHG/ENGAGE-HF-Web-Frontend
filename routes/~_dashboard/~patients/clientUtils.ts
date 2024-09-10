@@ -6,6 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 import { useMemo } from 'react'
+import { basicFhirCoding } from '@/modules/firebase/models/medication'
 import { ObservationType } from '@/modules/firebase/utils'
 import { strategy } from '@/packages/design-system/src/utils/misc'
 import { type MedicationsData } from '@/routes/~_dashboard/~patients/utils'
@@ -19,6 +20,7 @@ export const getObservationTypeUnits = (observationType: ObservationType) =>
           code: 'mL/min/{1.73_m2}',
           coding: [
             {
+              ...basicFhirCoding,
               system: 'http://loinc.org',
               code: '98979-8',
               display:
@@ -33,6 +35,7 @@ export const getObservationTypeUnits = (observationType: ObservationType) =>
           code: 'meq/L',
           coding: [
             {
+              ...basicFhirCoding,
               system: 'http://loinc.org',
               code: '6298-4',
               display: 'Potassium [Moles/volume] in Blood',
@@ -46,6 +49,7 @@ export const getObservationTypeUnits = (observationType: ObservationType) =>
           code: 'mg/dL',
           coding: [
             {
+              ...basicFhirCoding,
               system: 'http://loinc.org',
               code: '2160-0',
               display: 'Creatinine [Mass/volume] in Serum or Plasma',

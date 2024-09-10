@@ -15,6 +15,8 @@ import {
   FHIRAppointmentStatus,
   FHIRObservationStatus,
   FHIRExtensionUrl,
+  type FHIRObservation,
+  basicFhirCoding,
 } from '@/modules/firebase/models/medication'
 import { type ResourceType } from '@/modules/firebase/utils'
 import { getUnitOfObservationType } from '@/routes/~_dashboard/~patients/clientUtils'
@@ -22,12 +24,17 @@ import { type AllergyFormSchema } from '@/routes/~_dashboard/~patients/~$id/Alle
 import { type AppointmentFormSchema } from '@/routes/~_dashboard/~patients/~$id/AppointmentForm'
 import { type LabFormSchema } from '@/routes/~_dashboard/~patients/~$id/LabForm'
 
-export const getObservationData = (payload: LabFormSchema) => {
+export const getObservationData = (payload: LabFormSchema): FHIRObservation => {
   const unit = getUnitOfObservationType(payload.type, payload.unit)
   return {
+    id: null,
+    extension: null,
+    effectiveInstant: null,
+    effectivePeriod: null,
+    component: null,
     resourceType: 'Observation',
     status: FHIRObservationStatus.final,
-    code: { coding: unit.coding },
+    code: { text: null, coding: unit.coding },
     valueQuantity: {
       value: payload.value,
       unit: unit.unit,
@@ -73,6 +80,8 @@ export const updateObservation = async (
 }
 
 const getAllergyData = (payload: AllergyFormSchema) => ({
+  id: null,
+  extension: null,
   resourceType: 'Allergy',
   type:
     (
@@ -90,8 +99,10 @@ const getAllergyData = (payload: AllergyFormSchema) => ({
       FHIRAllergyIntoleranceCriticality.high
     : null,
   code: {
+    text: null,
     coding: [
       {
+        ...basicFhirCoding,
         system: 'http://www.nlm.nih.gov/research/umls/rxnorm',
         code: payload.medication,
       },
@@ -171,6 +182,7 @@ export const createAppointment = async (
       resourceType: payload.resourceType,
     }),
     {
+      id: null,
       created: new Date().toISOString(),
       ...getAppointmentData(payload),
     },

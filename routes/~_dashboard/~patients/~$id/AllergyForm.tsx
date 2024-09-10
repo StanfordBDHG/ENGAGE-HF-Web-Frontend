@@ -55,7 +55,7 @@ export const AllergyForm = ({
     formSchema: allergyFormSchema,
     defaultValues: {
       type: allergy?.type,
-      medication: allergy?.medication,
+      medication: allergy?.medication ?? undefined,
     },
   })
 

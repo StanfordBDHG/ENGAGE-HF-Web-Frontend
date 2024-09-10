@@ -71,9 +71,9 @@ export const UserForm = ({
       displayName: userInfo?.displayName ?? '',
       type: type ?? UserType.clinician,
       organizationId:
-        authUser.user.type === UserType.owner ?
+        (authUser.user.type === UserType.owner ?
           authUser.user.organization
-        : user?.organization,
+        : user?.organization) ?? undefined,
       invitationCode: user?.invitationCode ?? '',
       dateOfBirth: user?.dateOfBirth ? new Date(user.dateOfBirth) : undefined,
     },

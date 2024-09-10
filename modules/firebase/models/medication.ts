@@ -8,8 +8,11 @@
 import {
   type fhirAllergyIntoleranceConverter,
   type fhirAppointmentConverter,
+  type fhirCodingConverter,
+  type fhirElementConverter,
   type fhirMedicationRequestConverter,
   type fhirObservationConverter,
+  type fhirResourceConverter,
   type InferEncoded,
   type medicationClassConverter,
 } from '@stanfordbdhg/engagehf-models'
@@ -21,6 +24,26 @@ export {
   FHIRObservationStatus,
   FHIRExtensionUrl,
 } from '@stanfordbdhg/engagehf-models'
+
+export type FHIRElement = InferEncoded<typeof fhirElementConverter>
+
+export const basicFhirElement: FHIRElement = {
+  id: null,
+  extension: null,
+}
+
+export type FHIRResource = InferEncoded<typeof fhirResourceConverter>
+
+export type FHIRCoding = InferEncoded<typeof fhirCodingConverter>
+
+export const basicFhirCoding: FHIRCoding = {
+  ...basicFhirElement,
+  system: null,
+  version: null,
+  code: null,
+  display: null,
+  userSelected: null,
+}
 
 export type FHIRMedicationRequest = InferEncoded<
   typeof fhirMedicationRequestConverter
