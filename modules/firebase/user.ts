@@ -10,7 +10,7 @@ import {
   type UserInformation,
 } from '@stanfordbdhg/engagehf-models'
 import { chunk } from 'es-toolkit'
-import { callables } from '@/modules/firebase/guards'
+import { callables } from '@/modules/firebase/app'
 
 export const mapAuthData = async <T>(
   input: GetUsersInformationInput,

@@ -8,7 +8,7 @@
 import { kebabCase } from 'es-toolkit'
 import { Download } from 'lucide-react'
 import { useState } from 'react'
-import { callables } from '@/modules/firebase/guards'
+import { callables } from '@/modules/firebase/app'
 import { type ResourceType } from '@/modules/firebase/utils'
 import { Button } from '@/packages/design-system/src/components/Button'
 import { toast } from '@/packages/design-system/src/components/Toaster'

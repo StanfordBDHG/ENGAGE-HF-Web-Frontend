@@ -8,7 +8,7 @@
 import { UserType } from '@stanfordbdhg/engagehf-models'
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { Contact } from 'lucide-react'
-import { callables, docRefs } from '@/modules/firebase/guards'
+import { callables, docRefs } from '@/modules/firebase/app'
 import { useUser } from '@/modules/firebase/UserProvider'
 import { getDocDataOrThrow } from '@/modules/firebase/utils'
 import { routes } from '@/modules/routes'

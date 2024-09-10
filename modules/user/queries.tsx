@@ -9,7 +9,7 @@ import { UserType } from '@stanfordbdhg/engagehf-models'
 import { queryOptions } from '@tanstack/react-query'
 import { query, where } from 'firebase/firestore'
 import { queryClient } from '@/app/ReactQueryClientProvider'
-import { docRefs, getCurrentUser, refs } from '@/modules/firebase/guards'
+import { docRefs, getCurrentUser, refs } from '@/modules/firebase/app'
 import { type Invitation, type Organization } from '@/modules/firebase/models'
 import { mapAuthData } from '@/modules/firebase/user'
 import {

@@ -8,7 +8,7 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth'
 import { AsideEngageLayout } from '@/components/AsideEngageLayout'
-import { authProvider, auth } from '@/modules/firebase/guards'
+import { authProvider, auth } from '@/modules/firebase/app'
 import { SignInForm as AuthSignInForm } from '@/packages/design-system/src/modules/auth/SignInForm'
 
 const SignIn = () => (

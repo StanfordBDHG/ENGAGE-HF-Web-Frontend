@@ -14,7 +14,7 @@ import {
   getCurrentUser,
   getCurrentUserType,
   refs,
-} from '@/modules/firebase/guards'
+} from '@/modules/firebase/app'
 import { mapAuthData } from '@/modules/firebase/user'
 import { getDocData, getDocsData } from '@/modules/firebase/utils'
 import { routes } from '@/modules/routes'

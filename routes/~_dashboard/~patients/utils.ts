@@ -15,7 +15,7 @@ import { groupBy } from 'es-toolkit'
 import { query, where } from 'firebase/firestore'
 import { queryClient } from '@/app/ReactQueryClientProvider'
 import { AllergyType } from '@/modules/firebase/allergy'
-import { getCurrentUser, refs } from '@/modules/firebase/guards'
+import { getCurrentUser, refs } from '@/modules/firebase/app'
 import { type FHIRAllergyIntolerance } from '@/modules/firebase/models'
 import { mapAuthData } from '@/modules/firebase/user'
 import {

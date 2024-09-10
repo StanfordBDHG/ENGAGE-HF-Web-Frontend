@@ -10,7 +10,7 @@ import { UserType } from '@stanfordbdhg/engagehf-models'
 import { createFileRoute, notFound, useRouter } from '@tanstack/react-router'
 import { Users } from 'lucide-react'
 import { queryClient } from '@/app/ReactQueryClientProvider'
-import { callables, docRefs, ensureType } from '@/modules/firebase/guards'
+import { callables, docRefs, ensureType } from '@/modules/firebase/app'
 import { getDocDataOrThrow } from '@/modules/firebase/utils'
 import {
   getUserData,

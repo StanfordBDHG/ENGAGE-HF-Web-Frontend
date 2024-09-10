@@ -8,7 +8,7 @@
 import { deleteDoc } from '@firebase/firestore'
 import { useRouter } from '@tanstack/react-router'
 import { Pencil, Trash } from 'lucide-react'
-import { docRefs } from '@/modules/firebase/guards'
+import { docRefs } from '@/modules/firebase/app'
 import { type ResourceType } from '@/modules/firebase/utils'
 import { RowDropdownMenu } from '@/packages/design-system/src/components/DataTable'
 import { DropdownMenuItem } from '@/packages/design-system/src/components/DropdownMenu'

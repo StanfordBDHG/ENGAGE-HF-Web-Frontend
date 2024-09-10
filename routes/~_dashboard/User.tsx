@@ -6,7 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 import { LogOut } from 'lucide-react'
-import { auth } from '@/modules/firebase/guards'
+import { auth } from '@/modules/firebase/app'
 import {
   DropdownMenu,
   DropdownMenuTrigger,

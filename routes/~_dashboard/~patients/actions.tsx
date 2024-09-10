@@ -15,7 +15,7 @@ import {
 } from '@stanfordbdhg/engagehf-models'
 import { addHours } from 'date-fns'
 import { AllergyType } from '@/modules/firebase/allergy'
-import { docRefs, refs } from '@/modules/firebase/guards'
+import { docRefs, refs } from '@/modules/firebase/app'
 import {
   basicFhirCoding,
   type FHIRObservation,

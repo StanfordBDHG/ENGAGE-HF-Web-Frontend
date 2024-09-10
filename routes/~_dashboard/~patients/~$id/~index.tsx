@@ -9,7 +9,7 @@ import { runTransaction, updateDoc } from '@firebase/firestore'
 import { UserType } from '@stanfordbdhg/engagehf-models'
 import { createFileRoute, notFound, useRouter } from '@tanstack/react-router'
 import { Contact } from 'lucide-react'
-import { callables, db, docRefs, refs } from '@/modules/firebase/guards'
+import { callables, db, docRefs, refs } from '@/modules/firebase/app'
 import {
   getMedicationRequestData,
   getMedicationRequestMedicationIds,
