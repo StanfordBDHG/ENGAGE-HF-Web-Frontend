@@ -7,9 +7,17 @@
 //
 import { type Functions, httpsCallable } from '@firebase/functions'
 import {
+  type CreateInvitationInput,
+  type CreateInvitationOutput,
+  type DeleteUserInput,
+  type ExportHealthSummaryInput,
+  type ExportHealthSummaryOutput,
   type FHIRMedication,
+  type GetUsersInformationInput,
+  type GetUsersInformationOutput,
   type invitationConverter,
   type organizationConverter,
+  type UpdateUserInformationInput,
   type userConverter,
   UserType,
 } from '@stanfordbdhg/engagehf-models'
@@ -235,14 +243,6 @@ export const getDocumentsRefs = (db: Firestore) => ({
     ) as DocumentReference<FHIRObservation>,
 })
 
-interface Result<T> {
-  data?: T
-  error?: {
-    code: string
-    message: string
-  }
-}
-
 export interface UserAuthenticationInformation {
   displayName: string | null
   email: string | null
@@ -250,63 +250,26 @@ export interface UserAuthenticationInformation {
   photoURL: string | null
 }
 
-export interface UserInformation {
-  auth: UserAuthenticationInformation
-  user?: User
-}
-
-export interface GetUsersInformationInput {
-  userIds: string[]
-  includeUserData?: boolean
-}
-
 export const getCallables = (functions: Functions) => ({
   createInvitation: httpsCallable<
-    {
-      auth: {
-        displayName?: string
-        email: string
-        phoneNumber?: string
-        photoURL?: string
-      }
-      user: {
-        type: UserType
-        organization?: string
-        clinician?: string
-        language?: string
-        timeZone?: string
-        dateOfBirth?: string | null
-      }
-    },
-    { id: string }
+    CreateInvitationInput,
+    CreateInvitationOutput
   >(functions, 'createInvitation'),
   getUsersInformation: httpsCallable<
     GetUsersInformationInput,
-    Record<string, Result<UserInformation>>
+    GetUsersInformationOutput
   >(functions, 'getUsersInformation'),
-  deleteUser: httpsCallable<{ userId: string }, undefined>(
+  deleteUser: httpsCallable<DeleteUserInput, undefined>(
     functions,
     'deleteUser',
   ),
-  updateUserInformation: httpsCallable<
-    {
-      userId: string
-      data: {
-        auth: {
-          displayName?: string
-          email?: string
-          phoneNumber?: string
-          photoURL?: string
-        }
-      }
-    },
-    undefined
-  >(functions, 'updateUserInformation'),
+  updateUserInformation: httpsCallable<UpdateUserInformationInput, undefined>(
+    functions,
+    'updateUserInformation',
+  ),
   exportHealthSummary: httpsCallable<
-    {
-      userId: string
-    },
-    { content: string }
+    ExportHealthSummaryInput,
+    ExportHealthSummaryOutput
   >(functions, 'exportHealthSummary'),
 })
 

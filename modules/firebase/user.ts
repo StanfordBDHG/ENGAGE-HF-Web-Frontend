@@ -5,12 +5,12 @@
 //
 // SPDX-License-Identifier: MIT
 //
-import { chunk } from 'es-toolkit'
-import { callables } from '@/modules/firebase/guards'
 import {
   type GetUsersInformationInput,
   type UserInformation,
-} from '@/modules/firebase/utils'
+} from '@stanfordbdhg/engagehf-models'
+import { chunk } from 'es-toolkit'
+import { callables } from '@/modules/firebase/guards'
 
 export const mapAuthData = async <T>(
   input: GetUsersInformationInput,
@@ -27,17 +27,16 @@ export const mapAuthData = async <T>(
       userIds: chunkIds,
     })
     return chunkIds.map((id) => {
-      // userInformation might be undefined
-      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-      const userInformation = usersRecord.data[id]?.data
-      if (!userInformation) {
+      const user = usersRecord.data[id]
+      const userData = 'data' in user ? user.data : undefined
+      if (!userData) {
         console.error(`Cannot locate user ${id}.`, {
-          userData: usersRecord.data[id],
+          user,
           id,
         })
         return null
       }
-      return callback(userInformation, id)
+      return callback(userData, id)
     })
   })
   const results = await Promise.all(promises)
