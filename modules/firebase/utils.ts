@@ -10,6 +10,7 @@ import {
   type CreateInvitationInput,
   type CreateInvitationOutput,
   type DeleteUserInput,
+  type DeleteUserOutput,
   type ExportHealthSummaryInput,
   type ExportHealthSummaryOutput,
   type FHIRMedication,
@@ -18,6 +19,7 @@ import {
   type invitationConverter,
   type organizationConverter,
   type UpdateUserInformationInput,
+  type UpdateUserInformationOutput,
   type userConverter,
   UserType,
 } from '@stanfordbdhg/engagehf-models'
@@ -259,14 +261,14 @@ export const getCallables = (functions: Functions) => ({
     GetUsersInformationInput,
     GetUsersInformationOutput
   >(functions, 'getUsersInformation'),
-  deleteUser: httpsCallable<DeleteUserInput, undefined>(
+  deleteUser: httpsCallable<DeleteUserInput, DeleteUserOutput>(
     functions,
     'deleteUser',
   ),
-  updateUserInformation: httpsCallable<UpdateUserInformationInput, undefined>(
-    functions,
-    'updateUserInformation',
-  ),
+  updateUserInformation: httpsCallable<
+    UpdateUserInformationInput,
+    UpdateUserInformationOutput
+  >(functions, 'updateUserInformation'),
   exportHealthSummary: httpsCallable<
     ExportHealthSummaryInput,
     ExportHealthSummaryOutput
