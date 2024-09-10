@@ -21,7 +21,7 @@ concurrency:
 jobs:
   deployment:
     name: Production Deployment
-    uses: ./.github/workflows/beta-deployment.yml
+    uses: ./.github/workflows/deployment.yml
     permissions:
       contents: read
       actions: read
