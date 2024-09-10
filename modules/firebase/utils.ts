@@ -16,12 +16,12 @@ import {
   type FHIRMedication,
   type GetUsersInformationInput,
   type GetUsersInformationOutput,
+  type InferEncoded,
   type invitationConverter,
   type organizationConverter,
   type UpdateUserInformationInput,
   type UpdateUserInformationOutput,
   type userConverter,
-  UserType,
 } from '@stanfordbdhg/engagehf-models'
 import {
   collection,
@@ -42,17 +42,15 @@ import {
 } from '@/modules/firebase/models/medication'
 import { strategy } from '@/packages/design-system/src/utils/misc'
 
-export type Organization = ReturnType<
-  typeof organizationConverter.value.encode
-> & { id: string }
+export { UserType } from '@stanfordbdhg/engagehf-models'
 
-export type Invitation = ReturnType<typeof invitationConverter.value.encode>
-
-export { UserType }
-
-export type User = ReturnType<typeof userConverter.value.encode> & {
+export type Organization = InferEncoded<typeof organizationConverter> & {
   id: string
 }
+
+export type Invitation = InferEncoded<typeof invitationConverter>
+
+export type User = InferEncoded<typeof userConverter> & { id: string }
 
 export const collectionNames = {
   invitations: 'invitations',
