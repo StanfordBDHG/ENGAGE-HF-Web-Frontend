@@ -5,9 +5,9 @@
 //
 // SPDX-License-Identifier: MIT
 //
+import { UserType } from '@stanfordbdhg/engagehf-models'
 import { useLocation } from '@tanstack/react-router'
 import { Home, Users, Contact } from 'lucide-react'
-import { UserType } from '@/modules/firebase/utils'
 import { routes } from '@/modules/routes'
 import { MenuItem } from '@/packages/design-system/src/molecules/DashboardLayout'
 

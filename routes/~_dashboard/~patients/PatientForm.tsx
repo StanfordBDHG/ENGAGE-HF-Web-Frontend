@@ -6,7 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 import { z } from 'zod'
-import { type User } from '@/modules/firebase/utils'
+import { type User } from '@/modules/firebase/models'
 import { Button } from '@/packages/design-system/src/components/Button'
 import { DatePicker } from '@/packages/design-system/src/components/DatePicker'
 import { Input } from '@/packages/design-system/src/components/Input'

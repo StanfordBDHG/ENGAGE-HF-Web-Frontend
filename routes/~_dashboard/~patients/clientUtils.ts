@@ -6,7 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 import { useMemo } from 'react'
-import { basicFhirCoding } from '@/modules/firebase/models/medication'
+import { basicFhirCoding } from '@/modules/firebase/models'
 import { ObservationType } from '@/modules/firebase/utils'
 import { strategy } from '@/packages/design-system/src/utils/misc'
 import { type MedicationsData } from '@/routes/~_dashboard/~patients/utils'

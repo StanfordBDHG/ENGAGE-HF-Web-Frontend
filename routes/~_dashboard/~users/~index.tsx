@@ -5,12 +5,13 @@
 //
 // SPDX-License-Identifier: MIT
 //
+import { UserType } from '@stanfordbdhg/engagehf-models'
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { query, where } from 'firebase/firestore'
 import { UserPlus, Users } from 'lucide-react'
 import { ensureType, getCurrentUser, refs } from '@/modules/firebase/guards'
 import { mapAuthData } from '@/modules/firebase/user'
-import { getDocsData, UserType } from '@/modules/firebase/utils'
+import { getDocsData } from '@/modules/firebase/utils'
 import { routes } from '@/modules/routes'
 import {
   getUserOrganizationsMap,

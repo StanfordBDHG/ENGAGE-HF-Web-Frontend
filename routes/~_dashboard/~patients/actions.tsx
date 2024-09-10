@@ -6,18 +6,20 @@
 // SPDX-License-Identifier: MIT
 //
 import { addDoc, setDoc } from '@firebase/firestore'
-import { addHours } from 'date-fns'
-import { docRefs, refs } from '@/modules/firebase/guards'
-import { AllergyType } from '@/modules/firebase/models/allergy'
 import {
   FHIRAllergyIntoleranceCriticality,
   FHIRAllergyIntoleranceType,
   FHIRAppointmentStatus,
   FHIRObservationStatus,
   FHIRExtensionUrl,
-  type FHIRObservation,
+} from '@stanfordbdhg/engagehf-models'
+import { addHours } from 'date-fns'
+import { AllergyType } from '@/modules/firebase/allergy'
+import { docRefs, refs } from '@/modules/firebase/guards'
+import {
   basicFhirCoding,
-} from '@/modules/firebase/models/medication'
+  type FHIRObservation,
+} from '@/modules/firebase/models'
 import { type ResourceType } from '@/modules/firebase/utils'
 import { getUnitOfObservationType } from '@/routes/~_dashboard/~patients/clientUtils'
 import { type AllergyFormSchema } from '@/routes/~_dashboard/~patients/~$id/AllergyForm'

@@ -16,12 +16,8 @@ import {
   type FHIRMedication,
   type GetUsersInformationInput,
   type GetUsersInformationOutput,
-  type InferEncoded,
-  type invitationConverter,
-  type organizationConverter,
   type UpdateUserInformationInput,
   type UpdateUserInformationOutput,
-  type userConverter,
 } from '@stanfordbdhg/engagehf-models'
 import {
   collection,
@@ -34,23 +30,16 @@ import {
   type Query,
 } from 'firebase/firestore'
 import {
-  type FHIRMedicationRequest,
-  type MedicationClass,
-  type FHIRObservation,
   type FHIRAllergyIntolerance,
   type FHIRAppointment,
-} from '@/modules/firebase/models/medication'
+  type FHIRMedicationRequest,
+  type FHIRObservation,
+  type Invitation,
+  type MedicationClass,
+  type Organization,
+  type User,
+} from '@/modules/firebase/models'
 import { strategy } from '@/packages/design-system/src/utils/misc'
-
-export { UserType } from '@stanfordbdhg/engagehf-models'
-
-export type Organization = InferEncoded<typeof organizationConverter> & {
-  id: string
-}
-
-export type Invitation = InferEncoded<typeof invitationConverter>
-
-export type User = InferEncoded<typeof userConverter> & { id: string }
 
 export const collectionNames = {
   invitations: 'invitations',

@@ -5,6 +5,7 @@
 //
 // SPDX-License-Identifier: MIT
 //
+import { UserType } from '@stanfordbdhg/engagehf-models'
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { query, where } from 'firebase/firestore'
 import { Contact, UserPlus } from 'lucide-react'
@@ -15,7 +16,7 @@ import {
   refs,
 } from '@/modules/firebase/guards'
 import { mapAuthData } from '@/modules/firebase/user'
-import { getDocData, getDocsData, UserType } from '@/modules/firebase/utils'
+import { getDocData, getDocsData } from '@/modules/firebase/utils'
 import { routes } from '@/modules/routes'
 import {
   getNonAdminInvitations,

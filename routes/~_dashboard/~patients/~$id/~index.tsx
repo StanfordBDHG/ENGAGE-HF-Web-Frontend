@@ -6,18 +6,18 @@
 // SPDX-License-Identifier: MIT
 //
 import { runTransaction, updateDoc } from '@firebase/firestore'
+import { UserType } from '@stanfordbdhg/engagehf-models'
 import { createFileRoute, notFound, useRouter } from '@tanstack/react-router'
 import { Contact } from 'lucide-react'
 import { callables, db, docRefs, refs } from '@/modules/firebase/guards'
 import {
   getMedicationRequestData,
   getMedicationRequestMedicationIds,
-} from '@/modules/firebase/models/medication'
+} from '@/modules/firebase/medication'
 import {
   getDocDataOrThrow,
   getDocsData,
   type ResourceType,
-  UserType,
 } from '@/modules/firebase/utils'
 import { getUserData } from '@/modules/user/queries'
 import {

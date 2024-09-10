@@ -5,23 +5,23 @@
 //
 // SPDX-License-Identifier: MIT
 //
-import { groupBy } from 'es-toolkit'
-import { query, where } from 'firebase/firestore'
-import { queryClient } from '@/app/ReactQueryClientProvider'
-import { getCurrentUser, refs } from '@/modules/firebase/guards'
-import { AllergyType } from '@/modules/firebase/models/allergy'
 import {
-  type FHIRAllergyIntolerance,
   FHIRAllergyIntoleranceCriticality,
   FHIRAllergyIntoleranceType,
   FHIRExtensionUrl,
-} from '@/modules/firebase/models/medication'
+  UserType,
+} from '@stanfordbdhg/engagehf-models'
+import { groupBy } from 'es-toolkit'
+import { query, where } from 'firebase/firestore'
+import { queryClient } from '@/app/ReactQueryClientProvider'
+import { AllergyType } from '@/modules/firebase/allergy'
+import { getCurrentUser, refs } from '@/modules/firebase/guards'
+import { type FHIRAllergyIntolerance } from '@/modules/firebase/models'
 import { mapAuthData } from '@/modules/firebase/user'
 import {
   getDocsData,
   ObservationType,
   type ResourceType,
-  UserType,
 } from '@/modules/firebase/utils'
 import { userOrganizationQueryOptions } from '@/modules/user/queries'
 

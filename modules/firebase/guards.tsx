@@ -7,6 +7,7 @@
 //
 import { initializeApp } from '@firebase/app'
 import { connectFunctionsEmulator, getFunctions } from '@firebase/functions'
+import { type UserType } from '@stanfordbdhg/engagehf-models'
 import { queryOptions } from '@tanstack/react-query'
 import { redirect } from '@tanstack/react-router'
 import { connectAuthEmulator, getAuth, OAuthProvider } from 'firebase/auth'
@@ -19,7 +20,6 @@ import {
   getCollectionRefs,
   getDocDataOrThrow,
   getDocumentsRefs,
-  type UserType,
 } from '@/modules/firebase/utils'
 
 const firebaseApp = initializeApp(firebaseConfig)

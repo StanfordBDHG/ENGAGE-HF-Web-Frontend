@@ -5,13 +5,10 @@
 //
 // SPDX-License-Identifier: MIT
 //
+import { UserType } from '@stanfordbdhg/engagehf-models'
 import { z } from 'zod'
+import { type Organization, type User } from '@/modules/firebase/models'
 import { useUser } from '@/modules/firebase/UserProvider'
-import {
-  type Organization,
-  type User,
-  UserType,
-} from '@/modules/firebase/utils'
 import { Button } from '@/packages/design-system/src/components/Button'
 import { DatePicker } from '@/packages/design-system/src/components/DatePicker'
 import { Input } from '@/packages/design-system/src/components/Input'

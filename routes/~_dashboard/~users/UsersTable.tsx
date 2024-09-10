@@ -5,11 +5,11 @@
 //
 // SPDX-License-Identifier: MIT
 //
+import { UserType } from '@stanfordbdhg/engagehf-models'
 import { createColumnHelper } from '@tanstack/table-core'
 import { useMemo } from 'react'
 import { stringifyType } from '@/modules/firebase/role'
 import { useUser } from '@/modules/firebase/UserProvider'
-import { UserType } from '@/modules/firebase/utils'
 import { createSharedUserColumns, userColumnIds } from '@/modules/user/table'
 import { DataTable } from '@/packages/design-system/src/components/DataTable'
 import { UserMenu } from '@/routes/~_dashboard/~users/UserMenu'

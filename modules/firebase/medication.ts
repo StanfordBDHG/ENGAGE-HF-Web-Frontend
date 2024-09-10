@@ -5,58 +5,7 @@
 //
 // SPDX-License-Identifier: MIT
 //
-import {
-  type fhirAllergyIntoleranceConverter,
-  type fhirAppointmentConverter,
-  type fhirCodingConverter,
-  type fhirElementConverter,
-  type fhirMedicationRequestConverter,
-  type fhirObservationConverter,
-  type fhirResourceConverter,
-  type InferEncoded,
-  type medicationClassConverter,
-} from '@stanfordbdhg/engagehf-models'
-
-export {
-  FHIRAllergyIntoleranceCriticality,
-  FHIRAllergyIntoleranceType,
-  FHIRAppointmentStatus,
-  FHIRObservationStatus,
-  FHIRExtensionUrl,
-} from '@stanfordbdhg/engagehf-models'
-
-export type FHIRElement = InferEncoded<typeof fhirElementConverter>
-
-export const basicFhirElement: FHIRElement = {
-  id: null,
-  extension: null,
-}
-
-export type FHIRResource = InferEncoded<typeof fhirResourceConverter>
-
-export type FHIRCoding = InferEncoded<typeof fhirCodingConverter>
-
-export const basicFhirCoding: FHIRCoding = {
-  ...basicFhirElement,
-  system: null,
-  version: null,
-  code: null,
-  display: null,
-  userSelected: null,
-}
-
-export type FHIRMedicationRequest = InferEncoded<
-  typeof fhirMedicationRequestConverter
->
-
-export type MedicationClass = InferEncoded<typeof medicationClassConverter>
-export type FHIRObservation = InferEncoded<typeof fhirObservationConverter>
-export type FHIRAllergyIntolerance = InferEncoded<
-  typeof fhirAllergyIntoleranceConverter
->
-export type FHIRAppointment = InferEncoded<typeof fhirAppointmentConverter>
-
-export type LocalizedText = string | Record<string, string>
+import { type FHIRMedicationRequest } from '@/modules/firebase/models'
 
 export const getMedicationRequestData = (medication: {
   medication: string

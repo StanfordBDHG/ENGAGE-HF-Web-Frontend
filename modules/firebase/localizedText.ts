@@ -6,7 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 import { isObject } from 'lodash'
-import { type LocalizedText } from '@/modules/firebase/models/medication'
+import { type LocalizedText } from '@/modules/firebase/models'
 
 const locale = 'en'
 

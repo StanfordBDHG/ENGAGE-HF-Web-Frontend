@@ -7,10 +7,7 @@
 //
 import { type ComponentProps } from 'react'
 import { z } from 'zod'
-import {
-  AllergyType,
-  stringifyAllergyType,
-} from '@/modules/firebase/models/allergy'
+import { AllergyType, stringifyAllergyType } from '@/modules/firebase/allergy'
 import { Button } from '@/packages/design-system/src/components/Button'
 import {
   Dialog,
