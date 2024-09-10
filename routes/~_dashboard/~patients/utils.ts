@@ -211,7 +211,8 @@ export const getAppointmentsData = async ({
   const appointments = rawAppointments.map((appointment) => ({
     ...appointment,
     providerName: appointment.extension?.find(
-      (extension) => extension.url === FHIRExtensionUrl.providerName,
+      (extension) =>
+        extension.url === (FHIRExtensionUrl.providerName as string),
     )?.valueString,
   }))
   return { appointments, userId, resourceType }
