@@ -148,18 +148,115 @@ declare module '@tanstack/react-router' {
 
 // Create and export the route tree
 
-export const routeTree = rootRoute.addChildren({
-  DashboardRoute: DashboardRoute.addChildren({
-    DashboardIndexRoute,
-    DashboardPatientsIndexRoute,
-    DashboardUsersIndexRoute,
-    DashboardPatientsInviteRoute,
-    DashboardUsersIdRoute,
-    DashboardUsersInviteRoute,
-    DashboardPatientsIdIndexRoute,
-  }),
-  SignInIndexRoute,
-})
+interface DashboardRouteChildren {
+  DashboardIndexRoute: typeof DashboardIndexRoute
+  DashboardPatientsIndexRoute: typeof DashboardPatientsIndexRoute
+  DashboardUsersIndexRoute: typeof DashboardUsersIndexRoute
+  DashboardPatientsInviteRoute: typeof DashboardPatientsInviteRoute
+  DashboardUsersIdRoute: typeof DashboardUsersIdRoute
+  DashboardUsersInviteRoute: typeof DashboardUsersInviteRoute
+  DashboardPatientsIdIndexRoute: typeof DashboardPatientsIdIndexRoute
+}
+
+const DashboardRouteChildren: DashboardRouteChildren = {
+  DashboardIndexRoute: DashboardIndexRoute,
+  DashboardPatientsIndexRoute: DashboardPatientsIndexRoute,
+  DashboardUsersIndexRoute: DashboardUsersIndexRoute,
+  DashboardPatientsInviteRoute: DashboardPatientsInviteRoute,
+  DashboardUsersIdRoute: DashboardUsersIdRoute,
+  DashboardUsersInviteRoute: DashboardUsersInviteRoute,
+  DashboardPatientsIdIndexRoute: DashboardPatientsIdIndexRoute,
+}
+
+const DashboardRouteWithChildren = DashboardRoute._addFileChildren(
+  DashboardRouteChildren,
+)
+
+export interface FileRoutesByFullPath {
+  '': typeof DashboardRouteWithChildren
+  '/': typeof DashboardIndexRoute
+  '/sign-in': typeof SignInIndexRoute
+  '/patients': typeof DashboardPatientsIndexRoute
+  '/users': typeof DashboardUsersIndexRoute
+  '/patients/invite': typeof DashboardPatientsInviteRoute
+  '/users/$id': typeof DashboardUsersIdRoute
+  '/users/invite': typeof DashboardUsersInviteRoute
+  '/patients/$id': typeof DashboardPatientsIdIndexRoute
+}
+
+export interface FileRoutesByTo {
+  '/': typeof DashboardIndexRoute
+  '/sign-in': typeof SignInIndexRoute
+  '/patients': typeof DashboardPatientsIndexRoute
+  '/users': typeof DashboardUsersIndexRoute
+  '/patients/invite': typeof DashboardPatientsInviteRoute
+  '/users/$id': typeof DashboardUsersIdRoute
+  '/users/invite': typeof DashboardUsersInviteRoute
+  '/patients/$id': typeof DashboardPatientsIdIndexRoute
+}
+
+export interface FileRoutesById {
+  __root__: typeof rootRoute
+  '/_dashboard': typeof DashboardRouteWithChildren
+  '/_dashboard/': typeof DashboardIndexRoute
+  '/sign-in/': typeof SignInIndexRoute
+  '/_dashboard/patients/': typeof DashboardPatientsIndexRoute
+  '/_dashboard/users/': typeof DashboardUsersIndexRoute
+  '/_dashboard/patients/invite': typeof DashboardPatientsInviteRoute
+  '/_dashboard/users/$id': typeof DashboardUsersIdRoute
+  '/_dashboard/users/invite': typeof DashboardUsersInviteRoute
+  '/_dashboard/patients/$id/': typeof DashboardPatientsIdIndexRoute
+}
+
+export interface FileRouteTypes {
+  fileRoutesByFullPath: FileRoutesByFullPath
+  fullPaths:
+    | ''
+    | '/'
+    | '/sign-in'
+    | '/patients'
+    | '/users'
+    | '/patients/invite'
+    | '/users/$id'
+    | '/users/invite'
+    | '/patients/$id'
+  fileRoutesByTo: FileRoutesByTo
+  to:
+    | '/'
+    | '/sign-in'
+    | '/patients'
+    | '/users'
+    | '/patients/invite'
+    | '/users/$id'
+    | '/users/invite'
+    | '/patients/$id'
+  id:
+    | '__root__'
+    | '/_dashboard'
+    | '/_dashboard/'
+    | '/sign-in/'
+    | '/_dashboard/patients/'
+    | '/_dashboard/users/'
+    | '/_dashboard/patients/invite'
+    | '/_dashboard/users/$id'
+    | '/_dashboard/users/invite'
+    | '/_dashboard/patients/$id/'
+  fileRoutesById: FileRoutesById
+}
+
+export interface RootRouteChildren {
+  DashboardRoute: typeof DashboardRouteWithChildren
+  SignInIndexRoute: typeof SignInIndexRoute
+}
+
+const rootRouteChildren: RootRouteChildren = {
+  DashboardRoute: DashboardRouteWithChildren,
+  SignInIndexRoute: SignInIndexRoute,
+}
+
+export const routeTree = rootRoute
+  ._addFileChildren(rootRouteChildren)
+  ._addFileTypes<FileRouteTypes>()
 
 /* prettier-ignore-end */
 
