@@ -11,7 +11,7 @@ SPDX-License-Identifier: MIT
 # Stanford Biodesign Digital Health ENGAGE-HF Web Frontend
 
 [![Build and Test](https://github.com/StanfordBDHG/ENGAGE-HF-Web-Frontend/actions/workflows/build-and-test.yml/badge.svg)](https://github.com/StanfordBDHG/ENGAGE-HF-Web-Frontend/actions/workflows/build-and-test.yml)
-[![Deployment](https://github.com/StanfordBDHG/ENGAGE-HF-Web-Frontend/actions/workflows/main.yml/badge.svg)](https://github.com/StanfordBDHG/ENGAGE-HF-Web-Frontend/actions/workflows/main.yml)
+[![Deployment](https://github.com/StanfordBDHG/ENGAGE-HF-Web-Frontend/actions/workflows/deployment.yml/badge.svg)](https://github.com/StanfordBDHG/ENGAGE-HF-Web-Frontend/actions/workflows/deployment.yml)
 [![codecov](https://codecov.io/gh/StanfordBDHG/ENGAGE-HF-Web-Frontend/graph/badge.svg?token=PsKyNz7Woe)](https://codecov.io/gh/StanfordBDHG/ENGAGE-HF-Web-Frontend)
 
 ## How To Use ENGAGE-HF Web Frontend
