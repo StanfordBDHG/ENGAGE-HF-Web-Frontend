@@ -5,7 +5,7 @@
 //
 // SPDX-License-Identifier: MIT
 //
-import '../app/globals.css'
+import '../modules/globals.css'
 import { createRootRoute, Outlet, redirect } from '@tanstack/react-router'
 import { NextIntlClientProvider } from 'next-intl'
 import { useLayoutEffect } from 'react'
