@@ -75,7 +75,7 @@ jobs:
   deployfirebase:
     name: Deploy Firebase Project
     needs: [buildandtest, determineenvironment, vars]
-    uses: StanfordBDHG/.github/.github/workflows/firebase-deploy.yml@envFirebase2
+    uses: StanfordBDHG/.github/.github/workflows/firebase-deploy.yml@v2
     permissions:
       contents: read
     with:
