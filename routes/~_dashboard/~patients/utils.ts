@@ -13,7 +13,6 @@ import {
 } from '@stanfordbdhg/engagehf-models'
 import { groupBy } from 'es-toolkit'
 import { query, where } from 'firebase/firestore'
-import { queryClient } from '@/app/ReactQueryClientProvider'
 import { AllergyType } from '@/modules/firebase/allergy'
 import { getCurrentUser, refs } from '@/modules/firebase/app'
 import { type FHIRAllergyIntolerance } from '@/modules/firebase/models'
@@ -23,6 +22,7 @@ import {
   ObservationType,
   type ResourceType,
 } from '@/modules/firebase/utils'
+import { queryClient } from '@/modules/query/queryClient'
 import { userOrganizationQueryOptions } from '@/modules/user/queries'
 
 const getUserClinicians = async () => {

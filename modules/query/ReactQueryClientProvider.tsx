@@ -5,18 +5,13 @@
 //
 // SPDX-License-Identifier: MIT
 //
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { QueryClientProvider } from '@tanstack/react-query'
 import { type ReactNode } from 'react'
+import { queryClient } from '@/modules/query/queryClient'
 
 interface ReactQueryClientProviderProps {
   children: ReactNode
 }
-
-export const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: { retry: false },
-  },
-})
 
 export const ReactQueryClientProvider = ({
   children,

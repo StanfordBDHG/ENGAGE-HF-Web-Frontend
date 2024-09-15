@@ -12,7 +12,6 @@ import { queryOptions } from '@tanstack/react-query'
 import { redirect } from '@tanstack/react-router'
 import { connectAuthEmulator, getAuth, OAuthProvider } from 'firebase/auth'
 import { connectFirestoreEmulator, getFirestore } from 'firebase/firestore'
-import { queryClient } from '@/app/ReactQueryClientProvider'
 import { env } from '@/env'
 import { firebaseConfig } from '@/modules/firebase/config'
 import {
@@ -21,6 +20,7 @@ import {
   getDocDataOrThrow,
   getDocumentsRefs,
 } from '@/modules/firebase/utils'
+import { queryClient } from '@/modules/query/queryClient'
 
 const firebaseApp = initializeApp(firebaseConfig)
 

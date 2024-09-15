@@ -6,8 +6,8 @@
 // SPDX-License-Identifier: MIT
 //
 import { createFileRoute } from '@tanstack/react-router'
-import { queryClient } from '@/app/ReactQueryClientProvider'
 import { currentUserQueryOptions } from '@/modules/firebase/UserProvider'
+import { queryClient } from '@/modules/query/queryClient'
 
 export const Route = createFileRoute('/_dashboard')({
   loader: () => queryClient.ensureQueryData(currentUserQueryOptions()),
