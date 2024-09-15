@@ -21,6 +21,8 @@ import {
   getDocumentsRefs,
 } from '@/modules/firebase/utils'
 import { queryClient } from '@/modules/query/queryClient'
+import { toast } from '@/packages/design-system/src/components/Toaster'
+import { routes } from '@/modules/routes'
 
 const firebaseApp = initializeApp(firebaseConfig)
 
@@ -68,6 +70,7 @@ export const getCurrentUser = async () => {
 export const ensureType = async (types: UserType[]) => {
   const type = await getCurrentUserType()
   if (!types.includes(type)) {
-    throw redirect({ to: '/' })
+    toast.error(`You don't have permissions to access this page`)
+    throw redirect({ to: routes.home })
   }
 }
