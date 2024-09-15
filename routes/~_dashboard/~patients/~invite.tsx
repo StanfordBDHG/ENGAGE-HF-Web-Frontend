@@ -19,6 +19,7 @@ import {
   type PatientFormSchema,
 } from '@/routes/~_dashboard/~patients/PatientForm'
 import { getFormProps } from '@/routes/~_dashboard/~patients/utils'
+import { Helmet } from 'react-helmet'
 
 const InvitePatientPage = () => {
   const navigate = useNavigate()
@@ -48,6 +49,9 @@ const InvitePatientPage = () => {
     <DashboardLayout
       title={<PageTitle title="Invite patient" icon={<Contact />} />}
     >
+      <Helmet>
+        <title>Invite patient</title>
+      </Helmet>
       <PatientForm
         onSubmit={invitePatient}
         clinicianPreselectId={

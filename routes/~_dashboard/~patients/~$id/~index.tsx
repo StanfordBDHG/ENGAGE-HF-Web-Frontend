@@ -48,6 +48,7 @@ import { Appointments } from '@/routes/~_dashboard/~patients/~$id/Appointments'
 import { GenerateHealthSummary } from '@/routes/~_dashboard/~patients/~$id/GenerateHealthSummary'
 import { Labs } from '@/routes/~_dashboard/~patients/~$id/Labs'
 import { DashboardLayout } from '../../DashboardLayout'
+import { Helmet } from 'react-helmet'
 
 const getUserMedications = async (payload: {
   userId: string
@@ -175,6 +176,9 @@ const PatientPage = () => {
         />
       }
     >
+      <Helmet>
+        <title>Edit {userName}</title>
+      </Helmet>
       <Tabs defaultValue={Tab.medications}>
         <TabsList className="mb-6 w-full">
           <TabsTrigger value={Tab.information} className="grow">

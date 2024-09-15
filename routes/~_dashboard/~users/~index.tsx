@@ -22,6 +22,7 @@ import { Button } from '@/packages/design-system/src/components/Button'
 import { PageTitle } from '@/packages/design-system/src/molecules/DashboardLayout'
 import { UsersTable } from './UsersTable'
 import { DashboardLayout } from '../DashboardLayout'
+import { Helmet } from 'react-helmet'
 
 const getAdminData = () => ({
   usersQuery: refs.users(),
@@ -91,6 +92,9 @@ const UsersPage = () => {
       }
       title={<PageTitle title="Users" icon={<Users />} />}
     >
+      <Helmet>
+        <title>Users</title>
+      </Helmet>
       <UsersTable data={users} />
     </DashboardLayout>
   )

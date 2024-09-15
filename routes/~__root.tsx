@@ -9,6 +9,7 @@ import '../modules/globals.css'
 import { createRootRoute, Outlet, redirect } from '@tanstack/react-router'
 import { NextIntlClientProvider } from 'next-intl'
 import { useLayoutEffect } from 'react'
+import { Helmet } from 'react-helmet'
 import { auth } from '@/modules/firebase/app'
 import { AuthProvider } from '@/modules/firebase/AuthProvider'
 import messages from '@/modules/messages/translations/en.json'
@@ -32,6 +33,7 @@ const Root = () => {
           timeZone="Europe/Warsaw"
           messages={messages}
         >
+          <Helmet defaultTitle="ENGAGE-HF" titleTemplate="%s - ENGAGE-HF" />
           <Outlet />
           <Toaster />
         </NextIntlClientProvider>

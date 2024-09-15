@@ -23,6 +23,7 @@ import {
   type UserFormSchema,
 } from '@/routes/~_dashboard/~users/UserForm'
 import { DashboardLayout } from '../DashboardLayout'
+import { Helmet } from 'react-helmet'
 
 const UserPage = () => {
   const router = useRouter()
@@ -64,16 +65,16 @@ const UserPage = () => {
     await router.invalidate()
   }
 
+  const userName = getUserName(authUser)
   return (
     <DashboardLayout
       title={
-        <PageTitle
-          title="Edit user"
-          subTitle={getUserName(authUser)}
-          icon={<Users />}
-        />
+        <PageTitle title="Edit user" subTitle={userName} icon={<Users />} />
       }
     >
+      <Helmet>
+        <title>Edit {userName}</title>
+      </Helmet>
       <UserForm
         organizations={organizations}
         type={user.type}

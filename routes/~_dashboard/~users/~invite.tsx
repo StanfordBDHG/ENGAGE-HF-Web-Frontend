@@ -18,6 +18,7 @@ import {
   UserForm,
   type UserFormSchema,
 } from '@/routes/~_dashboard/~users/UserForm'
+import { Helmet } from 'react-helmet'
 
 const InviteUserPage = () => {
   const navigate = useNavigate()
@@ -40,6 +41,9 @@ const InviteUserPage = () => {
 
   return (
     <DashboardLayout title={<PageTitle title="Invite user" icon={<Users />} />}>
+      <Helmet>
+        <title>Invite user</title>
+      </Helmet>
       <UserForm organizations={organizations} onSubmit={inviteUser} />
     </DashboardLayout>
   )
