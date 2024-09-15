@@ -17,12 +17,6 @@ import { routes } from '@/modules/routes'
 import { lightTheme } from '@/packages/design-system/src'
 import { Toaster } from '@/packages/design-system/src/components/Toaster'
 
-/**
- * TODO
- * metadata
- * favicon
- * */
-
 const Root = () => {
   useLayoutEffect(() => {
     Object.entries(lightTheme).forEach(([key, value]) => {
