@@ -7,10 +7,10 @@
 //
 import { createFileRoute } from '@tanstack/react-router'
 import { signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth'
+import { Helmet } from 'react-helmet'
 import { AsideEngageLayout } from '@/components/AsideEngageLayout'
 import { authProvider, auth } from '@/modules/firebase/app'
 import { SignInForm as AuthSignInForm } from '@/packages/design-system/src/modules/auth/SignInForm'
-import { Helmet } from 'react-helmet'
 
 const SignIn = () => (
   <AsideEngageLayout>

@@ -9,6 +9,7 @@ import { UserType } from '@stanfordbdhg/engagehf-models'
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { query, where } from 'firebase/firestore'
 import { UserPlus, Users } from 'lucide-react'
+import { Helmet } from 'react-helmet'
 import { ensureType, getCurrentUser, refs } from '@/modules/firebase/app'
 import { mapAuthData } from '@/modules/firebase/user'
 import { getDocsData } from '@/modules/firebase/utils'
@@ -22,7 +23,6 @@ import { Button } from '@/packages/design-system/src/components/Button'
 import { PageTitle } from '@/packages/design-system/src/molecules/DashboardLayout'
 import { UsersTable } from './UsersTable'
 import { DashboardLayout } from '../DashboardLayout'
-import { Helmet } from 'react-helmet'
 
 const getAdminData = () => ({
   usersQuery: refs.users(),

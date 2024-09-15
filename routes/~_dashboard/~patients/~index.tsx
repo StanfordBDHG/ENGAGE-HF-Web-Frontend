@@ -9,6 +9,7 @@ import { UserType } from '@stanfordbdhg/engagehf-models'
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { query, where } from 'firebase/firestore'
 import { Contact, UserPlus } from 'lucide-react'
+import { Helmet } from 'react-helmet'
 import {
   docRefs,
   getCurrentUser,
@@ -28,7 +29,6 @@ import { Button } from '@/packages/design-system/src/components/Button'
 import { PageTitle } from '@/packages/design-system/src/molecules/DashboardLayout'
 import { DashboardLayout } from '@/routes/~_dashboard/DashboardLayout'
 import { PatientsTable } from '@/routes/~_dashboard/~patients/PatientsTable'
-import { Helmet } from 'react-helmet'
 
 const getData = async () => {
   const { currentUser } = await getCurrentUser()

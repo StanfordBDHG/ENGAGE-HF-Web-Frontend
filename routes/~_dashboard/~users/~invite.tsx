@@ -8,6 +8,7 @@
 import { UserType } from '@stanfordbdhg/engagehf-models'
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { Users } from 'lucide-react'
+import { Helmet } from 'react-helmet'
 import { callables, ensureType } from '@/modules/firebase/app'
 import { queryClient } from '@/modules/query/queryClient'
 import { routes } from '@/modules/routes'
@@ -18,7 +19,6 @@ import {
   UserForm,
   type UserFormSchema,
 } from '@/routes/~_dashboard/~users/UserForm'
-import { Helmet } from 'react-helmet'
 
 const InviteUserPage = () => {
   const navigate = useNavigate()

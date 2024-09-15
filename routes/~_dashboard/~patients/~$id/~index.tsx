@@ -9,6 +9,7 @@ import { runTransaction, updateDoc } from '@firebase/firestore'
 import { UserType } from '@stanfordbdhg/engagehf-models'
 import { createFileRoute, notFound, useRouter } from '@tanstack/react-router'
 import { Contact } from 'lucide-react'
+import { Helmet } from 'react-helmet'
 import { callables, db, docRefs, refs } from '@/modules/firebase/app'
 import {
   getMedicationRequestData,
@@ -48,7 +49,6 @@ import { Appointments } from '@/routes/~_dashboard/~patients/~$id/Appointments'
 import { GenerateHealthSummary } from '@/routes/~_dashboard/~patients/~$id/GenerateHealthSummary'
 import { Labs } from '@/routes/~_dashboard/~patients/~$id/Labs'
 import { DashboardLayout } from '../../DashboardLayout'
-import { Helmet } from 'react-helmet'
 
 const getUserMedications = async (payload: {
   userId: string

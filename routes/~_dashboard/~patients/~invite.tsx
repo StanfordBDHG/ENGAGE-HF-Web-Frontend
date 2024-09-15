@@ -8,6 +8,7 @@
 import { UserType } from '@stanfordbdhg/engagehf-models'
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { Contact } from 'lucide-react'
+import { Helmet } from 'react-helmet'
 import { callables, docRefs } from '@/modules/firebase/app'
 import { useUser } from '@/modules/firebase/UserProvider'
 import { getDocDataOrThrow } from '@/modules/firebase/utils'
@@ -19,7 +20,6 @@ import {
   type PatientFormSchema,
 } from '@/routes/~_dashboard/~patients/PatientForm'
 import { getFormProps } from '@/routes/~_dashboard/~patients/utils'
-import { Helmet } from 'react-helmet'
 
 const InvitePatientPage = () => {
   const navigate = useNavigate()
