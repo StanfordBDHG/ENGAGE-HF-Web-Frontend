@@ -21,8 +21,8 @@ import {
   getDocumentsRefs,
 } from '@/modules/firebase/utils'
 import { queryClient } from '@/modules/query/queryClient'
-import { toast } from '@/packages/design-system/src/components/Toaster'
 import { routes } from '@/modules/routes'
+import { toast } from '@/packages/design-system/src/components/Toaster'
 
 const firebaseApp = initializeApp(firebaseConfig)
 
