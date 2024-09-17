@@ -38,6 +38,7 @@ import {
   type MedicationClass,
   type Organization,
   type User,
+  UserMessage,
 } from '@/modules/firebase/models'
 import { strategy } from '@/packages/design-system/src/utils/misc'
 
@@ -54,6 +55,7 @@ export const collectionNames = {
   creatinineObservations: 'creatinineObservations',
   eGfrObservations: 'eGfrObservations',
   potassiumObservations: 'potassiumObservations',
+  messages: 'messages',
 }
 
 export type ResourceType = 'invitation' | 'user'
@@ -157,6 +159,11 @@ export const getCollectionRefs = (db: Firestore) => ({
       db,
       `/${userPath(resourceType)}/${userId}/${observationPath(observationType)}`,
     ) as CollectionReference<FHIRObservation>,
+  userMessages: ({ userId }: { userId: string }) =>
+    collection(
+      db,
+      `/${collectionNames.users}/${userId}/${collectionNames.messages}`,
+    ) as CollectionReference<UserMessage>,
 })
 
 export const getDocumentsRefs = (db: Firestore) => ({
