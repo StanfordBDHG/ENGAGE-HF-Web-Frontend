@@ -7,6 +7,7 @@
 //
 import { type CellContext } from '@tanstack/react-table'
 import { type Nil } from '../../utils/misc'
+import { formatISODateTime } from '../../utils/date'
 
 export const dateColumn = <T>(props: CellContext<T, Nil<string>>) => {
   const value = props.getValue()
@@ -16,8 +17,5 @@ export const dateColumn = <T>(props: CellContext<T, Nil<string>>) => {
 
 export const dateTimeColumn = <T>(props: CellContext<T, Nil<string>>) => {
   const value = props.getValue()
-  const date = value ? new Date(value) : undefined
-  return date ?
-      `${date.toLocaleDateString()} ${date.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' })}`
-    : ''
+  return value ? formatISODateTime(value) : ''
 }
