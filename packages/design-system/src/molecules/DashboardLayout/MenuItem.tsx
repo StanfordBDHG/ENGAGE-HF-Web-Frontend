@@ -13,11 +13,18 @@ import { cn } from '../../utils/className'
 interface MenuItemProps {
   href: string
   isActive?: boolean
+  isHighlighted?: boolean
   icon?: ReactNode
   label?: string
 }
 
-export const MenuItem = ({ href, icon, isActive, label }: MenuItemProps) => (
+export const MenuItem = ({
+  href,
+  icon,
+  isActive,
+  label,
+  isHighlighted,
+}: MenuItemProps) => (
   <Tooltip
     key={href}
     tooltip={label}
@@ -28,14 +35,20 @@ export const MenuItem = ({ href, icon, isActive, label }: MenuItemProps) => (
     <Link
       to={href}
       className={cn(
-        'focus-ring flex items-center gap-3 rounded-lg p-2 font-medium no-underline transition xl:w-full xl:self-start',
+        'focus-ring relative flex items-center gap-3 rounded-lg p-2 font-medium no-underline transition xl:w-full xl:self-start',
         isActive ?
           'bg-accent/50 text-primary hover:opacity-60'
         : 'text-foreground/60 hover:bg-accent hover:text-foreground',
       )}
     >
       {icon}
-      <span className="lg:hidden xl:block">{label}</span>
+      <span className="grow lg:hidden xl:block">{label}</span>
+      {isHighlighted && (
+        <i
+          aria-hidden
+          className="size-2 rounded-full bg-destructive lg:absolute lg:right-1 lg:top-1 lg:size-1.5 xl:static xl:size-2"
+        />
+      )}
     </Link>
   </Tooltip>
 )
