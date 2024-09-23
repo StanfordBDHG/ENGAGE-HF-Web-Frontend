@@ -61,6 +61,8 @@ export type FHIRAllergyIntolerance = InferEncoded<
 
 export type FHIRAppointment = InferEncoded<typeof fhirAppointmentConverter>
 
-export type UserMessage = InferEncoded<typeof userMessageConverter>
+export type UserMessage = InferEncoded<typeof userMessageConverter> & {
+  id: string
+}
 
 export type LocalizedText = string | Record<string, string>
