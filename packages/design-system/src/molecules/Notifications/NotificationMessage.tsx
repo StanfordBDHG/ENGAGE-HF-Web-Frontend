@@ -13,7 +13,7 @@ export const NotificationMessage = ({
     <p
       className={cn(
         'flex-1 text-sm',
-        notification.isRead && 'font-bold',
+        notification.isRead && 'text-foreground/70',
         className,
       )}
       {...props}

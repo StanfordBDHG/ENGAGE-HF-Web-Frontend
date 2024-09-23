@@ -25,7 +25,7 @@ export const Notification = ({
     <NotificationContext.Provider value={notification}>
       <Component
         className={cn(
-          'flex gap-x-4 border-b border-b-neutral-200 p-5 last:border-b-0',
+          'flex gap-x-4 border-b border-b-neutral-200 px-3 py-4 last:border-b-0',
           className,
         )}
       >

@@ -11,7 +11,10 @@ export const NotificationTime = ({ time, ...props }: NotificationTimeProps) => {
   const notification = useNotificationContext()
   return (
     <time
-      className={cn('shrink-0 text-xs', notification.isRead && 'font-bold')}
+      className={cn(
+        'shrink-0 text-xs',
+        !notification.isRead && 'font-semibold',
+      )}
       {...props}
     >
       {formatDateTime(time)}

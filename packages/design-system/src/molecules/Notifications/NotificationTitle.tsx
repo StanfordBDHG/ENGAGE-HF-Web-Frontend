@@ -12,8 +12,10 @@ export const NotificationTitle = ({
   return (
     <h5
       className={cn(
-        'text-landing flex-1 text-sm font-bold',
-        notification.isRead && 'font-bold',
+        'flex-1 text-sm',
+        notification.isRead ?
+          'font-medium text-foreground/70'
+        : 'font-semibold',
         className,
       )}
       {...props}
