@@ -11,6 +11,8 @@ import {
   type CreateInvitationOutput,
   type DeleteUserInput,
   type DeleteUserOutput,
+  DismissMessageInput,
+  DismissMessageOutput,
   type ExportHealthSummaryInput,
   type ExportHealthSummaryOutput,
   type FHIRMedication,
@@ -267,6 +269,10 @@ export const getCallables = (functions: Functions) => ({
     ExportHealthSummaryInput,
     ExportHealthSummaryOutput
   >(functions, 'exportHealthSummary'),
+  dismissMessage: httpsCallable<DismissMessageInput, DismissMessageOutput>(
+    functions,
+    'dismissMessage',
+  ),
 })
 
 export const getDocData = async <T>(reference: DocumentReference<T>) => {
