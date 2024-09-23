@@ -7,9 +7,10 @@
 //
 import { UserType } from '@stanfordbdhg/engagehf-models'
 import { useLocation } from '@tanstack/react-router'
-import { Home, Users, Contact } from 'lucide-react'
+import { Home, Users, Contact, Bell } from 'lucide-react'
 import { routes } from '@/modules/routes'
 import { MenuItem } from '@/packages/design-system/src/molecules/DashboardLayout'
+import { useHasUnreadNotification } from '@/modules/notifications/queries'
 
 interface MenuLinksProps {
   userType: UserType
@@ -23,9 +24,17 @@ export const MenuLinks = ({ userType }: MenuLinksProps) => {
     isActive: location.pathname === href,
   })
 
+  const { hasUnreadNotification } = useHasUnreadNotification()
+
   return (
     <>
       <MenuItem {...hrefProps('/')} label="Home" icon={<Home />} />
+      <MenuItem
+        {...hrefProps('/notifications')}
+        label="Notifications"
+        isHighlighted={hasUnreadNotification}
+        icon={<Bell />}
+      />
       {[UserType.admin, UserType.owner].includes(userType) && (
         <MenuItem
           {...hrefProps(routes.users.index)}
