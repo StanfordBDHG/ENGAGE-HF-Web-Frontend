@@ -239,6 +239,11 @@ export const getDocumentsRefs = (db: Firestore) => ({
       db,
       `/${userPath(resourceType)}/${userId}/${observationPath(observationType)}/${observationId}`,
     ) as DocumentReference<FHIRObservation>,
+  userMessage: ({ userId, messageId }: { userId: string; messageId: string }) =>
+    doc(
+      db,
+      `/${collectionNames.users}/${userId}/${collectionNames.messages}/${messageId}`,
+    ) as DocumentReference<UserMessage>,
 })
 
 export interface UserAuthenticationInformation {
