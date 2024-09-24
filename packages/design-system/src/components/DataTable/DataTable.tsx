@@ -11,6 +11,12 @@ import { GlobalFilterInput } from './GlobalFilterInput'
 import { cn } from '../../utils/className'
 import { DataTablePagination } from './DataTablePagination'
 import { DataTableTableView } from '@/packages/design-system/src/components/DataTable/DataTableTableView'
+import { Table as TableType } from '@tanstack/table-core'
+
+export type DataTableViewProps<Data> = { table: TableType<Data> } & Pick<
+  DataTableProps<Data>,
+  'entityName'
+>
 
 export interface DataTableProps<Data> extends UseDataTableProps<Data> {
   className?: string
@@ -22,6 +28,10 @@ export interface DataTableProps<Data> extends UseDataTableProps<Data> {
    * */
   entityName?: string
   header?: ReactNode
+  /**
+   * Render props pattern to define different type of views than standard DataTableView
+   * */
+  children?: (props: DataTableViewProps<Data>) => ReactNode
 }
 
 export const DataTable = <Data,>({
@@ -31,6 +41,7 @@ export const DataTable = <Data,>({
   data,
   pageSize,
   header,
+  children,
   ...props
 }: DataTableProps<Data>) => {
   const { table, setGlobalFilterDebounced } = useDataTable({
@@ -50,7 +61,9 @@ export const DataTable = <Data,>({
         />
         {header}
       </header>
-      <DataTableTableView table={table} entityName={entityName} />
+      {children ?
+        children({ table, entityName })
+      : <DataTableTableView table={table} entityName={entityName} />}
       {!!rows.length && (
         <footer className="flex items-center justify-between border-t p-4">
           <DataTablePagination table={table} />

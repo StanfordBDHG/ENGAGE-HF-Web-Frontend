@@ -1,4 +1,3 @@
-import type { Table as TableType } from '@tanstack/table-core'
 import {
   Table,
   TableBody,
@@ -10,11 +9,9 @@ import {
 import { flexRender } from '@tanstack/react-table'
 import { ToggleSortButton } from '@/packages/design-system/src/components/DataTable/ToggleSortButton'
 import { TableEmptyState } from '@/packages/design-system/src/components/Table/TableEmptyState'
+import type { DataTableViewProps } from './DataTable'
 
-interface DataTableTableViewProps<Data> {
-  table: TableType<Data>
-  entityName?: string
-}
+interface DataTableTableViewProps<Data> extends DataTableViewProps<Data> {}
 
 export const DataTableTableView = <Data,>({
   table,
