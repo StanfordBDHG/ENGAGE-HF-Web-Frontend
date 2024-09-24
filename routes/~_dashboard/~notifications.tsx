@@ -14,9 +14,34 @@ import { Notification } from '@/modules/notifications/Notification'
 import { notificationQueries } from '@/modules/notifications/queries'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { useUser } from '@/modules/firebase/UserProvider'
+import {
+  DataTable,
+  DataTableBasicView,
+} from '@/packages/design-system/src/components/DataTable'
+import { createColumnHelper } from '@tanstack/table-core'
+import { UserMessage } from '@/modules/firebase/models'
+import { parseNilLocalizedText } from '@/modules/firebase/localizedText'
+import { isMessageRead } from '@/modules/notifications/helpers'
+
+const columnHelper = createColumnHelper<UserMessage>()
+
+const columns = [
+  columnHelper.accessor(
+    (notification) => parseNilLocalizedText(notification.description),
+    { id: 'description' },
+  ),
+  columnHelper.accessor(
+    (notification) => parseNilLocalizedText(notification.title),
+    { id: 'title' },
+  ),
+  columnHelper.accessor((notification) => isMessageRead(notification), {
+    id: 'isRead',
+  }),
+]
 
 const NotificationsPage = () => {
   const { auth } = useUser()
+
   const { data: notifications } = useSuspenseQuery(
     notificationQueries.list({ userId: auth.uid }),
   )
@@ -28,11 +53,18 @@ const NotificationsPage = () => {
       <Helmet>
         <title>Notifications</title>
       </Helmet>
-      <div className="flex flex-col">
-        {notifications.map((notification) => (
-          <Notification key={notification.id} notification={notification} />
-        ))}
-      </div>
+      <DataTable
+        columns={columns}
+        data={notifications}
+        entityName="notifications"
+        pageSize={10}
+      >
+        {(props) => (
+          <DataTableBasicView {...props}>
+            {(notification) => <Notification notification={notification} />}
+          </DataTableBasicView>
+        )}
+      </DataTable>
     </DashboardLayout>
   )
 }
