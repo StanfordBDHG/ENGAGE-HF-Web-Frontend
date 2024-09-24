@@ -50,6 +50,7 @@ export const DataTableTableView = <Data,>({
             entityName={entityName}
             colSpan={table.getAllColumns().length}
             textFilter={table.getState().globalFilter}
+            hasFilters={table.getState().columnFilters.length > 0}
           />
         : rows.map((row) => (
             <TableRow

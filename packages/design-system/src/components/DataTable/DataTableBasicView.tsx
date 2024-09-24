@@ -19,6 +19,7 @@ export const DataTableBasicView = <Data,>({
         <EmptyState
           entityName={entityName}
           textFilter={table.getState().globalFilter}
+          hasFilters={table.getState().columnFilters.length > 0}
           className="py-6"
         />
       : rows.map((row) => (

@@ -11,12 +11,20 @@ import { cn } from '../../utils/className'
 
 export interface EmptyStateProps extends HTMLProps<HTMLDivElement> {
   entityName?: string
+  /**
+   * Provide text filter that data is filtered by
+   * */
   textFilter?: string
+  /**
+   * Provide whether data is filtered by other filters, excluding global text filter
+   * */
+  hasFilters?: boolean
 }
 
 export const EmptyState = ({
   entityName,
   textFilter,
+  hasFilters,
   className,
   ...props
 }: EmptyStateProps) => (
@@ -29,11 +37,13 @@ export const EmptyState = ({
     : <ListX />}
     <span>
       No {entityName ?? 'results'} found
-      {textFilter && (
+      {textFilter ?
         <>
           &nbsp;for <i>"{textFilter}"</i> search
         </>
-      )}
+      : hasFilters ?
+        <>&nbsp;for your selected filters</>
+      : null}
       .
     </span>
   </div>
