@@ -18,6 +18,8 @@ export type DataTableViewProps<Data> = { table: TableType<Data> } & Pick<
   'entityName'
 >
 
+type ViewRenderProp<Data> = (props: DataTableViewProps<Data>) => ReactNode
+
 export interface DataTableProps<Data> extends UseDataTableProps<Data> {
   className?: string
   /**
@@ -27,11 +29,11 @@ export interface DataTableProps<Data> extends UseDataTableProps<Data> {
    * @example "users"
    * */
   entityName?: string
-  header?: ReactNode
+  header?: ReactNode | ViewRenderProp<Data>
   /**
    * Render props pattern to define different type of views than standard DataTableView
    * */
-  children?: (props: DataTableViewProps<Data>) => ReactNode
+  children?: ViewRenderProp<Data>
 }
 
 export const DataTable = <Data,>({
@@ -52,6 +54,8 @@ export const DataTable = <Data,>({
   })
   const rows = table.getRowModel().rows
 
+  const viewProps = { table, entityName }
+
   return (
     <div className={cn('rounded-md border bg-surface-primary', className)}>
       <header className="flex items-center border-b p-4">
@@ -59,10 +63,10 @@ export const DataTable = <Data,>({
           onChange={(event) => setGlobalFilterDebounced(event.target.value)}
           entityName={entityName}
         />
-        {header}
+        {typeof header === 'function' ? header(viewProps) : header}
       </header>
       {children ?
-        children({ table, entityName })
+        children(viewProps)
       : <DataTableTableView table={table} entityName={entityName} />}
       {!!rows.length && (
         <footer className="flex items-center justify-between border-t p-4">
