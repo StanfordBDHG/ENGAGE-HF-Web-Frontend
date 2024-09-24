@@ -20,7 +20,7 @@ export const YourPatientsCard = () => {
   )
 
   return (
-    <Card className="col-span-full flex flex-col">
+    <Card className="col-span-full">
       <CardTitle className="px-5 pt-4">Your patients</CardTitle>
       {isLoading ?
         <div className="flex-center py-8">
@@ -37,7 +37,7 @@ export const YourPatientsCard = () => {
       <Button
         asChild
         variant="ghostPrimary"
-        className="mt-auto !h-16 w-full !rounded-none hover:!bg-accent/50"
+        className="!h-16 w-full !rounded-none hover:!bg-accent/50"
       >
         <Link to={routes.patients.index}>View all patients</Link>
       </Button>
