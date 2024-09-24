@@ -18,6 +18,7 @@ export const buttonVariants = {
       'border border-input bg-surface-primary hover:bg-accent hover:text-accent-foreground',
     secondary: 'bg-secondary text-secondary-foreground hover:bg-secondary/70',
     ghost: 'hover:bg-accent hover:text-accent-foreground',
+    ghostPrimary: 'text-primary hover:bg-primary/10',
     destructive:
       'bg-destructive text-destructive-foreground hover:bg-destructive/80',
     link: 'text-primary underline-offset-4 hover:underline',

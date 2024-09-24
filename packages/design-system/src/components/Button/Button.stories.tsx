@@ -34,9 +34,11 @@ export const Default: Story = { args: { variant: 'default' } }
 export const Secondary: Story = { args: { variant: 'secondary' } }
 export const Outline: Story = { args: { variant: 'outline' } }
 export const Ghost: Story = { args: { variant: 'ghost' } }
+export const GhostPrimary: Story = { args: { variant: 'ghostPrimary' } }
 export const Link: Story = { args: { variant: 'link' } }
 export const Destructive: Story = { args: { variant: 'destructive' } }
 
+export const Xs: Story = { args: { size: 'xs' } }
 export const Sm: Story = { args: { size: 'sm' } }
 export const Lg: Story = { args: { size: 'lg' } }
 export const Round: Story = {
