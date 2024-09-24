@@ -292,8 +292,7 @@ export const getDocData = async <T>(reference: DocumentReference<T>) => {
 }
 
 export const getDocDataOrThrow = async <T>(reference: DocumentReference<T>) => {
-  const doc = await getDoc(reference)
-  const data = doc.data()
+  const data = await getDocData(reference)
   if (!data) {
     throw new Error(`Doc not found: ${reference.path}`)
   }
