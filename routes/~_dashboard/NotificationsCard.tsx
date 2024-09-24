@@ -9,7 +9,7 @@ import { useQuery } from '@tanstack/react-query'
 import { Link } from '@tanstack/react-router'
 import { Loader2 } from 'lucide-react'
 import { useUser } from '@/modules/firebase/UserProvider'
-import { isMessageRead } from '@/modules/notifications/helpers'
+import { filterUnreadNotifications } from '@/modules/notifications/helpers'
 import { Notification } from '@/modules/notifications/Notification'
 import { notificationQueries } from '@/modules/notifications/queries'
 import { routes } from '@/modules/routes'
@@ -22,8 +22,7 @@ export const NotificationsCard = () => {
 
   const { data: notifications = [], isLoading } = useQuery({
     ...notificationQueries.list({ userId: auth.uid }),
-    select: (notification) =>
-      notification.filter((notification) => !isMessageRead(notification)),
+    select: filterUnreadNotifications,
   })
 
   return (

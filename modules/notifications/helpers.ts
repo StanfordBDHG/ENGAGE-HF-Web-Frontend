@@ -2,6 +2,9 @@ import { type UserMessage } from '@/modules/firebase/models'
 
 export const isMessageRead = (message: UserMessage) => !!message.completionDate
 
+export const filterUnreadNotifications = (messages: UserMessage[]) =>
+  messages.filter((notification) => !isMessageRead(notification))
+
 export const parseMessageToLink = (message: UserMessage) => {
   const action = message.action
   if (!action) return null

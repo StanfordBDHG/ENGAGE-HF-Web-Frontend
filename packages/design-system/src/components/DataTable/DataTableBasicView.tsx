@@ -20,7 +20,7 @@ export const DataTableBasicView = <Data,>({
           entityName={entityName}
           textFilter={table.getState().globalFilter}
           hasFilters={table.getState().columnFilters.length > 0}
-          className="py-6"
+          className="h-24"
         />
       : rows.map((row) => (
           <Fragment key={row.id}>{children(row.original, row)}</Fragment>
