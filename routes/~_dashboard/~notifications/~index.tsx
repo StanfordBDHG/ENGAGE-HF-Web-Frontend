@@ -5,24 +5,24 @@
 //
 // SPDX-License-Identifier: MIT
 //
+import { useQuery } from '@tanstack/react-query'
 import { createFileRoute } from '@tanstack/react-router'
 import { Bell } from 'lucide-react'
 import { Helmet } from 'react-helmet'
-import { PageTitle } from '@/packages/design-system/src/molecules/DashboardLayout'
+import { parseNilLocalizedText } from '@/modules/firebase/localizedText'
+import { useUser } from '@/modules/firebase/UserProvider'
+import { isMessageRead } from '@/modules/notifications/helpers'
 import { Notification } from '@/modules/notifications/Notification'
 import { notificationQueries } from '@/modules/notifications/queries'
-import { useQuery } from '@tanstack/react-query'
-import { useUser } from '@/modules/firebase/UserProvider'
 import {
   DataTable,
   DataTableBasicView,
 } from '@/packages/design-system/src/components/DataTable'
-import { parseNilLocalizedText } from '@/modules/firebase/localizedText'
-import { isMessageRead } from '@/modules/notifications/helpers'
-import { DashboardLayout } from '../DashboardLayout'
+import { PageTitle } from '@/packages/design-system/src/molecules/DashboardLayout'
 import { MarkAllAsReadButton } from '@/routes/~_dashboard/~notifications/MarkAllAsReadButton'
 import { ShowUnreadOnlySwitch } from '@/routes/~_dashboard/~notifications/ShowUnreadOnlySwitch'
 import { columnHelper, columnIds } from './helpers'
+import { DashboardLayout } from '../DashboardLayout'
 
 const columns = [
   columnHelper.accessor(

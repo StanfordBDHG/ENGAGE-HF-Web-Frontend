@@ -1,3 +1,5 @@
+import { flexRender } from '@tanstack/react-table'
+import { ToggleSortButton } from '@/packages/design-system/src/components/DataTable/ToggleSortButton'
 import {
   Table,
   TableBody,
@@ -6,8 +8,6 @@ import {
   TableHeader,
   TableRow,
 } from '@/packages/design-system/src/components/Table'
-import { flexRender } from '@tanstack/react-table'
-import { ToggleSortButton } from '@/packages/design-system/src/components/DataTable/ToggleSortButton'
 import { TableEmptyState } from '@/packages/design-system/src/components/Table/TableEmptyState'
 import type { DataTableViewProps } from './DataTable'
 

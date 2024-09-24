@@ -1,6 +1,6 @@
-import { RangeCounter } from '@/packages/design-system/src/components/RangeCounter'
-import { ButtonPagination } from '@/packages/design-system/src/components/Pagination/ButtonPagination'
 import type { Table as TableType } from '@tanstack/table-core'
+import { ButtonPagination } from '@/packages/design-system/src/components/Pagination/ButtonPagination'
+import { RangeCounter } from '@/packages/design-system/src/components/RangeCounter'
 
 interface DataTablePaginationProps<Data> {
   table: TableType<Data>

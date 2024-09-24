@@ -6,19 +6,19 @@
 // SPDX-License-Identifier: MIT
 //
 import {
-  fhirAllergyIntoleranceConverter,
-  fhirAppointmentConverter,
-  fhirCodingConverter,
-  fhirElementConverter,
-  fhirMedicationRequestConverter,
-  fhirObservationConverter,
-  fhirResourceConverter,
-  InferEncoded,
-  invitationConverter,
-  medicationClassConverter,
-  organizationConverter,
-  userConverter,
-  userMessageConverter,
+  type fhirAllergyIntoleranceConverter,
+  type fhirAppointmentConverter,
+  type fhirCodingConverter,
+  type fhirElementConverter,
+  type fhirMedicationRequestConverter,
+  type fhirObservationConverter,
+  type fhirResourceConverter,
+  type InferEncoded,
+  type invitationConverter,
+  type medicationClassConverter,
+  type organizationConverter,
+  type userConverter,
+  type userMessageConverter,
 } from '@stanfordbdhg/engagehf-models'
 
 export type Organization = InferEncoded<typeof organizationConverter> & {

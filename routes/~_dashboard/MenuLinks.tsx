@@ -8,9 +8,9 @@
 import { UserType } from '@stanfordbdhg/engagehf-models'
 import { useLocation } from '@tanstack/react-router'
 import { Home, Users, Contact, Bell } from 'lucide-react'
+import { useHasUnreadNotification } from '@/modules/notifications/queries'
 import { routes } from '@/modules/routes'
 import { MenuItem } from '@/packages/design-system/src/molecules/DashboardLayout'
-import { useHasUnreadNotification } from '@/modules/notifications/queries'
 
 interface MenuLinksProps {
   userType: UserType

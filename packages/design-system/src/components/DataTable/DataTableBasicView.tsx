@@ -1,7 +1,7 @@
-import { Row } from '@tanstack/react-table'
-import type { DataTableViewProps } from './DataTable'
+import { type Row } from '@tanstack/react-table'
+import { Fragment, type ReactNode } from 'react'
 import { EmptyState } from '@/packages/design-system/src/components/EmptyState'
-import { Fragment, ReactNode } from 'react'
+import type { DataTableViewProps } from './DataTable'
 
 interface DataTableBasicViewProps<Data> extends DataTableViewProps<Data> {
   children: (data: Data, row: Row<Data>) => ReactNode

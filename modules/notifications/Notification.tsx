@@ -1,7 +1,18 @@
+import { useMutation } from '@tanstack/react-query'
+import { callables } from '@/modules/firebase/app'
+import {
+  parseLocalizedText,
+  parseNilLocalizedText,
+} from '@/modules/firebase/localizedText'
+import { type UserMessage } from '@/modules/firebase/models'
+import { useUser } from '@/modules/firebase/UserProvider'
 import {
   isMessageRead,
   parseMessageToLink,
 } from '@/modules/notifications/helpers'
+import { notificationQueries } from '@/modules/notifications/queries'
+import { queryClient } from '@/modules/query/queryClient'
+import { Button } from '@/packages/design-system/src/components/Button'
 import {
   Notification as NotificationBase,
   NotificationActions,
@@ -12,18 +23,7 @@ import {
   NotificationTime,
   NotificationTitle,
 } from '@/packages/design-system/src/molecules/Notifications'
-import {
-  parseLocalizedText,
-  parseNilLocalizedText,
-} from '@/modules/firebase/localizedText'
-import { UserMessage } from '@/modules/firebase/models'
-import { Button } from '@/packages/design-system/src/components/Button'
 import { NotificationHeader } from '@/packages/design-system/src/molecules/Notifications/NotificationHeader'
-import { useMutation } from '@tanstack/react-query'
-import { callables } from '@/modules/firebase/app'
-import { useUser } from '@/modules/firebase/UserProvider'
-import { queryClient } from '@/modules/query/queryClient'
-import { notificationQueries } from '@/modules/notifications/queries'
 
 interface NotificationProps {
   notification: UserMessage

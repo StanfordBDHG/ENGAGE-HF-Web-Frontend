@@ -1,7 +1,7 @@
-import { useNotificationContext } from '@/packages/design-system/src/molecules/Notifications/NotificationContext'
+import { type HTMLProps } from 'react'
 import { cn } from '@/packages/design-system/src'
+import { useNotificationContext } from '@/packages/design-system/src/molecules/Notifications/NotificationContext'
 import { formatDateTime } from '@/packages/design-system/src/utils/date'
-import { HTMLProps } from 'react'
 
 interface NotificationTimeProps extends HTMLProps<HTMLTimeElement> {
   time: Date

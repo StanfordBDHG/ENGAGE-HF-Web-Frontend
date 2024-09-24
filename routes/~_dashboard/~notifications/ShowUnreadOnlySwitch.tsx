@@ -1,7 +1,7 @@
+import { type Table } from '@tanstack/table-core'
+import { type UserMessage } from '@/modules/firebase/models'
 import { SideLabel } from '@/packages/design-system/src/components/SideLabel'
 import { Switch } from '@/packages/design-system/src/components/Switch'
-import { Table } from '@tanstack/table-core'
-import { UserMessage } from '@/modules/firebase/models'
 import { columnIds } from './helpers'
 
 interface ShowUnreadOnlySwitchProps {

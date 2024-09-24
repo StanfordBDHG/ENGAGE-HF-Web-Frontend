@@ -5,13 +5,13 @@
 //
 // SPDX-License-Identifier: MIT
 //
+import { type Table as TableType } from '@tanstack/table-core'
 import { type ReactNode } from 'react'
-import { useDataTable, UseDataTableProps } from './DataTable.utils'
+import { DataTableTableView } from '@/packages/design-system/src/components/DataTable/DataTableTableView'
+import { useDataTable, type UseDataTableProps } from './DataTable.utils'
+import { DataTablePagination } from './DataTablePagination'
 import { GlobalFilterInput } from './GlobalFilterInput'
 import { cn } from '../../utils/className'
-import { DataTablePagination } from './DataTablePagination'
-import { DataTableTableView } from '@/packages/design-system/src/components/DataTable/DataTableTableView'
-import { Table as TableType } from '@tanstack/table-core'
 
 export type DataTableViewProps<Data> = { table: TableType<Data> } & Pick<
   DataTableProps<Data>,

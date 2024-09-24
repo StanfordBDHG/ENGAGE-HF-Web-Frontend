@@ -11,8 +11,8 @@ import {
   type CreateInvitationOutput,
   type DeleteUserInput,
   type DeleteUserOutput,
-  DismissMessageInput,
-  DismissMessageOutput,
+  type DismissMessageInput,
+  type DismissMessageOutput,
   type ExportHealthSummaryInput,
   type ExportHealthSummaryOutput,
   type FHIRMedication,
@@ -40,7 +40,7 @@ import {
   type MedicationClass,
   type Organization,
   type User,
-  UserMessage,
+  type UserMessage,
 } from '@/modules/firebase/models'
 import { strategy } from '@/packages/design-system/src/utils/misc'
 

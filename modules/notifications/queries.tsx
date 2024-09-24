@@ -1,7 +1,7 @@
 import { queryOptions, useQuery } from '@tanstack/react-query'
 import { refs } from '@/modules/firebase/app'
-import { getDocsData } from '@/modules/firebase/utils'
 import { useUser } from '@/modules/firebase/UserProvider'
+import { getDocsData } from '@/modules/firebase/utils'
 import { isMessageRead } from '@/modules/notifications/helpers'
 
 interface ListNotificationsPayload {

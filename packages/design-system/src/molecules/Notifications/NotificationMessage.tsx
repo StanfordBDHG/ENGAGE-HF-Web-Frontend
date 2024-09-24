@@ -1,6 +1,6 @@
 import type { HTMLProps } from 'react'
-import { useNotificationContext } from '@/packages/design-system/src/molecules/Notifications/NotificationContext'
 import { cn } from '@/packages/design-system/src'
+import { useNotificationContext } from '@/packages/design-system/src/molecules/Notifications/NotificationContext'
 
 interface NotificationMessageProps extends HTMLProps<HTMLParagraphElement> {}
 

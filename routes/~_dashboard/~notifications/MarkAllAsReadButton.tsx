@@ -1,13 +1,13 @@
-import { useUser } from '@/modules/firebase/UserProvider'
-import { useMemo } from 'react'
-import { isMessageRead } from '@/modules/notifications/helpers'
 import { useMutation } from '@tanstack/react-query'
+import { useMemo } from 'react'
 import { callables } from '@/modules/firebase/app'
-import { queryClient } from '@/modules/query/queryClient'
+import { type UserMessage } from '@/modules/firebase/models'
+import { useUser } from '@/modules/firebase/UserProvider'
+import { isMessageRead } from '@/modules/notifications/helpers'
 import { notificationQueries } from '@/modules/notifications/queries'
-import { Tooltip } from '@/packages/design-system/src/components/Tooltip'
+import { queryClient } from '@/modules/query/queryClient'
 import { Button } from '@/packages/design-system/src/components/Button'
-import { UserMessage } from '@/modules/firebase/models'
+import { Tooltip } from '@/packages/design-system/src/components/Tooltip'
 
 interface MarkAllAsReadButtonProps {
   notifications: UserMessage[]

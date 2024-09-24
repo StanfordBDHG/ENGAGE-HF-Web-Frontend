@@ -6,8 +6,8 @@
 // SPDX-License-Identifier: MIT
 //
 import { type CellContext } from '@tanstack/react-table'
-import { type Nil } from '../../utils/misc'
 import { formatISODateTime } from '../../utils/date'
+import { type Nil } from '../../utils/misc'
 
 export const dateColumn = <T>(props: CellContext<T, Nil<string>>) => {
   const value = props.getValue()

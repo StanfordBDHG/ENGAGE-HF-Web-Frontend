@@ -1,4 +1,4 @@
-import { UserMessage } from '@/modules/firebase/models'
+import { type UserMessage } from '@/modules/firebase/models'
 
 export const isMessageRead = (message: UserMessage) => !!message.completionDate
 

@@ -1,5 +1,5 @@
 import { createColumnHelper } from '@tanstack/table-core'
-import { UserMessage } from '@/modules/firebase/models'
+import { type UserMessage } from '@/modules/firebase/models'
 
 export const columnHelper = createColumnHelper<UserMessage>()
 

@@ -5,10 +5,10 @@
 //
 // SPDX-License-Identifier: MIT
 //
+import { isNil } from 'es-toolkit'
 import { isObject } from 'lodash'
 import { type LocalizedText } from '@/modules/firebase/models'
-import { Nil } from '@/packages/design-system/src/utils/misc'
-import { isNil } from 'es-toolkit'
+import { type Nil } from '@/packages/design-system/src/utils/misc'
 
 const locale = 'en'
 
