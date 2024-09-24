@@ -27,8 +27,14 @@ import { callables } from '@/modules/firebase/app'
 import { queryClient } from '@/modules/query/queryClient'
 import { useMemo } from 'react'
 import { Tooltip } from '@/packages/design-system/src/components/Tooltip'
+import { SideLabel } from '@/packages/design-system/src/components/SideLabel'
+import { Switch } from '@/packages/design-system/src/components/Switch'
 
 const columnHelper = createColumnHelper<UserMessage>()
+
+const columnIds = {
+  isRead: 'isRead',
+}
 
 const columns = [
   columnHelper.accessor(
@@ -39,8 +45,12 @@ const columns = [
     (notification) => parseNilLocalizedText(notification.title),
     { id: 'title' },
   ),
+  columnHelper.accessor((notification) => new Date(notification.creationDate), {
+    id: 'creationDate',
+  }),
   columnHelper.accessor((notification) => isMessageRead(notification), {
-    id: 'isRead',
+    id: columnIds.isRead,
+    filterFn: 'equals',
   }),
 ]
 
@@ -89,24 +99,46 @@ const NotificationsPage = () => {
         data={notifications}
         entityName="notifications"
         pageSize={10}
-        header={
-          <div className="ml-auto">
-            <Tooltip
-              tooltip="No unread notifications"
-              open={hasDismissibleNotifications ? false : undefined}
-            >
-              <Button
-                size="sm"
-                onClick={() => markNotificationsAsRead.mutate()}
-                isPending={markNotificationsAsRead.isPending}
-                disabled={!hasDismissibleNotifications}
-                className="disabled:pointer-events-auto"
+        header={({ table }) => {
+          const showsUnreadOnly = table
+            .getState()
+            .columnFilters.some(
+              (filter) =>
+                filter.id === columnIds.isRead && filter.value === false,
+            )
+          return (
+            <div className="ml-auto flex gap-4">
+              <SideLabel label="Show unread only">
+                <Switch
+                  checked={showsUnreadOnly}
+                  onCheckedChange={() =>
+                    table.setColumnFilters((filters) =>
+                      showsUnreadOnly ?
+                        filters.filter(
+                          (filter) => filter.id !== columnIds.isRead,
+                        )
+                      : [...filters, { id: columnIds.isRead, value: false }],
+                    )
+                  }
+                />
+              </SideLabel>
+              <Tooltip
+                tooltip="No unread notifications"
+                open={hasDismissibleNotifications ? false : undefined}
               >
-                Mark all as read
-              </Button>
-            </Tooltip>
-          </div>
-        }
+                <Button
+                  size="sm"
+                  onClick={() => markNotificationsAsRead.mutate()}
+                  isPending={markNotificationsAsRead.isPending}
+                  disabled={!hasDismissibleNotifications}
+                  className="disabled:pointer-events-auto"
+                >
+                  Mark all as read
+                </Button>
+              </Tooltip>
+            </div>
+          )
+        }}
       >
         {(props) => (
           <DataTableBasicView {...props}>
