@@ -34,6 +34,11 @@ export interface DataTableProps<Data> extends UseDataTableProps<Data> {
    * Render props pattern to define different type of views than standard DataTableView
    * */
   children?: ViewRenderProp<Data>
+  bordered?: boolean
+  /**
+   * Hides DataTable features, like header or pagination if not required
+   * */
+  minimal?: boolean
 }
 
 export const DataTable = <Data,>({
@@ -44,6 +49,8 @@ export const DataTable = <Data,>({
   pageSize,
   header,
   children,
+  bordered = true,
+  minimal,
   ...props
 }: DataTableProps<Data>) => {
   const { table, setGlobalFilterDebounced } = useDataTable({
@@ -57,18 +64,26 @@ export const DataTable = <Data,>({
   const viewProps = { table, entityName }
 
   return (
-    <div className={cn('rounded-md border bg-surface-primary', className)}>
-      <header className="flex items-center border-b p-4">
-        <GlobalFilterInput
-          onChange={(event) => setGlobalFilterDebounced(event.target.value)}
-          entityName={entityName}
-        />
-        {typeof header === 'function' ? header(viewProps) : header}
-      </header>
+    <div
+      className={cn(
+        'rounded-md bg-surface-primary',
+        bordered && 'border',
+        className,
+      )}
+    >
+      {!minimal && (
+        <header className="flex items-center border-b p-4">
+          <GlobalFilterInput
+            onChange={(event) => setGlobalFilterDebounced(event.target.value)}
+            entityName={entityName}
+          />
+          {typeof header === 'function' ? header(viewProps) : header}
+        </header>
+      )}
       {children ?
         children(viewProps)
       : <DataTableTableView table={table} entityName={entityName} />}
-      {!!rows.length && (
+      {(!minimal || table.getPageCount() > 1) && !!rows.length && (
         <footer className="flex items-center justify-between border-t p-4">
           <DataTablePagination table={table} />
         </footer>

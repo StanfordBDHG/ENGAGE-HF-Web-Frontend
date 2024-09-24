@@ -21,7 +21,8 @@ export const useHasUnreadNotification = () => {
   const { auth } = useUser()
   const { data: hasUnreadNotification } = useQuery({
     ...notificationQueries.list({ userId: auth.uid }),
-    select: filterUnreadNotifications,
+    select: (notifications) =>
+      filterUnreadNotifications(notifications).length > 0,
   })
 
   return { hasUnreadNotification }

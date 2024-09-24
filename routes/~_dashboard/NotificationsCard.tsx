@@ -22,7 +22,8 @@ export const NotificationsCard = () => {
 
   const { data: notifications = [], isLoading } = useQuery({
     ...notificationQueries.list({ userId: auth.uid }),
-    select: filterUnreadNotifications,
+    select: (notifications) =>
+      filterUnreadNotifications(notifications).slice(0, 4),
   })
 
   return (

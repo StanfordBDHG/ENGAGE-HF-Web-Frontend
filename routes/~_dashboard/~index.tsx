@@ -9,6 +9,7 @@ import { createFileRoute } from '@tanstack/react-router'
 import { Home } from 'lucide-react'
 import { Helmet } from 'react-helmet'
 import { PageTitle } from '@/packages/design-system/src/molecules/DashboardLayout'
+import { YourPatientsCard } from '@/routes/~_dashboard/YourPatientsCard'
 import { DashboardLayout } from './DashboardLayout'
 import { NotificationsCard } from './NotificationsCard'
 
@@ -17,8 +18,9 @@ const DashboardPage = () => (
     <Helmet>
       <title>Home</title>
     </Helmet>
-    <div className="grid grid-cols-2">
+    <div className="grid grid-cols-2 gap-5">
       <NotificationsCard />
+      <YourPatientsCard />
     </div>
   </DashboardLayout>
 )

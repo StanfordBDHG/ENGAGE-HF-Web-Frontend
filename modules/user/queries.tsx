@@ -19,7 +19,7 @@ import {
 } from '@/modules/firebase/utils'
 import { queryClient } from '@/modules/query/queryClient'
 
-export const getNonAdminInvitations = (organizationIds: string[]) =>
+export const getNonAdminInvitationsQuery = (organizationIds: string[]) =>
   query(
     refs.invitations(),
     where('user.organization', 'in', organizationIds),
