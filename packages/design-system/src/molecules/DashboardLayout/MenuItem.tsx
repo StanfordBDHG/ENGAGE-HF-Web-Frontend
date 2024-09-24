@@ -46,7 +46,7 @@ export const MenuItem = ({
       {isHighlighted && (
         <i
           aria-hidden
-          className="size-2 rounded-full bg-destructive lg:absolute lg:right-1 lg:top-1 lg:size-1.5 xl:static xl:size-2"
+          className="size-2.5 rounded-full bg-destructive lg:absolute lg:right-1 lg:top-1 lg:size-1.5 xl:static xl:size-2.5"
         />
       )}
     </Link>
