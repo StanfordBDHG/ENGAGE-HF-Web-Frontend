@@ -45,11 +45,6 @@ export const callables = getCallables(functions)
 export const refs = getCollectionRefs(db)
 export const docRefs = getDocumentsRefs(db)
 
-export const getCurrentUserType = async () => {
-  const { user } = await getCurrentUser()
-  return user.type
-}
-
 export const userQueryOptions = (opts: { id: string }) =>
   queryOptions({
     queryKey: ['user', opts],
@@ -68,8 +63,8 @@ export const getCurrentUser = async () => {
 }
 
 export const ensureType = async (types: UserType[]) => {
-  const type = await getCurrentUserType()
-  if (!types.includes(type)) {
+  const { user } = await getCurrentUser()
+  if (!types.includes(user.type)) {
     toast.error(`You don't have permissions to access this page`)
     throw redirect({ to: routes.home })
   }

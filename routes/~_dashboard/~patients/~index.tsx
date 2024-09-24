@@ -10,12 +10,7 @@ import { createFileRoute, Link } from '@tanstack/react-router'
 import { query, where } from 'firebase/firestore'
 import { Contact, UserPlus } from 'lucide-react'
 import { Helmet } from 'react-helmet'
-import {
-  docRefs,
-  getCurrentUser,
-  getCurrentUserType,
-  refs,
-} from '@/modules/firebase/app'
+import { docRefs, getCurrentUser, refs } from '@/modules/firebase/app'
 import { mapAuthData } from '@/modules/firebase/user'
 import { getDocData, getDocsData } from '@/modules/firebase/utils'
 import { routes } from '@/modules/routes'
@@ -51,9 +46,9 @@ const getAdminData = () => ({
 })
 
 const listPatients = async () => {
-  const userRole = await getCurrentUserType()
+  const { user } = await getCurrentUser()
   const { patientsQuery, invitationsQuery } =
-    userRole === UserType.admin ? getAdminData() : await getData()
+    user.type === UserType.admin ? getAdminData() : await getData()
   const patients = await getDocsData(
     query(patientsQuery, where('type', '==', UserType.patient)),
   )
