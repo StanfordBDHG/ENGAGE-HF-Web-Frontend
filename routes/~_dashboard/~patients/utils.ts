@@ -8,13 +8,13 @@
 import {
   FHIRAllergyIntoleranceCriticality,
   FHIRAllergyIntoleranceType,
-  FHIRExtensionUrl,
   UserType,
 } from '@stanfordbdhg/engagehf-models'
 import { groupBy } from 'es-toolkit'
 import { query, where } from 'firebase/firestore'
 import { AllergyType } from '@/modules/firebase/allergy'
 import { getCurrentUser, refs } from '@/modules/firebase/app'
+import { parseAppointment } from '@/modules/firebase/appointment'
 import { type FHIRAllergyIntolerance } from '@/modules/firebase/models'
 import { mapAuthData } from '@/modules/firebase/user'
 import {
@@ -208,14 +208,11 @@ export const getAppointmentsData = async ({
   const rawAppointments = await getDocsData(
     refs.appointments({ userId, resourceType }),
   )
-  const appointments = rawAppointments.map((appointment) => ({
-    ...appointment,
-    providerName: appointment.extension?.find(
-      (extension) =>
-        extension.url === (FHIRExtensionUrl.providerName as string),
-    )?.valueString,
-  }))
-  return { appointments, userId, resourceType }
+  return {
+    appointments: rawAppointments.map(parseAppointment),
+    userId,
+    resourceType,
+  }
 }
 
 export type AllergiesData = Awaited<ReturnType<typeof getAllergiesData>>
