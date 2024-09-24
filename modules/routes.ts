@@ -8,6 +8,7 @@
 
 export const routes = {
   home: '/',
+  notifications: '/notifications',
   users: {
     index: '/users',
     user: (userId: string) => `/users/${userId}`,

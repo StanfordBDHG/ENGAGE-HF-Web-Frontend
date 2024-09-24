@@ -30,7 +30,7 @@ export const MenuLinks = ({ userType }: MenuLinksProps) => {
     <>
       <MenuItem {...hrefProps('/')} label="Home" icon={<Home />} />
       <MenuItem
-        {...hrefProps('/notifications')}
+        {...hrefProps(routes.notifications)}
         label="Notifications"
         isHighlighted={hasUnreadNotification}
         icon={<Bell />}
