@@ -12,7 +12,7 @@ export const notificationQueries = {
   namespace: 'notifications',
   list: (payload: ListNotificationsPayload) =>
     queryOptions({
-      queryKey: [notificationQueries.namespace],
+      queryKey: [notificationQueries.namespace, payload],
       queryFn: () => getDocsData(refs.userMessages({ userId: payload.userId })),
     }),
 }

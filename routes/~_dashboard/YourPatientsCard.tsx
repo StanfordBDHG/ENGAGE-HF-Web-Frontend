@@ -7,39 +7,17 @@
 //
 import { useQuery } from '@tanstack/react-query'
 import { Link } from '@tanstack/react-router'
-import { query, where } from 'firebase/firestore'
 import { Loader2 } from 'lucide-react'
-import { getCurrentUser, refs } from '@/modules/firebase/app'
 import { routes } from '@/modules/routes'
-import { parsePatientsQueries } from '@/modules/user/patients'
-import { getNonAdminInvitationsQuery } from '@/modules/user/queries'
+import { patientsQueries } from '@/modules/user/patients'
 import { Button } from '@/packages/design-system/src/components/Button'
 import { Card, CardTitle } from '@/packages/design-system/src/components/Card'
 import { PatientsTable } from '@/routes/~_dashboard/~patients/PatientsTable'
 
-const listUserPatients = async () => {
-  const { user, currentUser } = await getCurrentUser()
-  const organizationId = user.organization
-  if (!organizationId) return []
-
-  return parsePatientsQueries({
-    patientsQuery: query(
-      refs.users(),
-      where('organization', '==', organizationId),
-      where('clinician', '==', currentUser.uid),
-    ),
-    invitationsQuery: query(
-      getNonAdminInvitationsQuery([organizationId]),
-      where('user.clinician', '==', currentUser.uid),
-    ),
-  })
-}
-
 export const YourPatientsCard = () => {
-  const { data: patients = [], isLoading } = useQuery({
-    queryKey: ['listUserPatients'],
-    queryFn: listUserPatients,
-  })
+  const { data: patients = [], isLoading } = useQuery(
+    patientsQueries.listUserPatients(),
+  )
 
   return (
     <Card className="col-span-full flex flex-col">

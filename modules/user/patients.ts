@@ -1,9 +1,12 @@
 import { UserType } from '@stanfordbdhg/engagehf-models'
+import { queryOptions } from '@tanstack/react-query'
 import { type Query, query, where } from 'firebase/firestore'
+import { getCurrentUser, refs } from '@/modules/firebase/app'
 import { type Invitation, type User } from '@/modules/firebase/models'
 import { mapAuthData } from '@/modules/firebase/user'
 import { getDocsData } from '@/modules/firebase/utils'
 import {
+  getNonAdminInvitationsQuery,
   getUserOrganizationsMap,
   parseAuthToUser,
   parseInvitationToUser,
@@ -40,4 +43,28 @@ export const parsePatientsQueries = async ({
   )
 
   return [...invitedUsers, ...patientsData]
+}
+
+export const patientsQueries = {
+  listUserPatients: () =>
+    queryOptions({
+      queryKey: ['listUserPatients'],
+      queryFn: async () => {
+        const { user, currentUser } = await getCurrentUser()
+        const organizationId = user.organization
+        if (!organizationId) return []
+
+        return parsePatientsQueries({
+          patientsQuery: query(
+            refs.users(),
+            where('organization', '==', organizationId),
+            where('clinician', '==', currentUser.uid),
+          ),
+          invitationsQuery: query(
+            getNonAdminInvitationsQuery([organizationId]),
+            where('user.clinician', '==', currentUser.uid),
+          ),
+        })
+      },
+    }),
 }
