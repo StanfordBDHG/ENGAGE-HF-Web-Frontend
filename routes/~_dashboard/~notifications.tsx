@@ -12,7 +12,7 @@ import { PageTitle } from '@/packages/design-system/src/molecules/DashboardLayou
 import { DashboardLayout } from './DashboardLayout'
 import { Notification } from '@/modules/notifications/Notification'
 import { notificationQueries } from '@/modules/notifications/queries'
-import { useSuspenseQuery } from '@tanstack/react-query'
+import { useMutation, useQuery } from '@tanstack/react-query'
 import { useUser } from '@/modules/firebase/UserProvider'
 import {
   DataTable,
@@ -22,6 +22,11 @@ import { createColumnHelper } from '@tanstack/table-core'
 import { UserMessage } from '@/modules/firebase/models'
 import { parseNilLocalizedText } from '@/modules/firebase/localizedText'
 import { isMessageRead } from '@/modules/notifications/helpers'
+import { Button } from '@/packages/design-system/src/components/Button'
+import { callables } from '@/modules/firebase/app'
+import { queryClient } from '@/modules/query/queryClient'
+import { useMemo } from 'react'
+import { Tooltip } from '@/packages/design-system/src/components/Tooltip'
 
 const columnHelper = createColumnHelper<UserMessage>()
 
@@ -42,9 +47,35 @@ const columns = [
 const NotificationsPage = () => {
   const { auth } = useUser()
 
-  const { data: notifications } = useSuspenseQuery(
+  const { data: notifications = [] } = useQuery(
     notificationQueries.list({ userId: auth.uid }),
   )
+
+  const dismissibleNotifications = useMemo(
+    () =>
+      notifications.filter(
+        (notification) =>
+          notification.isDismissible && !isMessageRead(notification),
+      ),
+    [notifications],
+  )
+  const hasDismissibleNotifications = dismissibleNotifications.length > 0
+
+  const markNotificationsAsRead = useMutation({
+    mutationFn: () =>
+      Promise.all(
+        dismissibleNotifications.map((notification) =>
+          callables.dismissMessage({
+            userId: auth.uid,
+            messageId: notification.id,
+          }),
+        ),
+      ),
+    onSuccess: async () =>
+      queryClient.invalidateQueries(
+        notificationQueries.list({ userId: auth.uid }),
+      ),
+  })
 
   return (
     <DashboardLayout
@@ -58,6 +89,24 @@ const NotificationsPage = () => {
         data={notifications}
         entityName="notifications"
         pageSize={10}
+        header={
+          <div className="ml-auto">
+            <Tooltip
+              tooltip="No unread notifications"
+              open={hasDismissibleNotifications ? false : undefined}
+            >
+              <Button
+                size="sm"
+                onClick={() => markNotificationsAsRead.mutate()}
+                isPending={markNotificationsAsRead.isPending}
+                disabled={!hasDismissibleNotifications}
+                className="disabled:pointer-events-auto"
+              >
+                Mark all as read
+              </Button>
+            </Tooltip>
+          </div>
+        }
       >
         {(props) => (
           <DataTableBasicView {...props}>

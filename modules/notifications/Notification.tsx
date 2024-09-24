@@ -31,7 +31,7 @@ interface NotificationProps {
 
 export const Notification = ({ notification }: NotificationProps) => {
   const { auth } = useUser()
-  const { mutate: markNotificationAsRead } = useMutation({
+  const markNotificationAsRead = useMutation({
     mutationFn: () =>
       callables.dismissMessage({
         userId: auth.uid,
@@ -65,7 +65,7 @@ export const Notification = ({ notification }: NotificationProps) => {
               variant="link"
               size="xs"
               className="!pl-0"
-              onClick={() => markNotificationAsRead()}
+              onClick={() => markNotificationAsRead.mutate()}
             >
               Mark as read
             </Button>
