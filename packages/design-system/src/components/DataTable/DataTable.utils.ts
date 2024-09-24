@@ -12,7 +12,6 @@ import {
   getFilteredRowModel,
   getPaginationRowModel,
   getSortedRowModel,
-  SortingState,
   useReactTable,
 } from '@tanstack/react-table'
 import { useState } from 'react'
@@ -58,7 +57,6 @@ export const useDataTable = <Data>({
   pageSize = 50,
   ...props
 }: UseDataTableProps<Data>) => {
-  const [sorting, setSorting] = useState<SortingState>([])
   const [globalFilter, setGlobalFilter] = useState('')
   const setGlobalFilterDebounced = useDebouncedCallback(
     (value: string) => setGlobalFilter(value),
@@ -77,8 +75,7 @@ export const useDataTable = <Data>({
     getSortedRowModel: getSortedRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     onGlobalFilterChange: setGlobalFilter,
-    onSortingChange: setSorting,
-    state: { globalFilter, sorting },
+    state: { globalFilter },
     initialState: {
       pagination: {
         pageSize,
