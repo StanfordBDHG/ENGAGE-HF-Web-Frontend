@@ -11,7 +11,11 @@ import { Loader2 } from 'lucide-react'
 import { routes } from '@/modules/routes'
 import { patientsQueries } from '@/modules/user/patients'
 import { Button } from '@/packages/design-system/src/components/Button'
-import { Card, CardTitle } from '@/packages/design-system/src/components/Card'
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+} from '@/packages/design-system/src/components/Card'
 import { PatientsTable } from '@/routes/~_dashboard/~patients/PatientsTable'
 
 export const YourPatientsCard = () => {
@@ -21,7 +25,9 @@ export const YourPatientsCard = () => {
 
   return (
     <Card className="col-span-full">
-      <CardTitle className="px-5 pt-4">Your patients</CardTitle>
+      <CardHeader>
+        <CardTitle>Your patients</CardTitle>
+      </CardHeader>
       {isLoading ?
         <div className="flex-center py-8">
           <Loader2 className="animate-spin text-muted-foreground" />

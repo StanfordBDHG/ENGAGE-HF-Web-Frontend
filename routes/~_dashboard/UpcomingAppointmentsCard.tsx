@@ -9,16 +9,21 @@ import { useQueries, useQuery } from '@tanstack/react-query'
 import { useNavigate } from '@tanstack/react-router'
 import { createColumnHelper } from '@tanstack/table-core'
 import { addWeeks, isBefore, isFuture } from 'date-fns'
-import { Loader2 } from 'lucide-react'
+import { Loader2, Info } from 'lucide-react'
 import { useMemo } from 'react'
 import { appointmentsQueries } from '@/modules/firebase/appointment'
 import { routes } from '@/modules/routes'
 import { patientsQueries } from '@/modules/user/patients'
-import { Card, CardTitle } from '@/packages/design-system/src/components/Card'
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+} from '@/packages/design-system/src/components/Card'
 import {
   DataTable,
   dateTimeColumn,
 } from '@/packages/design-system/src/components/DataTable'
+import { Tooltip } from '@/packages/design-system/src/components/Tooltip'
 import { getUserName } from '@/packages/design-system/src/modules/auth/user'
 
 export const UpcomingAppointmentsCard = () => {
@@ -75,7 +80,12 @@ export const UpcomingAppointmentsCard = () => {
 
   return (
     <Card>
-      <CardTitle className="px-5 pt-4">Upcoming Appointments</CardTitle>
+      <CardHeader>
+        <CardTitle>Upcoming Appointments</CardTitle>
+        <Tooltip tooltip="Appointments with patients assigned to you within upcoming next 2 weeks">
+          <Info className="size-5 text-muted-foreground" />
+        </Tooltip>
+      </CardHeader>
       {isLoading ?
         <div className="flex-center py-8">
           <Loader2 className="animate-spin text-muted-foreground" />

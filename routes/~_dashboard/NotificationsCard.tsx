@@ -14,7 +14,11 @@ import { Notification } from '@/modules/notifications/Notification'
 import { notificationQueries } from '@/modules/notifications/queries'
 import { routes } from '@/modules/routes'
 import { Button } from '@/packages/design-system/src/components/Button'
-import { Card, CardTitle } from '@/packages/design-system/src/components/Card'
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+} from '@/packages/design-system/src/components/Card'
 import { EmptyState } from '@/packages/design-system/src/components/EmptyState'
 
 export const NotificationsCard = () => {
@@ -28,7 +32,9 @@ export const NotificationsCard = () => {
 
   return (
     <Card className="flex flex-col">
-      <CardTitle className="px-5 pt-4">Notifications</CardTitle>
+      <CardHeader>
+        <CardTitle>Notifications</CardTitle>
+      </CardHeader>
       {isLoading ?
         <div className="flex-center py-8">
           <Loader2 className="animate-spin text-muted-foreground" />

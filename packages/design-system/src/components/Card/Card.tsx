@@ -7,7 +7,7 @@
 //
 import { Slot } from '@radix-ui/react-slot'
 import { cva, type VariantProps } from 'class-variance-authority'
-import { forwardRef, type HTMLAttributes, HTMLProps } from 'react'
+import { forwardRef, type HTMLAttributes } from 'react'
 import { cn } from '../../utils/className'
 
 export const cardVariants = {}
@@ -31,13 +31,20 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(
 )
 Card.displayName = 'Button'
 
-type CardTitleProps = HTMLProps<HTMLParagraphElement> & {
+type CardTitleProps = HTMLAttributes<HTMLParagraphElement> & {
   asChild?: boolean
 }
 
 export const CardTitle = ({ className, asChild, ...props }: CardTitleProps) => {
   const Comp = asChild ? Slot : 'h5'
-  return (
-    <Comp className={cn('mb-4 text-lg font-medium', className)} {...props} />
-  )
+  return <Comp className={cn('text-lg font-medium', className)} {...props} />
 }
+
+type CardHeaderProps = HTMLAttributes<HTMLDivElement>
+
+export const CardHeader = ({ className, ...props }: CardHeaderProps) => (
+  <header
+    className={cn('mb-4 flex items-center gap-2 px-5 pt-4', className)}
+    {...props}
+  />
+)
