@@ -68,14 +68,18 @@ export interface TableRowProps extends HTMLAttributes<HTMLTableRowElement> {
 }
 
 export const TableRow = forwardRef<HTMLTableRowElement, TableRowProps>(
-  ({ className, isHoverable = true, ...props }, ref) => (
+  ({ className, onClick, isHoverable = true, ...props }, ref) => (
     <tr
       ref={ref}
       className={cn(
         'border-b transition-colors data-[state=selected]:bg-muted',
         isHoverable && 'hover:bg-muted/50',
+        onClick &&
+          'cursor-pointer focus-visible:bg-primary/10 focus-visible:outline-none',
         className,
       )}
+      onClick={onClick}
+      {...(onClick ? { tabIndex: 0 } : undefined)}
       {...props}
     />
   ),

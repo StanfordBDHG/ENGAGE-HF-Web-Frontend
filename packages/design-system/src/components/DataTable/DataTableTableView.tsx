@@ -1,4 +1,5 @@
 import { flexRender } from '@tanstack/react-table'
+import { type MouseEvent } from 'react'
 import { ToggleSortButton } from '@/packages/design-system/src/components/DataTable/ToggleSortButton'
 import {
   Table,
@@ -11,11 +12,18 @@ import {
 import { TableEmptyState } from '@/packages/design-system/src/components/Table/TableEmptyState'
 import type { DataTableViewProps } from './DataTable'
 
-interface DataTableTableViewProps<Data> extends DataTableViewProps<Data> {}
+export interface DataTableTableViewSpecificProps<Data> {
+  onRowClick?: (data: Data, event: MouseEvent) => void
+}
+
+interface DataTableTableViewProps<Data>
+  extends DataTableViewProps<Data>,
+    DataTableTableViewSpecificProps<Data> {}
 
 export const DataTableTableView = <Data,>({
   table,
   entityName,
+  onRowClick,
 }: DataTableTableViewProps<Data>) => {
   const rows = table.getRowModel().rows
   return (
@@ -56,6 +64,11 @@ export const DataTableTableView = <Data,>({
             <TableRow
               key={row.id}
               data-state={row.getIsSelected() && 'selected'}
+              onClick={
+                onRowClick ?
+                  (event) => onRowClick(row.original, event)
+                : undefined
+              }
             >
               {row.getVisibleCells().map((cell) => (
                 <TableCell key={cell.id}>
