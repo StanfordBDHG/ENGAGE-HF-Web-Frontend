@@ -80,9 +80,7 @@ export const DataTable = <Data,>({
           {typeof header === 'function' ? header(viewProps) : header}
         </header>
       )}
-      {children ?
-        children(viewProps)
-      : <DataTableTableView table={table} entityName={entityName} />}
+      {children ? children(viewProps) : <DataTableTableView {...viewProps} />}
       {(!minimal || table.getPageCount() > 1) && !!rows.length && (
         <footer className="flex items-center justify-between border-t p-4">
           <DataTablePagination table={table} />
