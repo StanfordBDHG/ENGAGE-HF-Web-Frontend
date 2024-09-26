@@ -6,11 +6,13 @@
 // SPDX-License-Identifier: MIT
 //
 import { useQueries, useQuery } from '@tanstack/react-query'
+import { useNavigate } from '@tanstack/react-router'
 import { createColumnHelper } from '@tanstack/table-core'
 import { addWeeks, isBefore, isFuture } from 'date-fns'
 import { Loader2 } from 'lucide-react'
 import { useMemo } from 'react'
 import { appointmentsQueries } from '@/modules/firebase/appointment'
+import { routes } from '@/modules/routes'
 import { patientsQueries } from '@/modules/user/patients'
 import { Card, CardTitle } from '@/packages/design-system/src/components/Card'
 import {
@@ -20,6 +22,7 @@ import {
 import { getUserName } from '@/packages/design-system/src/modules/auth/user'
 
 export const UpcomingAppointmentsCard = () => {
+  const navigate = useNavigate()
   const patientsQuery = useQuery(patientsQueries.listUserPatients())
   const { data: patients } = patientsQuery
 
@@ -48,10 +51,13 @@ export const UpcomingAppointmentsCard = () => {
       .flatMap((appointments, index) => {
         const patient = patients.at(index)
         if (!patient || !appointments) return null
-        const patientName = getUserName(patient)
+        const patientObject = {
+          id: patient.resourceId,
+          name: getUserName(patient),
+        }
         return appointments
           .map((appointment) => ({
-            patientName,
+            patient: patientObject,
             date: new Date(appointment.start),
           }))
           .filter(
@@ -77,7 +83,7 @@ export const UpcomingAppointmentsCard = () => {
       : <DataTable
           data={upcomingAppointments}
           columns={[
-            columnHelper.accessor('patientName', {
+            columnHelper.accessor('patient.name', {
               header: 'Patient',
             }),
             columnHelper.accessor('date', {
@@ -88,7 +94,13 @@ export const UpcomingAppointmentsCard = () => {
           minimal
           bordered={false}
           pageSize={6}
-          entityName="assigned patients"
+          entityName="upcoming appointments"
+          tableView={{
+            onRowClick: (appointment) =>
+              void navigate({
+                to: routes.patients.patient(appointment.patient.id),
+              }),
+          }}
         />
       }
     </Card>
