@@ -27,7 +27,7 @@ export const NotificationsCard = () => {
   })
 
   return (
-    <Card>
+    <Card className="flex flex-col">
       <CardTitle className="px-5 pt-4">Notifications</CardTitle>
       {isLoading ?
         <div className="flex-center py-8">
@@ -35,14 +35,16 @@ export const NotificationsCard = () => {
         </div>
       : notifications.length === 0 ?
         <EmptyState entityName="unread notifications" className="py-8" />
-      : notifications.map((notification) => (
-          <Notification key={notification.id} notification={notification} />
-        ))
+      : <div>
+          {notifications.map((notification) => (
+            <Notification key={notification.id} notification={notification} />
+          ))}
+        </div>
       }
       <Button
         asChild
         variant="ghostPrimary"
-        className="!h-16 w-full !rounded-none hover:!bg-accent/50"
+        className="mt-auto !h-16 w-full !rounded-none border-t hover:!bg-accent/50"
       >
         <Link to={routes.notifications}>View all notifications</Link>
       </Button>
