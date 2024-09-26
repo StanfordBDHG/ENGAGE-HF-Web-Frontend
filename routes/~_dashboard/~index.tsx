@@ -12,14 +12,16 @@ import { PageTitle } from '@/packages/design-system/src/molecules/DashboardLayou
 import { YourPatientsCard } from '@/routes/~_dashboard/YourPatientsCard'
 import { DashboardLayout } from './DashboardLayout'
 import { NotificationsCard } from './NotificationsCard'
+import { UpcomingAppointmentsCard } from './UpcomingAppointmentsCard'
 
 const DashboardPage = () => (
   <DashboardLayout title={<PageTitle title="Home" icon={<Home />} />}>
     <Helmet>
       <title>Home</title>
     </Helmet>
-    <div className="grid grid-cols-2 gap-5">
+    <div className="grid gap-5 xl:grid-cols-2">
       <NotificationsCard />
+      <UpcomingAppointmentsCard />
       <YourPatientsCard />
     </div>
   </DashboardLayout>
