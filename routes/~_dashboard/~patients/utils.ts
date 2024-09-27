@@ -14,7 +14,10 @@ import { groupBy } from 'es-toolkit'
 import { query, where } from 'firebase/firestore'
 import { AllergyType } from '@/modules/firebase/allergy'
 import { getCurrentUser, refs } from '@/modules/firebase/app'
-import { parseAppointment } from '@/modules/firebase/appointment'
+import {
+  appointmentsQueries,
+  parseAppointment,
+} from '@/modules/firebase/appointment'
 import { type FHIRAllergyIntolerance } from '@/modules/firebase/models'
 import { mapAuthData } from '@/modules/firebase/user'
 import {
@@ -205,8 +208,8 @@ export const getAppointmentsData = async ({
   userId: string
   resourceType: ResourceType
 }) => {
-  const rawAppointments = await getDocsData(
-    refs.appointments({ userId, resourceType }),
+  const rawAppointments = await queryClient.ensureQueryData(
+    appointmentsQueries.list({ userId, resourceType }),
   )
   return {
     appointments: rawAppointments.map(parseAppointment),
