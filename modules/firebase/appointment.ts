@@ -1,5 +1,6 @@
 import { FHIRExtensionUrl } from '@stanfordbdhg/engagehf-models'
 import { queryOptions } from '@tanstack/react-query'
+import { orderBy, query } from 'firebase/firestore'
 import { refs } from '@/modules/firebase/app'
 import { type FHIRAppointment } from '@/modules/firebase/models'
 import { getDocsData } from '@/modules/firebase/utils'
@@ -18,6 +19,9 @@ export const appointmentsQueries = {
   list: (payload: Parameters<typeof refs.appointments>[0]) =>
     queryOptions({
       queryKey: ['listAppointments', payload],
-      queryFn: () => getDocsData(refs.appointments(payload)),
+      queryFn: () =>
+        getDocsData(
+          query(refs.appointments(payload), orderBy('created', 'desc')),
+        ),
     }),
 }
