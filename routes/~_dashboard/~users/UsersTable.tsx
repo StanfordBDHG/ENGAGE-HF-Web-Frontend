@@ -6,10 +6,12 @@
 // SPDX-License-Identifier: MIT
 //
 import { UserType } from '@stanfordbdhg/engagehf-models'
+import { useNavigate } from '@tanstack/react-router'
 import { createColumnHelper } from '@tanstack/table-core'
 import { useMemo } from 'react'
 import { stringifyType } from '@/modules/firebase/role'
 import { useUser } from '@/modules/firebase/UserProvider'
+import { routes } from '@/modules/routes'
 import { createSharedUserColumns, userColumnIds } from '@/modules/user/table'
 import { DataTable } from '@/packages/design-system/src/components/DataTable'
 import { UserMenu } from '@/routes/~_dashboard/~users/UserMenu'
@@ -40,6 +42,7 @@ interface UsersDataTableProps {
 }
 
 export const UsersTable = ({ data }: UsersDataTableProps) => {
+  const navigate = useNavigate()
   const user = useUser()
   const visibleColumns = useMemo(
     () =>
@@ -48,5 +51,17 @@ export const UsersTable = ({ data }: UsersDataTableProps) => {
       : columns.filter((column) => column.id !== userColumnIds.organization),
     [user.user.type],
   )
-  return <DataTable columns={visibleColumns} data={data} entityName="users" />
+  return (
+    <DataTable
+      columns={visibleColumns}
+      data={data}
+      entityName="users"
+      tableView={{
+        onRowClick: (user) =>
+          void navigate({
+            to: routes.users.user(user.resourceId),
+          }),
+      }}
+    />
+  )
 }
