@@ -1,4 +1,5 @@
 import { queryOptions, useQuery } from '@tanstack/react-query'
+import { query, orderBy } from 'firebase/firestore'
 import { refs } from '@/modules/firebase/app'
 import { useUser } from '@/modules/firebase/UserProvider'
 import { getDocsData } from '@/modules/firebase/utils'
@@ -13,7 +14,13 @@ export const notificationQueries = {
   list: (payload: ListNotificationsPayload) =>
     queryOptions({
       queryKey: [notificationQueries.namespace, payload],
-      queryFn: () => getDocsData(refs.userMessages({ userId: payload.userId })),
+      queryFn: () =>
+        getDocsData(
+          query(
+            refs.userMessages({ userId: payload.userId }),
+            orderBy('creationDate', 'desc'),
+          ),
+        ),
     }),
 }
 
