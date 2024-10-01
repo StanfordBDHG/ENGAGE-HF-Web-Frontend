@@ -10,8 +10,9 @@ export const parseMessageToLink = (message: UserMessage) => {
   if (!action) return null
   const actionParts = action.split('/')
   if (actionParts.at(0) === 'users') {
-    // TODO: Support tab navigation
-    return `/patients/${actionParts.at(1)}`
+    const userId = actionParts.at(1)
+    const tab = actionParts.at(2)
+    return `/patients/${userId}${tab ? `?tab=${tab}` : ''}`
   }
   return null
 }
