@@ -10,6 +10,7 @@ import {
   TableRow,
 } from '@/packages/design-system/src/components/Table'
 import { TableEmptyState } from '@/packages/design-system/src/components/Table/TableEmptyState'
+import { ensureString } from '@/packages/design-system/src/utils/misc'
 import type { DataTableViewProps } from './DataTable'
 
 export interface DataTableTableViewSpecificProps<Data> {
@@ -57,7 +58,7 @@ export const DataTableTableView = <Data,>({
           <TableEmptyState
             entityName={entityName}
             colSpan={table.getAllColumns().length}
-            textFilter={table.getState().globalFilter}
+            textFilter={ensureString(table.getState().globalFilter)}
             hasFilters={table.getState().columnFilters.length > 0}
           />
         : rows.map((row) => (

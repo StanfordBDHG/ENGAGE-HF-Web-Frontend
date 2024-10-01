@@ -1,6 +1,7 @@
 import { type Row } from '@tanstack/react-table'
 import { Fragment, type ReactNode } from 'react'
 import { EmptyState } from '@/packages/design-system/src/components/EmptyState'
+import { ensureString } from '@/packages/design-system/src/utils/misc'
 import type { DataTableViewProps } from './DataTable'
 
 interface DataTableBasicViewProps<Data> extends DataTableViewProps<Data> {
@@ -18,7 +19,7 @@ export const DataTableBasicView = <Data,>({
       {!rows.length ?
         <EmptyState
           entityName={entityName}
-          textFilter={table.getState().globalFilter}
+          textFilter={ensureString(table.getState().globalFilter)}
           hasFilters={table.getState().columnFilters.length > 0}
           className="h-24"
         />

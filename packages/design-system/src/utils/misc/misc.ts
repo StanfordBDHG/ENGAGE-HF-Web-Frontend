@@ -7,6 +7,7 @@
 //
 
 import type { UrlObject } from 'url'
+import { isString } from 'lodash'
 import { toast } from '../../components/Toaster'
 
 /**
@@ -61,3 +62,6 @@ export const strategy = <T extends string | number | symbol, F>(
   record: Record<T, F>,
   enumValue: T,
 ) => record[enumValue]
+
+export const ensureString = (value: unknown) =>
+  isString(value) ? value : undefined
