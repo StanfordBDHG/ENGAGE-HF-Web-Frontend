@@ -16,3 +16,13 @@ export const parseMessageToLink = (message: UserMessage) => {
   }
   return null
 }
+
+export const getNotificationPatientId = (message: UserMessage) => {
+  const action = message.action
+  if (!action) return null
+  const actionParts = action.split('/')
+  if (actionParts.at(0) === 'users') {
+    return actionParts.at(1)
+  }
+  return null
+}

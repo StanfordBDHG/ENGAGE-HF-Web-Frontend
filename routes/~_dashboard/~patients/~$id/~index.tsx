@@ -49,6 +49,7 @@ import { Allergies } from '@/routes/~_dashboard/~patients/~$id/Allergies'
 import { Appointments } from '@/routes/~_dashboard/~patients/~$id/Appointments'
 import { GenerateHealthSummary } from '@/routes/~_dashboard/~patients/~$id/GenerateHealthSummary'
 import { Labs } from '@/routes/~_dashboard/~patients/~$id/Labs'
+import { Notifications } from '@/routes/~_dashboard/~patients/~$id/Notifications'
 import { DashboardLayout } from '../../DashboardLayout'
 
 const getUserMedications = async (payload: {
@@ -212,7 +213,7 @@ const PatientPage = () => {
           />
         </TabsContent>
         <TabsContent value={PatientPageTab.notifications}>
-          notifications
+          <Notifications userId={userId} />
         </TabsContent>
         <TabsContent value={PatientPageTab.medications}>
           <Medications
