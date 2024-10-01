@@ -184,6 +184,7 @@ export const createAppointment = async (
       resourceType: payload.resourceType,
     }),
     {
+      // @ts-expect-error id can be null, because FHIRAppointment.id is nullable. id is overridden by getDocData
       id: null,
       created: new Date().toISOString(),
       ...getAppointmentData(payload),
