@@ -9,38 +9,11 @@ import { useQuery } from '@tanstack/react-query'
 import { createFileRoute } from '@tanstack/react-router'
 import { Bell } from 'lucide-react'
 import { Helmet } from 'react-helmet'
-import { parseNilLocalizedText } from '@/modules/firebase/localizedText'
 import { useUser } from '@/modules/firebase/UserProvider'
-import { isMessageRead } from '@/modules/notifications/helpers'
-import { Notification } from '@/modules/notifications/Notification'
+import { NotificationsTable } from '@/modules/notifications/NotificationsTable'
 import { notificationQueries } from '@/modules/notifications/queries'
-import {
-  DataTable,
-  DataTableBasicView,
-} from '@/packages/design-system/src/components/DataTable'
 import { PageTitle } from '@/packages/design-system/src/molecules/DashboardLayout'
-import { MarkAllAsReadButton } from '@/routes/~_dashboard/~notifications/MarkAllAsReadButton'
-import { ShowUnreadOnlySwitch } from '@/routes/~_dashboard/~notifications/ShowUnreadOnlySwitch'
-import { columnHelper, columnIds } from './helpers'
 import { DashboardLayout } from '../DashboardLayout'
-
-const columns = [
-  columnHelper.accessor(
-    (notification) => parseNilLocalizedText(notification.description),
-    { id: 'description' },
-  ),
-  columnHelper.accessor(
-    (notification) => parseNilLocalizedText(notification.title),
-    { id: 'title' },
-  ),
-  columnHelper.accessor((notification) => new Date(notification.creationDate), {
-    id: 'creationDate',
-  }),
-  columnHelper.accessor((notification) => isMessageRead(notification), {
-    id: columnIds.isRead,
-    filterFn: 'equals',
-  }),
-]
 
 const NotificationsPage = () => {
   const { auth } = useUser()
@@ -56,24 +29,7 @@ const NotificationsPage = () => {
       <Helmet>
         <title>Notifications</title>
       </Helmet>
-      <DataTable
-        columns={columns}
-        data={notifications}
-        entityName="notifications"
-        pageSize={10}
-        header={({ table }) => (
-          <div className="ml-auto flex gap-4">
-            <ShowUnreadOnlySwitch table={table} />
-            <MarkAllAsReadButton notifications={notifications} />
-          </div>
-        )}
-      >
-        {(props) => (
-          <DataTableBasicView {...props}>
-            {(notification) => <Notification notification={notification} />}
-          </DataTableBasicView>
-        )}
-      </DataTable>
+      <NotificationsTable notifications={notifications} />
     </DashboardLayout>
   )
 }

@@ -72,6 +72,7 @@ const getUserMedications = async (payload: {
 
 export enum PatientPageTab {
   information = 'information',
+  notifications = 'notifications',
   medications = 'medications',
   allergies = 'allergies',
   labs = 'labs',
@@ -186,6 +187,9 @@ const PatientPage = () => {
           <TabsTrigger value={PatientPageTab.information} className="grow">
             Information
           </TabsTrigger>
+          <TabsTrigger value={PatientPageTab.notifications} className="grow">
+            Notifications
+          </TabsTrigger>
           <TabsTrigger value={PatientPageTab.medications} className="grow">
             Medications
           </TabsTrigger>
@@ -206,6 +210,9 @@ const PatientPage = () => {
             onSubmit={updatePatient}
             {...formProps}
           />
+        </TabsContent>
+        <TabsContent value={PatientPageTab.notifications}>
+          notifications
         </TabsContent>
         <TabsContent value={PatientPageTab.medications}>
           <Medications
