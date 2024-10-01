@@ -6,9 +6,11 @@
 // SPDX-License-Identifier: MIT
 //
 import { UserType } from '@stanfordbdhg/engagehf-models'
+import { useNavigate } from '@tanstack/react-router'
 import { createColumnHelper } from '@tanstack/table-core'
 import { useMemo } from 'react'
 import { useUser } from '@/modules/firebase/UserProvider'
+import { routes } from '@/modules/routes'
 import { createSharedUserColumns, userColumnIds } from '@/modules/user/table'
 import {
   DataTable,
@@ -34,6 +36,7 @@ interface PatientsDataTableProps
   extends Omit<DataTableProps<Patient>, 'columns'> {}
 
 export const PatientsTable = ({ data, ...props }: PatientsDataTableProps) => {
+  const navigate = useNavigate()
   const user = useUser()
   const visibleColumns = useMemo(
     () =>
@@ -47,6 +50,12 @@ export const PatientsTable = ({ data, ...props }: PatientsDataTableProps) => {
       columns={visibleColumns}
       data={data}
       entityName="patients"
+      tableView={{
+        onRowClick: (patient) =>
+          void navigate({
+            to: routes.patients.patient(patient.resourceId),
+          }),
+      }}
       {...props}
     />
   )
