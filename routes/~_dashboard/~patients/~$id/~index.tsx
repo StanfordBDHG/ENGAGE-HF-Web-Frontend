@@ -179,7 +179,7 @@ const PatientPage = () => {
       <Helmet>
         <title>Edit {userName}</title>
       </Helmet>
-      <Tabs defaultValue={Tab.medications}>
+      <Tabs defaultValue={Tab.information}>
         <TabsList className="mb-6 w-full">
           <TabsTrigger value={Tab.information} className="grow">
             Information
