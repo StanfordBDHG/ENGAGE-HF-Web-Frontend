@@ -5,18 +5,32 @@
 //
 // SPDX-License-Identifier: MIT
 //
+import { deleteDoc } from '@firebase/firestore'
 import { useRouter } from '@tanstack/react-router'
 import { createColumnHelper } from '@tanstack/table-core'
-import { Plus } from 'lucide-react'
-import { useMemo } from 'react'
+import { Pencil, Plus, Trash } from 'lucide-react'
 import { stringifyAllergyType } from '@/modules/firebase/allergy'
+import { docRefs } from '@/modules/firebase/app'
 import { Button } from '@/packages/design-system/src/components/Button'
-import { DataTable } from '@/packages/design-system/src/components/DataTable'
-import { useOpenState } from '@/packages/design-system/src/utils/useOpenState'
-import { createAllergy } from '@/routes/~_dashboard/~patients/actions'
+import {
+  DataTable,
+  RowDropdownMenu,
+} from '@/packages/design-system/src/components/DataTable'
+import { DropdownMenuItem } from '@/packages/design-system/src/components/DropdownMenu'
+import { ConfirmDeleteDialog } from '@/packages/design-system/src/molecules/ConfirmDeleteDialog'
+import {
+  useOpenState,
+  useStatefulOpenState,
+} from '@/packages/design-system/src/utils/useOpenState'
+import {
+  createAllergy,
+  updateAllergy,
+} from '@/routes/~_dashboard/~patients/actions'
 import { useMedicationsMap } from '@/routes/~_dashboard/~patients/clientUtils'
-import { AllergyFormDialog } from '@/routes/~_dashboard/~patients/~$id/AllergyForm'
-import { AllergyMenu } from '@/routes/~_dashboard/~patients/~$id/AllergyMenu'
+import {
+  AllergyFormDialog,
+  type AllergyFormSchema,
+} from '@/routes/~_dashboard/~patients/~$id/AllergyForm'
 import {
   type AllergiesData,
   type Allergy,
@@ -35,57 +49,108 @@ export const Allergies = ({
 }: AllergiesProps) => {
   const router = useRouter()
   const createDialog = useOpenState()
+  const deleteDialog = useStatefulOpenState<Allergy>()
+  const editDialog = useStatefulOpenState<Allergy>()
 
   const medicationsMap = useMedicationsMap(medications)
 
-  const columns = useMemo(
-    () => [
-      columnHelper.accessor('type', {
-        header: 'Type',
-        cell: (props) => stringifyAllergyType(props.getValue()),
+  const handleCreate = async (data: AllergyFormSchema) => {
+    await createAllergy({
+      userId,
+      resourceType,
+      ...data,
+    })
+    createDialog.close()
+    await router.invalidate()
+  }
+
+  const handleDelete = async () => {
+    const allergy = deleteDialog.state
+    if (!allergy) return
+    await deleteDoc(
+      docRefs.allergyIntolerance({
+        userId,
+        resourceType,
+        allergyIntoleranceId: allergy.id,
       }),
-      columnHelper.accessor('medication', {
-        header: 'Medication',
-        cell: (props) => {
-          const medication = props.getValue()
-          return medication ? medicationsMap.get(medication)?.name : ''
-        },
-      }),
-      columnHelper.display({
-        id: 'actions',
-        cell: (props) => (
-          <AllergyMenu
-            allergy={props.row.original}
-            userId={userId}
-            resourceType={resourceType}
-            medications={medications}
-          />
-        ),
-      }),
-    ],
-    [medications, medicationsMap, resourceType, userId],
-  )
+    )
+    deleteDialog.close()
+    await router.invalidate()
+  }
+
+  const handleEdit = async (data: AllergyFormSchema) => {
+    const allergy = editDialog.state
+    if (!allergy) return
+    await updateAllergy({
+      userId,
+      resourceType,
+      allergyIntoleranceId: allergy.id,
+      ...data,
+    })
+    editDialog.close()
+    await router.invalidate()
+  }
+
+  const columns = [
+    columnHelper.accessor('type', {
+      header: 'Type',
+      cell: (props) => stringifyAllergyType(props.getValue()),
+    }),
+    columnHelper.accessor('medication', {
+      header: 'Medication',
+      cell: (props) => {
+        const medication = props.getValue()
+        return medication ? medicationsMap.get(medication)?.name : ''
+      },
+    }),
+    columnHelper.display({
+      id: 'actions',
+      cell: (props) => {
+        const allergy = props.row.original
+        return (
+          <RowDropdownMenu>
+            <DropdownMenuItem onClick={() => editDialog.open(allergy)}>
+              <Pencil />
+              Edit
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => deleteDialog.open(allergy)}>
+              <Trash />
+              Delete
+            </DropdownMenuItem>
+          </RowDropdownMenu>
+        )
+      },
+    }),
+  ]
 
   return (
     <>
       <AllergyFormDialog
-        onSubmit={async (data) => {
-          await createAllergy({
-            userId,
-            resourceType,
-            ...data,
-          })
-          createDialog.close()
-          await router.invalidate()
-        }}
+        onSubmit={handleCreate}
         open={createDialog.isOpen}
         onOpenChange={createDialog.setIsOpen}
         medications={medications}
+      />
+      <AllergyFormDialog
+        onSubmit={handleEdit}
+        open={editDialog.isOpen}
+        onOpenChange={editDialog.close}
+        allergy={editDialog.state}
+        medications={medications}
+      />
+      <ConfirmDeleteDialog
+        open={deleteDialog.isOpen}
+        onOpenChange={deleteDialog.close}
+        entityName="allergy"
+        onDelete={handleDelete}
       />
       <DataTable
         columns={columns}
         data={allergyIntolerances}
         entityName="allergies"
+        tableView={{
+          onRowClick: editDialog.open,
+        }}
         header={
           <>
             <Button

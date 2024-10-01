@@ -87,6 +87,38 @@ export const Appointments = ({
     editDialog.close()
   }
 
+  const columns = [
+    columnHelper.accessor('created', {
+      header: 'Created',
+      cell: dateColumn,
+    }),
+    columnHelper.accessor('providerName', {
+      header: 'Provider name',
+    }),
+    columnHelper.accessor('start', {
+      header: 'Start',
+      cell: dateTimeColumn,
+    }),
+    columnHelper.display({
+      id: 'actions',
+      cell: (props) => {
+        const appointment = props.row.original
+        return (
+          <RowDropdownMenu>
+            <DropdownMenuItem onClick={() => editDialog.open(appointment)}>
+              <Pencil />
+              Edit
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => deleteDialog.open(appointment)}>
+              <Trash />
+              Delete
+            </DropdownMenuItem>
+          </RowDropdownMenu>
+        )
+      },
+    }),
+  ]
+
   return (
     <>
       <AppointmentFormDialog
@@ -107,43 +139,12 @@ export const Appointments = ({
         onDelete={handleDelete}
       />
       <DataTable
-        columns={[
-          columnHelper.accessor('created', {
-            header: 'Created',
-            cell: dateColumn,
-          }),
-          columnHelper.accessor('providerName', {
-            header: 'Provider name',
-          }),
-          columnHelper.accessor('start', {
-            header: 'Start',
-            cell: dateTimeColumn,
-          }),
-          columnHelper.display({
-            id: 'actions',
-            cell: (props) => {
-              const appointment = props.row.original
-              return (
-                <RowDropdownMenu>
-                  <DropdownMenuItem
-                    onClick={() => editDialog.open(appointment)}
-                  >
-                    <Pencil />
-                    Edit
-                  </DropdownMenuItem>
-                  <DropdownMenuItem
-                    onClick={() => deleteDialog.open(appointment)}
-                  >
-                    <Trash />
-                    Delete
-                  </DropdownMenuItem>
-                </RowDropdownMenu>
-              )
-            },
-          }),
-        ]}
+        columns={columns}
         data={appointments}
         entityName="appointments"
+        tableView={{
+          onRowClick: editDialog.open,
+        }}
         header={
           <>
             <Button
