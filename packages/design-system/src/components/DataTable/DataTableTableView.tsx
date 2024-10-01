@@ -22,7 +22,15 @@ import type { DataTableViewProps } from './DataTable'
 
 export interface DataTableTableViewSpecificProps<Data> {
   onRowClick?: (data: Data, event: MouseEvent) => void
+  /**
+   * Determines whether event is valid row click. Some table rows include interactive elements
+   * isRowClicked allows excluding clicks that were bubbled up
+   * */
+  isRowClicked?: (event: MouseEvent) => boolean
 }
+
+const isRowClickedDefault = (event: MouseEvent) =>
+  (event.target as HTMLElement).tagName === 'TD'
 
 interface DataTableTableViewProps<Data>
   extends DataTableViewProps<Data>,
@@ -32,6 +40,7 @@ export const DataTableTableView = <Data,>({
   table,
   entityName,
   onRowClick,
+  isRowClicked = isRowClickedDefault,
 }: DataTableTableViewProps<Data>) => {
   const rows = table.getRowModel().rows
   return (
@@ -74,7 +83,11 @@ export const DataTableTableView = <Data,>({
               data-state={row.getIsSelected() && 'selected'}
               onClick={
                 onRowClick ?
-                  (event) => onRowClick(row.original, event)
+                  (event) => {
+                    if (isRowClicked(event)) {
+                      onRowClick(row.original, event)
+                    }
+                  }
                 : undefined
               }
             >
