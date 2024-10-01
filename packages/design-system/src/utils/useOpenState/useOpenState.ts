@@ -29,3 +29,26 @@ export const useOpenState = (initialValue: InitialState<boolean> = false) => {
 
   return { isOpen, setIsOpen, close, open, toggle }
 }
+
+/**
+ * Stateful open state is suitable for cases where combination of boolean flag and additional state is required
+ * State is kept after closing to prevent flickering of exit animations
+ * */
+export const useStatefulOpenState = <T>(
+  initialStateValue?: T | undefined,
+  initialValue?: InitialState<boolean>,
+) => {
+  const [state, setState] = useState(initialStateValue)
+  const openState = useOpenState(initialValue)
+
+  const close = openState.close
+
+  const open = (state: T) => {
+    setState(state)
+    openState.open()
+  }
+
+  const isOpen = !!state && openState.isOpen
+
+  return { isOpen, close, open, state }
+}
