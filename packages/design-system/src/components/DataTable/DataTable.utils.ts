@@ -55,6 +55,8 @@ export const useDataTable = <Data>({
   columns,
   data,
   pageSize = 50,
+  state,
+  initialState,
   ...props
 }: UseDataTableProps<Data>) => {
   const [globalFilter, setGlobalFilter] = useState('')
@@ -75,11 +77,12 @@ export const useDataTable = <Data>({
     getSortedRowModel: getSortedRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     onGlobalFilterChange: setGlobalFilter,
-    state: { globalFilter },
+    state: { globalFilter, ...state },
     initialState: {
       pagination: {
         pageSize,
       },
+      ...initialState,
     },
     ...props,
   })
