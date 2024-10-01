@@ -41,25 +41,26 @@ interface NotificationsTableProps {
 
 export const NotificationsTable = ({
   notifications,
-}: NotificationsTableProps) => {
-  return (
-    <DataTable
-      columns={columns}
-      data={notifications}
-      entityName="notifications"
-      pageSize={10}
-      header={({ table }) => (
-        <div className="ml-auto flex gap-4">
-          <ShowUnreadOnlySwitch table={table} />
-          <MarkAllAsReadButton notifications={notifications} />
-        </div>
-      )}
-    >
-      {(props) => (
-        <DataTableBasicView {...props}>
-          {(notification) => <Notification notification={notification} />}
-        </DataTableBasicView>
-      )}
-    </DataTable>
-  )
-}
+}: NotificationsTableProps) => (
+  <DataTable
+    columns={columns}
+    data={notifications}
+    entityName="notifications"
+    pageSize={10}
+    header={({ table }) => (
+      <div className="ml-auto flex gap-4">
+        <ShowUnreadOnlySwitch table={table} />
+        <MarkAllAsReadButton notifications={notifications} />
+      </div>
+    )}
+    initialState={{
+      columnFilters: [{ id: columnIds.isRead, value: false }],
+    }}
+  >
+    {(props) => (
+      <DataTableBasicView {...props}>
+        {(notification) => <Notification notification={notification} />}
+      </DataTableBasicView>
+    )}
+  </DataTable>
+)
