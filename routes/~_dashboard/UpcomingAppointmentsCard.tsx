@@ -9,7 +9,7 @@ import { useQueries, useQuery } from '@tanstack/react-query'
 import { useNavigate } from '@tanstack/react-router'
 import { createColumnHelper } from '@tanstack/table-core'
 import { addWeeks, isBefore, isFuture } from 'date-fns'
-import { Loader2, Info } from 'lucide-react'
+import { Info, Loader2 } from 'lucide-react'
 import { useMemo } from 'react'
 import { appointmentsQueries } from '@/modules/firebase/appointment'
 import { routes } from '@/modules/routes'
@@ -25,6 +25,7 @@ import {
 } from '@/packages/design-system/src/components/DataTable'
 import { Tooltip } from '@/packages/design-system/src/components/Tooltip'
 import { getUserName } from '@/packages/design-system/src/modules/auth/user'
+import { PatientPageTab } from '@/routes/~_dashboard/~patients/~$id/~index'
 
 export const UpcomingAppointmentsCard = () => {
   const navigate = useNavigate()
@@ -108,7 +109,9 @@ export const UpcomingAppointmentsCard = () => {
           tableView={{
             onRowClick: (appointment) =>
               void navigate({
-                to: routes.patients.patient(appointment.patient.id),
+                to: routes.patients.patient(appointment.patient.id, {
+                  tab: PatientPageTab.appointments,
+                }),
               }),
           }}
         />
