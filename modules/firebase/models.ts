@@ -59,7 +59,9 @@ export type FHIRAllergyIntolerance = InferEncoded<
   typeof fhirAllergyIntoleranceConverter
 >
 
-export type FHIRAppointment = InferEncoded<typeof fhirAppointmentConverter>
+export type FHIRAppointment = InferEncoded<typeof fhirAppointmentConverter> & {
+  id: string
+}
 
 export type UserMessage = InferEncoded<typeof userMessageConverter> & {
   id: string
