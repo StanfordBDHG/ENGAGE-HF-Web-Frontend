@@ -43,11 +43,11 @@ export const Labs = ({ observations, userId, resourceType }: LabsProps) => {
   const router = useRouter()
   const createDialog = useOpenState()
 
-  const deleteModal = useStatefulOpenState<Observation>()
-  const editModal = useStatefulOpenState<Observation>()
+  const deleteDialog = useStatefulOpenState<Observation>()
+  const editDialog = useStatefulOpenState<Observation>()
 
   const handleDelete = async () => {
-    const observation = deleteModal.state
+    const observation = deleteDialog.state
     if (!observation) return
     await deleteDoc(
       docRefs.userObservation({
@@ -58,11 +58,11 @@ export const Labs = ({ observations, userId, resourceType }: LabsProps) => {
       }),
     )
     await router.invalidate()
-    deleteModal.close()
+    deleteDialog.close()
   }
 
   const handleEdit = async (data: LabFormSchema) => {
-    const observation = deleteModal.state
+    const observation = deleteDialog.state
     if (!observation) return
     await updateObservation({
       userId,
@@ -71,7 +71,7 @@ export const Labs = ({ observations, userId, resourceType }: LabsProps) => {
       ...data,
     })
     await router.invalidate()
-    editModal.close()
+    editDialog.close()
   }
 
   const handleCreate = async (data: LabFormSchema) => {
@@ -88,9 +88,9 @@ export const Labs = ({ observations, userId, resourceType }: LabsProps) => {
     <>
       <LabFormDialog
         onSubmit={handleEdit}
-        open={editModal.isOpen}
-        onOpenChange={editModal.close}
-        observation={editModal.state}
+        open={editDialog.isOpen}
+        onOpenChange={editDialog.close}
+        observation={editDialog.state}
       />
       <LabFormDialog
         onSubmit={handleCreate}
@@ -98,8 +98,8 @@ export const Labs = ({ observations, userId, resourceType }: LabsProps) => {
         onOpenChange={createDialog.setIsOpen}
       />
       <ConfirmDeleteDialog
-        open={deleteModal.isOpen}
-        onOpenChange={deleteModal.close}
+        open={deleteDialog.isOpen}
+        onOpenChange={deleteDialog.close}
         entityName="lab"
         onDelete={handleDelete}
       />
@@ -125,12 +125,14 @@ export const Labs = ({ observations, userId, resourceType }: LabsProps) => {
               const observation = props.row.original
               return (
                 <RowDropdownMenu>
-                  <DropdownMenuItem onClick={() => editModal.open(observation)}>
+                  <DropdownMenuItem
+                    onClick={() => editDialog.open(observation)}
+                  >
                     <Pencil />
                     Edit
                   </DropdownMenuItem>
                   <DropdownMenuItem
-                    onClick={() => deleteModal.open(observation)}
+                    onClick={() => deleteDialog.open(observation)}
                   >
                     <Trash />
                     Delete
@@ -156,7 +158,7 @@ export const Labs = ({ observations, userId, resourceType }: LabsProps) => {
           </>
         }
         tableView={{
-          onRowClick: editModal.open,
+          onRowClick: editDialog.open,
         }}
       />
     </>
