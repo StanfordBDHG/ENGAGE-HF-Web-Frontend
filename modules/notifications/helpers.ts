@@ -6,6 +6,8 @@
 // SPDX-License-Identifier: MIT
 //
 import { type UserMessage } from '@/modules/firebase/models'
+import { routes } from '@/modules/routes'
+import { type PatientPageTab } from '@/routes/~_dashboard/~patients/~$id/~index'
 
 export const isMessageRead = (message: UserMessage) => !!message.completionDate
 
@@ -19,7 +21,9 @@ export const parseMessageToLink = (message: UserMessage) => {
   if (actionParts.at(0) === 'users') {
     const userId = actionParts.at(1)
     const tab = actionParts.at(2)
-    return `/patients/${userId}${tab ? `?tab=${tab}` : ''}`
+    if (userId) {
+      return routes.patients.patient(userId, { tab: tab as PatientPageTab })
+    }
   }
   return null
 }

@@ -6,6 +6,8 @@
 // SPDX-License-Identifier: MIT
 //
 
+import type { PatientPageTab } from '@/routes/~_dashboard/~patients/~$id/~index'
+
 export const routes = {
   home: '/',
   notifications: '/notifications',
@@ -16,7 +18,8 @@ export const routes = {
   },
   patients: {
     index: '/patients',
-    patient: (patientId: string) => `/patients/${patientId}`,
+    patient: (patientId: string, params?: { tab?: PatientPageTab }) =>
+      `/patients/${patientId}${params?.tab ? `?tab=${params.tab}` : ''}`,
     invite: '/patients/invite',
   },
   signIn: '/sign-in',
