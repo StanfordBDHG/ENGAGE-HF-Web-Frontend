@@ -13,7 +13,7 @@ import { type Nil } from '@/packages/design-system/src/utils/misc'
 
 interface SharedUser {
   resourceType: 'invitation' | 'user'
-  uid: Nil<string>
+  resourceId: string
   displayName: Nil<string>
   email: Nil<string>
   organization: Nil<{ name: string }>
@@ -27,7 +27,8 @@ export const createSharedUserColumns = <User extends SharedUser>() => {
   const columnHelper = createColumnHelper<User>()
   return {
     id: columnHelper.accessor(
-      (user) => (user.resourceType === 'invitation' ? 'invitation' : user.uid),
+      (user) =>
+        user.resourceType === 'invitation' ? 'invitation' : user.resourceId,
       {
         header: 'Id',
         cell: (props) => {
@@ -40,8 +41,8 @@ export const createSharedUserColumns = <User extends SharedUser>() => {
                   Invitation
                 </div>
               </Tooltip>
-            : user.uid ?
-              <CopyText className="max-w-[7rem]">{user.uid}</CopyText>
+            : user.resourceId ?
+              <CopyText className="max-w-[7rem]">{user.resourceId}</CopyText>
             : '-'
           )
         },
