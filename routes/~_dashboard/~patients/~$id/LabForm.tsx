@@ -7,7 +7,7 @@
 //
 import { type ComponentProps } from 'react'
 import { z } from 'zod'
-import { ObservationType } from '@/modules/firebase/utils'
+import { UserObservationCollection } from '@/modules/firebase/utils'
 import { Button } from '@/packages/design-system/src/components/Button'
 import { DatePicker } from '@/packages/design-system/src/components/DatePicker'
 import {
@@ -29,11 +29,12 @@ import { useForm } from '@/packages/design-system/src/forms/useForm'
 import {
   getObservationTypeUnits,
   getUnitOfObservationType,
+  labsObservationCollections,
 } from '@/routes/~_dashboard/~patients/clientUtils'
 import { type Observation } from '@/routes/~_dashboard/~patients/utils'
 
 export const labFormSchema = z.object({
-  type: z.nativeEnum(ObservationType),
+  type: z.nativeEnum(UserObservationCollection),
   effectiveDateTime: z.date(),
   unit: z.string(),
   value: z.number(),
@@ -48,7 +49,7 @@ interface LabFormProps {
 
 export const LabForm = ({ observation, onSubmit }: LabFormProps) => {
   const isEdit = !!observation
-  const defaultType = observation?.type ?? ObservationType.potassium
+  const defaultType = observation?.type ?? UserObservationCollection.potassium
   const form = useForm({
     formSchema: labFormSchema,
     defaultValues: {
@@ -81,8 +82,10 @@ export const LabForm = ({ observation, onSubmit }: LabFormProps) => {
               field.onChange(type)
               form.setValue(
                 'unit',
-                getUnitOfObservationType(type as ObservationType, formUnit)
-                  .unit,
+                getUnitOfObservationType(
+                  type as UserObservationCollection,
+                  formUnit,
+                ).unit,
               )
             }}
             {...field}
@@ -91,7 +94,7 @@ export const LabForm = ({ observation, onSubmit }: LabFormProps) => {
               <SelectValue placeholder="Type" />
             </SelectTrigger>
             <SelectContent>
-              {Object.values(ObservationType).map((type) => (
+              {labsObservationCollections.map((type) => (
                 <SelectItem key={type} value={type}>
                   {type}
                 </SelectItem>
@@ -110,7 +113,7 @@ export const LabForm = ({ observation, onSubmit }: LabFormProps) => {
               <SelectValue placeholder="Unit" />
             </SelectTrigger>
             <SelectContent>
-              {units.map((unit) => (
+              {units?.map((unit) => (
                 <SelectItem key={unit.unit} value={unit.unit}>
                   {unit.unit}
                 </SelectItem>

@@ -23,6 +23,11 @@ import {
 } from '@/modules/firebase/utils'
 import { getUserData } from '@/modules/user/queries'
 import {
+  Card,
+  CardHeader,
+  CardTitle,
+} from '@/packages/design-system/src/components/Card'
+import {
   Tabs,
   TabsContent,
   TabsList,
@@ -30,6 +35,7 @@ import {
 } from '@/packages/design-system/src/components/Tabs'
 import { getUserName } from '@/packages/design-system/src/modules/auth/user'
 import { PageTitle } from '@/packages/design-system/src/molecules/DashboardLayout'
+import { formatISODateTime } from '@/packages/design-system/src/utils/date'
 import {
   Medications,
   type MedicationsFormSchema,
@@ -44,6 +50,7 @@ import {
   getFormProps,
   getLabsData,
   getMedicationsData,
+  getUserActivity,
 } from '@/routes/~_dashboard/~patients/utils'
 import { Allergies } from '@/routes/~_dashboard/~patients/~$id/Allergies'
 import { Appointments } from '@/routes/~_dashboard/~patients/~$id/Appointments'
@@ -94,6 +101,7 @@ const PatientPage = () => {
     user,
     authUser,
     resourceType,
+    activity,
   } = Route.useLoaderData()
 
   const updatePatient = async (form: PatientFormSchema) => {
@@ -205,12 +213,35 @@ const PatientPage = () => {
           </TabsTrigger>
         </TabsList>
         <TabsContent value={PatientPageTab.information}>
-          <PatientForm
-            user={user}
-            userInfo={authUser}
-            onSubmit={updatePatient}
-            {...formProps}
-          />
+          <div className="flex flex-col gap-6 xl:flex-row">
+            <Card className="xl:min-w-max xl:self-start">
+              <CardHeader>
+                <CardTitle>User activity</CardTitle>
+              </CardHeader>
+              <div className="px-5 pb-4 marker:text-primary">
+                <ul className="list-disc pl-4">
+                  <li>
+                    latest activity:{' '}
+                    {activity.lastActiveDate ?
+                      formatISODateTime(activity.lastActiveDate)
+                    : '-'}
+                  </li>
+                  <li>
+                    latest questionnaire answer:{' '}
+                    {activity.latestQuestionnaireDate ?
+                      formatISODateTime(activity.latestQuestionnaireDate)
+                    : '-'}
+                  </li>
+                </ul>
+              </div>
+            </Card>
+            <PatientForm
+              user={user}
+              userInfo={authUser}
+              onSubmit={updatePatient}
+              {...formProps}
+            />
+          </div>
         </TabsContent>
         <TabsContent value={PatientPageTab.notifications}>
           <Notifications userId={userId} />
@@ -259,6 +290,7 @@ export const Route = createFileRoute('/_dashboard/patients/$id/')({
       allergiesData: await getAllergiesData({ userId, resourceType }),
       labsData: await getLabsData({ userId, resourceType }),
       appointmentsData: await getAppointmentsData({ userId, resourceType }),
+      activity: await getUserActivity(userData),
     }
   },
 })
