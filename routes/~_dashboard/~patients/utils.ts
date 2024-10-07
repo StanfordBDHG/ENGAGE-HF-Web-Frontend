@@ -145,14 +145,12 @@ export const getLabsData = async ({
   resourceType: ResourceType
 }) => {
   const rawObservations = await Promise.all(
-    Object.values(ObservationType).map(async (type) => {
-      return {
-        type,
-        data: await getDocsData(
-          refs.userObservation({ userId, resourceType, observationType: type }),
-        ),
-      }
-    }),
+    labsObservationCollections.map(async (type) => ({
+      type,
+      data: await getDocsData(
+        refs.userObservation({ userId, resourceType, observationType: type }),
+      ),
+    })),
   )
 
   const observations = rawObservations.flatMap((observations) =>
