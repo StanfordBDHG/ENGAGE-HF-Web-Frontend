@@ -84,6 +84,11 @@
     // false negatives
     "import/namespace": ["off"],
     "no-empty-pattern": "off",
+    "@typescript-eslint/no-empty-object-type": [
+      "error",
+      // `interface SpecificVariantProps extends VariantProps {}` is fine
+      { "allowInterfaces": "with-single-extends" }
+    ],
     // make sure to `await` inside try…catch
     "@typescript-eslint/return-await": ["error", "in-try-catch"],
     "@typescript-eslint/no-confusing-void-expression": [
