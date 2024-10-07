@@ -92,9 +92,7 @@ export const Route = createFileRoute('/_dashboard/users/$id')({
   loader: async ({ params }) => {
     const userId = params.id
     const { resourceType, user, authUser } = await getUserData(userId)
-    if (!user || !authUser || user.type === UserType.patient) {
-      throw notFound()
-    }
+    if (user.type === UserType.patient) throw notFound()
 
     return {
       user,

@@ -7,6 +7,7 @@
 //
 import { UserType } from '@stanfordbdhg/engagehf-models'
 import { queryOptions } from '@tanstack/react-query'
+import { notFound } from '@tanstack/react-router'
 import { query, where } from 'firebase/firestore'
 import { docRefs, getCurrentUser, refs } from '@/modules/firebase/app'
 import { type Invitation, type Organization } from '@/modules/firebase/models'
@@ -32,7 +33,6 @@ export const parseInvitationToUser = (
 ) => ({
   resourceId: invitation.id,
   resourceType: 'invitation' as const,
-  uid: invitation.userId,
   email: invitation.auth?.email,
   displayName: invitation.auth?.displayName,
   organization: organizationMap.get(invitation.user.organization ?? ''),
@@ -93,25 +93,23 @@ export const getUserData = async (userId: string) => {
       }),
     )
     const authUser = allAuthData.at(0)
+    if (!authUser) throw new Error('Incomplete data')
     return { user, authUser, resourceType: 'user' as const }
   }
   const invitation = await getDocData(docRefs.invitation(userId))
+  if (!invitation) throw notFound()
+  if (!invitation.auth) throw new Error('Incomplete data')
   return {
-    user:
-      invitation?.user ?
-        {
-          ...invitation.user,
-          invitationCode: invitation.id,
-        }
-      : undefined,
-    authUser:
-      invitation?.auth ?
-        {
-          uid: userId,
-          email: invitation.auth.email ?? null,
-          displayName: invitation.auth.displayName ?? null,
-        }
-      : undefined,
+    user: {
+      ...invitation.user,
+      invitationCode: invitation.id,
+      lastActiveDate: null,
+    },
+    authUser: {
+      uid: userId,
+      email: invitation.auth.email,
+      displayName: invitation.auth.displayName,
+    },
     resourceType: 'invitation' as const,
   }
 }
