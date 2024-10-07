@@ -12,6 +12,7 @@ import {
   type fhirElementConverter,
   type fhirMedicationRequestConverter,
   type fhirObservationConverter,
+  type fhirQuestionnaireResponseConverter,
   type fhirResourceConverter,
   type InferEncoded,
   type invitationConverter,
@@ -64,6 +65,12 @@ export type FHIRAppointment = InferEncoded<typeof fhirAppointmentConverter> & {
 }
 
 export type UserMessage = InferEncoded<typeof userMessageConverter> & {
+  id: string
+}
+
+export type QuestionnaireResponse = InferEncoded<
+  typeof fhirQuestionnaireResponseConverter
+> & {
   id: string
 }
 

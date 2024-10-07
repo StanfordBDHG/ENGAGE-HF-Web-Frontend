@@ -58,6 +58,7 @@ export const collectionNames = {
   eGfrObservations: 'eGfrObservations',
   potassiumObservations: 'potassiumObservations',
   messages: 'messages',
+  questionnaireResponses: 'questionnaireResponses',
 }
 
 export type ResourceType = 'invitation' | 'user'
@@ -166,6 +167,17 @@ export const getCollectionRefs = (db: Firestore) => ({
       db,
       `/${collectionNames.users}/${userId}/${collectionNames.messages}`,
     ) as CollectionReference<UserMessage>,
+  questionnaireResponses: ({
+    userId,
+    resourceType,
+  }: {
+    userId: string
+    resourceType: ResourceType
+  }) =>
+    collection(
+      db,
+      `/${userPath(resourceType)}/${userId}/${collectionNames.questionnaireResponses}`,
+    ) as CollectionReference<QuestionnaireResponse>,
 })
 
 export const getDocumentsRefs = (db: Firestore) => ({
