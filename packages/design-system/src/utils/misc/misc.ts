@@ -14,7 +14,7 @@ import { toast } from '../../components/Toaster'
  * Negates value
  * Useful for functional patterns and state callbacks
  * */
-export const not = <T>(value: T) => !value
+export const not = (value: unknown) => !value
 
 export type InitialState<T> = T | (() => T)
 
@@ -37,7 +37,7 @@ export const copyToClipboard = async (value: string) => {
   try {
     await navigator.clipboard.writeText(value)
     toast('Copied to clipboard')
-  } catch (error) {
+  } catch {
     console.info('Copying failed')
   }
 }
