@@ -7,12 +7,14 @@
 //
 import { createLocalizationHelpers } from '@/modules/firebase/localizedText'
 
+const { parseLocalizedText, parseNilLocalizedText } =
+  createLocalizationHelpers('pl-PL')
+
 describe('parseLocalizedText', () => {
   const plPL = 'pl-PL'
   const pl = 'pl'
   const en = 'en'
   const de = 'de'
-  const { parseLocalizedText } = createLocalizationHelpers('pl-PL')
 
   it('supports plain string', () => {
     expect(parseLocalizedText(en)).toBe(en)
@@ -38,5 +40,13 @@ describe('parseLocalizedText', () => {
     it('prioritizes ISO-639-2 if exists', () => {
       expect(parseLocalizedText({ 'pl-PL': plPL, pl, en })).toBe(plPL)
     })
+  })
+})
+
+describe('parseNilLocalizedText', () => {
+  it('supports nil values', () => {
+    expect(parseNilLocalizedText(null)).toBe(null)
+    expect(parseNilLocalizedText(undefined)).toBe(null)
+    expect(parseNilLocalizedText('')).toBe('')
   })
 })
