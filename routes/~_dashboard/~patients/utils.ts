@@ -224,7 +224,7 @@ export const getUserActivity = async ({
   const latestQuestionnaires = await getDocsData(
     query(
       refs.questionnaireResponses({ resourceType, userId: authUser.uid }),
-      orderBy('authored'),
+      orderBy('authored', 'desc'),
       limit(1),
     ),
   )
