@@ -241,3 +241,4 @@ export type Appointment = AppointmentsData['appointments'][number]
 export type LabsData = Awaited<ReturnType<typeof getLabsData>>
 export type Observation = LabsData['observations'][number]
 export type MedicationsData = Awaited<ReturnType<typeof getMedicationsData>>
+export type UserActivity = Awaited<ReturnType<typeof getUserActivity>>

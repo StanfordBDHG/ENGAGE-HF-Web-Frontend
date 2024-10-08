@@ -23,11 +23,6 @@ import {
 } from '@/modules/firebase/utils'
 import { getUserData } from '@/modules/user/queries'
 import {
-  Card,
-  CardHeader,
-  CardTitle,
-} from '@/packages/design-system/src/components/Card'
-import {
   Tabs,
   TabsContent,
   TabsList,
@@ -35,7 +30,6 @@ import {
 } from '@/packages/design-system/src/components/Tabs'
 import { getUserName } from '@/packages/design-system/src/modules/auth/user'
 import { PageTitle } from '@/packages/design-system/src/molecules/DashboardLayout'
-import { formatISODateTime } from '@/packages/design-system/src/utils/date'
 import {
   Medications,
   type MedicationsFormSchema,
@@ -57,6 +51,7 @@ import { Appointments } from '@/routes/~_dashboard/~patients/~$id/Appointments'
 import { GenerateHealthSummary } from '@/routes/~_dashboard/~patients/~$id/GenerateHealthSummary'
 import { Labs } from '@/routes/~_dashboard/~patients/~$id/Labs'
 import { Notifications } from '@/routes/~_dashboard/~patients/~$id/Notifications'
+import { UserActivity } from '@/routes/~_dashboard/~patients/~$id/UserActivity'
 import { DashboardLayout } from '../../DashboardLayout'
 
 const getUserMedications = async (payload: {
@@ -214,27 +209,7 @@ const PatientPage = () => {
         </TabsList>
         <TabsContent value={PatientPageTab.information}>
           <div className="flex flex-col gap-6 xl:flex-row">
-            <Card className="xl:min-w-max xl:self-start">
-              <CardHeader>
-                <CardTitle>User activity</CardTitle>
-              </CardHeader>
-              <div className="px-5 pb-4 marker:text-primary">
-                <ul className="list-disc pl-4">
-                  <li>
-                    latest activity:{' '}
-                    {activity.lastActiveDate ?
-                      formatISODateTime(activity.lastActiveDate)
-                    : '-'}
-                  </li>
-                  <li>
-                    latest questionnaire answer:{' '}
-                    {activity.latestQuestionnaireDate ?
-                      formatISODateTime(activity.latestQuestionnaireDate)
-                    : '-'}
-                  </li>
-                </ul>
-              </div>
-            </Card>
+            <UserActivity activity={activity} />
             <PatientForm
               user={user}
               userInfo={authUser}
