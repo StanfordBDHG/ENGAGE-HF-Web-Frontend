@@ -6,11 +6,16 @@
 // SPDX-License-Identifier: MIT
 //
 import { SearchX, ListX } from 'lucide-react'
-import { type HTMLProps } from 'react'
+import { type HTMLProps, type ReactNode } from 'react'
 import { cn } from '../../utils/className'
 
 export interface EmptyStateProps extends HTMLProps<HTMLDivElement> {
-  entityName?: string
+  /**
+   * Name of the presented missing data entity
+   * Provide pluralized and lowercased
+   * @example "users"
+   * */
+  entityName?: ReactNode
   /**
    * Provide text filter that data is filtered by
    * */
