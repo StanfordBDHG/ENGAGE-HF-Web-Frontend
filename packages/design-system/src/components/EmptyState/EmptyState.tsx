@@ -26,6 +26,7 @@ export const EmptyState = ({
   textFilter,
   hasFilters,
   className,
+  children,
   ...props
 }: EmptyStateProps) => (
   <div
@@ -36,15 +37,19 @@ export const EmptyState = ({
       <SearchX />
     : <ListX />}
     <span>
-      No {entityName ?? 'results'} found
-      {textFilter ?
+      {children ?? (
         <>
-          &nbsp;for <i>"{textFilter}"</i> search
+          No {entityName ?? 'results'} found
+          {textFilter ?
+            <>
+              &nbsp;for <i>"{textFilter}"</i> search
+            </>
+          : hasFilters ?
+            <>&nbsp;for your selected filters</>
+          : null}
+          .
         </>
-      : hasFilters ?
-        <>&nbsp;for your selected filters</>
-      : null}
-      .
+      )}
     </span>
   </div>
 )
