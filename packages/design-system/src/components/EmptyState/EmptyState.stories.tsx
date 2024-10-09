@@ -29,3 +29,7 @@ export const MiscFilters: Story = {
 export const TextFilter: Story = {
   args: { textFilter: 'John Doe' },
 }
+
+export const CustomMessage: Story = {
+  args: { children: 'Data is missing' },
+}

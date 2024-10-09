@@ -40,4 +40,12 @@ describe('EmptyState', () => {
 
     expect(element).toBeInTheDocument()
   })
+
+  it('supports completely custom message', () => {
+    render(<EmptyState>Data is missing</EmptyState>)
+
+    const element = screen.getByText('Data is missing')
+
+    expect(element).toBeInTheDocument()
+  })
 })
