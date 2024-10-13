@@ -72,28 +72,6 @@ This repository contains all necessary files to deploy the web frontend to Googl
 
 ...
 
-### Stanford SSO Setup
-
-The ENGAGE-HF web page uses Stanford single sign on (SSO) as a mechanism to allow clinicians and admins to log into the web page.
-
-The [Stanford SAML and OIDC Configuration Manager](https://spdb-prod.iam.stanford.edu) needs to be configured using an OIDC configuration.
-You will use the Client ID and Client secret from the configuration to set up the OIDC authentication in Firebase Authentication.
-
-- Subject Type: `public`
-- Token Endpoint Auth: `client_secret_basic`
-- Grant Type: `refresh_token (authorization_code always enabled)`
-- Scopes: `profile`, `email`.
-- Redirect URI(s): `https://FIREBASE_PROJECT_ID.firebaseapp.com/__/auth/handler`, replacing `FIREBASE_PROJECT_ID` with your Firebase project identifier.
-
-You will need to configure [Firebase Authentication with Identity Platform to use OpenID connect in web apps](https://firebase.google.com/docs/auth/web/openid-connect).
-You need to configure the OpenID Connect Sign-in provider as follows:
-
-- Grant Type: `Code flow`
-- Name: `Stanford`
-- Client ID: Client ID obtained from your OIDC configuration from the [Stanford SAML and OIDC Configuration Manager](https://spdb-prod.iam.stanford.edu).
-- Issuer (URL): `https://login.stanford.edu`
-- Client secret: Client ID obtained from your OIDC configuration from the [Stanford SAML and OIDC Configuration Manager](https://spdb-prod.iam.stanford.edu).
-
 ## License
 
 This project is licensed under the MIT License. See [Licenses](https://github.com/StanfordBDHG/ENGAGE-HF-Web-Frontend/tree/main/LICENSES) for more information.
