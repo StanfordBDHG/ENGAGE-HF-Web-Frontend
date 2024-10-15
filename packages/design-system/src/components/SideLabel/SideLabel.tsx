@@ -10,6 +10,8 @@ import { cn } from '../../utils/className'
 
 type SideLabelProps = Omit<HTMLProps<HTMLLabelElement>, 'label'> & {
   label?: ReactNode
+  /* Show label on right side */
+  reverse?: boolean
 }
 
 /**
@@ -19,11 +21,13 @@ export const SideLabel = ({
   children,
   className,
   label,
+  reverse,
   ...props
 }: SideLabelProps) => (
   <label
     className={cn(
       'flex cursor-pointer select-none items-center gap-2.5',
+      reverse && 'flex-row-reverse',
       className,
     )}
     {...props}
