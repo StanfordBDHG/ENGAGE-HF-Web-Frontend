@@ -37,7 +37,7 @@ export default defineConfig({
       ],
     }),
     viteEnvs({
-      declarationFile: '.env.declaration',
+      declarationFile: path.resolve(__dirname, '.env.declaration'),
     }),
   ],
   resolve: {

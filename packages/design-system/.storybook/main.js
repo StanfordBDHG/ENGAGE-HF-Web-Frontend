@@ -17,7 +17,14 @@ const config = {
   ],
   framework: {
     name: '@storybook/react-vite',
-    options: {},
+  },
+  core: {
+    builder: {
+      name: '@storybook/builder-vite',
+      options: {
+        viteConfigPath: './vite.config.ts',
+      },
+    },
   },
   docs: {},
   typescript: {
