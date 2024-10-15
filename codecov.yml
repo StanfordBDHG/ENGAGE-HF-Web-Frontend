@@ -9,6 +9,8 @@
 codecov:
   branch: main
   require_ci_to_pass: true
+ignore:
+  - "**/*.stories.tsx"
 comment:
   behavior: default
   layout: reach,diff,flags,files,footer
