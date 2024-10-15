@@ -16,7 +16,7 @@ const meta: Meta<typeof SideLabel> = {
 
 export default meta
 
-export const WithInput = () => (
+export const WithSwitch = () => (
   <SideLabel label="Check me">
     <Switch />
   </SideLabel>
