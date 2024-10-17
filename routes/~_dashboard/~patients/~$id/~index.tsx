@@ -187,23 +187,19 @@ const PatientPage = () => {
         <title>Edit {userName}</title>
       </Helmet>
       <Tabs defaultValue={tab ?? PatientPageTab.information}>
-        <TabsList className="mb-6 w-full">
-          <TabsTrigger value={PatientPageTab.information} className="grow">
+        <TabsList className="mb-6" grow>
+          <TabsTrigger value={PatientPageTab.information}>
             Information
           </TabsTrigger>
-          <TabsTrigger value={PatientPageTab.notifications} className="grow">
+          <TabsTrigger value={PatientPageTab.notifications}>
             Notifications
           </TabsTrigger>
-          <TabsTrigger value={PatientPageTab.medications} className="grow">
+          <TabsTrigger value={PatientPageTab.medications}>
             Medications
           </TabsTrigger>
-          <TabsTrigger value={PatientPageTab.allergies} className="grow">
-            Allergies
-          </TabsTrigger>
-          <TabsTrigger value={PatientPageTab.labs} className="grow">
-            Labs
-          </TabsTrigger>
-          <TabsTrigger value={PatientPageTab.appointments} className="grow">
+          <TabsTrigger value={PatientPageTab.allergies}>Allergies</TabsTrigger>
+          <TabsTrigger value={PatientPageTab.labs}>Labs</TabsTrigger>
+          <TabsTrigger value={PatientPageTab.appointments}>
             Appointments
           </TabsTrigger>
         </TabsList>
