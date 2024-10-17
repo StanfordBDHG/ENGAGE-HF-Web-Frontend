@@ -6,15 +6,20 @@
 // SPDX-License-Identifier: MIT
 //
 import { type Row } from '@tanstack/react-table'
-import { Fragment, type ReactNode } from 'react'
+import { type ReactNode } from 'react'
 import { EmptyState } from '@/packages/design-system/src/components/EmptyState'
 import { ensureString } from '@/packages/design-system/src/utils/misc'
 import type { DataTableViewProps } from './DataTable'
 
 interface DataTableBasicViewProps<Data> extends DataTableViewProps<Data> {
-  children: (data: Data, row: Row<Data>) => ReactNode
+  children: (rows: Array<Row<Data>>) => ReactNode
 }
 
+/**
+ * Handles basic states for custom DataTable views
+ *
+ * @example See `DataTable.stories#CustomView`
+ * */
 export const DataTableBasicView = <Data,>({
   table,
   entityName,
@@ -30,10 +35,7 @@ export const DataTableBasicView = <Data,>({
           hasFilters={table.getState().columnFilters.length > 0}
           className="h-24"
         />
-      : rows.map((row) => (
-          <Fragment key={row.id}>{children(row.original, row)}</Fragment>
-        ))
-      }
+      : children(rows)}
     </div>
   )
 }
