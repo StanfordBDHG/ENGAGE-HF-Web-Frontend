@@ -59,7 +59,14 @@ export const NotificationsTable = ({
   >
     {(props) => (
       <DataTableBasicView {...props}>
-        {(notification) => <Notification notification={notification} />}
+        {(rows) =>
+          rows.map((row) => {
+            const notification = row.original
+            return (
+              <Notification key={notification.id} notification={notification} />
+            )
+          })
+        }
       </DataTableBasicView>
     )}
   </DataTable>

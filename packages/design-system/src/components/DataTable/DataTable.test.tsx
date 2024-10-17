@@ -8,7 +8,7 @@
 import { fireEvent, render, screen, within } from '@testing-library/react'
 import { userEvent } from '@testing-library/user-event'
 import { peopleColumns, peopleData } from './DataTable.mocks'
-import { DataTable } from '.'
+import { DataTable, DataTableBasicView } from '.'
 
 describe('DataTable', () => {
   const getTBody = () => {
@@ -27,6 +27,12 @@ describe('DataTable', () => {
       expect(cellColumn).toBeInTheDocument()
     })
 
+  const expectEmptyStateToBeInTheDocument = () => {
+    // Regex because text is broken with elements
+    const emptyState = screen.getByText(/No\sresults\sfound/)
+    expect(emptyState).toBeInTheDocument()
+  }
+
   it('renders table element with respective columns', () => {
     render(<DataTable columns={peopleColumns} data={peopleData} />)
 
@@ -43,9 +49,7 @@ describe('DataTable', () => {
   it('shows empty state', () => {
     const { rerender } = render(<DataTable columns={peopleColumns} data={[]} />)
 
-    // Regex because text is broken with elements
-    const emptyState = screen.getByText(/No\sresults\sfound/)
-    expect(emptyState).toBeInTheDocument()
+    expectEmptyStateToBeInTheDocument()
 
     rerender(<DataTable columns={peopleColumns} data={[]} entityName="users" />)
     const emptyStateWithEntityName = screen.getByText(/No\susers\sfound/)
@@ -119,7 +123,6 @@ describe('DataTable', () => {
     await user.clear(searchInput)
     await user.type(searchInput, '1111')
 
-    //
     const emptyState = await screen.findByText(/No results found/)
     expect(emptyState).toBeInTheDocument()
     const searchTextDisplayed = screen.getByText(/"1111"/)
@@ -141,5 +144,76 @@ describe('DataTable', () => {
 
     const emptyState = await screen.findByText(/No users found/)
     expect(emptyState).toBeInTheDocument()
+  })
+
+  describe('minimal', () => {
+    it('hides header', () => {
+      render(<DataTable columns={peopleColumns} data={peopleData} minimal />)
+
+      const searchInput = screen.queryByRole('textbox', { name: 'Search...' })
+      expect(searchInput).not.toBeInTheDocument()
+    })
+
+    it('hides pagination counter if no pagination to show', () => {
+      render(<DataTable columns={peopleColumns} data={peopleData} minimal />)
+
+      const paginationCounter = screen.queryByRole('1-7 of 7')
+      expect(paginationCounter).not.toBeInTheDocument()
+    })
+
+    it('shows pagination counter if paginated', () => {
+      render(
+        <DataTable
+          columns={peopleColumns}
+          data={peopleData}
+          minimal
+          pageSize={2}
+        />,
+      )
+
+      const paginationCounter = screen.getByText('1-2 of 7')
+      expect(paginationCounter).toBeInTheDocument()
+    })
+  })
+
+  describe('custom view', () => {
+    it('renders people using custom view', () => {
+      render(
+        <DataTable columns={peopleColumns} data={peopleData}>
+          {(props) => (
+            <DataTableBasicView {...props}>
+              {(rows) =>
+                rows.map((row) => {
+                  const person = row.original
+                  return (
+                    <div key={row.id} role="row">
+                      Person name - {person.name}
+                    </div>
+                  )
+                })
+              }
+            </DataTableBasicView>
+          )}
+        </DataTable>,
+      )
+
+      const roles = screen.getAllByRole('row')
+      expect(roles).toHaveLength(peopleData.length)
+
+      const john = screen.getByText('Person name - John')
+      expect(john).toBeInTheDocument()
+    })
+
+    it('shows empty state', () => {
+      render(
+        <DataTable columns={peopleColumns} data={[]}>
+          {(props) => (
+            <DataTableBasicView {...props}>{() => null}</DataTableBasicView>
+          )}
+        </DataTable>,
+      )
+
+      expectEmptyStateToBeInTheDocument()
+    })
   })
 })
