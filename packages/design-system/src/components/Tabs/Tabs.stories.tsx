@@ -48,11 +48,13 @@ export const CustomPositioning = () => {
 }
 
 export const TriggerGrow = () => (
-  <Tabs defaultValue={Tab.lorem}>
-    <TabsList className="w-96" grow>
-      <TabsTrigger value={Tab.lorem}>Lorem</TabsTrigger>
-      <TabsTrigger value={Tab.ipsum}>Ipsum</TabsTrigger>
-      <TabsTrigger value={Tab.dolor}>Dolor</TabsTrigger>
-    </TabsList>
-  </Tabs>
+  <div className="w-96">
+    <Tabs defaultValue={Tab.lorem}>
+      <TabsList grow>
+        <TabsTrigger value={Tab.lorem}>Lorem</TabsTrigger>
+        <TabsTrigger value={Tab.ipsum}>Ipsum</TabsTrigger>
+        <TabsTrigger value={Tab.dolor}>Dolor</TabsTrigger>
+      </TabsList>
+    </Tabs>
+  </div>
 )
