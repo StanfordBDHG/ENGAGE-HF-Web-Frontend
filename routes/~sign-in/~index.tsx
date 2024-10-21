@@ -9,6 +9,7 @@ import { createFileRoute } from '@tanstack/react-router'
 import { signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth'
 import { Helmet } from 'react-helmet'
 import { AsideEngageLayout } from '@/components/AsideEngageLayout'
+import { env } from '@/env'
 import { authProvider, auth } from '@/modules/firebase/app'
 import { SignInForm as AuthSignInForm } from '@/packages/design-system/src/modules/auth/SignInForm'
 
@@ -20,7 +21,7 @@ const SignIn = () => (
     <AuthSignInForm
       className="mx-auto w-[350px]"
       providers={[{ name: 'Stanford', provider: authProvider.stanford }]}
-      enableEmailPassword
+      enableEmailPassword={env.VITE_PUBLIC_EMAIL_PASSWORD_SIGN_IN}
       auth={auth}
       signInWithPopup={signInWithPopup}
       signInWithEmailAndPassword={signInWithEmailAndPassword}

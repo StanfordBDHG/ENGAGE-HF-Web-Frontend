@@ -8,6 +8,16 @@
 import { createEnv } from '@t3-oss/env-core'
 import { z } from 'zod'
 
+const booleanFlag = z
+  .preprocess((value) => {
+    if (typeof value === 'string') {
+      const flag = value.trim().toLowerCase()
+      return flag === 'true' || flag === '1' || flag === 't'
+    }
+    return value
+  }, z.boolean().optional())
+  .default(false)
+
 export const env = createEnv({
   server: {},
   client: {
@@ -17,12 +27,8 @@ export const env = createEnv({
     VITE_PUBLIC_FIREBASE_STORAGE_BUCKET: z.string().min(1),
     VITE_PUBLIC_FIREBASE_MESSAGING_SENDER_ID: z.string().min(1),
     VITE_PUBLIC_FIREBASE_APP_ID: z.string().min(1),
-    VITE_PUBLIC_EMULATOR: z
-      .preprocess((value) => {
-        if (typeof value === 'string') return value === 'true'
-        return value
-      }, z.boolean().optional())
-      .default(false),
+    VITE_PUBLIC_EMULATOR: booleanFlag,
+    VITE_PUBLIC_EMAIL_PASSWORD_SIGN_IN: booleanFlag,
   },
   clientPrefix: 'VITE_PUBLIC',
   runtimeEnv: {
@@ -37,5 +43,7 @@ export const env = createEnv({
       .VITE_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
     VITE_PUBLIC_FIREBASE_APP_ID: import.meta.env.VITE_PUBLIC_FIREBASE_APP_ID,
     VITE_PUBLIC_EMULATOR: import.meta.env.VITE_PUBLIC_EMULATOR,
+    VITE_PUBLIC_EMAIL_PASSWORD_SIGN_IN: import.meta.env
+      .VITE_PUBLIC_EMAIL_PASSWORD_SIGN_IN,
   },
 })

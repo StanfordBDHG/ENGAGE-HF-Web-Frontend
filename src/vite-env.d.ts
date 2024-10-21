@@ -16,6 +16,7 @@ type ImportMetaEnv = {
   VITE_PUBLIC_FIREBASE_PROJECT_ID: string
   VITE_PUBLIC_FIREBASE_STORAGE_BUCKET: string
   VITE_PUBLIC_EMULATOR: string
+  VITE_PUBLIC_EMAIL_PASSWORD_SIGN_IN: string
   BASE_URL: string
   MODE: string
   DEV: boolean
