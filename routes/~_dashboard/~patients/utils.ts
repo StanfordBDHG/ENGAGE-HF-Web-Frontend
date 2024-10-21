@@ -231,6 +231,7 @@ export const getUserActivity = async ({
   return {
     lastActiveDate: user.lastActiveDate,
     latestQuestionnaireDate: latestQuestionnaires.at(0)?.authored,
+    isInvitation: resourceType === 'invitation',
   }
 }
 

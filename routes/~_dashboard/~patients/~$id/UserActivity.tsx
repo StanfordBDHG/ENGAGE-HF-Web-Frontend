@@ -5,7 +5,7 @@
 //
 // SPDX-License-Identifier: MIT
 //
-import { Clock, FileQuestion } from 'lucide-react'
+import { Clock, FileQuestion, Mail } from 'lucide-react'
 import { type ReactNode } from 'react'
 import {
   Card,
@@ -42,6 +42,13 @@ export const UserActivity = ({ activity }: UserActivityProps) => (
     </CardHeader>
     <div className="px-5 pb-4 marker:text-primary">
       <ul className="flex list-disc flex-col gap-4">
+        {activity.isInvitation && (
+          <ActivityRow
+            icon={<Mail className="size-5" />}
+            label="Invitation"
+            value="patient has not yet logged in"
+          />
+        )}
         <ActivityRow
           icon={<Clock className="size-5" />}
           label="Latest activity"
