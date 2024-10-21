@@ -38,47 +38,56 @@ const DashboardRoute = DashboardImport.update({
 } as any)
 
 const SignInIndexRoute = SignInIndexImport.update({
+  id: '/sign-in/',
   path: '/sign-in/',
   getParentRoute: () => rootRoute,
 } as any)
 
 const DashboardIndexRoute = DashboardIndexImport.update({
+  id: '/',
   path: '/',
   getParentRoute: () => DashboardRoute,
 } as any)
 
 const DashboardUsersInviteRoute = DashboardUsersInviteImport.update({
+  id: '/users/invite',
   path: '/users/invite',
   getParentRoute: () => DashboardRoute,
 } as any)
 
 const DashboardUsersIdRoute = DashboardUsersIdImport.update({
+  id: '/users/$id',
   path: '/users/$id',
   getParentRoute: () => DashboardRoute,
 } as any)
 
 const DashboardPatientsInviteRoute = DashboardPatientsInviteImport.update({
+  id: '/patients/invite',
   path: '/patients/invite',
   getParentRoute: () => DashboardRoute,
 } as any)
 
 const DashboardUsersIndexRoute = DashboardUsersIndexImport.update({
+  id: '/users/',
   path: '/users/',
   getParentRoute: () => DashboardRoute,
 } as any)
 
 const DashboardPatientsIndexRoute = DashboardPatientsIndexImport.update({
+  id: '/patients/',
   path: '/patients/',
   getParentRoute: () => DashboardRoute,
 } as any)
 
 const DashboardNotificationsIndexRoute =
   DashboardNotificationsIndexImport.update({
+    id: '/notifications/',
     path: '/notifications/',
     getParentRoute: () => DashboardRoute,
   } as any)
 
 const DashboardPatientsIdIndexRoute = DashboardPatientsIdIndexImport.update({
+  id: '/patients/$id/',
   path: '/patients/$id/',
   getParentRoute: () => DashboardRoute,
 } as any)
