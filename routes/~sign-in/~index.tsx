@@ -19,10 +19,7 @@ const SignIn = () => (
     </Helmet>
     <AuthSignInForm
       className="mx-auto w-[350px]"
-      providers={[
-        { name: 'Apple', provider: authProvider.apple },
-        { name: 'Stanford', provider: authProvider.stanford },
-      ]}
+      providers={[{ name: 'Stanford', provider: authProvider.stanford }]}
       enableEmailPassword
       auth={auth}
       signInWithPopup={signInWithPopup}

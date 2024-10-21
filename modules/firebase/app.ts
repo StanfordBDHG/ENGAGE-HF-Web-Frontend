@@ -33,7 +33,6 @@ if (enableEmulation)
 
 export const authProvider = {
   stanford: new OAuthProvider('oidc.stanford'),
-  apple: new OAuthProvider('apple.com'),
 }
 
 export const db = getFirestore(firebaseApp)
