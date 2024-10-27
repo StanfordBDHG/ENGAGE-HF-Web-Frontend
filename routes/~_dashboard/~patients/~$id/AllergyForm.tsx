@@ -5,25 +5,24 @@
 //
 // SPDX-License-Identifier: MIT
 //
-import { type ComponentProps } from 'react'
-import { z } from 'zod'
-import { AllergyType, stringifyAllergyType } from '@/modules/firebase/allergy'
-import { Button } from '@/packages/design-system/src/components/Button'
+import { Button } from '@stanfordbdhg/spezi-web-design-system/components/Button'
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
-} from '@/packages/design-system/src/components/Dialog'
+} from '@stanfordbdhg/spezi-web-design-system/components/Dialog'
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/packages/design-system/src/components/Select'
-import { Field } from '@/packages/design-system/src/forms/Field'
-import { useForm } from '@/packages/design-system/src/forms/useForm'
+} from '@stanfordbdhg/spezi-web-design-system/components/Select'
+import { Field, useForm } from '@stanfordbdhg/spezi-web-design-system/forms'
+import { type ComponentProps } from 'react'
+import { z } from 'zod'
+import { AllergyType, stringifyAllergyType } from '@/modules/firebase/allergy'
 import { MedicationSelect } from '@/routes/~_dashboard/~patients/MedicationSelect'
 import {
   type Allergy,

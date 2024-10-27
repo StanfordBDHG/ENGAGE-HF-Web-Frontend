@@ -5,18 +5,18 @@
 //
 // SPDX-License-Identifier: MIT
 //
+import { Button } from '@stanfordbdhg/spezi-web-design-system/components/Button'
+import { toast } from '@stanfordbdhg/spezi-web-design-system/components/Toaster'
+import { Tooltip } from '@stanfordbdhg/spezi-web-design-system/components/Tooltip'
+import {
+  base64ToBlob,
+  downloadFile,
+} from '@stanfordbdhg/spezi-web-design-system/utils/file'
 import { kebabCase } from 'es-toolkit'
 import { Download } from 'lucide-react'
 import { useState } from 'react'
 import { callables } from '@/modules/firebase/app'
 import { type ResourceType } from '@/modules/firebase/utils'
-import { Button } from '@/packages/design-system/src/components/Button'
-import { toast } from '@/packages/design-system/src/components/Toaster'
-import { Tooltip } from '@/packages/design-system/src/components/Tooltip'
-import {
-  base64ToBlob,
-  downloadFile,
-} from '@/packages/design-system/src/utils/file'
 
 interface GenerateHealthSummaryProps {
   userId: string

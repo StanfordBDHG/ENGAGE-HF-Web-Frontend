@@ -5,6 +5,8 @@
 //
 // SPDX-License-Identifier: MIT
 //
+import { Button } from '@stanfordbdhg/spezi-web-design-system/components/Button'
+import { Tooltip } from '@stanfordbdhg/spezi-web-design-system/components/Tooltip'
 import { useMutation } from '@tanstack/react-query'
 import { useMemo } from 'react'
 import { callables } from '@/modules/firebase/app'
@@ -13,8 +15,6 @@ import { useUser } from '@/modules/firebase/UserProvider'
 import { isMessageRead } from '@/modules/notifications/helpers'
 import { notificationQueries } from '@/modules/notifications/queries'
 import { queryClient } from '@/modules/query/queryClient'
-import { Button } from '@/packages/design-system/src/components/Button'
-import { Tooltip } from '@/packages/design-system/src/components/Tooltip'
 
 interface MarkAllAsReadButtonProps {
   notifications: UserMessage[]

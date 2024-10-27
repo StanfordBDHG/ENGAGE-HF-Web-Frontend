@@ -5,24 +5,23 @@
 //
 // SPDX-License-Identifier: MIT
 //
-import { z } from 'zod'
-import { type User } from '@/modules/firebase/models'
-import { Button } from '@/packages/design-system/src/components/Button'
-import { DatePicker } from '@/packages/design-system/src/components/DatePicker'
-import { Input } from '@/packages/design-system/src/components/Input'
+import { Button } from '@stanfordbdhg/spezi-web-design-system/components/Button'
+import { DatePicker } from '@stanfordbdhg/spezi-web-design-system/components/DatePicker'
+import { Input } from '@stanfordbdhg/spezi-web-design-system/components/Input'
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/packages/design-system/src/components/Select'
-import { Field } from '@/packages/design-system/src/forms/Field'
-import { useForm } from '@/packages/design-system/src/forms/useForm'
+} from '@stanfordbdhg/spezi-web-design-system/components/Select'
+import { Field, useForm } from '@stanfordbdhg/spezi-web-design-system/forms'
 import {
   getUserName,
   type UserInfo,
-} from '@/packages/design-system/src/modules/auth/user'
+} from '@stanfordbdhg/spezi-web-design-system/modules/auth'
+import { z } from 'zod'
+import { type User } from '@/modules/firebase/models'
 
 export const patientFormSchema = z.object({
   email: z.string().email().min(1, 'Email is required'),

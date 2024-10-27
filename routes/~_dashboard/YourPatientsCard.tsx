@@ -5,17 +5,17 @@
 //
 // SPDX-License-Identifier: MIT
 //
+import { Button } from '@stanfordbdhg/spezi-web-design-system/components/Button'
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+} from '@stanfordbdhg/spezi-web-design-system/components/Card'
 import { useQuery } from '@tanstack/react-query'
 import { Link } from '@tanstack/react-router'
 import { Loader2 } from 'lucide-react'
 import { routes } from '@/modules/routes'
 import { patientsQueries } from '@/modules/user/patients'
-import { Button } from '@/packages/design-system/src/components/Button'
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-} from '@/packages/design-system/src/components/Card'
 import { PatientsTable } from '@/routes/~_dashboard/~patients/PatientsTable'
 
 export const YourPatientsCard = () => {

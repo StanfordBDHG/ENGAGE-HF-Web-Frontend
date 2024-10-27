@@ -6,6 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 import { UserType } from '@stanfordbdhg/engagehf-models'
+import { DataTable } from '@stanfordbdhg/spezi-web-design-system/components/DataTable'
 import { useNavigate } from '@tanstack/react-router'
 import { createColumnHelper } from '@tanstack/table-core'
 import { useMemo } from 'react'
@@ -13,7 +14,6 @@ import { stringifyType } from '@/modules/firebase/role'
 import { useUser } from '@/modules/firebase/UserProvider'
 import { routes } from '@/modules/routes'
 import { createSharedUserColumns, userColumnIds } from '@/modules/user/table'
-import { DataTable } from '@/packages/design-system/src/components/DataTable'
 import { UserMenu } from '@/routes/~_dashboard/~users/UserMenu'
 import { type User } from '@/routes/~_dashboard/~users/~index'
 

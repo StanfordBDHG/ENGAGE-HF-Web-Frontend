@@ -5,14 +5,14 @@
 //
 // SPDX-License-Identifier: MIT
 //
+import {
+  DataTable,
+  DataTableBasicView,
+} from '@stanfordbdhg/spezi-web-design-system/components/DataTable'
 import { parseNilLocalizedText } from '@/modules/firebase/localizedText'
 import { type UserMessage } from '@/modules/firebase/models'
 import { isMessageRead } from '@/modules/notifications/helpers'
 import { Notification } from '@/modules/notifications/Notification'
-import {
-  DataTable,
-  DataTableBasicView,
-} from '@/packages/design-system/src/components/DataTable'
 import { columnHelper, columnIds } from './helpers'
 import { MarkAllAsReadButton } from './MarkAllAsReadButton'
 import { ShowUnreadOnlySwitch } from './ShowUnreadOnlySwitch'

@@ -5,19 +5,19 @@
 //
 // SPDX-License-Identifier: MIT
 //
-import { LogOut } from 'lucide-react'
-import { auth } from '@/modules/firebase/app'
 import {
   DropdownMenu,
   DropdownMenuTrigger,
   DropdownMenuContent,
   DropdownMenuItem,
-} from '@/packages/design-system/src/components/DropdownMenu'
+} from '@stanfordbdhg/spezi-web-design-system/components/DropdownMenu'
 import {
   getUserName,
   type UserInfo,
-} from '@/packages/design-system/src/modules/auth/user'
-import { UserMenuItem } from '@/packages/design-system/src/molecules/DashboardLayout'
+} from '@stanfordbdhg/spezi-web-design-system/modules/auth'
+import { UserMenuItem } from '@stanfordbdhg/spezi-web-design-system/molecules/DashboardLayout'
+import { LogOut } from 'lucide-react'
+import { auth } from '@/modules/firebase/app'
 
 interface UserProps {
   user: UserInfo

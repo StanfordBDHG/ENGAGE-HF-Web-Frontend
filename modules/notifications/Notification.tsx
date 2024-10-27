@@ -5,6 +5,18 @@
 //
 // SPDX-License-Identifier: MIT
 //
+import { Button } from '@stanfordbdhg/spezi-web-design-system/components/Button'
+import {
+  Notification as NotificationBase,
+  NotificationActions,
+  NotificationContentContainer,
+  NotificationImage,
+  NotificationLink,
+  NotificationMessage,
+  NotificationTime,
+  NotificationTitle,
+  NotificationHeader,
+} from '@stanfordbdhg/spezi-web-design-system/molecules/Notifications'
 import { useMutation } from '@tanstack/react-query'
 import { callables } from '@/modules/firebase/app'
 import {
@@ -19,18 +31,6 @@ import {
 } from '@/modules/notifications/helpers'
 import { notificationQueries } from '@/modules/notifications/queries'
 import { queryClient } from '@/modules/query/queryClient'
-import { Button } from '@/packages/design-system/src/components/Button'
-import {
-  Notification as NotificationBase,
-  NotificationActions,
-  NotificationContentContainer,
-  NotificationImage,
-  NotificationLink,
-  NotificationMessage,
-  NotificationTime,
-  NotificationTitle,
-} from '@/packages/design-system/src/molecules/Notifications'
-import { NotificationHeader } from '@/packages/design-system/src/molecules/Notifications/NotificationHeader'
 
 interface NotificationProps {
   notification: UserMessage

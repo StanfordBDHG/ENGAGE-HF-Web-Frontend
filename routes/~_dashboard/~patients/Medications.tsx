@@ -5,10 +5,8 @@
 //
 // SPDX-License-Identifier: MIT
 //
-import { Plus, Check, Trash, Pencil } from 'lucide-react'
-import { z } from 'zod'
-import { Button } from '@/packages/design-system/src/components/Button'
-import { Card } from '@/packages/design-system/src/components/Card'
+import { Button } from '@stanfordbdhg/spezi-web-design-system/components/Button'
+import { Card } from '@stanfordbdhg/spezi-web-design-system/components/Card'
 import {
   Dialog,
   DialogContent,
@@ -17,26 +15,27 @@ import {
   DialogTitle,
   DialogTrigger,
   DialogClose,
-} from '@/packages/design-system/src/components/Dialog'
-import { EmptyState } from '@/packages/design-system/src/components/EmptyState'
+} from '@stanfordbdhg/spezi-web-design-system/components/Dialog'
+import { EmptyState } from '@stanfordbdhg/spezi-web-design-system/components/EmptyState'
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/packages/design-system/src/components/Select'
+} from '@stanfordbdhg/spezi-web-design-system/components/Select'
 import {
   Table,
   TableCell,
   TableHeader,
   TableRow,
   TableBody,
-} from '@/packages/design-system/src/components/Table'
-import { Textarea } from '@/packages/design-system/src/components/Textarea'
-import { Tooltip } from '@/packages/design-system/src/components/Tooltip'
-import { Field } from '@/packages/design-system/src/forms/Field'
-import { useForm } from '@/packages/design-system/src/forms/useForm'
+} from '@stanfordbdhg/spezi-web-design-system/components/Table'
+import { Textarea } from '@stanfordbdhg/spezi-web-design-system/components/Textarea'
+import { Tooltip } from '@stanfordbdhg/spezi-web-design-system/components/Tooltip'
+import { Field, useForm } from '@stanfordbdhg/spezi-web-design-system/forms'
+import { Plus, Check, Trash, Pencil } from 'lucide-react'
+import { z } from 'zod'
 import { useMedicationsMap } from '@/routes/~_dashboard/~patients/clientUtils'
 import { MedicationSelect } from '@/routes/~_dashboard/~patients/MedicationSelect'
 import { type MedicationsData } from '@/routes/~_dashboard/~patients/utils'

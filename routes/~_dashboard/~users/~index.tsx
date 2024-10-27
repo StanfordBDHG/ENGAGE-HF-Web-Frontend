@@ -6,6 +6,8 @@
 // SPDX-License-Identifier: MIT
 //
 import { UserType } from '@stanfordbdhg/engagehf-models'
+import { Button } from '@stanfordbdhg/spezi-web-design-system/components/Button'
+import { PageTitle } from '@stanfordbdhg/spezi-web-design-system/molecules/DashboardLayout'
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { query, where } from 'firebase/firestore'
 import { UserPlus, Users } from 'lucide-react'
@@ -19,8 +21,6 @@ import {
   parseAuthToUser,
   parseInvitationToUser,
 } from '@/modules/user/queries'
-import { Button } from '@/packages/design-system/src/components/Button'
-import { PageTitle } from '@/packages/design-system/src/molecules/DashboardLayout'
 import { UsersTable } from './UsersTable'
 import { DashboardLayout } from '../DashboardLayout'
 

@@ -6,21 +6,20 @@
 // SPDX-License-Identifier: MIT
 //
 import { UserType } from '@stanfordbdhg/engagehf-models'
-import { z } from 'zod'
-import { type Organization, type User } from '@/modules/firebase/models'
-import { useUser } from '@/modules/firebase/UserProvider'
-import { Button } from '@/packages/design-system/src/components/Button'
-import { Input } from '@/packages/design-system/src/components/Input'
+import { Button } from '@stanfordbdhg/spezi-web-design-system/components/Button'
+import { Input } from '@stanfordbdhg/spezi-web-design-system/components/Input'
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/packages/design-system/src/components/Select'
-import { Field } from '@/packages/design-system/src/forms/Field'
-import { useForm } from '@/packages/design-system/src/forms/useForm'
-import { type UserInfo } from '@/packages/design-system/src/modules/auth/user'
+} from '@stanfordbdhg/spezi-web-design-system/components/Select'
+import { Field, useForm } from '@stanfordbdhg/spezi-web-design-system/forms'
+import { type UserInfo } from '@stanfordbdhg/spezi-web-design-system/modules/auth'
+import { z } from 'zod'
+import { type Organization, type User } from '@/modules/firebase/models'
+import { useUser } from '@/modules/firebase/UserProvider'
 
 export const userFormSchema = z
   .object({
