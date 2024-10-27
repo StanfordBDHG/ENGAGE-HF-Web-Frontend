@@ -6,41 +6,27 @@
 // SPDX-License-Identifier: MIT
 //
 import '../modules/globals.css'
+import { Toaster } from '@stanfordbdhg/spezi-web-design-system/components/Toaster'
+import { SpeziProvider } from '@stanfordbdhg/spezi-web-design-system/SpeziProvider'
 import { createRootRoute, Outlet, redirect } from '@tanstack/react-router'
-import { NextIntlClientProvider } from 'next-intl'
-import { useLayoutEffect } from 'react'
 import { Helmet } from 'react-helmet'
 import { auth } from '@/modules/firebase/app'
 import { AuthProvider } from '@/modules/firebase/AuthProvider'
-import messages from '@/modules/messages/translations/en.json'
 import { ReactQueryClientProvider } from '@/modules/query/ReactQueryClientProvider'
 import { routes } from '@/modules/routes'
-import { lightTheme } from '@/packages/design-system/src'
-import { Toaster } from '@/packages/design-system/src/components/Toaster'
+import '@stanfordbdhg/spezi-web-design-system/style.css'
 
-const Root = () => {
-  useLayoutEffect(() => {
-    Object.entries(lightTheme).forEach(([key, value]) => {
-      document.documentElement.style.setProperty(`--${key}`, value)
-    })
-  }, [])
-
-  return (
-    <AuthProvider>
+const Root = () => (
+  <AuthProvider>
+    <SpeziProvider>
       <ReactQueryClientProvider>
-        <NextIntlClientProvider
-          locale="en"
-          timeZone="Europe/Warsaw"
-          messages={messages}
-        >
-          <Helmet defaultTitle="ENGAGE-HF" titleTemplate="%s - ENGAGE-HF" />
-          <Outlet />
-          <Toaster />
-        </NextIntlClientProvider>
+        <Helmet defaultTitle="ENGAGE-HF" titleTemplate="%s - ENGAGE-HF" />
+        <Outlet />
+        <Toaster />
       </ReactQueryClientProvider>
-    </AuthProvider>
-  )
-}
+    </SpeziProvider>
+  </AuthProvider>
+)
 
 export const Route = createRootRoute({
   component: Root,
