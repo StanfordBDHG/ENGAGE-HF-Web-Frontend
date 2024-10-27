@@ -7,8 +7,6 @@ SPDX-FileCopyrightText: 2023 Stanford University and the project authors (see CO
 SPDX-License-Identifier: MIT
 
 */
-@import '../packages/design-system/src/main.css';
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
