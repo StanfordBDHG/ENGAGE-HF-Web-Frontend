@@ -21,6 +21,7 @@ import {
   type UpdateUserInformationInput,
   type UpdateUserInformationOutput,
 } from '@stanfordbdhg/engagehf-models'
+import { strategy } from '@stanfordbdhg/spezi-web-design-system/utils/misc'
 import {
   collection,
   type CollectionReference,
@@ -43,7 +44,6 @@ import {
   type User,
   type UserMessage,
 } from '@/modules/firebase/models'
-import { strategy } from '@/packages/design-system/src/utils/misc'
 
 export const collectionNames = {
   invitations: 'invitations',

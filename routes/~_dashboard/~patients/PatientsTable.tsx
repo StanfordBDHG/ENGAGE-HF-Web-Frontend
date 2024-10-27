@@ -6,16 +6,16 @@
 // SPDX-License-Identifier: MIT
 //
 import { UserType } from '@stanfordbdhg/engagehf-models'
+import {
+  DataTable,
+  type DataTableProps,
+} from '@stanfordbdhg/spezi-web-design-system/components/DataTable'
 import { useNavigate } from '@tanstack/react-router'
 import { createColumnHelper } from '@tanstack/table-core'
 import { useMemo } from 'react'
 import { useUser } from '@/modules/firebase/UserProvider'
 import { routes } from '@/modules/routes'
 import { createSharedUserColumns, userColumnIds } from '@/modules/user/table'
-import {
-  DataTable,
-  type DataTableProps,
-} from '@/packages/design-system/src/components/DataTable'
 import { PatientMenu } from '@/routes/~_dashboard/~patients/PatientMenu'
 import { type Patient } from '@/routes/~_dashboard/~patients/~index'
 

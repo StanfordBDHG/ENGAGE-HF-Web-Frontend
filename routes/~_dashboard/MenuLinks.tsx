@@ -6,11 +6,11 @@
 // SPDX-License-Identifier: MIT
 //
 import { UserType } from '@stanfordbdhg/engagehf-models'
+import { MenuItem } from '@stanfordbdhg/spezi-web-design-system/molecules/DashboardLayout'
 import { useLocation } from '@tanstack/react-router'
 import { Home, Users, Contact, Bell } from 'lucide-react'
 import { useHasUnreadNotification } from '@/modules/notifications/queries'
 import { routes } from '@/modules/routes'
-import { MenuItem } from '@/packages/design-system/src/molecules/DashboardLayout'
 
 interface MenuLinksProps {
   userType: UserType

@@ -5,8 +5,6 @@
 //
 // SPDX-License-Identifier: MIT
 //
-import { type ComponentProps } from 'react'
-import { parseLocalizedText } from '@/modules/firebase/localizedText'
 import {
   Select,
   SelectContent,
@@ -15,7 +13,9 @@ import {
   SelectLabel,
   SelectTrigger,
   SelectValue,
-} from '@/packages/design-system/src/components/Select'
+} from '@stanfordbdhg/spezi-web-design-system/components/Select'
+import { type ComponentProps } from 'react'
+import { parseLocalizedText } from '@/modules/firebase/localizedText'
 import { type MedicationsData } from '@/routes/~_dashboard/~patients/utils'
 
 interface MedicationSelectProps

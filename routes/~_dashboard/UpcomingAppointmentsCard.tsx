@@ -5,6 +5,17 @@
 //
 // SPDX-License-Identifier: MIT
 //
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+} from '@stanfordbdhg/spezi-web-design-system/components/Card'
+import {
+  DataTable,
+  dateTimeColumn,
+} from '@stanfordbdhg/spezi-web-design-system/components/DataTable'
+import { Tooltip } from '@stanfordbdhg/spezi-web-design-system/components/Tooltip'
+import { getUserName } from '@stanfordbdhg/spezi-web-design-system/modules/auth'
 import { useQueries, useQuery } from '@tanstack/react-query'
 import { useNavigate } from '@tanstack/react-router'
 import { createColumnHelper } from '@tanstack/table-core'
@@ -14,17 +25,6 @@ import { useMemo } from 'react'
 import { appointmentsQueries } from '@/modules/firebase/appointment'
 import { routes } from '@/modules/routes'
 import { patientsQueries } from '@/modules/user/patients'
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-} from '@/packages/design-system/src/components/Card'
-import {
-  DataTable,
-  dateTimeColumn,
-} from '@/packages/design-system/src/components/DataTable'
-import { Tooltip } from '@/packages/design-system/src/components/Tooltip'
-import { getUserName } from '@/packages/design-system/src/modules/auth/user'
 import { PatientPageTab } from '@/routes/~_dashboard/~patients/~$id/~index'
 
 export const UpcomingAppointmentsCard = () => {

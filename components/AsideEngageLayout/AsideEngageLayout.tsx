@@ -5,11 +5,11 @@
 //
 // SPDX-License-Identifier: MIT
 //
-import { LogoType } from '@/components/icons/LogoType'
 import {
   type AsideBrandLayoutProps,
   AsideBrandLayout,
-} from '@/packages/design-system/src/molecules/AsideBrandLayout'
+} from '@stanfordbdhg/spezi-web-design-system/molecules/AsideBrandLayout'
+import { LogoType } from '@/components/icons/LogoType'
 
 export const AsideEngageLayout = (
   props: Omit<AsideBrandLayoutProps, 'aside'>,

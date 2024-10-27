@@ -5,11 +5,11 @@
 //
 // SPDX-License-Identifier: MIT
 //
+import { CopyText } from '@stanfordbdhg/spezi-web-design-system/components/CopyText'
+import { Tooltip } from '@stanfordbdhg/spezi-web-design-system/components/Tooltip'
+import { type Nil } from '@stanfordbdhg/spezi-web-design-system/utils/misc'
 import { createColumnHelper } from '@tanstack/table-core'
 import { Mail } from 'lucide-react'
-import { CopyText } from '@/packages/design-system/src/components/CopyText'
-import { Tooltip } from '@/packages/design-system/src/components/Tooltip'
-import { type Nil } from '@/packages/design-system/src/utils/misc'
 
 interface SharedUser {
   resourceType: 'invitation' | 'user'

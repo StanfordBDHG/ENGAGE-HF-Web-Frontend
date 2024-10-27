@@ -5,20 +5,19 @@
 //
 // SPDX-License-Identifier: MIT
 //
-import { type ComponentProps } from 'react'
-import { z } from 'zod'
-import { Button } from '@/packages/design-system/src/components/Button'
-import { DatePicker } from '@/packages/design-system/src/components/DatePicker'
+import { Button } from '@stanfordbdhg/spezi-web-design-system/components/Button'
+import { DatePicker } from '@stanfordbdhg/spezi-web-design-system/components/DatePicker'
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
-} from '@/packages/design-system/src/components/Dialog'
-import { Input } from '@/packages/design-system/src/components/Input'
-import { Textarea } from '@/packages/design-system/src/components/Textarea'
-import { Field } from '@/packages/design-system/src/forms/Field'
-import { useForm } from '@/packages/design-system/src/forms/useForm'
+} from '@stanfordbdhg/spezi-web-design-system/components/Dialog'
+import { Input } from '@stanfordbdhg/spezi-web-design-system/components/Input'
+import { Textarea } from '@stanfordbdhg/spezi-web-design-system/components/Textarea'
+import { Field, useForm } from '@stanfordbdhg/spezi-web-design-system/forms'
+import { type ComponentProps } from 'react'
+import { z } from 'zod'
 import { type Appointment } from '@/routes/~_dashboard/~patients/utils'
 
 export const appointmentFormSchema = z.object({

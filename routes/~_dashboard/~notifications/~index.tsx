@@ -5,6 +5,7 @@
 //
 // SPDX-License-Identifier: MIT
 //
+import { PageTitle } from '@stanfordbdhg/spezi-web-design-system/molecules/DashboardLayout'
 import { useQuery } from '@tanstack/react-query'
 import { createFileRoute } from '@tanstack/react-router'
 import { Bell } from 'lucide-react'
@@ -12,7 +13,6 @@ import { Helmet } from 'react-helmet'
 import { useUser } from '@/modules/firebase/UserProvider'
 import { NotificationsTable } from '@/modules/notifications/NotificationsTable'
 import { notificationQueries } from '@/modules/notifications/queries'
-import { PageTitle } from '@/packages/design-system/src/molecules/DashboardLayout'
 import { DashboardLayout } from '../DashboardLayout'
 
 const NotificationsPage = () => {

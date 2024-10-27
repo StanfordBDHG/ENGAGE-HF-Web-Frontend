@@ -5,11 +5,11 @@
 //
 // SPDX-License-Identifier: MIT
 //
+import { useAuthUser } from '@stanfordbdhg/spezi-web-design-system/modules/auth'
 import { useNavigate } from '@tanstack/react-router'
 import { type ReactNode, useEffect } from 'react'
 import { auth } from '@/modules/firebase/app'
 import { routes } from '@/modules/routes'
-import { useAuthUser } from '@/packages/design-system/src/modules/auth/hooks'
 
 interface AuthProviderProps {
   children?: ReactNode

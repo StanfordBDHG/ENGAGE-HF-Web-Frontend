@@ -6,6 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 import { UserType } from '@stanfordbdhg/engagehf-models'
+import { PageTitle } from '@stanfordbdhg/spezi-web-design-system/molecules/DashboardLayout'
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { Users } from 'lucide-react'
 import { Helmet } from 'react-helmet'
@@ -13,7 +14,6 @@ import { callables, ensureType } from '@/modules/firebase/app'
 import { queryClient } from '@/modules/query/queryClient'
 import { routes } from '@/modules/routes'
 import { userOrganizationQueryOptions } from '@/modules/user/queries'
-import { PageTitle } from '@/packages/design-system/src/molecules/DashboardLayout'
 import { DashboardLayout } from '@/routes/~_dashboard/DashboardLayout'
 import {
   UserForm,

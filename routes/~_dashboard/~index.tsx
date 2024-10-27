@@ -5,10 +5,10 @@
 //
 // SPDX-License-Identifier: MIT
 //
+import { PageTitle } from '@stanfordbdhg/spezi-web-design-system/molecules/DashboardLayout'
 import { createFileRoute } from '@tanstack/react-router'
 import { Home } from 'lucide-react'
 import { Helmet } from 'react-helmet'
-import { PageTitle } from '@/packages/design-system/src/molecules/DashboardLayout'
 import { YourPatientsCard } from '@/routes/~_dashboard/YourPatientsCard'
 import { DashboardLayout } from './DashboardLayout'
 import { NotificationsCard } from './NotificationsCard'

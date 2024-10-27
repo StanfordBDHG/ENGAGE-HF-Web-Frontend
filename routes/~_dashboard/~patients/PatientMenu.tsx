@@ -6,15 +6,15 @@
 // SPDX-License-Identifier: MIT
 //
 import { deleteDoc } from '@firebase/firestore'
+import { RowDropdownMenu } from '@stanfordbdhg/spezi-web-design-system/components/DataTable'
+import { DropdownMenuItem } from '@stanfordbdhg/spezi-web-design-system/components/DropdownMenu'
+import { getUserName } from '@stanfordbdhg/spezi-web-design-system/modules/auth'
+import { ConfirmDeleteDialog } from '@stanfordbdhg/spezi-web-design-system/molecules/ConfirmDeleteDialog'
+import { useOpenState } from '@stanfordbdhg/spezi-web-design-system/utils/useOpenState'
 import { Link, useRouter } from '@tanstack/react-router'
 import { Pencil, Trash } from 'lucide-react'
 import { callables, docRefs } from '@/modules/firebase/app'
 import { routes } from '@/modules/routes'
-import { RowDropdownMenu } from '@/packages/design-system/src/components/DataTable'
-import { DropdownMenuItem } from '@/packages/design-system/src/components/DropdownMenu'
-import { getUserName } from '@/packages/design-system/src/modules/auth/user'
-import { ConfirmDeleteDialog } from '@/packages/design-system/src/molecules/ConfirmDeleteDialog'
-import { useOpenState } from '@/packages/design-system/src/utils/useOpenState'
 import { type Patient } from '@/routes/~_dashboard/~patients/~index'
 
 interface PatientMenuProps {

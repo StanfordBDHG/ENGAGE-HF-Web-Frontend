@@ -5,14 +5,12 @@
 //
 // SPDX-License-Identifier: MIT
 //
+import { tailwindColors } from '@stanfordbdhg/spezi-web-design-system'
 import tailwindCssAnimate from 'tailwindcss-animate'
-import { tailwindColors } from './packages/design-system/src/utils/tailwind'
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: [
-    './{app,pages,components,routes,packages/design-system/src,modules}/**/*.{js,ts,jsx,tsx,mdx}',
-  ],
+  content: ['./{app,pages,components,routes,modules}/**/*.{js,ts,jsx,tsx,mdx}'],
   theme: {
     extend: {
       colors: tailwindColors,

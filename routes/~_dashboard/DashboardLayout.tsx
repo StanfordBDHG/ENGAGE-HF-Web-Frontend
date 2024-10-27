@@ -5,14 +5,14 @@
 //
 // SPDX-License-Identifier: MIT
 //
-import { Link } from '@tanstack/react-router'
-import { LogoType } from '@/components/icons/LogoType'
-import { useUser } from '@/modules/firebase/UserProvider'
-import { getUserInfo } from '@/packages/design-system/src/modules/auth/user'
+import { getUserInfo } from '@stanfordbdhg/spezi-web-design-system/modules/auth'
 import {
   DashboardLayout as DashboardLayoutBase,
   type DashboardLayoutProps as DashboardLayoutPropsBase,
-} from '@/packages/design-system/src/molecules/DashboardLayout'
+} from '@stanfordbdhg/spezi-web-design-system/molecules/DashboardLayout'
+import { Link } from '@tanstack/react-router'
+import { LogoType } from '@/components/icons/LogoType'
+import { useUser } from '@/modules/firebase/UserProvider'
 import { MenuLinks } from '@/routes/~_dashboard/MenuLinks'
 import { User } from '@/routes/~_dashboard/User'
 

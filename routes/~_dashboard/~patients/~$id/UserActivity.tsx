@@ -5,14 +5,14 @@
 //
 // SPDX-License-Identifier: MIT
 //
-import { Clock, FileQuestion, Mail } from 'lucide-react'
-import { type ReactNode } from 'react'
 import {
   Card,
   CardHeader,
   CardTitle,
-} from '@/packages/design-system/src/components/Card'
-import { formatNilDateTime } from '@/packages/design-system/src/utils/date'
+} from '@stanfordbdhg/spezi-web-design-system/components/Card'
+import { formatNilDateTime } from '@stanfordbdhg/spezi-web-design-system/utils/date'
+import { Clock, FileQuestion, Mail } from 'lucide-react'
+import { type ReactNode } from 'react'
 import { type UserActivity as UserActivityType } from '@/routes/~_dashboard/~patients/utils'
 
 interface ActivityRowProps {

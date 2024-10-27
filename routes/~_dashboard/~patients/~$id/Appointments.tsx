@@ -6,23 +6,23 @@
 // SPDX-License-Identifier: MIT
 //
 import { deleteDoc } from '@firebase/firestore'
-import { useRouter } from '@tanstack/react-router'
-import { createColumnHelper } from '@tanstack/table-core'
-import { Pencil, Plus, Trash } from 'lucide-react'
-import { docRefs } from '@/modules/firebase/app'
-import { Button } from '@/packages/design-system/src/components/Button'
+import { Button } from '@stanfordbdhg/spezi-web-design-system/components/Button'
 import {
   DataTable,
   dateColumn,
   dateTimeColumn,
   RowDropdownMenu,
-} from '@/packages/design-system/src/components/DataTable'
-import { DropdownMenuItem } from '@/packages/design-system/src/components/DropdownMenu'
-import { ConfirmDeleteDialog } from '@/packages/design-system/src/molecules/ConfirmDeleteDialog'
+} from '@stanfordbdhg/spezi-web-design-system/components/DataTable'
+import { DropdownMenuItem } from '@stanfordbdhg/spezi-web-design-system/components/DropdownMenu'
+import { ConfirmDeleteDialog } from '@stanfordbdhg/spezi-web-design-system/molecules/ConfirmDeleteDialog'
 import {
   useOpenState,
   useStatefulOpenState,
-} from '@/packages/design-system/src/utils/useOpenState'
+} from '@stanfordbdhg/spezi-web-design-system/utils/useOpenState'
+import { useRouter } from '@tanstack/react-router'
+import { createColumnHelper } from '@tanstack/table-core'
+import { Pencil, Plus, Trash } from 'lucide-react'
+import { docRefs } from '@/modules/firebase/app'
 import {
   createAppointment,
   updateAppointment,

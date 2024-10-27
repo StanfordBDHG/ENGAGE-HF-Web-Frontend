@@ -7,6 +7,8 @@
 //
 import { updateDoc } from '@firebase/firestore'
 import { UserType } from '@stanfordbdhg/engagehf-models'
+import { getUserName } from '@stanfordbdhg/spezi-web-design-system/modules/auth'
+import { PageTitle } from '@stanfordbdhg/spezi-web-design-system/molecules/DashboardLayout'
 import { createFileRoute, notFound, useRouter } from '@tanstack/react-router'
 import { Users } from 'lucide-react'
 import { Helmet } from 'react-helmet'
@@ -17,8 +19,6 @@ import {
   getUserData,
   userOrganizationQueryOptions,
 } from '@/modules/user/queries'
-import { getUserName } from '@/packages/design-system/src/modules/auth/user'
-import { PageTitle } from '@/packages/design-system/src/molecules/DashboardLayout'
 import {
   UserForm,
   type UserFormSchema,
