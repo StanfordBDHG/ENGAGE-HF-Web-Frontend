@@ -5,6 +5,7 @@
 //
 // SPDX-License-Identifier: MIT
 //
+
 import { Toaster } from '@stanfordspezi/spezi-web-design-system/components/Toaster'
 import { SpeziProvider } from '@stanfordspezi/spezi-web-design-system/SpeziProvider'
 import { createRootRoute, Outlet, redirect } from '@tanstack/react-router'

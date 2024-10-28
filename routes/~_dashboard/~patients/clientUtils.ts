@@ -5,6 +5,7 @@
 //
 // SPDX-License-Identifier: MIT
 //
+
 import { useMemo } from 'react'
 import { basicFhirCoding } from '@/modules/firebase/models'
 import { UserObservationCollection } from '@/modules/firebase/utils'

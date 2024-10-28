@@ -5,6 +5,7 @@
 //
 // SPDX-License-Identifier: MIT
 //
+
 import { tailwindColors } from '@stanfordspezi/spezi-web-design-system'
 import tailwindCssAnimate from 'tailwindcss-animate'
 

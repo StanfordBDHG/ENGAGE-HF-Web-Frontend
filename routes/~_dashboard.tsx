@@ -5,6 +5,7 @@
 //
 // SPDX-License-Identifier: MIT
 //
+
 import { createFileRoute } from '@tanstack/react-router'
 import { currentUserQueryOptions } from '@/modules/firebase/UserProvider'
 import { queryClient } from '@/modules/query/queryClient'

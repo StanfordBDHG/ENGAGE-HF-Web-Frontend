@@ -5,6 +5,7 @@
 //
 // SPDX-License-Identifier: MIT
 //
+
 import type en from './modules/messages/translations/en.json'
 
 /// <reference types="vite/client" />

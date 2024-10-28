@@ -5,6 +5,7 @@
 //
 // SPDX-License-Identifier: MIT
 //
+
 import { deleteDoc } from '@firebase/firestore'
 import { Button } from '@stanfordspezi/spezi-web-design-system/components/Button'
 import {

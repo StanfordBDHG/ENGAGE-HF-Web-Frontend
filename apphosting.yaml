@@ -5,6 +5,7 @@
 #
 # SPDX-License-Identifier: MIT
 #
+
 env:
   - variable: VITE_PUBLIC_FIREBASE_API_KEY
     secret: webFrontend_VITE_PUBLIC_FIREBASE_API_KEY

@@ -5,6 +5,7 @@
 //
 // SPDX-License-Identifier: MIT
 //
+
 import { CopyText } from '@stanfordspezi/spezi-web-design-system/components/CopyText'
 import { Tooltip } from '@stanfordspezi/spezi-web-design-system/components/Tooltip'
 import { type Nil } from '@stanfordspezi/spezi-web-design-system/utils/misc'

@@ -5,6 +5,7 @@
 //
 // SPDX-License-Identifier: MIT
 //
+
 import { addDoc, setDoc } from '@firebase/firestore'
 import {
   FHIRAllergyIntoleranceCriticality,

@@ -5,6 +5,7 @@
 //
 // SPDX-License-Identifier: MIT
 //
+
 import { type Functions, httpsCallable } from '@firebase/functions'
 import {
   type CreateInvitationInput,
