@@ -5,10 +5,12 @@
 //
 // SPDX-License-Identifier: MIT
 //
-import { type Nil } from '@stanfordbdhg/spezi-web-design-system/utils/misc'
+import {
+  type Nil,
+  isObject,
+} from '@stanfordbdhg/spezi-web-design-system/utils/misc'
 import { getNavigatorLanguage } from '@stanfordbdhg/spezi-web-design-system/utils/navigator'
 import { isNil } from 'es-toolkit'
-import { isObject } from 'lodash'
 import { type LocalizedText } from '@/modules/firebase/models'
 
 export const createLocalizationHelpers = (locale: string) => {
