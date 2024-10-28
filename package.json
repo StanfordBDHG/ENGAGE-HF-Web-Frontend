@@ -23,8 +23,7 @@
     "lint:ci": "eslint --output-file eslint_report.json --format json .",
     "test": "vitest run --coverage",
     "docs": "typedoc",
-    "docs:ci": "typedoc --out ./out/docs --githubPages true",
-    "storybook": "storybook dev -p 6006 --config-dir=\"./packages/design-system/.storybook\""
+    "docs:ci": "typedoc --out ./out/docs --githubPages true"
   },
   "dependencies": {
     "@stanfordbdhg/engagehf-models": "^0.4.0",
