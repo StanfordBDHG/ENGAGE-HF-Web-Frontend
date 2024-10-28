@@ -7,7 +7,6 @@
 # SPDX-License-Identifier: MIT
 #
 
-
 FROM node:latest AS build
 
 RUN mkdir /app

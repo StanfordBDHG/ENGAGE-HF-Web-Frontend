@@ -5,6 +5,7 @@
 //
 // SPDX-License-Identifier: MIT
 //
+
 import { UserType } from '@stanfordbdhg/engagehf-models'
 import {
   DataTable,

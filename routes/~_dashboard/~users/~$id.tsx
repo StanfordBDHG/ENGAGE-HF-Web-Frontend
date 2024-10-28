@@ -5,6 +5,7 @@
 //
 // SPDX-License-Identifier: MIT
 //
+
 import { updateDoc } from '@firebase/firestore'
 import { UserType } from '@stanfordbdhg/engagehf-models'
 import { getUserName } from '@stanfordbdhg/spezi-web-design-system/modules/auth'

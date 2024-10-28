@@ -5,6 +5,7 @@
 //
 // SPDX-License-Identifier: MIT
 //
+
 import { UserType } from '@stanfordbdhg/engagehf-models'
 import { MenuItem } from '@stanfordbdhg/spezi-web-design-system/molecules/DashboardLayout'
 import { useLocation } from '@tanstack/react-router'

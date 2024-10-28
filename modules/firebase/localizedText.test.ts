@@ -5,6 +5,7 @@
 //
 // SPDX-License-Identifier: MIT
 //
+
 import { createLocalizationHelpers } from '@/modules/firebase/localizedText'
 
 const { parseLocalizedText, parseNilLocalizedText } =

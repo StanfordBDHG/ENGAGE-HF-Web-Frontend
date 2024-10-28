@@ -5,6 +5,7 @@
 //
 // SPDX-License-Identifier: MIT
 //
+
 import { deleteDoc } from '@firebase/firestore'
 import { RowDropdownMenu } from '@stanfordbdhg/spezi-web-design-system/components/DataTable'
 import { DropdownMenuItem } from '@stanfordbdhg/spezi-web-design-system/components/DropdownMenu'

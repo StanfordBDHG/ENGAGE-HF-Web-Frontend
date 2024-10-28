@@ -5,6 +5,7 @@
 //
 // SPDX-License-Identifier: MIT
 //
+
 import '../modules/globals.css'
 import { Toaster } from '@stanfordbdhg/spezi-web-design-system/components/Toaster'
 import { SpeziProvider } from '@stanfordbdhg/spezi-web-design-system/SpeziProvider'

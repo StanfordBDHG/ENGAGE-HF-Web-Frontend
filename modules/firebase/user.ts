@@ -5,6 +5,7 @@
 //
 // SPDX-License-Identifier: MIT
 //
+
 import {
   type GetUsersInformationInput,
   type UserInformation,

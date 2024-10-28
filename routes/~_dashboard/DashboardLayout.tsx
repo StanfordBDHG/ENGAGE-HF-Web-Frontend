@@ -5,6 +5,7 @@
 //
 // SPDX-License-Identifier: MIT
 //
+
 import { getUserInfo } from '@stanfordbdhg/spezi-web-design-system/modules/auth'
 import {
   DashboardLayout as DashboardLayoutBase,

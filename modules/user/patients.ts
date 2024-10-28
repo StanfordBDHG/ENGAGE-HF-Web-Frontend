@@ -5,6 +5,7 @@
 //
 // SPDX-License-Identifier: MIT
 //
+
 import { UserType } from '@stanfordbdhg/engagehf-models'
 import { queryOptions } from '@tanstack/react-query'
 import { type Query, query, where } from 'firebase/firestore'

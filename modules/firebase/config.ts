@@ -5,6 +5,7 @@
 //
 // SPDX-License-Identifier: MIT
 //
+
 import { env } from '../../env'
 
 export const firebaseConfig = {

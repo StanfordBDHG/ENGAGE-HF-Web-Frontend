@@ -5,6 +5,7 @@
 //
 // SPDX-License-Identifier: MIT
 //
+
 import { useQuery } from '@tanstack/react-query'
 import { useUser } from '@/modules/firebase/UserProvider'
 import { getNotificationPatientId } from '@/modules/notifications/helpers'

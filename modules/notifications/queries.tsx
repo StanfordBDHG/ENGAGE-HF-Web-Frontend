@@ -5,6 +5,7 @@
 //
 // SPDX-License-Identifier: MIT
 //
+
 import { queryOptions, useQuery } from '@tanstack/react-query'
 import { query, orderBy } from 'firebase/firestore'
 import { refs } from '@/modules/firebase/app'

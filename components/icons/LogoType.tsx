@@ -5,6 +5,7 @@
 //
 // SPDX-License-Identifier: MIT
 //
+
 import type { SVGProps } from 'react'
 
 type LogoTypeProps = SVGProps<SVGSVGElement> & {

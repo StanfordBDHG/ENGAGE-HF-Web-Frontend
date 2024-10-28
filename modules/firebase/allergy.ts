@@ -5,6 +5,7 @@
 //
 // SPDX-License-Identifier: MIT
 //
+
 import { startCase } from 'es-toolkit'
 
 export enum AllergyType {

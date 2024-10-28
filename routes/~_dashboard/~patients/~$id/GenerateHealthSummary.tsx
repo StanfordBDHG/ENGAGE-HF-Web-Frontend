@@ -5,6 +5,7 @@
 //
 // SPDX-License-Identifier: MIT
 //
+
 import { Button } from '@stanfordbdhg/spezi-web-design-system/components/Button'
 import { toast } from '@stanfordbdhg/spezi-web-design-system/components/Toaster'
 import { Tooltip } from '@stanfordbdhg/spezi-web-design-system/components/Tooltip'

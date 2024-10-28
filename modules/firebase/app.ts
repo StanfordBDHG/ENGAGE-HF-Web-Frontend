@@ -5,6 +5,7 @@
 //
 // SPDX-License-Identifier: MIT
 //
+
 import { initializeApp } from '@firebase/app'
 import { connectFunctionsEmulator, getFunctions } from '@firebase/functions'
 import { type UserType } from '@stanfordbdhg/engagehf-models'
