@@ -10,7 +10,6 @@ import { z } from 'zod'
 import { type Organization, type User } from '@/modules/firebase/models'
 import { useUser } from '@/modules/firebase/UserProvider'
 import { Button } from '@/packages/design-system/src/components/Button'
-import { DatePicker } from '@/packages/design-system/src/components/DatePicker'
 import { Input } from '@/packages/design-system/src/components/Input'
 import {
   Select,
@@ -27,9 +26,7 @@ export const userFormSchema = z
   .object({
     email: z.string().email().min(1, 'Email is required'),
     displayName: z.string(),
-    invitationCode: z.string(),
-    dateOfBirth: z.date().optional(),
-    organizationId: z.string().optional(),
+    organizationId: z.string().nullable(),
     type: z.nativeEnum(UserType),
   })
   .superRefine((schema, ctx) => {
@@ -47,7 +44,7 @@ export type UserFormSchema = z.infer<typeof userFormSchema>
 interface UserFormProps {
   organizations: Array<Pick<Organization, 'name' | 'id'>>
   userInfo?: Pick<UserInfo, 'email' | 'displayName' | 'uid'>
-  user?: Pick<User, 'organization' | 'invitationCode' | 'dateOfBirth'>
+  user?: Pick<User, 'organization'>
   type?: UserType
   onSubmit: (data: UserFormSchema) => Promise<void>
 }
@@ -70,9 +67,7 @@ export const UserForm = ({
       organizationId:
         (authUser.user.type === UserType.owner ?
           authUser.user.organization
-        : user?.organization) ?? undefined,
-      invitationCode: user?.invitationCode ?? '',
-      dateOfBirth: user?.dateOfBirth ? new Date(user.dateOfBirth) : undefined,
+        : user?.organization) ?? null,
     },
   })
 
@@ -94,35 +89,17 @@ export const UserForm = ({
         label="Display name"
         render={({ field }) => <Input {...field} />}
       />
-      <Field
-        control={form.control}
-        name="dateOfBirth"
-        label="Date of Birth"
-        render={({ field }) => (
-          <DatePicker
-            mode="single"
-            selected={field.value}
-            onSelect={(date) => field.onChange(date)}
-            defaultMonth={field.value}
-            toYear={new Date().getFullYear()}
-          />
-        )}
-      />
-      {isEdit && (
-        <Field
-          control={form.control}
-          name="invitationCode"
-          label="Invitation code"
-          render={({ field }) => <Input {...field} />}
-        />
-      )}
       {authUser.user.type === UserType.admin && (
         <Field
           control={form.control}
           name="organizationId"
           label="Organization"
           render={({ field }) => (
-            <Select onValueChange={field.onChange} {...field}>
+            <Select
+              {...field}
+              onValueChange={field.onChange}
+              value={field.value ?? undefined}
+            >
               <SelectTrigger>
                 <SelectValue placeholder="Organization" />
               </SelectTrigger>

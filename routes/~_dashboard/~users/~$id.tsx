@@ -36,10 +36,8 @@ const UserPage = () => {
       email: form.email,
     }
     const userData = {
-      invitationCode: form.invitationCode,
       organization: form.organizationId,
       type: form.type,
-      dateOfBirth: form.dateOfBirth?.toISOString(),
     }
     if (resourceType === 'user') {
       await callables.updateUserInformation({
