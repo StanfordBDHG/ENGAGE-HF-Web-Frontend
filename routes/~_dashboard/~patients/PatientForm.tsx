@@ -128,7 +128,7 @@ export const PatientForm = ({
         )}
       />
       <Button type="submit" isPending={form.formState.isSubmitting}>
-        {isEdit ? 'Edit' : 'Invite'} patient
+        {isEdit ? 'Update' : 'Invite'} patient
       </Button>
     </form>
   )

@@ -94,7 +94,7 @@ export const AllergyForm = ({
         )}
       />
       <Button type="submit" isPending={form.formState.isSubmitting}>
-        {isEdit ? 'Edit' : 'Create'} allergy
+        {isEdit ? 'Update' : 'Create'} allergy
       </Button>
     </form>
   )

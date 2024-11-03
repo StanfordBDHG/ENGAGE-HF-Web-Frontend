@@ -94,7 +94,7 @@ export const AppointmentForm = ({
         )}
       />
       <Button type="submit" isPending={form.formState.isSubmitting}>
-        {isEdit ? 'Edit' : 'Create'} appointment
+        {isEdit ? 'Update' : 'Create'} appointment
       </Button>
     </form>
   )

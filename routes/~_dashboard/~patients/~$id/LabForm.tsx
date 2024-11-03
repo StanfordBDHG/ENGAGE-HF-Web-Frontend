@@ -151,7 +151,7 @@ export const LabForm = ({ observation, onSubmit }: LabFormProps) => {
         )}
       />
       <Button type="submit" isPending={form.formState.isSubmitting}>
-        {isEdit ? 'Edit' : 'Create'} observation
+        {isEdit ? 'Update' : 'Create'} observation
       </Button>
     </form>
   )
