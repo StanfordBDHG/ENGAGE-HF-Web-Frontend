@@ -98,7 +98,7 @@ const getUserInvitationData = async (userId: string) => {
   return {
     user: {
       ...invitation.user,
-      invitationCode: invitation.id,
+      invitationCode: invitation.code,
       lastActiveDate: null,
     },
     authUser: {
