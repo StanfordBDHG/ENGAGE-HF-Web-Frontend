@@ -78,24 +78,19 @@ export const getUserOrganizationsMap = async () => {
   )
 }
 
-/**
- * Gets user or invitation data
- * */
-export const getUserData = async (userId: string) => {
+const getUserAuthData = async (userId: string) => {
   const user = await getDocData(docRefs.user(userId))
-  if (user) {
-    const allAuthData = await mapAuthData(
-      { userIds: [userId] },
-      (data, id) => ({
-        uid: id,
-        email: data.auth.email,
-        displayName: data.auth.displayName,
-      }),
-    )
-    const authUser = allAuthData.at(0)
-    if (!authUser) throw new Error('Incomplete data')
-    return { user, authUser, resourceType: 'user' as const }
-  }
+  const allAuthData = await mapAuthData({ userIds: [userId] }, (data, id) => ({
+    uid: id,
+    email: data.auth.email,
+    displayName: data.auth.displayName,
+  }))
+  const authUser = allAuthData.at(0)
+  if (!authUser || !user) throw notFound()
+  return { user, authUser, resourceType: 'user' as const }
+}
+
+const getUserInvitationData = async (userId: string) => {
   const invitation = await getDocData(docRefs.invitation(userId))
   if (!invitation) throw notFound()
   if (!invitation.auth) throw new Error('Incomplete data')
@@ -112,4 +107,18 @@ export const getUserData = async (userId: string) => {
     },
     resourceType: 'invitation' as const,
   }
+}
+
+/**
+ * Gets user or invitation data
+ * @param userId Starts with `invitation-` if user is an invitation.
+ * It's necessary to prefix invitation id, because user id and invitation id are not guaranteed to be distinct
+ * */
+export const getUserData = async (userId: string) => {
+  const prefix = 'invitation-'
+  if (userId.startsWith(prefix)) {
+    const id = userId.slice(prefix.length)
+    return getUserInvitationData(id)
+  }
+  return getUserAuthData(userId)
 }

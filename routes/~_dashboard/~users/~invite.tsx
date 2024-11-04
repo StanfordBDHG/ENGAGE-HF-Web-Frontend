@@ -35,7 +35,7 @@ const InviteUserPage = () => {
         type: form.type,
       },
     })
-    void navigate({ to: routes.users.user(result.data.id) })
+    void navigate({ to: routes.users.user(result.data.id, 'invitation') })
   }
 
   return (

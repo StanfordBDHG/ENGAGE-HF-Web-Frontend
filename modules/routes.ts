@@ -6,6 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 
+import { type ResourceType } from '@/modules/firebase/utils'
 import type { PatientPageTab } from '@/routes/~_dashboard/~patients/~$id/~index'
 
 export const routes = {
@@ -13,7 +14,8 @@ export const routes = {
   notifications: '/notifications',
   users: {
     index: '/users',
-    user: (userId: string) => `/users/${userId}`,
+    user: (userId: string, resourceType: ResourceType) =>
+      `/users/${resourceType === 'invitation' ? 'invitation-' : ''}${userId}`,
     invite: '/users/invite',
   },
   patients: {

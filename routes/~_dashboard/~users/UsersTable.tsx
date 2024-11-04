@@ -59,7 +59,7 @@ export const UsersTable = ({ data }: UsersDataTableProps) => {
       tableView={{
         onRowClick: (user) =>
           void navigate({
-            to: routes.users.user(user.resourceId),
+            to: routes.users.user(user.resourceId, user.resourceType),
           }),
       }}
     />

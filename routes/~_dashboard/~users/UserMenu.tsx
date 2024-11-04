@@ -48,7 +48,7 @@ export const UserMenu = ({ user }: UserMenuProps) => {
       />
       <RowDropdownMenu>
         <DropdownMenuItem asChild>
-          <Link to={routes.users.user(user.resourceId)}>
+          <Link to={routes.users.user(user.resourceId, user.resourceType)}>
             <Pencil />
             Edit
           </Link>
