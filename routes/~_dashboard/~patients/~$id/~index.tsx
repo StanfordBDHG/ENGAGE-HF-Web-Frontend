@@ -109,7 +109,7 @@ const PatientPage = () => {
       invitationCode: form.invitationCode,
       clinician: form.clinician,
       organization: clinician.organization,
-      dateOfBirth: form.dateOfBirth?.toISOString(),
+      dateOfBirth: form.dateOfBirth?.toISOString() ?? null,
     }
     if (resourceType === 'user') {
       await callables.updateUserInformation({
