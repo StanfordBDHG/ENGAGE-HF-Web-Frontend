@@ -41,7 +41,7 @@ const InvitePatientPage = () => {
       },
     })
     await navigate({
-      to: routes.patients.patient(result.data.id),
+      to: routes.patients.patient(result.data.id, 'invitation'),
     })
   }
 

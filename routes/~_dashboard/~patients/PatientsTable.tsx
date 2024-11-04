@@ -53,7 +53,10 @@ export const PatientsTable = ({ data, ...props }: PatientsDataTableProps) => {
       tableView={{
         onRowClick: (patient) =>
           void navigate({
-            to: routes.patients.patient(patient.resourceId),
+            to: routes.patients.patient(
+              patient.resourceId,
+              patient.resourceType,
+            ),
           }),
       }}
       {...props}

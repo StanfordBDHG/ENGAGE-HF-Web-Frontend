@@ -46,7 +46,12 @@ export const PatientMenu = ({ patient }: PatientMenuProps) => {
       />
       <RowDropdownMenu>
         <DropdownMenuItem asChild>
-          <Link to={routes.patients.patient(patient.resourceId)}>
+          <Link
+            to={routes.patients.patient(
+              patient.resourceId,
+              patient.resourceType,
+            )}
+          >
             <Pencil />
             Edit
           </Link>

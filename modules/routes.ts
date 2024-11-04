@@ -20,8 +20,12 @@ export const routes = {
   },
   patients: {
     index: '/patients',
-    patient: (patientId: string, params?: { tab?: PatientPageTab }) =>
-      `/patients/${patientId}${params?.tab ? `?tab=${params.tab}` : ''}`,
+    patient: (
+      patientId: string,
+      resourceType: ResourceType,
+      params?: { tab?: PatientPageTab },
+    ) =>
+      `/patients/${resourceType === 'invitation' ? 'invitation-' : ''}${patientId}${params?.tab ? `?tab=${params.tab}` : ''}`,
     invite: '/patients/invite',
   },
   signIn: '/sign-in',

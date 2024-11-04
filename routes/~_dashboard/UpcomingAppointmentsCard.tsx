@@ -59,6 +59,7 @@ export const UpcomingAppointmentsCard = () => {
         if (!patient || !appointments) return null
         const patientObject = {
           id: patient.resourceId,
+          resourceType: patient.resourceType,
           name: getUserName(patient),
         }
         return appointments
@@ -109,9 +110,13 @@ export const UpcomingAppointmentsCard = () => {
           tableView={{
             onRowClick: (appointment) =>
               void navigate({
-                to: routes.patients.patient(appointment.patient.id, {
-                  tab: PatientPageTab.appointments,
-                }),
+                to: routes.patients.patient(
+                  appointment.patient.id,
+                  appointment.patient.resourceType,
+                  {
+                    tab: PatientPageTab.appointments,
+                  },
+                ),
               }),
           }}
         />

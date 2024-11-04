@@ -22,7 +22,9 @@ export const parseMessageToLink = (message: UserMessage) => {
     const userId = actionParts.at(1)
     const tab = actionParts.at(2)
     if (userId) {
-      return routes.patients.patient(userId, { tab: tab as PatientPageTab })
+      return routes.patients.patient(userId, 'user', {
+        tab: tab as PatientPageTab,
+      })
     }
   }
   return null
