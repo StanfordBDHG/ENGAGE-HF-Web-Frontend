@@ -21,7 +21,7 @@ import {
   getDocsData,
   type ResourceType,
 } from '@/modules/firebase/utils'
-import { getUserData } from '@/modules/user/queries'
+import { getUserData, parseUserId } from '@/modules/user/queries'
 import {
   Tabs,
   TabsContent,
@@ -84,9 +84,9 @@ export enum PatientPageTab {
 
 const PatientPage = () => {
   const router = useRouter()
-  const { id: userId } = Route.useParams()
   const { tab } = Route.useSearch()
   const {
+    userId,
     medications,
     formProps,
     userMedications,
@@ -246,13 +246,14 @@ export const Route = createFileRoute('/_dashboard/patients/$id/')({
     tab: z.nativeEnum(PatientPageTab).optional().catch(undefined),
   }),
   loader: async ({ params }) => {
-    const userId = params.id
-    const userData = await getUserData(userId)
-    const { resourceType, user, authUser } = userData
+    const { userId, resourceType } = parseUserId(params.id)
+    const userData = await getUserData(userId, resourceType)
+    const { user, authUser } = userData
     if (user.type !== UserType.patient) throw notFound()
 
     return {
       user,
+      userId,
       authUser,
       resourceType,
       medications: await getMedicationsData(),

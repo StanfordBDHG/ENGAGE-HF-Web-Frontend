@@ -15,6 +15,7 @@ import { getDocDataOrThrow } from '@/modules/firebase/utils'
 import { queryClient } from '@/modules/query/queryClient'
 import {
   getUserData,
+  parseUserId,
   userOrganizationQueryOptions,
 } from '@/modules/user/queries'
 import { getUserName } from '@/packages/design-system/src/modules/auth/user'
@@ -27,8 +28,8 @@ import { DashboardLayout } from '../DashboardLayout'
 
 const UserPage = () => {
   const router = useRouter()
-  const { id: userId } = Route.useParams()
-  const { authUser, user, resourceType, organizations } = Route.useLoaderData()
+  const { authUser, user, resourceType, organizations, userId } =
+    Route.useLoaderData()
 
   const updateUser = async (form: UserFormSchema) => {
     const authData = {
@@ -88,12 +89,13 @@ export const Route = createFileRoute('/_dashboard/users/$id')({
   component: UserPage,
   beforeLoad: () => ensureType([UserType.admin, UserType.owner]),
   loader: async ({ params }) => {
-    const userId = params.id
-    const { resourceType, user, authUser } = await getUserData(userId)
+    const { resourceType, userId } = parseUserId(params.id)
+    const { user, authUser } = await getUserData(userId, resourceType)
     if (user.type === UserType.patient) throw notFound()
 
     return {
       user,
+      userId,
       authUser,
       resourceType,
       organizations: await queryClient.ensureQueryData(

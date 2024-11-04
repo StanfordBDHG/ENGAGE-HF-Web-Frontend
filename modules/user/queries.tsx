@@ -16,6 +16,7 @@ import {
   getDocData,
   getDocDataOrThrow,
   getDocsData,
+  type ResourceType,
   type UserAuthenticationInformation,
 } from '@/modules/firebase/utils'
 import { queryClient } from '@/modules/query/queryClient'
@@ -109,16 +110,25 @@ const getUserInvitationData = async (userId: string) => {
   }
 }
 
+const invitationPrefix = 'invitation-'
+
 /**
  * Gets user or invitation data
  * @param userId Starts with `invitation-` if user is an invitation.
  * It's necessary to prefix invitation id, because user id and invitation id are not guaranteed to be distinct
  * */
-export const getUserData = async (userId: string) => {
-  const prefix = 'invitation-'
-  if (userId.startsWith(prefix)) {
-    const id = userId.slice(prefix.length)
-    return getUserInvitationData(id)
-  }
-  return getUserAuthData(userId)
-}
+export const parseUserId = (userId: string) =>
+  userId.startsWith(invitationPrefix) ?
+    {
+      userId: userId.slice(invitationPrefix.length),
+      resourceType: 'invitation' as const,
+    }
+  : { userId, resourceType: 'user' as const }
+
+export const getUserData = async (
+  userId: string,
+  resourceType: ResourceType,
+) =>
+  resourceType === 'invitation' ?
+    getUserInvitationData(userId)
+  : getUserAuthData(userId)
