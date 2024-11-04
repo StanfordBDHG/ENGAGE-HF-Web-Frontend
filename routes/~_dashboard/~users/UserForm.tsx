@@ -81,6 +81,7 @@ export const UserForm = ({
         control={form.control}
         name="email"
         label="Email"
+        tooltip="Email should be the unique SSO indentifier of your organization"
         render={({ field }) => <Input type="email" {...field} />}
       />
       <Field
