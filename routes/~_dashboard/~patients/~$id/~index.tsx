@@ -107,7 +107,6 @@ const PatientPage = () => {
       email: form.email,
     }
     const userData = {
-      invitationCode: form.invitationCode,
       clinician: form.clinician,
       organization: clinician.organization,
       dateOfBirth: form.dateOfBirth?.toISOString() ?? null,

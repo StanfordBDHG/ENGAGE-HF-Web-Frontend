@@ -27,7 +27,6 @@ import { type User } from '@/modules/firebase/models'
 export const patientFormSchema = z.object({
   email: z.string().email().min(1, 'Email is required'),
   displayName: z.string(),
-  invitationCode: z.string(),
   clinician: z.string().min(1, 'Clinician is required'),
   dateOfBirth: z.date().optional(),
 })
@@ -41,10 +40,7 @@ interface PatientFormProps {
     email: string | null
   }>
   userInfo?: Pick<UserInfo, 'email' | 'displayName' | 'uid'>
-  user?: Pick<
-    User,
-    'organization' | 'invitationCode' | 'clinician' | 'dateOfBirth'
-  >
+  user?: Pick<User, 'organization' | 'clinician' | 'dateOfBirth'>
   onSubmit: (data: PatientFormSchema) => Promise<void>
   clinicianPreselectId?: string
 }
@@ -62,7 +58,6 @@ export const PatientForm = ({
     defaultValues: {
       email: userInfo?.email ?? '',
       displayName: userInfo?.displayName ?? '',
-      invitationCode: user?.invitationCode ?? '',
       clinician: user?.clinician ?? clinicianPreselectId ?? '',
       dateOfBirth: user?.dateOfBirth ? new Date(user.dateOfBirth) : undefined,
     },
@@ -100,14 +95,6 @@ export const PatientForm = ({
           />
         )}
       />
-      {isEdit && (
-        <Field
-          control={form.control}
-          name="invitationCode"
-          label="Invitation code"
-          render={({ field }) => <Input {...field} />}
-        />
-      )}
       <Field
         control={form.control}
         name="clinician"
