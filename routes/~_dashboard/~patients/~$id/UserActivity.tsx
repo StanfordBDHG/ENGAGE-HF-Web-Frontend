@@ -6,13 +6,9 @@
 // SPDX-License-Identifier: MIT
 //
 
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-} from '@stanfordspezi/spezi-web-design-system/components/Card'
+import { Card } from '@stanfordspezi/spezi-web-design-system/components/Card'
 import { formatNilDateTime } from '@stanfordspezi/spezi-web-design-system/utils/date'
-import { Clock, FileQuestion, Mail } from 'lucide-react'
+import { Clock, FileQuestion, Mail, BookLock } from 'lucide-react'
 import { type ReactNode } from 'react'
 import { type UserActivity as UserActivityType } from '@/routes/~_dashboard/~patients/utils'
 
@@ -38,11 +34,13 @@ interface UserActivityProps {
 
 export const UserActivity = ({ activity }: UserActivityProps) => (
   <Card className="xl:min-w-max xl:self-start">
-    <CardHeader>
-      <CardTitle>User activity</CardTitle>
-    </CardHeader>
-    <div className="px-5 pb-4 marker:text-primary">
+    <div className="px-5 py-4 marker:text-primary">
       <ul className="flex list-disc flex-col gap-4">
+        <ActivityRow
+          icon={<BookLock className="size-5" />}
+          label="Invitation code"
+          value={activity.invitationCode}
+        />
         {activity.isInvitation && (
           <ActivityRow
             icon={<Mail className="size-5" />}
