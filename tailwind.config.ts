@@ -10,7 +10,10 @@ import tailwindCssAnimate from 'tailwindcss-animate'
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ['./{app,pages,components,routes,modules}/**/*.{js,ts,jsx,tsx,mdx}'],
+  content: [
+    './{app,pages,components,routes,modules}/**/*.{js,ts,jsx,tsx,mdx}',
+    './node_modules/@stanfordspezi/spezi-web-design-system/dist/**/*.js',
+  ],
   theme: {
     extend: {
       colors: tailwindColors,

@@ -13,7 +13,6 @@ import { auth } from '@/modules/firebase/app'
 import { AuthProvider } from '@/modules/firebase/AuthProvider'
 import { ReactQueryClientProvider } from '@/modules/query/ReactQueryClientProvider'
 import { routes } from '@/modules/routes'
-import '@stanfordspezi/spezi-web-design-system/style.css'
 import '../modules/globals.css'
 
 const Root = () => (
