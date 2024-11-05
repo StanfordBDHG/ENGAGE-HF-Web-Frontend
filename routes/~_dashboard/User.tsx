@@ -10,12 +10,12 @@ import {
   DropdownMenuTrigger,
   DropdownMenuContent,
   DropdownMenuItem,
-} from '@stanfordbdhg/spezi-web-design-system/components/DropdownMenu'
+} from '@stanfordspezi/spezi-web-design-system/components/DropdownMenu'
 import {
   getUserName,
   type UserInfo,
-} from '@stanfordbdhg/spezi-web-design-system/modules/auth'
-import { UserMenuItem } from '@stanfordbdhg/spezi-web-design-system/molecules/DashboardLayout'
+} from '@stanfordspezi/spezi-web-design-system/modules/auth'
+import { UserMenuItem } from '@stanfordspezi/spezi-web-design-system/molecules/DashboardLayout'
 import { LogOut } from 'lucide-react'
 import { auth } from '@/modules/firebase/app'
 

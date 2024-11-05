@@ -5,8 +5,8 @@
 //
 // SPDX-License-Identifier: MIT
 //
-import { SideLabel } from '@stanfordbdhg/spezi-web-design-system/components/SideLabel'
-import { Switch } from '@stanfordbdhg/spezi-web-design-system/components/Switch'
+import { SideLabel } from '@stanfordspezi/spezi-web-design-system/components/SideLabel'
+import { Switch } from '@stanfordspezi/spezi-web-design-system/components/Switch'
 import { type Table } from '@tanstack/table-core'
 import { type UserMessage } from '@/modules/firebase/models'
 import { columnIds } from './helpers'

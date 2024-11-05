@@ -6,11 +6,11 @@
 // SPDX-License-Identifier: MIT
 //
 import { deleteDoc } from '@firebase/firestore'
-import { RowDropdownMenu } from '@stanfordbdhg/spezi-web-design-system/components/DataTable'
-import { DropdownMenuItem } from '@stanfordbdhg/spezi-web-design-system/components/DropdownMenu'
-import { getUserName } from '@stanfordbdhg/spezi-web-design-system/modules/auth'
-import { ConfirmDeleteDialog } from '@stanfordbdhg/spezi-web-design-system/molecules/ConfirmDeleteDialog'
-import { useOpenState } from '@stanfordbdhg/spezi-web-design-system/utils/useOpenState'
+import { RowDropdownMenu } from '@stanfordspezi/spezi-web-design-system/components/DataTable'
+import { DropdownMenuItem } from '@stanfordspezi/spezi-web-design-system/components/DropdownMenu'
+import { getUserName } from '@stanfordspezi/spezi-web-design-system/modules/auth'
+import { ConfirmDeleteDialog } from '@stanfordspezi/spezi-web-design-system/molecules/ConfirmDeleteDialog'
+import { useOpenState } from '@stanfordspezi/spezi-web-design-system/utils/useOpenState'
 import { Link, useRouter } from '@tanstack/react-router'
 import { Pencil, Trash } from 'lucide-react'
 import { callables, docRefs } from '@/modules/firebase/app'

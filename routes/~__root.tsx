@@ -6,15 +6,15 @@
 // SPDX-License-Identifier: MIT
 //
 import '../modules/globals.css'
-import { Toaster } from '@stanfordbdhg/spezi-web-design-system/components/Toaster'
-import { SpeziProvider } from '@stanfordbdhg/spezi-web-design-system/SpeziProvider'
+import { Toaster } from '@stanfordspezi/spezi-web-design-system/components/Toaster'
+import { SpeziProvider } from '@stanfordspezi/spezi-web-design-system/SpeziProvider'
 import { createRootRoute, Outlet, redirect } from '@tanstack/react-router'
 import { Helmet } from 'react-helmet'
 import { auth } from '@/modules/firebase/app'
 import { AuthProvider } from '@/modules/firebase/AuthProvider'
 import { ReactQueryClientProvider } from '@/modules/query/ReactQueryClientProvider'
 import { routes } from '@/modules/routes'
-import '@stanfordbdhg/spezi-web-design-system/style.css'
+import '@stanfordspezi/spezi-web-design-system/style.css'
 
 const Root = () => (
   <AuthProvider>

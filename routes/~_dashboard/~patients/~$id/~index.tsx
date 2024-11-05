@@ -12,9 +12,9 @@ import {
   TabsContent,
   TabsList,
   TabsTrigger,
-} from '@stanfordbdhg/spezi-web-design-system/components/Tabs'
-import { getUserName } from '@stanfordbdhg/spezi-web-design-system/modules/auth'
-import { PageTitle } from '@stanfordbdhg/spezi-web-design-system/molecules/DashboardLayout'
+} from '@stanfordspezi/spezi-web-design-system/components/Tabs'
+import { getUserName } from '@stanfordspezi/spezi-web-design-system/modules/auth'
+import { PageTitle } from '@stanfordspezi/spezi-web-design-system/molecules/DashboardLayout'
 import { createFileRoute, notFound, useRouter } from '@tanstack/react-router'
 import { Contact } from 'lucide-react'
 import { Helmet } from 'react-helmet'

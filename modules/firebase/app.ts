@@ -8,7 +8,7 @@
 import { initializeApp } from '@firebase/app'
 import { connectFunctionsEmulator, getFunctions } from '@firebase/functions'
 import { type UserType } from '@stanfordbdhg/engagehf-models'
-import { toast } from '@stanfordbdhg/spezi-web-design-system/components/Toaster'
+import { toast } from '@stanfordspezi/spezi-web-design-system/components/Toaster'
 import { queryOptions } from '@tanstack/react-query'
 import { redirect } from '@tanstack/react-router'
 import { connectAuthEmulator, getAuth, OAuthProvider } from 'firebase/auth'

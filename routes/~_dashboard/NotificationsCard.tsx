@@ -5,13 +5,13 @@
 //
 // SPDX-License-Identifier: MIT
 //
-import { Button } from '@stanfordbdhg/spezi-web-design-system/components/Button'
+import { Button } from '@stanfordspezi/spezi-web-design-system/components/Button'
 import {
   Card,
   CardHeader,
   CardTitle,
-} from '@stanfordbdhg/spezi-web-design-system/components/Card'
-import { EmptyState } from '@stanfordbdhg/spezi-web-design-system/components/EmptyState'
+} from '@stanfordspezi/spezi-web-design-system/components/Card'
+import { EmptyState } from '@stanfordspezi/spezi-web-design-system/components/EmptyState'
 import { useQuery } from '@tanstack/react-query'
 import { Link } from '@tanstack/react-router'
 import { Loader2 } from 'lucide-react'

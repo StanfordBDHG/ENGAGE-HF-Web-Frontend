@@ -5,21 +5,21 @@
 //
 // SPDX-License-Identifier: MIT
 //
-import { Button } from '@stanfordbdhg/spezi-web-design-system/components/Button'
-import { DatePicker } from '@stanfordbdhg/spezi-web-design-system/components/DatePicker'
-import { Input } from '@stanfordbdhg/spezi-web-design-system/components/Input'
+import { Button } from '@stanfordspezi/spezi-web-design-system/components/Button'
+import { DatePicker } from '@stanfordspezi/spezi-web-design-system/components/DatePicker'
+import { Input } from '@stanfordspezi/spezi-web-design-system/components/Input'
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@stanfordbdhg/spezi-web-design-system/components/Select'
-import { Field, useForm } from '@stanfordbdhg/spezi-web-design-system/forms'
+} from '@stanfordspezi/spezi-web-design-system/components/Select'
+import { Field, useForm } from '@stanfordspezi/spezi-web-design-system/forms'
 import {
   getUserName,
   type UserInfo,
-} from '@stanfordbdhg/spezi-web-design-system/modules/auth'
+} from '@stanfordspezi/spezi-web-design-system/modules/auth'
 import { z } from 'zod'
 import { type User } from '@/modules/firebase/models'
 

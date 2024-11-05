@@ -6,17 +6,17 @@
 // SPDX-License-Identifier: MIT
 //
 import { UserType } from '@stanfordbdhg/engagehf-models'
-import { Button } from '@stanfordbdhg/spezi-web-design-system/components/Button'
-import { Input } from '@stanfordbdhg/spezi-web-design-system/components/Input'
+import { Button } from '@stanfordspezi/spezi-web-design-system/components/Button'
+import { Input } from '@stanfordspezi/spezi-web-design-system/components/Input'
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@stanfordbdhg/spezi-web-design-system/components/Select'
-import { Field, useForm } from '@stanfordbdhg/spezi-web-design-system/forms'
-import { type UserInfo } from '@stanfordbdhg/spezi-web-design-system/modules/auth'
+} from '@stanfordspezi/spezi-web-design-system/components/Select'
+import { Field, useForm } from '@stanfordspezi/spezi-web-design-system/forms'
+import { type UserInfo } from '@stanfordspezi/spezi-web-design-system/modules/auth'
 import { z } from 'zod'
 import { type Organization, type User } from '@/modules/firebase/models'
 import { useUser } from '@/modules/firebase/UserProvider'

@@ -13,7 +13,7 @@ import {
   SelectLabel,
   SelectTrigger,
   SelectValue,
-} from '@stanfordbdhg/spezi-web-design-system/components/Select'
+} from '@stanfordspezi/spezi-web-design-system/components/Select'
 import { type ComponentProps } from 'react'
 import { parseLocalizedText } from '@/modules/firebase/localizedText'
 import { type MedicationsData } from '@/routes/~_dashboard/~patients/utils'

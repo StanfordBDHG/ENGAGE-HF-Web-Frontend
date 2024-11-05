@@ -5,8 +5,8 @@
 //
 // SPDX-License-Identifier: MIT
 //
-import { Button } from '@stanfordbdhg/spezi-web-design-system/components/Button'
-import { Card } from '@stanfordbdhg/spezi-web-design-system/components/Card'
+import { Button } from '@stanfordspezi/spezi-web-design-system/components/Button'
+import { Card } from '@stanfordspezi/spezi-web-design-system/components/Card'
 import {
   Dialog,
   DialogContent,
@@ -15,25 +15,25 @@ import {
   DialogTitle,
   DialogTrigger,
   DialogClose,
-} from '@stanfordbdhg/spezi-web-design-system/components/Dialog'
-import { EmptyState } from '@stanfordbdhg/spezi-web-design-system/components/EmptyState'
+} from '@stanfordspezi/spezi-web-design-system/components/Dialog'
+import { EmptyState } from '@stanfordspezi/spezi-web-design-system/components/EmptyState'
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@stanfordbdhg/spezi-web-design-system/components/Select'
+} from '@stanfordspezi/spezi-web-design-system/components/Select'
 import {
   Table,
   TableCell,
   TableHeader,
   TableRow,
   TableBody,
-} from '@stanfordbdhg/spezi-web-design-system/components/Table'
-import { Textarea } from '@stanfordbdhg/spezi-web-design-system/components/Textarea'
-import { Tooltip } from '@stanfordbdhg/spezi-web-design-system/components/Tooltip'
-import { Field, useForm } from '@stanfordbdhg/spezi-web-design-system/forms'
+} from '@stanfordspezi/spezi-web-design-system/components/Table'
+import { Textarea } from '@stanfordspezi/spezi-web-design-system/components/Textarea'
+import { Tooltip } from '@stanfordspezi/spezi-web-design-system/components/Tooltip'
+import { Field, useForm } from '@stanfordspezi/spezi-web-design-system/forms'
 import { Plus, Check, Trash, Pencil } from 'lucide-react'
 import { z } from 'zod'
 import { useMedicationsMap } from '@/routes/~_dashboard/~patients/clientUtils'

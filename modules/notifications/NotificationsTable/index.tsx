@@ -8,7 +8,7 @@
 import {
   DataTable,
   DataTableBasicView,
-} from '@stanfordbdhg/spezi-web-design-system/components/DataTable'
+} from '@stanfordspezi/spezi-web-design-system/components/DataTable'
 import { parseNilLocalizedText } from '@/modules/firebase/localizedText'
 import { type UserMessage } from '@/modules/firebase/models'
 import { isMessageRead } from '@/modules/notifications/helpers'

@@ -7,8 +7,8 @@
 //
 import { updateDoc } from '@firebase/firestore'
 import { UserType } from '@stanfordbdhg/engagehf-models'
-import { getUserName } from '@stanfordbdhg/spezi-web-design-system/modules/auth'
-import { PageTitle } from '@stanfordbdhg/spezi-web-design-system/molecules/DashboardLayout'
+import { getUserName } from '@stanfordspezi/spezi-web-design-system/modules/auth'
+import { PageTitle } from '@stanfordspezi/spezi-web-design-system/molecules/DashboardLayout'
 import { createFileRoute, notFound, useRouter } from '@tanstack/react-router'
 import { Users } from 'lucide-react'
 import { Helmet } from 'react-helmet'

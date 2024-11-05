@@ -21,7 +21,7 @@ import {
   type UpdateUserInformationInput,
   type UpdateUserInformationOutput,
 } from '@stanfordbdhg/engagehf-models'
-import { strategy } from '@stanfordbdhg/spezi-web-design-system/utils/misc'
+import { strategy } from '@stanfordspezi/spezi-web-design-system/utils/misc'
 import {
   collection,
   type CollectionReference,

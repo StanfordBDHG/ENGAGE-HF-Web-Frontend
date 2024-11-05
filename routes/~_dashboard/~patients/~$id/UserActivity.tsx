@@ -9,8 +9,8 @@ import {
   Card,
   CardHeader,
   CardTitle,
-} from '@stanfordbdhg/spezi-web-design-system/components/Card'
-import { formatNilDateTime } from '@stanfordbdhg/spezi-web-design-system/utils/date'
+} from '@stanfordspezi/spezi-web-design-system/components/Card'
+import { formatNilDateTime } from '@stanfordspezi/spezi-web-design-system/utils/date'
 import { Clock, FileQuestion, Mail } from 'lucide-react'
 import { type ReactNode } from 'react'
 import { type UserActivity as UserActivityType } from '@/routes/~_dashboard/~patients/utils'

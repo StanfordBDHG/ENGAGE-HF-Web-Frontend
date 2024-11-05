@@ -6,7 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 import { UserType } from '@stanfordbdhg/engagehf-models'
-import { DataTable } from '@stanfordbdhg/spezi-web-design-system/components/DataTable'
+import { DataTable } from '@stanfordspezi/spezi-web-design-system/components/DataTable'
 import { useNavigate } from '@tanstack/react-router'
 import { createColumnHelper } from '@tanstack/table-core'
 import { useMemo } from 'react'

@@ -5,17 +5,17 @@
 //
 // SPDX-License-Identifier: MIT
 //
-import { Button } from '@stanfordbdhg/spezi-web-design-system/components/Button'
-import { DatePicker } from '@stanfordbdhg/spezi-web-design-system/components/DatePicker'
+import { Button } from '@stanfordspezi/spezi-web-design-system/components/Button'
+import { DatePicker } from '@stanfordspezi/spezi-web-design-system/components/DatePicker'
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
-} from '@stanfordbdhg/spezi-web-design-system/components/Dialog'
-import { Input } from '@stanfordbdhg/spezi-web-design-system/components/Input'
-import { Textarea } from '@stanfordbdhg/spezi-web-design-system/components/Textarea'
-import { Field, useForm } from '@stanfordbdhg/spezi-web-design-system/forms'
+} from '@stanfordspezi/spezi-web-design-system/components/Dialog'
+import { Input } from '@stanfordspezi/spezi-web-design-system/components/Input'
+import { Textarea } from '@stanfordspezi/spezi-web-design-system/components/Textarea'
+import { Field, useForm } from '@stanfordspezi/spezi-web-design-system/forms'
 import { type ComponentProps } from 'react'
 import { z } from 'zod'
 import { type Appointment } from '@/routes/~_dashboard/~patients/utils'

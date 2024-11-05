@@ -8,8 +8,8 @@
 import {
   type Nil,
   isObject,
-} from '@stanfordbdhg/spezi-web-design-system/utils/misc'
-import { getNavigatorLanguage } from '@stanfordbdhg/spezi-web-design-system/utils/navigator'
+} from '@stanfordspezi/spezi-web-design-system/utils/misc'
+import { getNavigatorLanguage } from '@stanfordspezi/spezi-web-design-system/utils/navigator'
 import { isNil } from 'es-toolkit'
 import { type LocalizedText } from '@/modules/firebase/models'
 

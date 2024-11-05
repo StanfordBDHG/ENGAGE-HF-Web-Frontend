@@ -9,7 +9,7 @@ import { UserType } from '@stanfordbdhg/engagehf-models'
 import {
   DataTable,
   type DataTableProps,
-} from '@stanfordbdhg/spezi-web-design-system/components/DataTable'
+} from '@stanfordspezi/spezi-web-design-system/components/DataTable'
 import { useNavigate } from '@tanstack/react-router'
 import { createColumnHelper } from '@tanstack/table-core'
 import { useMemo } from 'react'
