@@ -13,9 +13,11 @@ import { PageTitle } from '@stanfordspezi/spezi-web-design-system/molecules/Dash
 import { createFileRoute, notFound, useRouter } from '@tanstack/react-router'
 import { Users } from 'lucide-react'
 import { Helmet } from 'react-helmet'
+import { NotFound } from '@/components/NotFound'
 import { callables, docRefs, ensureType } from '@/modules/firebase/app'
 import { getDocDataOrThrow } from '@/modules/firebase/utils'
 import { queryClient } from '@/modules/query/queryClient'
+import { routes } from '@/modules/routes'
 import {
   getUserData,
   parseUserId,
@@ -89,10 +91,21 @@ const UserPage = () => {
 export const Route = createFileRoute('/_dashboard/users/$id')({
   component: UserPage,
   beforeLoad: () => ensureType([UserType.admin, UserType.owner]),
+  notFoundComponent: () => (
+    <NotFound
+      backPage={{ name: 'users list', href: routes.users.index }}
+      entityName="user"
+    />
+  ),
   loader: async ({ params }) => {
     const { resourceType, userId } = parseUserId(params.id)
-    const { user, authUser } = await getUserData(userId, resourceType)
-    if (user.type === UserType.patient) throw notFound()
+    const userData = await getUserData(userId, resourceType, [
+      UserType.clinician,
+      UserType.admin,
+      UserType.owner,
+    ])
+    if (!userData) throw notFound()
+    const { user, authUser } = userData
 
     return {
       user,

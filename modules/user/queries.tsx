@@ -8,7 +8,6 @@
 
 import { UserType } from '@stanfordbdhg/engagehf-models'
 import { queryOptions } from '@tanstack/react-query'
-import { notFound } from '@tanstack/react-router'
 import { query, where } from 'firebase/firestore'
 import { docRefs, getCurrentUser, refs } from '@/modules/firebase/app'
 import { type Invitation, type Organization } from '@/modules/firebase/models'
@@ -88,13 +87,13 @@ const getUserAuthData = async (userId: string) => {
     displayName: data.auth.displayName,
   }))
   const authUser = allAuthData.at(0)
-  if (!authUser || !user) throw notFound()
+  if (!authUser || !user) return null
   return { user, authUser, resourceType: 'user' as const }
 }
 
 const getUserInvitationData = async (userId: string) => {
   const invitation = await getDocData(docRefs.invitation(userId))
-  if (!invitation) throw notFound()
+  if (!invitation) return null
   if (!invitation.auth) throw new Error('Incomplete data')
   return {
     user: {
@@ -129,7 +128,13 @@ export const parseUserId = (userId: string) =>
 export const getUserData = async (
   userId: string,
   resourceType: ResourceType,
-) =>
-  resourceType === 'invitation' ?
-    getUserInvitationData(userId)
-  : getUserAuthData(userId)
+  validUserTypes: UserType[],
+) => {
+  const data =
+    resourceType === 'invitation' ?
+      await getUserInvitationData(userId)
+    : await getUserAuthData(userId)
+  return data && validUserTypes.includes(data.user.type) ? data : null
+}
+
+export type UserData = Exclude<Awaited<ReturnType<typeof getUserData>>, null>

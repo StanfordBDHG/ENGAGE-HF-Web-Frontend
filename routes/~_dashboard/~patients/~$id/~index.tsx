@@ -20,6 +20,7 @@ import { createFileRoute, notFound, useRouter } from '@tanstack/react-router'
 import { Contact } from 'lucide-react'
 import { Helmet } from 'react-helmet'
 import { z } from 'zod'
+import { NotFound } from '@/components/NotFound'
 import { callables, db, docRefs, refs } from '@/modules/firebase/app'
 import {
   getMedicationRequestData,
@@ -30,6 +31,7 @@ import {
   getDocsData,
   type ResourceType,
 } from '@/modules/firebase/utils'
+import { routes } from '@/modules/routes'
 import { getUserData, parseUserId } from '@/modules/user/queries'
 import {
   Medications,
@@ -245,11 +247,17 @@ export const Route = createFileRoute('/_dashboard/patients/$id/')({
   validateSearch: z.object({
     tab: z.nativeEnum(PatientPageTab).optional().catch(undefined),
   }),
+  notFoundComponent: () => (
+    <NotFound
+      entityName="patient"
+      backPage={{ name: 'patients list', href: routes.patients.index }}
+    />
+  ),
   loader: async ({ params }) => {
     const { userId, resourceType } = parseUserId(params.id)
-    const userData = await getUserData(userId, resourceType)
+    const userData = await getUserData(userId, resourceType, [UserType.patient])
+    if (!userData) throw notFound()
     const { user, authUser } = userData
-    if (user.type !== UserType.patient) throw notFound()
 
     return {
       user,

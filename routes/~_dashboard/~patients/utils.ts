@@ -24,7 +24,7 @@ import { mapAuthData } from '@/modules/firebase/user'
 import { getDocsData, type ResourceType } from '@/modules/firebase/utils'
 import { queryClient } from '@/modules/query/queryClient'
 import {
-  type getUserData,
+  type UserData,
   userOrganizationQueryOptions,
 } from '@/modules/user/queries'
 import { labsObservationCollections } from '@/routes/~_dashboard/~patients/clientUtils'
@@ -221,7 +221,7 @@ export const getUserActivity = async ({
   user,
   resourceType,
   authUser,
-}: Awaited<ReturnType<typeof getUserData>>) => {
+}: UserData) => {
   const latestQuestionnaires = await getDocsData(
     query(
       refs.questionnaireResponses({ resourceType, userId: authUser.uid }),
