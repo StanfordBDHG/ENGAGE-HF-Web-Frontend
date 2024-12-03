@@ -20,7 +20,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@stanfordspezi/spezi-web-design-system/components/Select'
-import { Field, useForm } from '@stanfordspezi/spezi-web-design-system/forms'
+import {
+  Field,
+  FormError,
+  useForm,
+} from '@stanfordspezi/spezi-web-design-system/forms'
 import { type ComponentProps } from 'react'
 import { z } from 'zod'
 import { AllergyType, stringifyAllergyType } from '@/modules/firebase/allergy'
@@ -62,6 +66,10 @@ export const AllergyForm = ({
 
   return (
     <form onSubmit={handleSubmit}>
+      <FormError
+        prefix={`${isEdit ? 'Updating' : 'Creating'} allergy failed. `}
+        formError={form.formError}
+      />
       <Field
         control={form.control}
         name="type"

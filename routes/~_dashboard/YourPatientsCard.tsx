@@ -6,6 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 
+import { queriesToAsyncProps } from '@stanfordspezi/spezi-web-design-system/components/Async'
 import { Button } from '@stanfordspezi/spezi-web-design-system/components/Button'
 import {
   Card,
@@ -14,33 +15,27 @@ import {
 } from '@stanfordspezi/spezi-web-design-system/components/Card'
 import { useQuery } from '@tanstack/react-query'
 import { Link } from '@tanstack/react-router'
-import { Loader2 } from 'lucide-react'
 import { routes } from '@/modules/routes'
 import { patientsQueries } from '@/modules/user/patients'
 import { PatientsTable } from '@/routes/~_dashboard/~patients/PatientsTable'
 
 export const YourPatientsCard = () => {
-  const { data: patients = [], isLoading } = useQuery(
-    patientsQueries.listUserPatients(),
-  )
+  const patientsQuery = useQuery(patientsQueries.listUserPatients())
+  const { data: patients = [] } = patientsQuery
 
   return (
     <Card className="col-span-full">
       <CardHeader>
         <CardTitle>Your patients</CardTitle>
       </CardHeader>
-      {isLoading ?
-        <div className="flex-center py-8">
-          <Loader2 className="animate-spin text-muted-foreground" />
-        </div>
-      : <PatientsTable
-          data={patients}
-          minimal
-          bordered={false}
-          pageSize={6}
-          entityName="assigned patients"
-        />
-      }
+      <PatientsTable
+        data={patients}
+        minimal
+        bordered={false}
+        pageSize={6}
+        entityName="assigned patients"
+        {...queriesToAsyncProps([patientsQuery])}
+      />
       <Button
         asChild
         variant="ghostPrimary"
