@@ -20,16 +20,21 @@ interface MenuLinksProps {
 export const MenuLinks = ({ userType }: MenuLinksProps) => {
   const location = useLocation()
 
-  const hrefProps = (href: string) => ({
+  const hrefProps = (href: string, exact = false) => ({
     href,
-    isActive: location.pathname === href,
+    isActive:
+      exact ? location.pathname === href : location.pathname.startsWith(href),
   })
 
   const { hasUnreadNotification } = useHasUnreadNotification()
 
   return (
     <>
-      <MenuItem {...hrefProps('/')} label="Home" icon={<Home />} />
+      <MenuItem
+        {...hrefProps(routes.home, true)}
+        label="Home"
+        icon={<Home />}
+      />
       <MenuItem
         {...hrefProps(routes.notifications)}
         label="Notifications"

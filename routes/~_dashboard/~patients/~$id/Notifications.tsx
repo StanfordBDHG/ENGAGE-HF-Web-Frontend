@@ -6,6 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 
+import { queriesToAsyncProps } from '@stanfordspezi/spezi-web-design-system/components/Async'
 import { useQuery } from '@tanstack/react-query'
 import { useUser } from '@/modules/firebase/UserProvider'
 import { getNotificationPatientId } from '@/modules/notifications/helpers'
@@ -19,13 +20,19 @@ interface NotificationsProps {
 export const Notifications = ({ userId }: NotificationsProps) => {
   const { auth } = useUser()
 
-  const { data: notifications = [] } = useQuery({
+  const notificationQuery = useQuery({
     ...notificationQueries.list({ userId: auth.uid }),
     select: (notifications) =>
       notifications.filter(
         (notification) => getNotificationPatientId(notification) === userId,
       ),
   })
+  const notifications = notificationQuery.data ?? []
 
-  return <NotificationsTable notifications={notifications} />
+  return (
+    <NotificationsTable
+      {...queriesToAsyncProps([notificationQuery])}
+      notifications={notifications}
+    />
+  )
 }

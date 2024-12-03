@@ -16,7 +16,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@stanfordspezi/spezi-web-design-system/components/Select'
-import { Field, useForm } from '@stanfordspezi/spezi-web-design-system/forms'
+import {
+  Field,
+  FormError,
+  useForm,
+} from '@stanfordspezi/spezi-web-design-system/forms'
 import {
   getUserName,
   type UserInfo,
@@ -69,6 +73,10 @@ export const PatientForm = ({
 
   return (
     <form onSubmit={handleSubmit} className="mx-auto w-full max-w-2xl">
+      <FormError
+        prefix={`${isEdit ? 'Updating' : 'Inviting'} patient failed. `}
+        formError={form.formError}
+      />
       <Field
         control={form.control}
         name="email"

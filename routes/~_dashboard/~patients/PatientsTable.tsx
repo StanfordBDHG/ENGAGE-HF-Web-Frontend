@@ -11,7 +11,7 @@ import {
   DataTable,
   type DataTableProps,
 } from '@stanfordspezi/spezi-web-design-system/components/DataTable'
-import { useNavigate } from '@tanstack/react-router'
+import { type RequiredSome } from '@stanfordspezi/spezi-web-design-system/utils/misc'
 import { createColumnHelper } from '@tanstack/table-core'
 import { useMemo } from 'react'
 import { useUser } from '@/modules/firebase/UserProvider'
@@ -19,6 +19,7 @@ import { routes } from '@/modules/routes'
 import { createSharedUserColumns, userColumnIds } from '@/modules/user/table'
 import { PatientMenu } from '@/routes/~_dashboard/~patients/PatientMenu'
 import { type Patient } from '@/routes/~_dashboard/~patients/~index'
+import { useNavigateOrOpen } from '@/utils/useNavigateOrOpen'
 
 const columnHelper = createColumnHelper<Patient>()
 const userColumns = createSharedUserColumns<Patient>()
@@ -34,10 +35,10 @@ const columns = [
 ]
 
 interface PatientsDataTableProps
-  extends Omit<DataTableProps<Patient>, 'columns'> {}
+  extends RequiredSome<DataTableProps<Patient>, 'data'> {}
 
 export const PatientsTable = ({ data, ...props }: PatientsDataTableProps) => {
-  const navigate = useNavigate()
+  const navigateOrOpen = useNavigateOrOpen()
   const user = useUser()
   const visibleColumns = useMemo(
     () =>
@@ -52,8 +53,8 @@ export const PatientsTable = ({ data, ...props }: PatientsDataTableProps) => {
       data={data}
       entityName="patients"
       tableView={{
-        onRowClick: (patient) =>
-          void navigate({
+        onRowClick: (patient, event) =>
+          void navigateOrOpen(event, {
             to: routes.patients.patient(
               patient.resourceId,
               patient.resourceType,

@@ -21,6 +21,8 @@ const router = createRouter({
       entityName="page"
     />
   ),
+  defaultPendingMs: 300,
+  defaultPendingMinMs: 200,
 })
 
 declare module '@tanstack/react-router' {
