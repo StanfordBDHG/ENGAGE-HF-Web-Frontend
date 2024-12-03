@@ -7,21 +7,17 @@
 //
 
 import { PageTitle } from '@stanfordspezi/spezi-web-design-system/molecules/DashboardLayout'
-import { useQuery } from '@tanstack/react-query'
 import { createFileRoute } from '@tanstack/react-router'
 import { Bell } from 'lucide-react'
 import { Helmet } from 'react-helmet'
-import { useUser } from '@/modules/firebase/UserProvider'
+import { currentUserQueryOptions } from '@/modules/firebase/UserProvider'
 import { NotificationsTable } from '@/modules/notifications/NotificationsTable'
 import { notificationQueries } from '@/modules/notifications/queries'
+import { queryClient } from '@/modules/query/queryClient'
 import { DashboardLayout } from '../DashboardLayout'
 
 const NotificationsPage = () => {
-  const { auth } = useUser()
-
-  const { data: notifications = [] } = useQuery(
-    notificationQueries.list({ userId: auth.uid }),
-  )
+  const { notifications } = Route.useLoaderData()
 
   return (
     <DashboardLayout
@@ -37,4 +33,13 @@ const NotificationsPage = () => {
 
 export const Route = createFileRoute('/_dashboard/notifications/')({
   component: NotificationsPage,
+  loader: async () => {
+    const user = await queryClient.ensureQueryData(currentUserQueryOptions())
+
+    return {
+      notifications: await queryClient.ensureQueryData(
+        notificationQueries.list({ userId: user.auth.uid }),
+      ),
+    }
+  },
 })

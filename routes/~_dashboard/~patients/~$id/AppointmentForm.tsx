@@ -16,7 +16,11 @@ import {
 } from '@stanfordspezi/spezi-web-design-system/components/Dialog'
 import { Input } from '@stanfordspezi/spezi-web-design-system/components/Input'
 import { Textarea } from '@stanfordspezi/spezi-web-design-system/components/Textarea'
-import { Field, useForm } from '@stanfordspezi/spezi-web-design-system/forms'
+import {
+  Field,
+  FormError,
+  useForm,
+} from '@stanfordspezi/spezi-web-design-system/forms'
 import { type ComponentProps } from 'react'
 import { z } from 'zod'
 import { type Appointment } from '@/routes/~_dashboard/~patients/utils'
@@ -56,6 +60,10 @@ export const AppointmentForm = ({
 
   return (
     <form onSubmit={handleSubmit}>
+      <FormError
+        prefix={`${isEdit ? 'Updating' : 'Creating'} appointment failed. `}
+        formError={form.formError}
+      />
       <Field
         control={form.control}
         name="start"
