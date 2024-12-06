@@ -130,6 +130,7 @@ export const LabForm = ({ observation, onSubmit }: LabFormProps) => {
           <Input
             {...field}
             type="number"
+            step="0.1"
             onChange={(event) =>
               field.onChange(event.currentTarget.valueAsNumber)
             }
