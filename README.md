@@ -68,7 +68,7 @@ Every version of the application on the `main` branch is automatically packaged 
 
 ## Deployment
 
-This repository contains all necessary files to deploy the web frontend to Google Cloud Firebase ([Stanford mHealth Platform](https://med.stanford.edu/mhealth.html)).
+This repository contains all necessary files to deploy the web frontend to Google Cloud Firebase.
 
 ### Deployment Configuration
 
