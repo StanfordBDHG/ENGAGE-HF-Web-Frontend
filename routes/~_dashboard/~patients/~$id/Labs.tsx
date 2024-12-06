@@ -63,7 +63,7 @@ export const Labs = ({ observations, userId, resourceType }: LabsProps) => {
   }
 
   const handleEdit = async (data: LabFormSchema) => {
-    const observation = deleteDialog.state
+    const observation = editDialog.state
     if (!observation) return
     await updateObservation({
       userId,
