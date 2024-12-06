@@ -26,6 +26,7 @@ jobs:
       contents: read
       actions: read
       security-events: write
+      checks: write
     secrets: inherit
     with:
       environment: production
