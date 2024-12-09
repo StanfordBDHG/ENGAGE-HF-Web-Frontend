@@ -7,6 +7,7 @@
 //
 
 import { UserType } from '@stanfordbdhg/engagehf-models'
+import { toast } from '@stanfordspezi/spezi-web-design-system/components/Toaster'
 import { PageTitle } from '@stanfordspezi/spezi-web-design-system/molecules/DashboardLayout'
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { Contact } from 'lucide-react'
@@ -41,6 +42,7 @@ const InvitePatientPage = () => {
         dateOfBirth: form.dateOfBirth?.toISOString(),
       },
     })
+    toast.success('Patient has been successfully invited!')
     await navigate({
       to: routes.patients.patient(result.data.id, 'invitation'),
     })

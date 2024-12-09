@@ -14,6 +14,7 @@ import {
   TabsList,
   TabsTrigger,
 } from '@stanfordspezi/spezi-web-design-system/components/Tabs'
+import { toast } from '@stanfordspezi/spezi-web-design-system/components/Toaster'
 import { getUserName } from '@stanfordspezi/spezi-web-design-system/modules/auth'
 import { PageTitle } from '@stanfordspezi/spezi-web-design-system/molecules/DashboardLayout'
 import { createFileRoute, notFound, useRouter } from '@tanstack/react-router'
@@ -134,6 +135,7 @@ const PatientPage = () => {
         },
       })
     }
+    toast.success('Patient has been successfully updated!')
     void router.invalidate()
   }
 

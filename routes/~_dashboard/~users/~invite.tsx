@@ -7,6 +7,7 @@
 //
 
 import { UserType } from '@stanfordbdhg/engagehf-models'
+import { toast } from '@stanfordspezi/spezi-web-design-system/components/Toaster'
 import { PageTitle } from '@stanfordspezi/spezi-web-design-system/molecules/DashboardLayout'
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { Users } from 'lucide-react'
@@ -36,6 +37,7 @@ const InviteUserPage = () => {
         type: form.type,
       },
     })
+    toast.success('User has been successfully invited!')
     void navigate({ to: routes.users.user(result.data.id, 'invitation') })
   }
 

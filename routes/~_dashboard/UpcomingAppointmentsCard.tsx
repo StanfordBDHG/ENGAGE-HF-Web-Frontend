@@ -6,6 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 
+import { queriesToAsyncProps } from '@stanfordspezi/spezi-web-design-system/components/Async'
 import {
   Card,
   CardHeader,
@@ -17,23 +18,24 @@ import {
 } from '@stanfordspezi/spezi-web-design-system/components/DataTable'
 import { Tooltip } from '@stanfordspezi/spezi-web-design-system/components/Tooltip'
 import { getUserName } from '@stanfordspezi/spezi-web-design-system/modules/auth'
+import { combineQueries } from '@stanfordspezi/spezi-web-design-system/utils/query'
 import { useQueries, useQuery } from '@tanstack/react-query'
-import { useNavigate } from '@tanstack/react-router'
 import { createColumnHelper } from '@tanstack/table-core'
 import { addWeeks, isBefore, isFuture } from 'date-fns'
-import { Info, Loader2 } from 'lucide-react'
+import { Info } from 'lucide-react'
 import { useMemo } from 'react'
 import { appointmentsQueries } from '@/modules/firebase/appointment'
 import { routes } from '@/modules/routes'
 import { patientsQueries } from '@/modules/user/patients'
 import { PatientPageTab } from '@/routes/~_dashboard/~patients/~$id/~index'
+import { useNavigateOrOpen } from '@/utils/useNavigateOrOpen'
 
 export const UpcomingAppointmentsCard = () => {
-  const navigate = useNavigate()
+  const navigateOrOpen = useNavigateOrOpen()
   const patientsQuery = useQuery(patientsQueries.listUserPatients())
   const { data: patients } = patientsQuery
 
-  const results = useQueries({
+  const appointmentsQuery = useQueries({
     queries:
       patients?.map((patient) =>
         appointmentsQueries.list({
@@ -42,19 +44,15 @@ export const UpcomingAppointmentsCard = () => {
         }),
       ) ?? [],
     combine: (results) => ({
-      isLoading: results.some((result) => result.isLoading),
-      isError: results.some((result) => result.isError),
+      ...combineQueries(results),
       data: results.map((result) => result.data),
-      isSuccess: results.every((result) => result.isSuccess),
     }),
   })
 
-  const isLoading = patientsQuery.isLoading || results.isLoading
-
   const upcomingAppointments = useMemo(() => {
-    if (!results.isSuccess || !patients) return []
+    if (!appointmentsQuery.isSuccess || !patients) return []
     const twoWeeksFromNow = addWeeks(new Date(), 2)
-    return results.data
+    return appointmentsQuery.data
       .flatMap((appointments, index) => {
         const patient = patients.at(index)
         if (!patient || !appointments) return null
@@ -76,7 +74,7 @@ export const UpcomingAppointmentsCard = () => {
       })
       .filter(Boolean)
       .sort((a, b) => a.date.getTime() - b.date.getTime())
-  }, [patients, results.data, results.isSuccess])
+  }, [patients, appointmentsQuery.data, appointmentsQuery.isSuccess])
 
   const columnHelper =
     createColumnHelper<(typeof upcomingAppointments)[number]>()
@@ -89,39 +87,35 @@ export const UpcomingAppointmentsCard = () => {
           <Info className="size-5 text-muted-foreground" />
         </Tooltip>
       </CardHeader>
-      {isLoading ?
-        <div className="flex-center py-8">
-          <Loader2 className="animate-spin text-muted-foreground" />
-        </div>
-      : <DataTable
-          data={upcomingAppointments}
-          columns={[
-            columnHelper.accessor('patient.name', {
-              header: 'Patient',
+      <DataTable
+        data={upcomingAppointments}
+        columns={[
+          columnHelper.accessor('patient.name', {
+            header: 'Patient',
+          }),
+          columnHelper.accessor('date', {
+            header: 'Start',
+            cell: dateTimeColumn,
+          }),
+        ]}
+        minimal
+        bordered={false}
+        pageSize={6}
+        entityName="upcoming appointments"
+        tableView={{
+          onRowClick: (appointment, event) =>
+            void navigateOrOpen(event, {
+              to: routes.patients.patient(
+                appointment.patient.id,
+                appointment.patient.resourceType,
+                {
+                  tab: PatientPageTab.appointments,
+                },
+              ),
             }),
-            columnHelper.accessor('date', {
-              header: 'Start',
-              cell: dateTimeColumn,
-            }),
-          ]}
-          minimal
-          bordered={false}
-          pageSize={6}
-          entityName="upcoming appointments"
-          tableView={{
-            onRowClick: (appointment) =>
-              void navigate({
-                to: routes.patients.patient(
-                  appointment.patient.id,
-                  appointment.patient.resourceType,
-                  {
-                    tab: PatientPageTab.appointments,
-                  },
-                ),
-              }),
-          }}
-        />
-      }
+        }}
+        {...queriesToAsyncProps([patientsQuery, appointmentsQuery])}
+      />
     </Card>
   )
 }
