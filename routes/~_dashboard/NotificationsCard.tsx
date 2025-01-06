@@ -32,7 +32,7 @@ export const NotificationsCard = () => {
     select: (notifications) =>
       filterUnreadNotifications(notifications).slice(0, 3),
   })
-  const { data: notifications = [] } = notificationQuery
+  const notifications = notificationQuery.data ?? []
 
   return (
     <Card className="flex flex-col">
