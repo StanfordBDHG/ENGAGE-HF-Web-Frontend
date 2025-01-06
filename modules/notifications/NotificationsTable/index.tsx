@@ -37,7 +37,7 @@ const columns = [
 ]
 
 interface NotificationsTableProps
-  extends Omit<DataTableProps<UserMessage>, 'data'> {
+  extends Omit<DataTableProps<UserMessage>, 'data' | 'columns'> {
   notifications: UserMessage[]
 }
 
