@@ -22,6 +22,9 @@ import {
   type UpdateUserInformationInput,
   type UpdateUserInformationOutput,
   type UpdateStaticDataInput,
+  type UpdateStaticDataOutput,
+  type DefaultSeedInput,
+  type DefaultSeedOutput,
 } from '@stanfordbdhg/engagehf-models'
 import { strategy } from '@stanfordspezi/spezi-web-design-system/utils/misc'
 import {
@@ -46,11 +49,6 @@ import {
   type User,
   type UserMessage,
 } from '@/modules/firebase/models'
-
-// TODO: Replace with @stanfordbdhg/engagehf-models exports
-type UpdateStaticDataOutput = string
-type UpdateDefaultSeedInput = Record<string, unknown>
-type UpdateDefaultSeedOutput = string
 
 export const collectionNames = {
   invitations: 'invitations',
@@ -296,7 +294,7 @@ export const getCallables = (functions: Functions) => ({
     UpdateStaticDataInput,
     UpdateStaticDataOutput
   >(functions, 'updateStaticData'),
-  defaultSeed: httpsCallable<UpdateDefaultSeedInput, UpdateDefaultSeedOutput>(
+  defaultSeed: httpsCallable<DefaultSeedInput, DefaultSeedOutput>(
     functions,
     'defaultSeed',
   ),
