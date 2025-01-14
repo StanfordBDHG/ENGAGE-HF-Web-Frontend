@@ -30,6 +30,7 @@ import { Route as DashboardPatientsInviteImport } from './routes/~_dashboard/~pa
 import { Route as DashboardUsersIndexImport } from './routes/~_dashboard/~users/~index'
 import { Route as DashboardPatientsIndexImport } from './routes/~_dashboard/~patients/~index'
 import { Route as DashboardNotificationsIndexImport } from './routes/~_dashboard/~notifications/~index'
+import { Route as DashboardAdminIndexImport } from './routes/~_dashboard/~admin/~index'
 import { Route as DashboardPatientsIdIndexImport } from './routes/~_dashboard/~patients/~$id/~index'
 
 // Create/Update Routes
@@ -88,6 +89,12 @@ const DashboardNotificationsIndexRoute =
     getParentRoute: () => DashboardRoute,
   } as any)
 
+const DashboardAdminIndexRoute = DashboardAdminIndexImport.update({
+  id: '/admin/',
+  path: '/admin/',
+  getParentRoute: () => DashboardRoute,
+} as any)
+
 const DashboardPatientsIdIndexRoute = DashboardPatientsIdIndexImport.update({
   id: '/patients/$id/',
   path: '/patients/$id/',
@@ -118,6 +125,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/sign-in'
       preLoaderRoute: typeof SignInIndexImport
       parentRoute: typeof rootRoute
+    }
+    '/_dashboard/admin/': {
+      id: '/_dashboard/admin/'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof DashboardAdminIndexImport
+      parentRoute: typeof DashboardImport
     }
     '/_dashboard/notifications/': {
       id: '/_dashboard/notifications/'
@@ -175,6 +189,7 @@ declare module '@tanstack/react-router' {
 
 interface DashboardRouteChildren {
   DashboardIndexRoute: typeof DashboardIndexRoute
+  DashboardAdminIndexRoute: typeof DashboardAdminIndexRoute
   DashboardNotificationsIndexRoute: typeof DashboardNotificationsIndexRoute
   DashboardPatientsIndexRoute: typeof DashboardPatientsIndexRoute
   DashboardUsersIndexRoute: typeof DashboardUsersIndexRoute
@@ -186,6 +201,7 @@ interface DashboardRouteChildren {
 
 const DashboardRouteChildren: DashboardRouteChildren = {
   DashboardIndexRoute: DashboardIndexRoute,
+  DashboardAdminIndexRoute: DashboardAdminIndexRoute,
   DashboardNotificationsIndexRoute: DashboardNotificationsIndexRoute,
   DashboardPatientsIndexRoute: DashboardPatientsIndexRoute,
   DashboardUsersIndexRoute: DashboardUsersIndexRoute,
@@ -203,6 +219,7 @@ export interface FileRoutesByFullPath {
   '': typeof DashboardRouteWithChildren
   '/': typeof DashboardIndexRoute
   '/sign-in': typeof SignInIndexRoute
+  '/admin': typeof DashboardAdminIndexRoute
   '/notifications': typeof DashboardNotificationsIndexRoute
   '/patients': typeof DashboardPatientsIndexRoute
   '/users': typeof DashboardUsersIndexRoute
@@ -215,6 +232,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof DashboardIndexRoute
   '/sign-in': typeof SignInIndexRoute
+  '/admin': typeof DashboardAdminIndexRoute
   '/notifications': typeof DashboardNotificationsIndexRoute
   '/patients': typeof DashboardPatientsIndexRoute
   '/users': typeof DashboardUsersIndexRoute
@@ -229,6 +247,7 @@ export interface FileRoutesById {
   '/_dashboard': typeof DashboardRouteWithChildren
   '/_dashboard/': typeof DashboardIndexRoute
   '/sign-in/': typeof SignInIndexRoute
+  '/_dashboard/admin/': typeof DashboardAdminIndexRoute
   '/_dashboard/notifications/': typeof DashboardNotificationsIndexRoute
   '/_dashboard/patients/': typeof DashboardPatientsIndexRoute
   '/_dashboard/users/': typeof DashboardUsersIndexRoute
@@ -244,6 +263,7 @@ export interface FileRouteTypes {
     | ''
     | '/'
     | '/sign-in'
+    | '/admin'
     | '/notifications'
     | '/patients'
     | '/users'
@@ -255,6 +275,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/sign-in'
+    | '/admin'
     | '/notifications'
     | '/patients'
     | '/users'
@@ -267,6 +288,7 @@ export interface FileRouteTypes {
     | '/_dashboard'
     | '/_dashboard/'
     | '/sign-in/'
+    | '/_dashboard/admin/'
     | '/_dashboard/notifications/'
     | '/_dashboard/patients/'
     | '/_dashboard/users/'
@@ -305,6 +327,7 @@ export const routeTree = rootRoute
       "filePath": "~_dashboard.tsx",
       "children": [
         "/_dashboard/",
+        "/_dashboard/admin/",
         "/_dashboard/notifications/",
         "/_dashboard/patients/",
         "/_dashboard/users/",
@@ -320,6 +343,10 @@ export const routeTree = rootRoute
     },
     "/sign-in/": {
       "filePath": "~sign-in/~index.tsx"
+    },
+    "/_dashboard/admin/": {
+      "filePath": "~_dashboard/~admin/~index.tsx",
+      "parent": "/_dashboard"
     },
     "/_dashboard/notifications/": {
       "filePath": "~_dashboard/~notifications/~index.tsx",

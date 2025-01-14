@@ -12,6 +12,7 @@ import type { PatientPageTab } from '@/routes/~_dashboard/~patients/~$id/~index'
 export const routes = {
   home: '/',
   notifications: '/notifications',
+  admin: '/admin',
   users: {
     index: '/users',
     user: (userId: string, resourceType: ResourceType) =>

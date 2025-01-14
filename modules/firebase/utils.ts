@@ -21,6 +21,10 @@ import {
   type GetUsersInformationOutput,
   type UpdateUserInformationInput,
   type UpdateUserInformationOutput,
+  type UpdateStaticDataInput,
+  type UpdateStaticDataOutput,
+  type DefaultSeedInput,
+  type DefaultSeedOutput,
 } from '@stanfordbdhg/engagehf-models'
 import { strategy } from '@stanfordspezi/spezi-web-design-system/utils/misc'
 import {
@@ -285,6 +289,14 @@ export const getCallables = (functions: Functions) => ({
   dismissMessage: httpsCallable<DismissMessageInput, DismissMessageOutput>(
     functions,
     'dismissMessage',
+  ),
+  updateStaticData: httpsCallable<
+    UpdateStaticDataInput,
+    UpdateStaticDataOutput
+  >(functions, 'updateStaticData'),
+  defaultSeed: httpsCallable<DefaultSeedInput, DefaultSeedOutput>(
+    functions,
+    'defaultSeed',
   ),
 })
 
