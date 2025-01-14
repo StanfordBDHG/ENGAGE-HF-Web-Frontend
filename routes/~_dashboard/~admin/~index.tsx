@@ -55,7 +55,9 @@ const AdminPage = () => {
           >
             Seed data
           </Button>
-          <p className="text-sm font-light">Seeds Firebase with test users</p>
+          <p className="text-sm font-light">
+            Seeds the application with test users
+          </p>
         </section>
       </div>
     </DashboardLayout>
