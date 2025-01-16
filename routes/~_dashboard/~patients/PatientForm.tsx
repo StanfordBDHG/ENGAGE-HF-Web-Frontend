@@ -32,6 +32,10 @@ export const patientFormSchema = z.object({
   displayName: z.string(),
   clinician: z.string().min(1, 'Clinician is required'),
   dateOfBirth: z.date().optional(),
+  providerName: z.preprocess(
+    (value) => (value === '' ? null : value),
+    z.string().nullable(),
+  ),
 })
 
 export type PatientFormSchema = z.infer<typeof patientFormSchema>
@@ -43,7 +47,10 @@ interface PatientFormProps {
     email: string | null
   }>
   userInfo?: Pick<UserInfo, 'email' | 'displayName' | 'uid'>
-  user?: Pick<User, 'organization' | 'clinician' | 'dateOfBirth'>
+  user?: Pick<
+    User,
+    'organization' | 'clinician' | 'dateOfBirth' | 'providerName'
+  >
   onSubmit: (data: PatientFormSchema) => Promise<void>
   clinicianPreselectId?: string
 }
@@ -62,6 +69,7 @@ export const PatientForm = ({
       displayName: userInfo?.displayName ?? '',
       clinician: user?.clinician ?? clinicianPreselectId ?? '',
       dateOfBirth: user?.dateOfBirth ? new Date(user.dateOfBirth) : undefined,
+      providerName: user?.providerName ?? '',
     },
   })
 
@@ -113,6 +121,13 @@ export const PatientForm = ({
             </SelectContent>
           </Select>
         )}
+      />
+      <Field
+        control={form.control}
+        name="providerName"
+        label="Provider name"
+        tooltip={'Displayed under "Provider" in Health Report'}
+        render={({ field }) => <Input {...field} value={field.value ?? ''} />}
       />
       <Button type="submit" isPending={form.formState.isSubmitting}>
         {isEdit ? 'Update' : 'Invite'} patient

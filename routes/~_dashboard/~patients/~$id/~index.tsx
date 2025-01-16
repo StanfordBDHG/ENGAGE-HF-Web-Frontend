@@ -112,6 +112,7 @@ const PatientPage = () => {
       clinician: form.clinician,
       organization: clinician.organization,
       dateOfBirth: form.dateOfBirth?.toISOString() ?? null,
+      providerName: form.providerName,
     }
     if (resourceType === 'user') {
       await callables.updateUserInformation({
