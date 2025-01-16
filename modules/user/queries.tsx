@@ -38,6 +38,7 @@ export const parseInvitationToUser = (
   displayName: invitation.auth?.displayName,
   organization: organizationMap.get(invitation.user.organization ?? ''),
   type: invitation.user.type,
+  disabled: invitation.user.disabled,
 })
 
 export const parseAuthToUser = (

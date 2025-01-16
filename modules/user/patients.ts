@@ -43,6 +43,7 @@ export const parsePatientsQueries = async ({
     ({ auth, user }, id) => ({
       ...parseAuthToUser(id, auth),
       organization: organizationMap.get(user?.organization ?? ''),
+      disabled: user?.disabled,
     }),
   )
 

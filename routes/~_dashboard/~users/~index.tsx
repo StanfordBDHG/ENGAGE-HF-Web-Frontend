@@ -64,6 +64,7 @@ const listUsers = async () => {
     { userIds, includeUserData: true },
     ({ auth, user }, id) => ({
       ...parseAuthToUser(id, auth),
+      disabled: user?.disabled,
       organization: organizationMap.get(user?.organization ?? ''),
       type: user?.type,
     }),

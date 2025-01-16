@@ -10,14 +10,15 @@ import { CopyText } from '@stanfordspezi/spezi-web-design-system/components/Copy
 import { Tooltip } from '@stanfordspezi/spezi-web-design-system/components/Tooltip'
 import { type Nil } from '@stanfordspezi/spezi-web-design-system/utils/misc'
 import { createColumnHelper } from '@tanstack/table-core'
-import { Mail } from 'lucide-react'
+import { Mail, ShieldX } from 'lucide-react'
 
-interface SharedUser {
+export interface SharedUser {
   resourceType: 'invitation' | 'user'
   resourceId: string
   displayName: Nil<string>
   email: Nil<string>
   organization: Nil<{ name: string }>
+  disabled: boolean | undefined
 }
 
 export const userColumnIds = {
@@ -57,6 +58,15 @@ export const createSharedUserColumns = <User extends SharedUser>() => {
     organization: columnHelper.accessor((user) => user.organization?.name, {
       id: userColumnIds.organization,
       header: 'Organization',
+    }),
+    disabled: columnHelper.accessor((user) => user.disabled, {
+      header: 'Disabled',
+      cell: (props) =>
+        props.row.original.disabled ?
+          <span className="flex items-center gap-2">
+            <ShieldX className="size-5" /> Disabled
+          </span>
+        : null,
     }),
   }
 }

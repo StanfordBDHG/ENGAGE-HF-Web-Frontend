@@ -17,6 +17,7 @@ import { Pencil, Trash } from 'lucide-react'
 import { callables, docRefs } from '@/modules/firebase/app'
 import { useUser } from '@/modules/firebase/UserProvider'
 import { routes } from '@/modules/routes'
+import { ToggleUserDisabled } from '@/modules/user/ToggleUserDisabled'
 import { type User } from '@/routes/~_dashboard/~users/~index'
 
 interface UserMenuProps {
@@ -38,6 +39,8 @@ export const UserMenu = ({ user }: UserMenuProps) => {
     void router.invalidate()
   }
 
+  const isSelf = authUser.auth.uid === user.resourceId
+
   return (
     <>
       <ConfirmDeleteDialog
@@ -54,13 +57,11 @@ export const UserMenu = ({ user }: UserMenuProps) => {
             Edit
           </Link>
         </DropdownMenuItem>
-        <DropdownMenuItem
-          onClick={deleteConfirm.open}
-          disabled={authUser.auth.uid === user.resourceId}
-        >
+        <DropdownMenuItem onClick={deleteConfirm.open} disabled={isSelf}>
           <Trash />
           Delete
         </DropdownMenuItem>
+        <ToggleUserDisabled user={user} />
       </RowDropdownMenu>
     </>
   )

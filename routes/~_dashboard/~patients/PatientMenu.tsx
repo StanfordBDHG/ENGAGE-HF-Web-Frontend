@@ -16,6 +16,7 @@ import { Link, useRouter } from '@tanstack/react-router'
 import { Pencil, Trash } from 'lucide-react'
 import { callables, docRefs } from '@/modules/firebase/app'
 import { routes } from '@/modules/routes'
+import { ToggleUserDisabled } from '@/modules/user/ToggleUserDisabled'
 import { type Patient } from '@/routes/~_dashboard/~patients/~index'
 
 interface PatientMenuProps {
@@ -61,6 +62,7 @@ export const PatientMenu = ({ patient }: PatientMenuProps) => {
           <Trash />
           Delete
         </DropdownMenuItem>
+        <ToggleUserDisabled user={patient} />
       </RowDropdownMenu>
     </>
   )

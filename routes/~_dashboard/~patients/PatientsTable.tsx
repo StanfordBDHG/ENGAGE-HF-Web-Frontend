@@ -28,6 +28,7 @@ const columns = [
   userColumns.displayName,
   userColumns.email,
   userColumns.organization,
+  userColumns.disabled,
   columnHelper.display({
     id: 'actions',
     cell: (props) => <PatientMenu patient={props.row.original} />,

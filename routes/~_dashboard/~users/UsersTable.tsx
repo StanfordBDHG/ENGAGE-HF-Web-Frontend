@@ -36,6 +36,7 @@ const columns = [
     },
   }),
   userColumns.organization,
+  userColumns.disabled,
   columnHelper.display({
     id: 'actions',
     cell: (props) => <UserMenu user={props.row.original} />,
