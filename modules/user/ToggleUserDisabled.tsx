@@ -1,3 +1,11 @@
+//
+// This source file is part of the Stanford Biodesign Digital Health ENGAGE-HF open-source project
+//
+// SPDX-FileCopyrightText: 2023 Stanford University and the project authors (see CONTRIBUTORS.md)
+//
+// SPDX-License-Identifier: MIT
+//
+
 import { DropdownMenuItem } from '@stanfordspezi/spezi-web-design-system/components/DropdownMenu'
 import { toast } from '@stanfordspezi/spezi-web-design-system/components/Toaster'
 import { getUserName } from '@stanfordspezi/spezi-web-design-system/modules/auth'
