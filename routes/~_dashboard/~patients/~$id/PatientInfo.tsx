@@ -38,8 +38,8 @@ export const PatientInfo = ({ info }: PatientInfoProps) => (
       <ul className="flex flex-col gap-4">
         <InfoRow
           icon={<AtSign className="size-5" />}
-          label="E-mail"
-          value={info.email}
+          label="Email"
+          value={info.email ?? 'no email'}
         />
         <InfoRow
           icon={<BookLock className="size-5" />}
