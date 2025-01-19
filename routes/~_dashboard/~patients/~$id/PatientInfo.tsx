@@ -34,8 +34,8 @@ interface PatientInfoProps {
 
 export const PatientInfo = ({ activity }: PatientInfoProps) => (
   <Card className="xl:min-w-max xl:self-start">
-    <div className="px-5 py-4 marker:text-primary">
-      <ul className="flex list-disc flex-col gap-4">
+    <div className="px-5 py-4">
+      <ul className="flex flex-col gap-4">
         <InfoRow
           icon={<BookLock className="size-5" />}
           label="Invitation code"
