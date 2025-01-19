@@ -12,13 +12,13 @@ import { Clock, FileQuestion, Mail, BookLock } from 'lucide-react'
 import { type ReactNode } from 'react'
 import { type UserActivity as UserActivityType } from '@/routes/~_dashboard/~patients/utils'
 
-interface ActivityRowProps {
+interface InfoRowProps {
   icon?: ReactNode
   label?: ReactNode
   value?: ReactNode
 }
 
-export const ActivityRow = ({ icon, label, value }: ActivityRowProps) => (
+export const InfoRow = ({ icon, label, value }: InfoRowProps) => (
   <li className="flex items-center gap-4">
     <div className="flex-center text-muted-foreground">{icon}</div>
     <div className="flex flex-col gap-1 text-sm">
@@ -28,32 +28,32 @@ export const ActivityRow = ({ icon, label, value }: ActivityRowProps) => (
   </li>
 )
 
-interface UserActivityProps {
+interface PatientInfoProps {
   activity: UserActivityType
 }
 
-export const UserActivity = ({ activity }: UserActivityProps) => (
+export const PatientInfo = ({ activity }: PatientInfoProps) => (
   <Card className="xl:min-w-max xl:self-start">
     <div className="px-5 py-4 marker:text-primary">
       <ul className="flex list-disc flex-col gap-4">
-        <ActivityRow
+        <InfoRow
           icon={<BookLock className="size-5" />}
           label="Invitation code"
           value={activity.invitationCode}
         />
         {activity.isInvitation && (
-          <ActivityRow
+          <InfoRow
             icon={<Mail className="size-5" />}
             label="Invitation"
             value="patient has not yet logged in"
           />
         )}
-        <ActivityRow
+        <InfoRow
           icon={<Clock className="size-5" />}
           label="Latest activity"
           value={formatNilDateTime(activity.lastActiveDate) ?? 'no activity'}
         />
-        <ActivityRow
+        <InfoRow
           icon={<FileQuestion className="size-5" />}
           label="Latest questionnaire answer"
           value={
