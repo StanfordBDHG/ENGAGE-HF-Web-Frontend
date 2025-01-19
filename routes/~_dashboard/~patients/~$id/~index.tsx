@@ -107,7 +107,6 @@ const PatientPage = () => {
     const clinician = await getDocDataOrThrow(docRefs.user(form.clinician))
     const authData = {
       displayName: form.displayName,
-      email: form.email,
     }
     const userData = {
       clinician: form.clinician,

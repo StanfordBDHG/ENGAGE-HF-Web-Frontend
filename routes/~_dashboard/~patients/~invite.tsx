@@ -33,7 +33,6 @@ const InvitePatientPage = () => {
     const result = await callables.createInvitation({
       auth: {
         displayName: form.displayName,
-        email: form.email,
       },
       user: {
         type: UserType.patient,
