@@ -37,6 +37,11 @@ export const PatientInfo = ({ activity }: PatientInfoProps) => (
     <div className="px-5 py-4">
       <ul className="flex flex-col gap-4">
         <InfoRow
+          icon={<AtSign className="size-5" />}
+          label="E-mail"
+          value={info.email}
+        />
+        <InfoRow
           icon={<BookLock className="size-5" />}
           label="Invitation code"
           value={activity.invitationCode}
