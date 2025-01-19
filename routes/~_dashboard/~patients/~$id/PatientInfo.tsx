@@ -8,9 +8,9 @@
 
 import { Card } from '@stanfordspezi/spezi-web-design-system/components/Card'
 import { formatNilDateTime } from '@stanfordspezi/spezi-web-design-system/utils/date'
-import { Clock, FileQuestion, Mail, BookLock } from 'lucide-react'
+import { Clock, FileQuestion, Mail, BookLock, AtSign } from 'lucide-react'
 import { type ReactNode } from 'react'
-import { type UserActivity as UserActivityType } from '@/routes/~_dashboard/~patients/utils'
+import { type PatientInfo as PatientInfoData } from '@/routes/~_dashboard/~patients/utils'
 
 interface InfoRowProps {
   icon?: ReactNode
@@ -29,10 +29,10 @@ export const InfoRow = ({ icon, label, value }: InfoRowProps) => (
 )
 
 interface PatientInfoProps {
-  activity: UserActivityType
+  info: PatientInfoData
 }
 
-export const PatientInfo = ({ activity }: PatientInfoProps) => (
+export const PatientInfo = ({ info }: PatientInfoProps) => (
   <Card className="xl:min-w-max xl:self-start">
     <div className="px-5 py-4">
       <ul className="flex flex-col gap-4">
@@ -44,9 +44,9 @@ export const PatientInfo = ({ activity }: PatientInfoProps) => (
         <InfoRow
           icon={<BookLock className="size-5" />}
           label="Invitation code"
-          value={activity.invitationCode}
+          value={info.invitationCode}
         />
-        {activity.isInvitation && (
+        {info.isInvitation && (
           <InfoRow
             icon={<Mail className="size-5" />}
             label="Invitation"
@@ -56,13 +56,13 @@ export const PatientInfo = ({ activity }: PatientInfoProps) => (
         <InfoRow
           icon={<Clock className="size-5" />}
           label="Latest activity"
-          value={formatNilDateTime(activity.lastActiveDate) ?? 'no activity'}
+          value={formatNilDateTime(info.lastActiveDate) ?? 'no activity'}
         />
         <InfoRow
           icon={<FileQuestion className="size-5" />}
           label="Latest questionnaire answer"
           value={
-            formatNilDateTime(activity.latestQuestionnaireDate) ??
+            formatNilDateTime(info.latestQuestionnaireDate) ??
             'no questionnaire answered'
           }
         />

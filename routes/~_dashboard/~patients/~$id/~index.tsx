@@ -48,7 +48,7 @@ import {
   getFormProps,
   getLabsData,
   getMedicationsData,
-  getUserActivity,
+  getPatientInfo,
 } from '@/routes/~_dashboard/~patients/utils'
 import { Allergies } from '@/routes/~_dashboard/~patients/~$id/Allergies'
 import { Appointments } from '@/routes/~_dashboard/~patients/~$id/Appointments'
@@ -100,7 +100,7 @@ const PatientPage = () => {
     user,
     authUser,
     resourceType,
-    activity,
+    info,
   } = Route.useLoaderData()
 
   const updatePatient = async (form: PatientFormSchema) => {
@@ -208,7 +208,7 @@ const PatientPage = () => {
         </TabsList>
         <TabsContent value={PatientPageTab.information}>
           <div className="flex flex-col gap-6 xl:flex-row">
-            <PatientInfo activity={activity} />
+            <PatientInfo info={info} />
             <PatientForm
               user={user}
               userInfo={authUser}
@@ -271,7 +271,7 @@ export const Route = createFileRoute('/_dashboard/patients/$id/')({
       allergiesData: await getAllergiesData({ userId, resourceType }),
       labsData: await getLabsData({ userId, resourceType }),
       appointmentsData: await getAppointmentsData({ userId, resourceType }),
-      activity: await getUserActivity(userData),
+      info: await getPatientInfo(userData),
     }
   },
 })
