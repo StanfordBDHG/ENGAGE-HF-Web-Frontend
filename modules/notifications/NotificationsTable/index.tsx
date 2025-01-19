@@ -8,7 +8,7 @@
 
 import {
   DataTable,
-  DataTableBasicView,
+  type DataTableProps,
 } from '@stanfordspezi/spezi-web-design-system/components/DataTable'
 import { parseNilLocalizedText } from '@/modules/firebase/localizedText'
 import { type UserMessage } from '@/modules/firebase/models'
@@ -36,12 +36,14 @@ const columns = [
   }),
 ]
 
-interface NotificationsTableProps {
+interface NotificationsTableProps
+  extends Omit<DataTableProps<UserMessage>, 'data' | 'columns'> {
   notifications: UserMessage[]
 }
 
 export const NotificationsTable = ({
   notifications,
+  ...props
 }: NotificationsTableProps) => (
   <DataTable
     columns={columns}
@@ -57,18 +59,17 @@ export const NotificationsTable = ({
     initialState={{
       columnFilters: [{ id: columnIds.isRead, value: false }],
     }}
+    {...props}
   >
-    {(props) => (
-      <DataTableBasicView {...props}>
-        {(rows) =>
-          rows.map((row) => {
-            const notification = row.original
-            return (
-              <Notification key={notification.id} notification={notification} />
-            )
-          })
-        }
-      </DataTableBasicView>
+    {({ rows }) => (
+      <div>
+        {rows.map((row) => {
+          const notification = row.original
+          return (
+            <Notification key={notification.id} notification={notification} />
+          )
+        })}
+      </div>
     )}
   </DataTable>
 )

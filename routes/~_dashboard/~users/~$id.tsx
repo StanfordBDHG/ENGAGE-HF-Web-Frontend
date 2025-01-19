@@ -8,6 +8,7 @@
 
 import { updateDoc } from '@firebase/firestore'
 import { UserType } from '@stanfordbdhg/engagehf-models'
+import { toast } from '@stanfordspezi/spezi-web-design-system/components/Toaster'
 import { getUserName } from '@stanfordspezi/spezi-web-design-system/modules/auth'
 import { PageTitle } from '@stanfordspezi/spezi-web-design-system/molecules/DashboardLayout'
 import { createFileRoute, notFound, useRouter } from '@tanstack/react-router'
@@ -64,6 +65,7 @@ const UserPage = () => {
         },
       })
     }
+    toast.success('User has been successfully updated!')
     await router.invalidate()
   }
 

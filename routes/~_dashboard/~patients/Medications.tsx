@@ -25,6 +25,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@stanfordspezi/spezi-web-design-system/components/Select'
+import { StateContainer } from '@stanfordspezi/spezi-web-design-system/components/StateContainer'
 import {
   Table,
   TableCell,
@@ -34,7 +35,11 @@ import {
 } from '@stanfordspezi/spezi-web-design-system/components/Table'
 import { Textarea } from '@stanfordspezi/spezi-web-design-system/components/Textarea'
 import { Tooltip } from '@stanfordspezi/spezi-web-design-system/components/Tooltip'
-import { Field, useForm } from '@stanfordspezi/spezi-web-design-system/forms'
+import {
+  Field,
+  FormError,
+  useForm,
+} from '@stanfordspezi/spezi-web-design-system/forms'
 import { Plus, Check, Trash, Pencil } from 'lucide-react'
 import { z } from 'zod'
 import { useMedicationsMap } from '@/routes/~_dashboard/~patients/clientUtils'
@@ -118,8 +123,14 @@ export const Medications = ({
           Save
         </Button>
       </header>
+      <FormError
+        prefix="Saving medications failed. "
+        formError={form.formError}
+      />
       {formValues.medications.length === 0 ?
-        <EmptyState entityName="medications" className="my-12" />
+        <StateContainer>
+          <EmptyState entityName="medications" />
+        </StateContainer>
       : <Table className="table-fixed">
           <TableHeader>
             <TableRow isHoverable={false}>

@@ -7,8 +7,11 @@
 //
 
 import { UserType } from '@stanfordbdhg/engagehf-models'
-import { DataTable } from '@stanfordspezi/spezi-web-design-system/components/DataTable'
-import { useNavigate } from '@tanstack/react-router'
+import {
+  DataTable,
+  type DataTableProps,
+} from '@stanfordspezi/spezi-web-design-system/components/DataTable'
+import { type RequiredSome } from '@stanfordspezi/spezi-web-design-system/utils/misc'
 import { createColumnHelper } from '@tanstack/table-core'
 import { useMemo } from 'react'
 import { stringifyType } from '@/modules/firebase/role'
@@ -17,6 +20,7 @@ import { routes } from '@/modules/routes'
 import { createSharedUserColumns, userColumnIds } from '@/modules/user/table'
 import { UserMenu } from '@/routes/~_dashboard/~users/UserMenu'
 import { type User } from '@/routes/~_dashboard/~users/~index'
+import { useNavigateOrOpen } from '@/utils/useNavigateOrOpen'
 
 const columnHelper = createColumnHelper<User>()
 const userColumns = createSharedUserColumns<User>()
@@ -38,12 +42,11 @@ const columns = [
   }),
 ]
 
-interface UsersDataTableProps {
-  data: User[]
-}
+interface UsersDataTableProps
+  extends RequiredSome<DataTableProps<User>, 'data'> {}
 
-export const UsersTable = ({ data }: UsersDataTableProps) => {
-  const navigate = useNavigate()
+export const UsersTable = (props: UsersDataTableProps) => {
+  const navigateOrOpen = useNavigateOrOpen()
   const user = useUser()
   const visibleColumns = useMemo(
     () =>
@@ -55,14 +58,14 @@ export const UsersTable = ({ data }: UsersDataTableProps) => {
   return (
     <DataTable
       columns={visibleColumns}
-      data={data}
       entityName="users"
       tableView={{
-        onRowClick: (user) =>
-          void navigate({
+        onRowClick: (user, event) =>
+          void navigateOrOpen(event, {
             to: routes.users.user(user.resourceId, user.resourceType),
           }),
       }}
+      {...props}
     />
   )
 }

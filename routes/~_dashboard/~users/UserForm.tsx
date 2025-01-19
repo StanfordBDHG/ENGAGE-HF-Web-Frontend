@@ -16,7 +16,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@stanfordspezi/spezi-web-design-system/components/Select'
-import { Field, useForm } from '@stanfordspezi/spezi-web-design-system/forms'
+import {
+  Field,
+  FormError,
+  useForm,
+} from '@stanfordspezi/spezi-web-design-system/forms'
 import { type UserInfo } from '@stanfordspezi/spezi-web-design-system/modules/auth'
 import { z } from 'zod'
 import { type Organization, type User } from '@/modules/firebase/models'
@@ -77,6 +81,10 @@ export const UserForm = ({
 
   return (
     <form onSubmit={handleSubmit} className="mx-auto w-full max-w-2xl">
+      <FormError
+        prefix={`${isEdit ? 'Updating' : 'Inviting'} user failed. `}
+        formError={form.formError}
+      />
       <Field
         control={form.control}
         name="email"

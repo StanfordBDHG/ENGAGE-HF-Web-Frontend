@@ -6,16 +6,18 @@
 // SPDX-License-Identifier: MIT
 //
 
+import {
+  Async,
+  queriesToAsyncProps,
+} from '@stanfordspezi/spezi-web-design-system/components/Async'
 import { Button } from '@stanfordspezi/spezi-web-design-system/components/Button'
 import {
   Card,
   CardHeader,
   CardTitle,
 } from '@stanfordspezi/spezi-web-design-system/components/Card'
-import { EmptyState } from '@stanfordspezi/spezi-web-design-system/components/EmptyState'
 import { useQuery } from '@tanstack/react-query'
 import { Link } from '@tanstack/react-router'
-import { Loader2 } from 'lucide-react'
 import { useUser } from '@/modules/firebase/UserProvider'
 import { filterUnreadNotifications } from '@/modules/notifications/helpers'
 import { Notification } from '@/modules/notifications/Notification'
@@ -25,29 +27,29 @@ import { routes } from '@/modules/routes'
 export const NotificationsCard = () => {
   const { auth } = useUser()
 
-  const { data: notifications = [], isLoading } = useQuery({
+  const notificationQuery = useQuery({
     ...notificationQueries.list({ userId: auth.uid }),
     select: (notifications) =>
       filterUnreadNotifications(notifications).slice(0, 3),
   })
+  const notifications = notificationQuery.data ?? []
 
   return (
     <Card className="flex flex-col">
       <CardHeader>
         <CardTitle>Notifications</CardTitle>
       </CardHeader>
-      {isLoading ?
-        <div className="flex-center py-8">
-          <Loader2 className="animate-spin text-muted-foreground" />
-        </div>
-      : notifications.length === 0 ?
-        <EmptyState entityName="unread notifications" className="py-8" />
-      : <div>
+      <Async
+        {...queriesToAsyncProps([notificationQuery])}
+        empty={notifications.length === 0}
+        entityName="unread notifications"
+      >
+        <div>
           {notifications.map((notification) => (
             <Notification key={notification.id} notification={notification} />
           ))}
         </div>
-      }
+      </Async>
       <Button
         asChild
         variant="ghostPrimary"
