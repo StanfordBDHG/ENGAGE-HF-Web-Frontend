@@ -34,6 +34,8 @@ if (enableEmulation)
 
 export const authProvider = {
   stanford: new OAuthProvider('oidc.stanford'),
+  johnsHopkins: new OAuthProvider('oidc.johnshopkins'),
+  michigan: new OAuthProvider('oidc.michigan'),
 }
 
 export const db = getFirestore(firebaseApp)

@@ -21,7 +21,11 @@ const SignIn = () => (
     </Helmet>
     <AuthSignInForm
       className="mx-auto w-[350px]"
-      providers={[{ name: 'Stanford', provider: authProvider.stanford }]}
+      providers={[
+        { name: 'Stanford', provider: authProvider.stanford },
+        { name: 'Johns Hopkins', provider: authProvider.johnsHopkins },
+        { name: 'Michigan', provider: authProvider.michigan },
+      ]}
       enableEmailPassword={env.VITE_PUBLIC_EMAIL_PASSWORD_SIGN_IN}
       auth={auth}
       signInWithPopup={signInWithPopup}
