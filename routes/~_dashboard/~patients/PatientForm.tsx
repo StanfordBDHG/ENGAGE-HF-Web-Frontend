@@ -126,7 +126,12 @@ export const PatientForm = ({
         control={form.control}
         name="providerName"
         label="Provider name"
-        tooltip={'Displayed under "Provider" in Health Report'}
+        tooltip={
+          <div>
+            Displayed as "Provider" of the Health Report. <br />
+            If "Provider name" is not set, assigned clinician will be shown.
+          </div>
+        }
         render={({ field }) => <Input {...field} value={field.value ?? ''} />}
       />
       <Button type="submit" isPending={form.formState.isSubmitting}>
