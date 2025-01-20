@@ -29,10 +29,13 @@ import { z } from 'zod'
 import { type User } from '@/modules/firebase/models'
 
 export const patientFormSchema = z.object({
-  email: z.string().email().min(1, 'Email is required'),
   displayName: z.string(),
   clinician: z.string().min(1, 'Clinician is required'),
   dateOfBirth: z.date().optional(),
+  providerName: z.preprocess(
+    (value) => (value === '' ? null : value),
+    z.string().nullable(),
+  ),
 })
 
 export type PatientFormSchema = z.infer<typeof patientFormSchema>
@@ -44,7 +47,10 @@ interface PatientFormProps {
     email: string | null
   }>
   userInfo?: Pick<UserInfo, 'email' | 'displayName' | 'uid'>
-  user?: Pick<User, 'organization' | 'clinician' | 'dateOfBirth'>
+  user?: Pick<
+    User,
+    'organization' | 'clinician' | 'dateOfBirth' | 'providerName'
+  >
   onSubmit: (data: PatientFormSchema) => Promise<void>
   clinicianPreselectId?: string
 }
@@ -60,10 +66,10 @@ export const PatientForm = ({
   const form = useForm({
     formSchema: patientFormSchema,
     defaultValues: {
-      email: userInfo?.email ?? '',
       displayName: userInfo?.displayName ?? '',
       clinician: user?.clinician ?? clinicianPreselectId ?? '',
       dateOfBirth: user?.dateOfBirth ? new Date(user.dateOfBirth) : undefined,
+      providerName: user?.providerName ?? '',
     },
   })
 
@@ -76,12 +82,6 @@ export const PatientForm = ({
       <FormError
         prefix={`${isEdit ? 'Updating' : 'Inviting'} patient failed. `}
         formError={form.formError}
-      />
-      <Field
-        control={form.control}
-        name="email"
-        label="Email"
-        render={({ field }) => <Input type="email" {...field} />}
       />
       <Field
         control={form.control}
@@ -121,6 +121,18 @@ export const PatientForm = ({
             </SelectContent>
           </Select>
         )}
+      />
+      <Field
+        control={form.control}
+        name="providerName"
+        label="Provider name"
+        tooltip={
+          <div>
+            Displayed as "Provider" of the Health Report. <br />
+            If "Provider name" is not set, assigned clinician will be shown.
+          </div>
+        }
+        render={({ field }) => <Input {...field} value={field.value ?? ''} />}
       />
       <Button type="submit" isPending={form.formState.isSubmitting}>
         {isEdit ? 'Update' : 'Invite'} patient

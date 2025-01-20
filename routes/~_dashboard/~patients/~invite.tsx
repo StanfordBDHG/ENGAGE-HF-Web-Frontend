@@ -33,13 +33,13 @@ const InvitePatientPage = () => {
     const result = await callables.createInvitation({
       auth: {
         displayName: form.displayName,
-        email: form.email,
       },
       user: {
         type: UserType.patient,
         clinician: form.clinician,
         organization: clinician.organization,
         dateOfBirth: form.dateOfBirth?.toISOString(),
+        providerName: form.providerName,
       },
     })
     toast.success('Patient has been successfully invited!')
