@@ -217,7 +217,7 @@ export const getAppointmentsData = async ({
   }
 }
 
-export const getUserActivity = async ({
+export const getPatientInfo = async ({
   user,
   resourceType,
   authUser,
@@ -230,6 +230,7 @@ export const getUserActivity = async ({
     ),
   )
   return {
+    email: authUser.email,
     lastActiveDate: user.lastActiveDate,
     latestQuestionnaireDate: latestQuestionnaires.at(0)?.authored,
     invitationCode: user.invitationCode,
@@ -244,4 +245,4 @@ export type Appointment = AppointmentsData['appointments'][number]
 export type LabsData = Awaited<ReturnType<typeof getLabsData>>
 export type Observation = LabsData['observations'][number]
 export type MedicationsData = Awaited<ReturnType<typeof getMedicationsData>>
-export type UserActivity = Awaited<ReturnType<typeof getUserActivity>>
+export type PatientInfo = Awaited<ReturnType<typeof getPatientInfo>>

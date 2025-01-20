@@ -29,7 +29,6 @@ import { z } from 'zod'
 import { type User } from '@/modules/firebase/models'
 
 export const patientFormSchema = z.object({
-  email: z.string().email().min(1, 'Email is required'),
   displayName: z.string(),
   clinician: z.string().min(1, 'Clinician is required'),
   dateOfBirth: z.date().optional(),
@@ -60,7 +59,6 @@ export const PatientForm = ({
   const form = useForm({
     formSchema: patientFormSchema,
     defaultValues: {
-      email: userInfo?.email ?? '',
       displayName: userInfo?.displayName ?? '',
       clinician: user?.clinician ?? clinicianPreselectId ?? '',
       dateOfBirth: user?.dateOfBirth ? new Date(user.dateOfBirth) : undefined,
@@ -76,12 +74,6 @@ export const PatientForm = ({
       <FormError
         prefix={`${isEdit ? 'Updating' : 'Inviting'} patient failed. `}
         formError={form.formError}
-      />
-      <Field
-        control={form.control}
-        name="email"
-        label="Email"
-        render={({ field }) => <Input type="email" {...field} />}
       />
       <Field
         control={form.control}

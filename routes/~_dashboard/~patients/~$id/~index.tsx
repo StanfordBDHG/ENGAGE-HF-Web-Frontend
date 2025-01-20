@@ -48,14 +48,14 @@ import {
   getFormProps,
   getLabsData,
   getMedicationsData,
-  getUserActivity,
+  getPatientInfo,
 } from '@/routes/~_dashboard/~patients/utils'
 import { Allergies } from '@/routes/~_dashboard/~patients/~$id/Allergies'
 import { Appointments } from '@/routes/~_dashboard/~patients/~$id/Appointments'
 import { GenerateHealthSummary } from '@/routes/~_dashboard/~patients/~$id/GenerateHealthSummary'
 import { Labs } from '@/routes/~_dashboard/~patients/~$id/Labs'
 import { Notifications } from '@/routes/~_dashboard/~patients/~$id/Notifications'
-import { UserActivity } from '@/routes/~_dashboard/~patients/~$id/UserActivity'
+import { PatientInfo } from '@/routes/~_dashboard/~patients/~$id/PatientInfo'
 import { DashboardLayout } from '../../DashboardLayout'
 
 const getUserMedications = async (payload: {
@@ -100,14 +100,13 @@ const PatientPage = () => {
     user,
     authUser,
     resourceType,
-    activity,
+    info,
   } = Route.useLoaderData()
 
   const updatePatient = async (form: PatientFormSchema) => {
     const clinician = await getDocDataOrThrow(docRefs.user(form.clinician))
     const authData = {
       displayName: form.displayName,
-      email: form.email,
     }
     const userData = {
       clinician: form.clinician,
@@ -209,7 +208,7 @@ const PatientPage = () => {
         </TabsList>
         <TabsContent value={PatientPageTab.information}>
           <div className="flex flex-col gap-6 xl:flex-row">
-            <UserActivity activity={activity} />
+            <PatientInfo info={info} />
             <PatientForm
               user={user}
               userInfo={authUser}
@@ -272,7 +271,7 @@ export const Route = createFileRoute('/_dashboard/patients/$id/')({
       allergiesData: await getAllergiesData({ userId, resourceType }),
       labsData: await getLabsData({ userId, resourceType }),
       appointmentsData: await getAppointmentsData({ userId, resourceType }),
-      activity: await getUserActivity(userData),
+      info: await getPatientInfo(userData),
     }
   },
 })
