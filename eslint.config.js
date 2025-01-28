@@ -6,11 +6,6 @@
 // SPDX-License-Identifier: MIT
 //
 
-const config = {
-  plugins: [require.resolve('prettier-plugin-tailwindcss')],
-  semi: false,
-  singleQuote: true,
-  experimentalTernaries: true,
-}
+const { getEslintConfig } = require('@stanfordspezi/spezi-web-configurations')
 
-module.exports = config
+module.exports = getEslintConfig({ tsconfigRootDir: __dirname })
