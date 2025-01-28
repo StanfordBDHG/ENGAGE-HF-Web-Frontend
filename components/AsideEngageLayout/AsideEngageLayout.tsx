@@ -8,11 +8,11 @@
 import {
   type AsideBrandLayoutProps,
   AsideBrandLayout,
-} from '@stanfordspezi/spezi-web-design-system/molecules/AsideBrandLayout'
-import { LogoType } from '@/components/icons/LogoType'
+} from "@stanfordspezi/spezi-web-design-system/molecules/AsideBrandLayout";
+import { LogoType } from "@/components/icons/LogoType";
 
 export const AsideEngageLayout = (
-  props: Omit<AsideBrandLayoutProps, 'aside'>,
+  props: Omit<AsideBrandLayoutProps, "aside">,
 ) => (
   <AsideBrandLayout
     aside={
@@ -27,4 +27,4 @@ export const AsideEngageLayout = (
     }
     {...props}
   />
-)
+);

@@ -6,7 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { type Functions, httpsCallable } from '@firebase/functions'
+import { type Functions, httpsCallable } from "@firebase/functions";
 import {
   type CreateInvitationInput,
   type CreateInvitationOutput,
@@ -29,8 +29,8 @@ import {
   type UpdateStaticDataOutput,
   type DefaultSeedInput,
   type DefaultSeedOutput,
-} from '@stanfordbdhg/engagehf-models'
-import { strategy } from '@stanfordspezi/spezi-web-design-system/utils/misc'
+} from "@stanfordbdhg/engagehf-models";
+import { strategy } from "@stanfordspezi/spezi-web-design-system/utils/misc";
 import {
   collection,
   type CollectionReference,
@@ -40,7 +40,7 @@ import {
   getDoc,
   getDocs,
   type Query,
-} from 'firebase/firestore'
+} from "firebase/firestore";
 import {
   type FHIRAllergyIntolerance,
   type FHIRAppointment,
@@ -52,26 +52,26 @@ import {
   type QuestionnaireResponse,
   type User,
   type UserMessage,
-} from '@/modules/firebase/models'
+} from "@/modules/firebase/models";
 
 export const collectionNames = {
-  invitations: 'invitations',
-  users: 'users',
-  organizations: 'organizations',
-  medications: 'medications',
-  medicationClasses: 'medicationClasses',
-  drugs: 'drugs',
-  medicationRequests: 'medicationRequests',
-  appointments: 'appointments',
-  allergyIntolerances: 'allergyIntolerances',
-  creatinineObservations: 'creatinineObservations',
-  eGfrObservations: 'eGfrObservations',
-  potassiumObservations: 'potassiumObservations',
-  messages: 'messages',
-  questionnaireResponses: 'questionnaireResponses',
-}
+  invitations: "invitations",
+  users: "users",
+  organizations: "organizations",
+  medications: "medications",
+  medicationClasses: "medicationClasses",
+  drugs: "drugs",
+  medicationRequests: "medicationRequests",
+  appointments: "appointments",
+  allergyIntolerances: "allergyIntolerances",
+  creatinineObservations: "creatinineObservations",
+  eGfrObservations: "eGfrObservations",
+  potassiumObservations: "potassiumObservations",
+  messages: "messages",
+  questionnaireResponses: "questionnaireResponses",
+};
 
-export type ResourceType = 'invitation' | 'user'
+export type ResourceType = "invitation" | "user";
 
 export const userPath = (resourceType: ResourceType) =>
   strategy(
@@ -80,16 +80,16 @@ export const userPath = (resourceType: ResourceType) =>
       user: collectionNames.users,
     },
     resourceType,
-  )
+  );
 
 export enum UserObservationCollection {
-  bodyWeight = 'bodyWeightObservations',
-  bloodPressure = 'bloodPressureObservations',
-  creatinine = 'creatinineObservations',
-  dryWeight = 'dryWeightObservations',
-  eGfr = 'eGfrObservations',
-  heartRate = 'heartRateObservations',
-  potassium = 'potassiumObservations',
+  bodyWeight = "bodyWeightObservations",
+  bloodPressure = "bloodPressureObservations",
+  creatinine = "creatinineObservations",
+  dryWeight = "dryWeightObservations",
+  eGfr = "eGfrObservations",
+  heartRate = "heartRateObservations",
+  potassium = "potassiumObservations",
 }
 
 export const getCollectionRefs = (db: Firestore) => ({
@@ -119,8 +119,8 @@ export const getCollectionRefs = (db: Firestore) => ({
     userId,
     resourceType,
   }: {
-    userId: string
-    resourceType: ResourceType
+    userId: string;
+    resourceType: ResourceType;
   }) =>
     collection(
       db,
@@ -130,8 +130,8 @@ export const getCollectionRefs = (db: Firestore) => ({
     userId,
     resourceType,
   }: {
-    userId: string
-    resourceType: ResourceType
+    userId: string;
+    resourceType: ResourceType;
   }) =>
     collection(
       db,
@@ -141,8 +141,8 @@ export const getCollectionRefs = (db: Firestore) => ({
     userId,
     resourceType,
   }: {
-    userId: string
-    resourceType: ResourceType
+    userId: string;
+    resourceType: ResourceType;
   }) =>
     collection(
       db,
@@ -158,9 +158,9 @@ export const getCollectionRefs = (db: Firestore) => ({
     resourceType,
     observationType,
   }: {
-    userId: string
-    resourceType: ResourceType
-    observationType: UserObservationCollection
+    userId: string;
+    resourceType: ResourceType;
+    observationType: UserObservationCollection;
   }) =>
     collection(
       db,
@@ -175,14 +175,14 @@ export const getCollectionRefs = (db: Firestore) => ({
     userId,
     resourceType,
   }: {
-    userId: string
-    resourceType: ResourceType
+    userId: string;
+    resourceType: ResourceType;
   }) =>
     collection(
       db,
       `/${userPath(resourceType)}/${userId}/${collectionNames.questionnaireResponses}`,
     ) as CollectionReference<QuestionnaireResponse>,
-})
+});
 
 export const getDocumentsRefs = (db: Firestore) => ({
   user: (...segments: string[]) =>
@@ -206,9 +206,9 @@ export const getDocumentsRefs = (db: Firestore) => ({
     medicationRequestId,
     resourceType,
   }: {
-    userId: string
-    medicationRequestId: string
-    resourceType: ResourceType
+    userId: string;
+    medicationRequestId: string;
+    resourceType: ResourceType;
   }) =>
     doc(
       db,
@@ -219,9 +219,9 @@ export const getDocumentsRefs = (db: Firestore) => ({
     appointmentId,
     resourceType,
   }: {
-    userId: string
-    appointmentId: string
-    resourceType: ResourceType
+    userId: string;
+    appointmentId: string;
+    resourceType: ResourceType;
   }) =>
     doc(
       db,
@@ -232,9 +232,9 @@ export const getDocumentsRefs = (db: Firestore) => ({
     allergyIntoleranceId,
     resourceType,
   }: {
-    userId: string
-    allergyIntoleranceId: string
-    resourceType: ResourceType
+    userId: string;
+    allergyIntoleranceId: string;
+    resourceType: ResourceType;
   }) =>
     doc(
       db,
@@ -246,10 +246,10 @@ export const getDocumentsRefs = (db: Firestore) => ({
     observationType,
     observationId,
   }: {
-    userId: string
-    resourceType: ResourceType
-    observationType: UserObservationCollection
-    observationId: string
+    userId: string;
+    resourceType: ResourceType;
+    observationType: UserObservationCollection;
+    observationId: string;
   }) =>
     doc(
       db,
@@ -260,85 +260,85 @@ export const getDocumentsRefs = (db: Firestore) => ({
       db,
       `/${collectionNames.users}/${userId}/${collectionNames.messages}/${messageId}`,
     ) as DocumentReference<UserMessage>,
-})
+});
 
 export interface UserAuthenticationInformation {
-  displayName: string | null
-  email: string | null
-  phoneNumber: string | null
-  photoURL: string | null
+  displayName: string | null;
+  email: string | null;
+  phoneNumber: string | null;
+  photoURL: string | null;
 }
 
 export const getCallables = (functions: Functions) => ({
   createInvitation: httpsCallable<
     CreateInvitationInput,
     CreateInvitationOutput
-  >(functions, 'createInvitation'),
+  >(functions, "createInvitation"),
   getUsersInformation: httpsCallable<
     GetUsersInformationInput,
     GetUsersInformationOutput
-  >(functions, 'getUsersInformation'),
+  >(functions, "getUsersInformation"),
   deleteUser: httpsCallable<DeleteUserInput, DeleteUserOutput>(
     functions,
-    'deleteUser',
+    "deleteUser",
   ),
   updateUserInformation: httpsCallable<
     UpdateUserInformationInput,
     UpdateUserInformationOutput
-  >(functions, 'updateUserInformation'),
+  >(functions, "updateUserInformation"),
   exportHealthSummary: httpsCallable<
     ExportHealthSummaryInput,
     ExportHealthSummaryOutput
-  >(functions, 'exportHealthSummary'),
+  >(functions, "exportHealthSummary"),
   dismissMessage: httpsCallable<DismissMessageInput, DismissMessageOutput>(
     functions,
-    'dismissMessage',
+    "dismissMessage",
   ),
   updateStaticData: httpsCallable<
     UpdateStaticDataInput,
     UpdateStaticDataOutput
-  >(functions, 'updateStaticData'),
+  >(functions, "updateStaticData"),
   defaultSeed: httpsCallable<DefaultSeedInput, DefaultSeedOutput>(
     functions,
-    'defaultSeed',
+    "defaultSeed",
   ),
   disableUser: httpsCallable<DisableUserInput, DisableUserOutput>(
     functions,
-    'disableUser',
+    "disableUser",
   ),
   enableUser: httpsCallable<EnableUserInput, EnableUserOutput>(
     functions,
-    'enableUser',
+    "enableUser",
   ),
-})
+});
 
 export const getDocData = async <T>(reference: DocumentReference<T>) => {
-  const doc = await getDoc(reference)
-  const data = doc.data()
+  const doc = await getDoc(reference);
+  const data = doc.data();
   return data ?
       {
         ...data,
         id: doc.id,
       }
-    : undefined
-}
+    : undefined;
+};
 
 export const getDocDataOrThrow = async <T>(reference: DocumentReference<T>) => {
-  const data = await getDocData(reference)
+  const data = await getDocData(reference);
   if (!data) {
-    throw new Error(`Doc not found: ${reference.path}`)
+    throw new Error(`Doc not found: ${reference.path}`);
   }
-  return data
-}
+  return data;
+};
 
 export const getDocsData = async <T>(query: Query<T>) => {
-  const docs = await getDocs(query)
+  const docs = await getDocs(query);
   return docs.docs.map((doc) => {
-    const data = doc.data()
-    if (!data) throw new Error(`No data for ${doc.id} ${doc.ref.path}`)
+    const data = doc.data();
+    if (!data) throw new Error(`No data for ${doc.id} ${doc.ref.path}`);
     return {
       ...data,
       id: doc.id,
-    }
-  })
-}
+    };
+  });
+};

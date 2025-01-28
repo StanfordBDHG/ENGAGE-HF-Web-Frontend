@@ -6,23 +6,23 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { PageTitle } from '@stanfordspezi/spezi-web-design-system/molecules/DashboardLayout'
+import { PageTitle } from "@stanfordspezi/spezi-web-design-system/molecules/DashboardLayout";
 import {
   NotFound as NotFoundBase,
   type NotFoundProps,
-} from '@stanfordspezi/spezi-web-design-system/molecules/NotFound'
-import { useQuery } from '@tanstack/react-query'
-import { RouteOff } from 'lucide-react'
-import { currentUserQueryOptions } from '@/modules/firebase/UserProvider'
-import { DashboardLayout } from '@/routes/~_dashboard/DashboardLayout'
+} from "@stanfordspezi/spezi-web-design-system/molecules/NotFound";
+import { useQuery } from "@tanstack/react-query";
+import { RouteOff } from "lucide-react";
+import { currentUserQueryOptions } from "@/modules/firebase/UserProvider";
+import { DashboardLayout } from "@/routes/~_dashboard/DashboardLayout";
 
 /**
  * NotFound component wrapped with DashboardLayout if user is signed in
  * */
 export const NotFound = (props: NotFoundProps) => {
-  const userQuery = useQuery(currentUserQueryOptions())
+  const userQuery = useQuery(currentUserQueryOptions());
 
-  const notFound = <NotFoundBase {...props} />
+  const notFound = <NotFoundBase {...props} />;
 
   return userQuery.data ?
       <DashboardLayout
@@ -30,5 +30,5 @@ export const NotFound = (props: NotFoundProps) => {
       >
         {notFound}
       </DashboardLayout>
-    : <div className="flex-center min-h-screen">{notFound}</div>
-}
+    : <div className="flex-center min-h-screen">{notFound}</div>;
+};

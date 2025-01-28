@@ -6,22 +6,22 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { queriesToAsyncProps } from '@stanfordspezi/spezi-web-design-system/components/Async'
-import { Button } from '@stanfordspezi/spezi-web-design-system/components/Button'
+import { queriesToAsyncProps } from "@stanfordspezi/spezi-web-design-system/components/Async";
+import { Button } from "@stanfordspezi/spezi-web-design-system/components/Button";
 import {
   Card,
   CardHeader,
   CardTitle,
-} from '@stanfordspezi/spezi-web-design-system/components/Card'
-import { useQuery } from '@tanstack/react-query'
-import { Link } from '@tanstack/react-router'
-import { routes } from '@/modules/routes'
-import { patientsQueries } from '@/modules/user/patients'
-import { PatientsTable } from '@/routes/~_dashboard/~patients/PatientsTable'
+} from "@stanfordspezi/spezi-web-design-system/components/Card";
+import { useQuery } from "@tanstack/react-query";
+import { Link } from "@tanstack/react-router";
+import { routes } from "@/modules/routes";
+import { patientsQueries } from "@/modules/user/patients";
+import { PatientsTable } from "@/routes/~_dashboard/~patients/PatientsTable";
 
 export const YourPatientsCard = () => {
-  const patientsQuery = useQuery(patientsQueries.listUserPatients())
-  const { data: patients = [] } = patientsQuery
+  const patientsQuery = useQuery(patientsQueries.listUserPatients());
+  const { data: patients = [] } = patientsQuery;
 
   return (
     <Card className="col-span-full">
@@ -44,5 +44,5 @@ export const YourPatientsCard = () => {
         <Link to={routes.patients.index}>View all patients</Link>
       </Button>
     </Card>
-  )
-}
+  );
+};

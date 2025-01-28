@@ -6,14 +6,14 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { tailwindColors } from '@stanfordspezi/spezi-web-design-system'
-import tailwindCssAnimate from 'tailwindcss-animate'
+import { tailwindColors } from "@stanfordspezi/spezi-web-design-system";
+import tailwindCssAnimate from "tailwindcss-animate";
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
-    './{app,pages,components,routes,modules}/**/*.{js,ts,jsx,tsx,mdx}',
-    './node_modules/@stanfordspezi/spezi-web-design-system/dist/**/*.js',
+    "./{app,pages,components,routes,modules}/**/*.{js,ts,jsx,tsx,mdx}",
+    "./node_modules/@stanfordspezi/spezi-web-design-system/dist/**/*.js",
   ],
   theme: {
     extend: {
@@ -21,4 +21,4 @@ module.exports = {
     },
   },
   plugins: [tailwindCssAnimate],
-}
+};

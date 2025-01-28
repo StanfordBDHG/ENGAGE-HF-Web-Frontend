@@ -6,7 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { env } from '../../env'
+import { env } from "../../env";
 
 export const firebaseConfig = {
   apiKey: env.VITE_PUBLIC_FIREBASE_API_KEY,
@@ -15,4 +15,4 @@ export const firebaseConfig = {
   storageBucket: env.VITE_PUBLIC_FIREBASE_STORAGE_BUCKET,
   messagingSenderId: env.VITE_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
   appId: env.VITE_PUBLIC_FIREBASE_APP_ID,
-}
+};

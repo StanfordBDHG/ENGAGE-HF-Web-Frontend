@@ -6,7 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { Button } from '@stanfordspezi/spezi-web-design-system/components/Button'
+import { Button } from "@stanfordspezi/spezi-web-design-system/components/Button";
 import {
   Notification as NotificationBase,
   NotificationActions,
@@ -17,28 +17,28 @@ import {
   NotificationTime,
   NotificationTitle,
   NotificationHeader,
-} from '@stanfordspezi/spezi-web-design-system/molecules/Notifications'
-import { useMutation } from '@tanstack/react-query'
-import { callables } from '@/modules/firebase/app'
+} from "@stanfordspezi/spezi-web-design-system/molecules/Notifications";
+import { useMutation } from "@tanstack/react-query";
+import { callables } from "@/modules/firebase/app";
 import {
   parseLocalizedText,
   parseNilLocalizedText,
-} from '@/modules/firebase/localizedText'
-import { type UserMessage } from '@/modules/firebase/models'
-import { useUser } from '@/modules/firebase/UserProvider'
+} from "@/modules/firebase/localizedText";
+import { type UserMessage } from "@/modules/firebase/models";
+import { useUser } from "@/modules/firebase/UserProvider";
 import {
   isMessageRead,
   parseMessageToLink,
-} from '@/modules/notifications/helpers'
-import { notificationQueries } from '@/modules/notifications/queries'
-import { queryClient } from '@/modules/query/queryClient'
+} from "@/modules/notifications/helpers";
+import { notificationQueries } from "@/modules/notifications/queries";
+import { queryClient } from "@/modules/query/queryClient";
 
 interface NotificationProps {
-  notification: UserMessage
+  notification: UserMessage;
 }
 
 export const Notification = ({ notification }: NotificationProps) => {
-  const { auth } = useUser()
+  const { auth } = useUser();
   const markNotificationAsRead = useMutation({
     mutationFn: () =>
       callables.dismissMessage({
@@ -49,10 +49,10 @@ export const Notification = ({ notification }: NotificationProps) => {
       queryClient.invalidateQueries(
         notificationQueries.list({ userId: auth.uid }),
       ),
-  })
+  });
 
-  const isRead = isMessageRead(notification)
-  const link = parseMessageToLink(notification)
+  const isRead = isMessageRead(notification);
+  const link = parseMessageToLink(notification);
 
   const content = (
     <>
@@ -81,9 +81,9 @@ export const Notification = ({ notification }: NotificationProps) => {
         </NotificationActions>
       </NotificationContentContainer>
     </>
-  )
+  );
 
-  const notificationContext = { isRead }
+  const notificationContext = { isRead };
 
   return link ?
       <NotificationLink href={link} notification={notificationContext}>
@@ -91,5 +91,5 @@ export const Notification = ({ notification }: NotificationProps) => {
       </NotificationLink>
     : <NotificationBase notification={notificationContext}>
         {content}
-      </NotificationBase>
-}
+      </NotificationBase>;
+};

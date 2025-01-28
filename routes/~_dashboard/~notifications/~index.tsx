@@ -6,18 +6,18 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { PageTitle } from '@stanfordspezi/spezi-web-design-system/molecules/DashboardLayout'
-import { createFileRoute } from '@tanstack/react-router'
-import { Bell } from 'lucide-react'
-import { Helmet } from 'react-helmet'
-import { currentUserQueryOptions } from '@/modules/firebase/UserProvider'
-import { NotificationsTable } from '@/modules/notifications/NotificationsTable'
-import { notificationQueries } from '@/modules/notifications/queries'
-import { queryClient } from '@/modules/query/queryClient'
-import { DashboardLayout } from '../DashboardLayout'
+import { PageTitle } from "@stanfordspezi/spezi-web-design-system/molecules/DashboardLayout";
+import { createFileRoute } from "@tanstack/react-router";
+import { Bell } from "lucide-react";
+import { Helmet } from "react-helmet";
+import { currentUserQueryOptions } from "@/modules/firebase/UserProvider";
+import { NotificationsTable } from "@/modules/notifications/NotificationsTable";
+import { notificationQueries } from "@/modules/notifications/queries";
+import { queryClient } from "@/modules/query/queryClient";
+import { DashboardLayout } from "../DashboardLayout";
 
 const NotificationsPage = () => {
-  const { notifications } = Route.useLoaderData()
+  const { notifications } = Route.useLoaderData();
 
   return (
     <DashboardLayout
@@ -28,18 +28,18 @@ const NotificationsPage = () => {
       </Helmet>
       <NotificationsTable notifications={notifications} />
     </DashboardLayout>
-  )
-}
+  );
+};
 
-export const Route = createFileRoute('/_dashboard/notifications/')({
+export const Route = createFileRoute("/_dashboard/notifications/")({
   component: NotificationsPage,
   loader: async () => {
-    const user = await queryClient.ensureQueryData(currentUserQueryOptions())
+    const user = await queryClient.ensureQueryData(currentUserQueryOptions());
 
     return {
       notifications: await queryClient.ensureQueryData(
         notificationQueries.list({ userId: user.auth.uid }),
       ),
-    }
+    };
   },
-})
+});

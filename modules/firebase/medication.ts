@@ -5,18 +5,18 @@
 //
 // SPDX-License-Identifier: MIT
 //
-import { type FHIRMedicationRequest } from '@/modules/firebase/models'
+import { type FHIRMedicationRequest } from "@/modules/firebase/models";
 
 export const getMedicationRequestData = (medication: {
-  medication: string
-  drug: string
-  frequencyPerDay: number
-  quantity: number
-  instructions: string
+  medication: string;
+  drug: string;
+  frequencyPerDay: number;
+  quantity: number;
+  instructions: string;
 }): FHIRMedicationRequest => ({
   id: null,
   extension: null,
-  resourceType: 'MedicationRequest',
+  resourceType: "MedicationRequest",
   medicationReference: {
     reference: `medications/${medication.medication}/drugs/${medication.drug}`,
     type: null,
@@ -31,7 +31,7 @@ export const getMedicationRequestData = (medication: {
         repeat: {
           frequency: medication.frequencyPerDay,
           period: 1,
-          periodUnit: 'd',
+          periodUnit: "d",
           timeOfDay: null,
         },
       },
@@ -39,9 +39,9 @@ export const getMedicationRequestData = (medication: {
         {
           type: null,
           doseQuantity: {
-            code: '{tbl}',
-            system: 'http://unitsofmeasure.org',
-            unit: 'tbl.',
+            code: "{tbl}",
+            system: "http://unitsofmeasure.org",
+            unit: "tbl.",
             value: medication.quantity,
           },
         },
@@ -49,14 +49,14 @@ export const getMedicationRequestData = (medication: {
       patientInstruction: null,
     },
   ],
-})
+});
 
 export const getMedicationRequestMedicationIds = (
   request: FHIRMedicationRequest,
 ) => {
-  const reference = request.medicationReference?.reference.split('/')
+  const reference = request.medicationReference?.reference.split("/");
   return {
     medicationId: reference?.at(1),
     drugId: reference?.at(3),
-  }
-}
+  };
+};

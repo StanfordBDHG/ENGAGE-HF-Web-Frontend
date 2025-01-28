@@ -6,54 +6,54 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { Button } from '@stanfordspezi/spezi-web-design-system/components/Button'
-import { DatePicker } from '@stanfordspezi/spezi-web-design-system/components/DatePicker'
+import { Button } from "@stanfordspezi/spezi-web-design-system/components/Button";
+import { DatePicker } from "@stanfordspezi/spezi-web-design-system/components/DatePicker";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
-} from '@stanfordspezi/spezi-web-design-system/components/Dialog'
-import { Input } from '@stanfordspezi/spezi-web-design-system/components/Input'
+} from "@stanfordspezi/spezi-web-design-system/components/Dialog";
+import { Input } from "@stanfordspezi/spezi-web-design-system/components/Input";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@stanfordspezi/spezi-web-design-system/components/Select'
+} from "@stanfordspezi/spezi-web-design-system/components/Select";
 import {
   Field,
   FormError,
   useForm,
-} from '@stanfordspezi/spezi-web-design-system/forms'
-import { type ComponentProps } from 'react'
-import { z } from 'zod'
-import { UserObservationCollection } from '@/modules/firebase/utils'
+} from "@stanfordspezi/spezi-web-design-system/forms";
+import { type ComponentProps } from "react";
+import { z } from "zod";
+import { UserObservationCollection } from "@/modules/firebase/utils";
 import {
   getObservationTypeUnits,
   getUnitOfObservationType,
   labsObservationCollections,
-} from '@/routes/~_dashboard/~patients/clientUtils'
-import { type Observation } from '@/routes/~_dashboard/~patients/utils'
+} from "@/routes/~_dashboard/~patients/clientUtils";
+import { type Observation } from "@/routes/~_dashboard/~patients/utils";
 
 export const labFormSchema = z.object({
   type: z.nativeEnum(UserObservationCollection),
   effectiveDateTime: z.date(),
   unit: z.string(),
   value: z.number(),
-})
+});
 
-export type LabFormSchema = z.infer<typeof labFormSchema>
+export type LabFormSchema = z.infer<typeof labFormSchema>;
 
 interface LabFormProps {
-  observation?: Observation
-  onSubmit: (data: LabFormSchema) => Promise<void>
+  observation?: Observation;
+  onSubmit: (data: LabFormSchema) => Promise<void>;
 }
 
 export const LabForm = ({ observation, onSubmit }: LabFormProps) => {
-  const isEdit = !!observation
-  const defaultType = observation?.type ?? UserObservationCollection.potassium
+  const isEdit = !!observation;
+  const defaultType = observation?.type ?? UserObservationCollection.potassium;
   const form = useForm({
     formSchema: labFormSchema,
     defaultValues: {
@@ -65,19 +65,19 @@ export const LabForm = ({ observation, onSubmit }: LabFormProps) => {
       unit: observation?.unit ?? getUnitOfObservationType(defaultType).unit,
       value: observation?.value ?? undefined,
     },
-  })
+  });
 
-  const [formType, formUnit] = form.watch(['type', 'unit'])
-  const units = getObservationTypeUnits(formType)
+  const [formType, formUnit] = form.watch(["type", "unit"]);
+  const units = getObservationTypeUnits(formType);
 
   const handleSubmit = form.handleSubmit(async (data) => {
-    await onSubmit(data)
-  })
+    await onSubmit(data);
+  });
 
   return (
     <form onSubmit={handleSubmit}>
       <FormError
-        prefix={`${isEdit ? 'Updating' : 'Creating'} observation failed. `}
+        prefix={`${isEdit ? "Updating" : "Creating"} observation failed. `}
         formError={form.formError}
       />
       <Field
@@ -87,14 +87,14 @@ export const LabForm = ({ observation, onSubmit }: LabFormProps) => {
         render={({ field }) => (
           <Select
             onValueChange={(type) => {
-              field.onChange(type)
+              field.onChange(type);
               form.setValue(
-                'unit',
+                "unit",
                 getUnitOfObservationType(
                   type as UserObservationCollection,
                   formUnit,
                 ).unit,
-              )
+              );
             }}
             {...field}
           >
@@ -160,14 +160,14 @@ export const LabForm = ({ observation, onSubmit }: LabFormProps) => {
         )}
       />
       <Button type="submit" isPending={form.formState.isSubmitting}>
-        {isEdit ? 'Update' : 'Create'} observation
+        {isEdit ? "Update" : "Create"} observation
       </Button>
     </form>
-  )
-}
+  );
+};
 
 type LabFormDialogProps = LabFormProps &
-  Pick<ComponentProps<typeof Dialog>, 'open' | 'onOpenChange'>
+  Pick<ComponentProps<typeof Dialog>, "open" | "onOpenChange">;
 
 export const LabFormDialog = ({
   open,
@@ -178,9 +178,9 @@ export const LabFormDialog = ({
   <Dialog open={open} onOpenChange={onOpenChange}>
     <DialogContent>
       <DialogHeader>
-        <DialogTitle>{observation ? 'Edit' : 'Create'} observation</DialogTitle>
+        <DialogTitle>{observation ? "Edit" : "Create"} observation</DialogTitle>
       </DialogHeader>
       <LabForm {...props} observation={observation} />
     </DialogContent>
   </Dialog>
-)
+);

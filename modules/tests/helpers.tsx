@@ -12,31 +12,31 @@ import {
   createRouter,
   Outlet,
   RouterProvider,
-} from '@tanstack/react-router'
-import { render, type RenderOptions } from '@testing-library/react'
-import type { ReactNode } from 'react'
+} from "@tanstack/react-router";
+import { render, type RenderOptions } from "@testing-library/react";
+import type { ReactNode } from "react";
 
 interface TestRouterProviderProps {
-  children: ReactNode
+  children: ReactNode;
 }
 
 export const TestRouterProvider = ({ children }: TestRouterProviderProps) => {
   const rootRoute = createRootRoute({
     component: Outlet,
-  })
+  });
 
   const indexRoute = createRoute({
     getParentRoute: () => rootRoute,
-    path: '/',
+    path: "/",
     component: () => <>{children}</>,
-  })
+  });
 
-  const routeTree = rootRoute.addChildren([indexRoute])
-  const router = createRouter({ routeTree })
+  const routeTree = rootRoute.addChildren([indexRoute]);
+  const router = createRouter({ routeTree });
 
   // @ts-expect-error Error is expected, because types are matching application
-  return <RouterProvider router={router} />
-}
+  return <RouterProvider router={router} />;
+};
 
 export const renderWithProviders = (node: ReactNode, options?: RenderOptions) =>
-  render(<TestRouterProvider>{node}</TestRouterProvider>, options)
+  render(<TestRouterProvider>{node}</TestRouterProvider>, options);

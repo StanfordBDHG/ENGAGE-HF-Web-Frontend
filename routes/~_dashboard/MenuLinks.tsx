@@ -6,29 +6,29 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { UserType } from '@stanfordbdhg/engagehf-models'
-import { MenuItem } from '@stanfordspezi/spezi-web-design-system/molecules/DashboardLayout'
-import { useLocation } from '@tanstack/react-router'
-import { Home, Users, Contact, Bell, MonitorCog } from 'lucide-react'
-import { useHasUnreadNotification } from '@/modules/notifications/queries'
-import { routes } from '@/modules/routes'
+import { UserType } from "@stanfordbdhg/engagehf-models";
+import { MenuItem } from "@stanfordspezi/spezi-web-design-system/molecules/DashboardLayout";
+import { useLocation } from "@tanstack/react-router";
+import { Home, Users, Contact, Bell, MonitorCog } from "lucide-react";
+import { useHasUnreadNotification } from "@/modules/notifications/queries";
+import { routes } from "@/modules/routes";
 
 interface MenuLinksProps {
-  userType: UserType
+  userType: UserType;
 }
 
 export const MenuLinks = ({ userType }: MenuLinksProps) => {
-  const location = useLocation()
+  const location = useLocation();
 
   const hrefProps = (href: string, exact = false) => ({
     href,
     isActive:
       exact ? location.pathname === href : location.pathname.startsWith(href),
-  })
+  });
 
-  const { hasUnreadNotification } = useHasUnreadNotification()
+  const { hasUnreadNotification } = useHasUnreadNotification();
 
-  const isRole = (roles: UserType[]) => roles.includes(userType)
+  const isRole = (roles: UserType[]) => roles.includes(userType);
 
   return (
     <>
@@ -63,5 +63,5 @@ export const MenuLinks = ({ userType }: MenuLinksProps) => {
         />
       )}
     </>
-  )
-}
+  );
+};

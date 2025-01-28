@@ -6,11 +6,11 @@
 // SPDX-License-Identifier: MIT
 //
 
-import type { SVGProps } from 'react'
+import type { SVGProps } from "react";
 
 type LogoTypeProps = SVGProps<SVGSVGElement> & {
-  className?: string
-}
+  className?: string;
+};
 
 export const LogoType = (props: LogoTypeProps) => (
   <svg
@@ -26,4 +26,4 @@ export const LogoType = (props: LogoTypeProps) => (
       fill="currentColor"
     />
   </svg>
-)
+);

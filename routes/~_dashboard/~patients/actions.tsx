@@ -6,52 +6,52 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { addDoc, setDoc } from '@firebase/firestore'
+import { addDoc, setDoc } from "@firebase/firestore";
 import {
   FHIRAllergyIntoleranceCriticality,
   FHIRAllergyIntoleranceType,
   FHIRAppointmentStatus,
   FHIRObservationStatus,
   FHIRExtensionUrl,
-} from '@stanfordbdhg/engagehf-models'
-import { addHours } from 'date-fns'
-import { AllergyType } from '@/modules/firebase/allergy'
-import { docRefs, refs } from '@/modules/firebase/app'
+} from "@stanfordbdhg/engagehf-models";
+import { addHours } from "date-fns";
+import { AllergyType } from "@/modules/firebase/allergy";
+import { docRefs, refs } from "@/modules/firebase/app";
 import {
   basicFhirCoding,
   type FHIRObservation,
-} from '@/modules/firebase/models'
-import { type ResourceType } from '@/modules/firebase/utils'
-import { getUnitOfObservationType } from '@/routes/~_dashboard/~patients/clientUtils'
-import { type AllergyFormSchema } from '@/routes/~_dashboard/~patients/~$id/AllergyForm'
-import { type AppointmentFormSchema } from '@/routes/~_dashboard/~patients/~$id/AppointmentForm'
-import { type LabFormSchema } from '@/routes/~_dashboard/~patients/~$id/LabForm'
+} from "@/modules/firebase/models";
+import { type ResourceType } from "@/modules/firebase/utils";
+import { getUnitOfObservationType } from "@/routes/~_dashboard/~patients/clientUtils";
+import { type AllergyFormSchema } from "@/routes/~_dashboard/~patients/~$id/AllergyForm";
+import { type AppointmentFormSchema } from "@/routes/~_dashboard/~patients/~$id/AppointmentForm";
+import { type LabFormSchema } from "@/routes/~_dashboard/~patients/~$id/LabForm";
 
 export const getObservationData = (payload: LabFormSchema): FHIRObservation => {
-  const unit = getUnitOfObservationType(payload.type, payload.unit)
+  const unit = getUnitOfObservationType(payload.type, payload.unit);
   return {
     id: null,
     extension: null,
     effectiveInstant: null,
     effectivePeriod: null,
     component: null,
-    resourceType: 'Observation',
+    resourceType: "Observation",
     status: FHIRObservationStatus.final,
     code: { text: null, coding: unit.coding },
     valueQuantity: {
       value: payload.value,
       unit: unit.unit,
-      system: 'http://unitsofmeasure.org',
+      system: "http://unitsofmeasure.org",
       code: unit.code,
     },
     effectiveDateTime: payload.effectiveDateTime.toString(),
-  }
-}
+  };
+};
 
 export const createObservation = async (
   payload: {
-    userId: string
-    resourceType: ResourceType
+    userId: string;
+    resourceType: ResourceType;
   } & LabFormSchema,
 ) => {
   await addDoc(
@@ -61,14 +61,14 @@ export const createObservation = async (
       resourceType: payload.resourceType,
     }),
     getObservationData(payload),
-  )
-}
+  );
+};
 
 export const updateObservation = async (
   payload: {
-    userId: string
-    resourceType: ResourceType
-    observationId: string
+    userId: string;
+    resourceType: ResourceType;
+    observationId: string;
   } & LabFormSchema,
 ) => {
   await setDoc(
@@ -79,13 +79,13 @@ export const updateObservation = async (
       observationId: payload.observationId,
     }),
     getObservationData(payload),
-  )
-}
+  );
+};
 
 const getAllergyData = (payload: AllergyFormSchema) => ({
   id: null,
   extension: null,
-  resourceType: 'Allergy',
+  resourceType: "Allergy",
   type:
     (
       payload.type === AllergyType.severeAllergy ||
@@ -106,17 +106,17 @@ const getAllergyData = (payload: AllergyFormSchema) => ({
     coding: [
       {
         ...basicFhirCoding,
-        system: 'http://www.nlm.nih.gov/research/umls/rxnorm',
+        system: "http://www.nlm.nih.gov/research/umls/rxnorm",
         code: payload.medication,
       },
     ],
   },
-})
+});
 
 export const createAllergy = async (
   payload: {
-    userId: string
-    resourceType: ResourceType
+    userId: string;
+    resourceType: ResourceType;
   } & AllergyFormSchema,
 ) => {
   await addDoc(
@@ -125,14 +125,14 @@ export const createAllergy = async (
       resourceType: payload.resourceType,
     }),
     getAllergyData(payload),
-  )
-}
+  );
+};
 
 export const updateAllergy = async (
   payload: {
-    userId: string
-    resourceType: ResourceType
-    allergyIntoleranceId: string
+    userId: string;
+    resourceType: ResourceType;
+    allergyIntoleranceId: string;
   } & AllergyFormSchema,
 ) => {
   await setDoc(
@@ -142,13 +142,13 @@ export const updateAllergy = async (
       allergyIntoleranceId: payload.allergyIntoleranceId,
     }),
     getAllergyData(payload),
-  )
-}
+  );
+};
 
 const getAppointmentData = (
   payload: AppointmentFormSchema & { userId: string },
 ) => ({
-  resourceType: 'Appointment',
+  resourceType: "Appointment",
   status: FHIRAppointmentStatus.booked,
   start: payload.start.toISOString(),
   end: addHours(payload.start, 1).toISOString(),
@@ -171,12 +171,12 @@ const getAppointmentData = (
       type: null,
     },
   ],
-})
+});
 
 export const createAppointment = async (
   payload: {
-    userId: string
-    resourceType: ResourceType
+    userId: string;
+    resourceType: ResourceType;
   } & AppointmentFormSchema,
 ) => {
   await addDoc(
@@ -190,14 +190,14 @@ export const createAppointment = async (
       created: new Date().toISOString(),
       ...getAppointmentData(payload),
     },
-  )
-}
+  );
+};
 
 export const updateAppointment = async (
   payload: {
-    userId: string
-    resourceType: ResourceType
-    appointmentId: string
+    userId: string;
+    resourceType: ResourceType;
+    appointmentId: string;
   } & AppointmentFormSchema,
 ) => {
   await setDoc(
@@ -208,5 +208,5 @@ export const updateAppointment = async (
     }),
     getAppointmentData(payload),
     { merge: true },
-  )
-}
+  );
+};

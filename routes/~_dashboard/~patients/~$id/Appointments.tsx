@@ -6,104 +6,104 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { deleteDoc } from '@firebase/firestore'
-import { Button } from '@stanfordspezi/spezi-web-design-system/components/Button'
+import { deleteDoc } from "@firebase/firestore";
+import { Button } from "@stanfordspezi/spezi-web-design-system/components/Button";
 import {
   DataTable,
   dateColumn,
   dateTimeColumn,
   RowDropdownMenu,
-} from '@stanfordspezi/spezi-web-design-system/components/DataTable'
-import { DropdownMenuItem } from '@stanfordspezi/spezi-web-design-system/components/DropdownMenu'
-import { ConfirmDeleteDialog } from '@stanfordspezi/spezi-web-design-system/molecules/ConfirmDeleteDialog'
+} from "@stanfordspezi/spezi-web-design-system/components/DataTable";
+import { DropdownMenuItem } from "@stanfordspezi/spezi-web-design-system/components/DropdownMenu";
+import { ConfirmDeleteDialog } from "@stanfordspezi/spezi-web-design-system/molecules/ConfirmDeleteDialog";
 import {
   useOpenState,
   useStatefulOpenState,
-} from '@stanfordspezi/spezi-web-design-system/utils/useOpenState'
-import { useRouter } from '@tanstack/react-router'
-import { createColumnHelper } from '@tanstack/table-core'
-import { Pencil, Plus, Trash } from 'lucide-react'
-import { docRefs } from '@/modules/firebase/app'
+} from "@stanfordspezi/spezi-web-design-system/utils/useOpenState";
+import { useRouter } from "@tanstack/react-router";
+import { createColumnHelper } from "@tanstack/table-core";
+import { Pencil, Plus, Trash } from "lucide-react";
+import { docRefs } from "@/modules/firebase/app";
 import {
   createAppointment,
   updateAppointment,
-} from '@/routes/~_dashboard/~patients/actions'
+} from "@/routes/~_dashboard/~patients/actions";
 import type {
   AppointmentsData,
   Appointment,
-} from '@/routes/~_dashboard/~patients/utils'
+} from "@/routes/~_dashboard/~patients/utils";
 import {
   AppointmentFormDialog,
   type AppointmentFormSchema,
-} from '@/routes/~_dashboard/~patients/~$id/AppointmentForm'
+} from "@/routes/~_dashboard/~patients/~$id/AppointmentForm";
 
 interface AppointmentsProps extends AppointmentsData {}
 
-const columnHelper = createColumnHelper<Appointment>()
+const columnHelper = createColumnHelper<Appointment>();
 
 export const Appointments = ({
   appointments,
   userId,
   resourceType,
 }: AppointmentsProps) => {
-  const router = useRouter()
-  const createDialog = useOpenState()
-  const deleteDialog = useStatefulOpenState<Appointment>()
-  const editDialog = useStatefulOpenState<Appointment>()
+  const router = useRouter();
+  const createDialog = useOpenState();
+  const deleteDialog = useStatefulOpenState<Appointment>();
+  const editDialog = useStatefulOpenState<Appointment>();
 
   const handleCreate = async (data: AppointmentFormSchema) => {
     await createAppointment({
       userId,
       resourceType,
       ...data,
-    })
-    createDialog.close()
-    await router.invalidate()
-  }
+    });
+    createDialog.close();
+    await router.invalidate();
+  };
 
   const handleDelete = async () => {
-    const appointment = deleteDialog.state
-    if (!appointment) return
+    const appointment = deleteDialog.state;
+    if (!appointment) return;
     await deleteDoc(
       docRefs.appointment({
         userId,
         resourceType,
         appointmentId: appointment.id,
       }),
-    )
-    await router.invalidate()
-    deleteDialog.close()
-  }
+    );
+    await router.invalidate();
+    deleteDialog.close();
+  };
 
   const handleEdit = async (data: AppointmentFormSchema) => {
-    const appointment = editDialog.state
-    if (!appointment) return
+    const appointment = editDialog.state;
+    if (!appointment) return;
     await updateAppointment({
       userId,
       resourceType,
       appointmentId: appointment.id,
       ...data,
-    })
-    await router.invalidate()
-    editDialog.close()
-  }
+    });
+    await router.invalidate();
+    editDialog.close();
+  };
 
   const columns = [
-    columnHelper.accessor('created', {
-      header: 'Created',
+    columnHelper.accessor("created", {
+      header: "Created",
       cell: dateColumn,
     }),
-    columnHelper.accessor('providerName', {
-      header: 'Provider name',
+    columnHelper.accessor("providerName", {
+      header: "Provider name",
     }),
-    columnHelper.accessor('start', {
-      header: 'Start',
+    columnHelper.accessor("start", {
+      header: "Start",
       cell: dateTimeColumn,
     }),
     columnHelper.display({
-      id: 'actions',
+      id: "actions",
       cell: (props) => {
-        const appointment = props.row.original
+        const appointment = props.row.original;
         return (
           <RowDropdownMenu>
             <DropdownMenuItem onClick={() => editDialog.open(appointment)}>
@@ -115,10 +115,10 @@ export const Appointments = ({
               Delete
             </DropdownMenuItem>
           </RowDropdownMenu>
-        )
+        );
       },
     }),
-  ]
+  ];
 
   return (
     <>
@@ -161,5 +161,5 @@ export const Appointments = ({
         }
       />
     </>
-  )
-}
+  );
+};

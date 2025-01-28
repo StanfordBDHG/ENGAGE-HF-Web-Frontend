@@ -6,40 +6,40 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { deleteDoc } from '@firebase/firestore'
-import { RowDropdownMenu } from '@stanfordspezi/spezi-web-design-system/components/DataTable'
-import { DropdownMenuItem } from '@stanfordspezi/spezi-web-design-system/components/DropdownMenu'
-import { getUserName } from '@stanfordspezi/spezi-web-design-system/modules/auth'
-import { ConfirmDeleteDialog } from '@stanfordspezi/spezi-web-design-system/molecules/ConfirmDeleteDialog'
-import { useOpenState } from '@stanfordspezi/spezi-web-design-system/utils/useOpenState'
-import { Link, useRouter } from '@tanstack/react-router'
-import { Pencil, Trash } from 'lucide-react'
-import { callables, docRefs } from '@/modules/firebase/app'
-import { useUser } from '@/modules/firebase/UserProvider'
-import { routes } from '@/modules/routes'
-import { ToggleUserDisabled } from '@/modules/user/ToggleUserDisabled'
-import { type User } from '@/routes/~_dashboard/~users/~index'
+import { deleteDoc } from "@firebase/firestore";
+import { RowDropdownMenu } from "@stanfordspezi/spezi-web-design-system/components/DataTable";
+import { DropdownMenuItem } from "@stanfordspezi/spezi-web-design-system/components/DropdownMenu";
+import { getUserName } from "@stanfordspezi/spezi-web-design-system/modules/auth";
+import { ConfirmDeleteDialog } from "@stanfordspezi/spezi-web-design-system/molecules/ConfirmDeleteDialog";
+import { useOpenState } from "@stanfordspezi/spezi-web-design-system/utils/useOpenState";
+import { Link, useRouter } from "@tanstack/react-router";
+import { Pencil, Trash } from "lucide-react";
+import { callables, docRefs } from "@/modules/firebase/app";
+import { useUser } from "@/modules/firebase/UserProvider";
+import { routes } from "@/modules/routes";
+import { ToggleUserDisabled } from "@/modules/user/ToggleUserDisabled";
+import { type User } from "@/routes/~_dashboard/~users/~index";
 
 interface UserMenuProps {
-  user: User
+  user: User;
 }
 
 export const UserMenu = ({ user }: UserMenuProps) => {
-  const router = useRouter()
-  const authUser = useUser()
-  const deleteConfirm = useOpenState()
+  const router = useRouter();
+  const authUser = useUser();
+  const deleteConfirm = useOpenState();
 
   const handleDelete = async () => {
-    if (user.resourceType === 'user') {
-      await callables.deleteUser({ userId: user.resourceId })
+    if (user.resourceType === "user") {
+      await callables.deleteUser({ userId: user.resourceId });
     } else {
-      await deleteDoc(docRefs.invitation(user.resourceId))
+      await deleteDoc(docRefs.invitation(user.resourceId));
     }
-    deleteConfirm.close()
-    void router.invalidate()
-  }
+    deleteConfirm.close();
+    void router.invalidate();
+  };
 
-  const isSelf = authUser.auth.uid === user.resourceId
+  const isSelf = authUser.auth.uid === user.resourceId;
 
   return (
     <>
@@ -64,5 +64,5 @@ export const UserMenu = ({ user }: UserMenuProps) => {
         <ToggleUserDisabled user={user} />
       </RowDropdownMenu>
     </>
-  )
-}
+  );
+};

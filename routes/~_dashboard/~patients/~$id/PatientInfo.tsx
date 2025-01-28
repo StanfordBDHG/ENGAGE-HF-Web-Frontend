@@ -6,16 +6,16 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { Card } from '@stanfordspezi/spezi-web-design-system/components/Card'
-import { formatNilDateTime } from '@stanfordspezi/spezi-web-design-system/utils/date'
-import { Clock, FileQuestion, Mail, BookLock, AtSign } from 'lucide-react'
-import { type ReactNode } from 'react'
-import { type PatientInfo as PatientInfoData } from '@/routes/~_dashboard/~patients/utils'
+import { Card } from "@stanfordspezi/spezi-web-design-system/components/Card";
+import { formatNilDateTime } from "@stanfordspezi/spezi-web-design-system/utils/date";
+import { Clock, FileQuestion, Mail, BookLock, AtSign } from "lucide-react";
+import { type ReactNode } from "react";
+import { type PatientInfo as PatientInfoData } from "@/routes/~_dashboard/~patients/utils";
 
 interface InfoRowProps {
-  icon?: ReactNode
-  label?: ReactNode
-  value?: ReactNode
+  icon?: ReactNode;
+  label?: ReactNode;
+  value?: ReactNode;
 }
 
 export const InfoRow = ({ icon, label, value }: InfoRowProps) => (
@@ -26,10 +26,10 @@ export const InfoRow = ({ icon, label, value }: InfoRowProps) => (
       <p className="text-muted-foreground">{value}</p>
     </div>
   </li>
-)
+);
 
 interface PatientInfoProps {
-  info: PatientInfoData
+  info: PatientInfoData;
 }
 
 export const PatientInfo = ({ info }: PatientInfoProps) => (
@@ -39,7 +39,7 @@ export const PatientInfo = ({ info }: PatientInfoProps) => (
         <InfoRow
           icon={<AtSign className="size-5" />}
           label="Email"
-          value={info.email ?? 'no email'}
+          value={info.email ?? "no email"}
         />
         <InfoRow
           icon={<BookLock className="size-5" />}
@@ -56,17 +56,17 @@ export const PatientInfo = ({ info }: PatientInfoProps) => (
         <InfoRow
           icon={<Clock className="size-5" />}
           label="Latest activity"
-          value={formatNilDateTime(info.lastActiveDate) ?? 'no activity'}
+          value={formatNilDateTime(info.lastActiveDate) ?? "no activity"}
         />
         <InfoRow
           icon={<FileQuestion className="size-5" />}
           label="Latest questionnaire answer"
           value={
             formatNilDateTime(info.latestQuestionnaireDate) ??
-            'no questionnaire answered'
+            "no questionnaire answered"
           }
         />
       </ul>
     </div>
   </Card>
-)
+);

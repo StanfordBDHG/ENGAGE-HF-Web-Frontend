@@ -6,28 +6,28 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { type ResourceType } from '@/modules/firebase/utils'
-import type { PatientPageTab } from '@/routes/~_dashboard/~patients/~$id/~index'
+import { type ResourceType } from "@/modules/firebase/utils";
+import type { PatientPageTab } from "@/routes/~_dashboard/~patients/~$id/~index";
 
 export const routes = {
-  home: '/',
-  notifications: '/notifications',
-  admin: '/admin',
+  home: "/",
+  notifications: "/notifications",
+  admin: "/admin",
   users: {
-    index: '/users',
+    index: "/users",
     user: (userId: string, resourceType: ResourceType) =>
-      `/users/${resourceType === 'invitation' ? 'invitation-' : ''}${userId}`,
-    invite: '/users/invite',
+      `/users/${resourceType === "invitation" ? "invitation-" : ""}${userId}`,
+    invite: "/users/invite",
   },
   patients: {
-    index: '/patients',
+    index: "/patients",
     patient: (
       patientId: string,
       resourceType: ResourceType,
       params?: { tab?: PatientPageTab },
     ) =>
-      `/patients/${resourceType === 'invitation' ? 'invitation-' : ''}${patientId}${params?.tab ? `?tab=${params.tab}` : ''}`,
-    invite: '/patients/invite',
+      `/patients/${resourceType === "invitation" ? "invitation-" : ""}${patientId}${params?.tab ? `?tab=${params.tab}` : ""}`,
+    invite: "/patients/invite",
   },
-  signIn: '/sign-in',
-}
+  signIn: "/sign-in",
+};
