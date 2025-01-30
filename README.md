@@ -49,7 +49,7 @@ VITE_PUBLIC_EMAIL_PASSWORD_SIGN_IN=""
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.<!-- markdown-link-check-disable-line -->
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 You can edit the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
@@ -60,7 +60,7 @@ You can edit the page by modifying `app/page.tsx`. The page auto-updates as you 
 
 You can view the images you create with `docker images`.
 
-Open [http://localhost](http://localhost) with your browser to see the result. You can visit [http://localhost:8080](http://localhost:8080) to see the reverse proxy setup before the main application.<!-- markdown-link-check-disable-line -->
+Open [http://localhost](http://localhost) with your browser to see the result. You can visit [http://localhost:8080](http://localhost:8080) to see the reverse proxy setup before the main application.
 
 The `docker-compose.yml` setup contains a production-ready setup using a reverse proxy.
 
