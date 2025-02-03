@@ -6,23 +6,23 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { useNavigate } from '@tanstack/react-router'
+import { useNavigate } from "@tanstack/react-router";
 
 /**
  * This hook tries to replicate native CMD+Click on links to open them in a new tab
  * Use only when no regular link can be used (for example on DataTable row click)
  * */
 export const useNavigateOrOpen = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   return async (
     event: { ctrlKey: boolean; metaKey: boolean },
     ...args: Parameters<typeof navigate>
   ) => {
-    const [path] = args
+    const [path] = args;
     if (event.ctrlKey || event.metaKey) {
-      window.open(path.to, '_blank')
+      window.open(path.to, "_blank");
     } else {
-      await navigate(...args)
+      await navigate(...args);
     }
-  }
-}
+  };
+};

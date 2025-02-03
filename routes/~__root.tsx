@@ -6,20 +6,25 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { Toaster } from '@stanfordspezi/spezi-web-design-system/components/Toaster'
-import { SpeziProvider } from '@stanfordspezi/spezi-web-design-system/SpeziProvider'
-import { createRootRoute, Link, Outlet, redirect } from '@tanstack/react-router'
-import { type ComponentProps } from 'react'
-import { Helmet } from 'react-helmet'
-import { auth } from '@/modules/firebase/app'
-import { AuthProvider } from '@/modules/firebase/AuthProvider'
-import { ReactQueryClientProvider } from '@/modules/query/ReactQueryClientProvider'
-import { routes } from '@/modules/routes'
-import '../modules/globals.css'
+import { Toaster } from "@stanfordspezi/spezi-web-design-system/components/Toaster";
+import { SpeziProvider } from "@stanfordspezi/spezi-web-design-system/SpeziProvider";
+import {
+  createRootRoute,
+  Link,
+  Outlet,
+  redirect,
+} from "@tanstack/react-router";
+import { type ComponentProps } from "react";
+import { Helmet } from "react-helmet";
+import { auth } from "@/modules/firebase/app";
+import { AuthProvider } from "@/modules/firebase/AuthProvider";
+import { ReactQueryClientProvider } from "@/modules/query/ReactQueryClientProvider";
+import { routes } from "@/modules/routes";
+import "../modules/globals.css";
 
-const routerProps: ComponentProps<typeof SpeziProvider>['router'] = {
+const routerProps: ComponentProps<typeof SpeziProvider>["router"] = {
   Link: ({ href, ...props }) => <Link to={href} {...props} />,
-}
+};
 
 const Root = () => (
   <AuthProvider>
@@ -31,18 +36,18 @@ const Root = () => (
       </ReactQueryClientProvider>
     </SpeziProvider>
   </AuthProvider>
-)
+);
 
 export const Route = createRootRoute({
   component: Root,
   beforeLoad: async ({ location }) => {
-    await auth.authStateReady()
-    const user = auth.currentUser
-    const isSignIn = location.pathname === routes.signIn
+    await auth.authStateReady();
+    const user = auth.currentUser;
+    const isSignIn = location.pathname === routes.signIn;
     if (isSignIn && user) {
-      throw redirect({ to: routes.home })
+      throw redirect({ to: routes.home });
     } else if (!isSignIn && !user) {
-      throw redirect({ to: routes.signIn })
+      throw redirect({ to: routes.signIn });
     }
   },
-})
+});

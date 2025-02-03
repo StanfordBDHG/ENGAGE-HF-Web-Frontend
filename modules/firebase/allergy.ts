@@ -6,14 +6,14 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { startCase } from 'es-toolkit'
+import { startCase } from "es-toolkit";
 
 export enum AllergyType {
-  severeAllergy = 'severeAllergy',
-  allergy = 'allergy',
-  intolerance = 'intolerance',
-  financial = 'financial',
-  preference = 'preference',
+  severeAllergy = "severeAllergy",
+  allergy = "allergy",
+  intolerance = "intolerance",
+  financial = "financial",
+  preference = "preference",
 }
 
-export const stringifyAllergyType = (type: AllergyType) => startCase(type)
+export const stringifyAllergyType = (type: AllergyType) => startCase(type);

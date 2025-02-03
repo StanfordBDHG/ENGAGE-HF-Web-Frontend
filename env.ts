@@ -6,18 +6,18 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { createEnv } from '@t3-oss/env-core'
-import { z } from 'zod'
+import { createEnv } from "@t3-oss/env-core";
+import { z } from "zod";
 
 const booleanFlag = z
   .preprocess((value) => {
-    if (typeof value === 'string') {
-      const flag = value.trim().toLowerCase()
-      return flag === 'true' || flag === '1' || flag === 't'
+    if (typeof value === "string") {
+      const flag = value.trim().toLowerCase();
+      return flag === "true" || flag === "1" || flag === "t";
     }
-    return value
+    return value;
   }, z.boolean().optional())
-  .default(false)
+  .default(false);
 
 export const env = createEnv({
   server: {},
@@ -31,7 +31,7 @@ export const env = createEnv({
     VITE_PUBLIC_EMULATOR: booleanFlag,
     VITE_PUBLIC_EMAIL_PASSWORD_SIGN_IN: booleanFlag,
   },
-  clientPrefix: 'VITE_PUBLIC',
+  clientPrefix: "VITE_PUBLIC",
   runtimeEnv: {
     VITE_PUBLIC_FIREBASE_API_KEY: import.meta.env.VITE_PUBLIC_FIREBASE_API_KEY,
     VITE_PUBLIC_FIREBASE_AUTH_DOMAIN: import.meta.env
@@ -47,4 +47,4 @@ export const env = createEnv({
     VITE_PUBLIC_EMAIL_PASSWORD_SIGN_IN: import.meta.env
       .VITE_PUBLIC_EMAIL_PASSWORD_SIGN_IN,
   },
-})
+});

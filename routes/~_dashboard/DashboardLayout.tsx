@@ -6,24 +6,24 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { getUserInfo } from '@stanfordspezi/spezi-web-design-system/modules/auth'
+import { getUserInfo } from "@stanfordspezi/spezi-web-design-system/modules/auth";
 import {
   DashboardLayout as DashboardLayoutBase,
   type DashboardLayoutProps as DashboardLayoutPropsBase,
-} from '@stanfordspezi/spezi-web-design-system/molecules/DashboardLayout'
-import { Link } from '@tanstack/react-router'
-import { LogoType } from '@/components/icons/LogoType'
-import { useUser } from '@/modules/firebase/UserProvider'
-import { MenuLinks } from '@/routes/~_dashboard/MenuLinks'
-import { User } from '@/routes/~_dashboard/User'
+} from "@stanfordspezi/spezi-web-design-system/molecules/DashboardLayout";
+import { Link } from "@tanstack/react-router";
+import { LogoType } from "@/components/icons/LogoType";
+import { useUser } from "@/modules/firebase/UserProvider";
+import { MenuLinks } from "@/routes/~_dashboard/MenuLinks";
+import { User } from "@/routes/~_dashboard/User";
 
 interface DashboardLayoutProps
-  extends Omit<DashboardLayoutPropsBase, 'aside' | 'mobile'> {}
+  extends Omit<DashboardLayoutPropsBase, "aside" | "mobile"> {}
 
 export const DashboardLayout = (props: DashboardLayoutProps) => {
-  const { user, auth } = useUser()
-  const role = user.type
-  const userUI = <User user={getUserInfo(auth)} />
+  const { user, auth } = useUser();
+  const role = user.type;
+  const userUI = <User user={getUserInfo(auth)} />;
 
   return (
     <DashboardLayoutBase
@@ -48,5 +48,5 @@ export const DashboardLayout = (props: DashboardLayoutProps) => {
       }
       {...props}
     />
-  )
-}
+  );
+};

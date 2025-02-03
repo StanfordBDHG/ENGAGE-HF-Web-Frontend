@@ -11,17 +11,17 @@ import {
   DropdownMenuTrigger,
   DropdownMenuContent,
   DropdownMenuItem,
-} from '@stanfordspezi/spezi-web-design-system/components/DropdownMenu'
+} from "@stanfordspezi/spezi-web-design-system/components/DropdownMenu";
 import {
   getUserName,
   type UserInfo,
-} from '@stanfordspezi/spezi-web-design-system/modules/auth'
-import { UserMenuItem } from '@stanfordspezi/spezi-web-design-system/molecules/DashboardLayout'
-import { LogOut } from 'lucide-react'
-import { auth } from '@/modules/firebase/app'
+} from "@stanfordspezi/spezi-web-design-system/modules/auth";
+import { UserMenuItem } from "@stanfordspezi/spezi-web-design-system/molecules/DashboardLayout";
+import { LogOut } from "lucide-react";
+import { auth } from "@/modules/firebase/app";
 
 interface UserProps {
-  user: UserInfo
+  user: UserInfo;
 }
 
 export const User = ({ user }: UserProps) => (
@@ -32,7 +32,7 @@ export const User = ({ user }: UserProps) => (
     <DropdownMenuContent>
       <DropdownMenuItem
         onClick={async () => {
-          await auth.signOut()
+          await auth.signOut();
         }}
       >
         <LogOut />
@@ -40,4 +40,4 @@ export const User = ({ user }: UserProps) => (
       </DropdownMenuItem>
     </DropdownMenuContent>
   </DropdownMenu>
-)
+);

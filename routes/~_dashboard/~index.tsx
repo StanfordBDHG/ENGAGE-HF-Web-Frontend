@@ -6,14 +6,14 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { PageTitle } from '@stanfordspezi/spezi-web-design-system/molecules/DashboardLayout'
-import { createFileRoute } from '@tanstack/react-router'
-import { Home } from 'lucide-react'
-import { Helmet } from 'react-helmet'
-import { YourPatientsCard } from '@/routes/~_dashboard/YourPatientsCard'
-import { DashboardLayout } from './DashboardLayout'
-import { NotificationsCard } from './NotificationsCard'
-import { UpcomingAppointmentsCard } from './UpcomingAppointmentsCard'
+import { PageTitle } from "@stanfordspezi/spezi-web-design-system/molecules/DashboardLayout";
+import { createFileRoute } from "@tanstack/react-router";
+import { Home } from "lucide-react";
+import { Helmet } from "react-helmet";
+import { YourPatientsCard } from "@/routes/~_dashboard/YourPatientsCard";
+import { DashboardLayout } from "./DashboardLayout";
+import { NotificationsCard } from "./NotificationsCard";
+import { UpcomingAppointmentsCard } from "./UpcomingAppointmentsCard";
 
 const DashboardPage = () => (
   <DashboardLayout title={<PageTitle title="Home" icon={<Home />} />}>
@@ -26,8 +26,8 @@ const DashboardPage = () => (
       <YourPatientsCard />
     </div>
   </DashboardLayout>
-)
+);
 
-export const Route = createFileRoute('/_dashboard/')({
+export const Route = createFileRoute("/_dashboard/")({
   component: DashboardPage,
-})
+});

@@ -6,25 +6,25 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { Button } from '@stanfordspezi/spezi-web-design-system/components/Button'
-import { Tooltip } from '@stanfordspezi/spezi-web-design-system/components/Tooltip'
-import { useMutation } from '@tanstack/react-query'
-import { useMemo } from 'react'
-import { callables } from '@/modules/firebase/app'
-import { type UserMessage } from '@/modules/firebase/models'
-import { useUser } from '@/modules/firebase/UserProvider'
-import { isMessageRead } from '@/modules/notifications/helpers'
-import { notificationQueries } from '@/modules/notifications/queries'
-import { queryClient } from '@/modules/query/queryClient'
+import { Button } from "@stanfordspezi/spezi-web-design-system/components/Button";
+import { Tooltip } from "@stanfordspezi/spezi-web-design-system/components/Tooltip";
+import { useMutation } from "@tanstack/react-query";
+import { useMemo } from "react";
+import { callables } from "@/modules/firebase/app";
+import { type UserMessage } from "@/modules/firebase/models";
+import { useUser } from "@/modules/firebase/UserProvider";
+import { isMessageRead } from "@/modules/notifications/helpers";
+import { notificationQueries } from "@/modules/notifications/queries";
+import { queryClient } from "@/modules/query/queryClient";
 
 interface MarkAllAsReadButtonProps {
-  notifications: UserMessage[]
+  notifications: UserMessage[];
 }
 
 export const MarkAllAsReadButton = ({
   notifications,
 }: MarkAllAsReadButtonProps) => {
-  const { auth } = useUser()
+  const { auth } = useUser();
 
   const dismissibleNotifications = useMemo(
     () =>
@@ -33,8 +33,8 @@ export const MarkAllAsReadButton = ({
           notification.isDismissible && !isMessageRead(notification),
       ),
     [notifications],
-  )
-  const hasDismissibleNotifications = dismissibleNotifications.length > 0
+  );
+  const hasDismissibleNotifications = dismissibleNotifications.length > 0;
 
   const markNotificationsAsRead = useMutation({
     mutationFn: () =>
@@ -50,7 +50,7 @@ export const MarkAllAsReadButton = ({
       queryClient.invalidateQueries(
         notificationQueries.list({ userId: auth.uid }),
       ),
-  })
+  });
 
   return (
     <Tooltip
@@ -67,5 +67,5 @@ export const MarkAllAsReadButton = ({
         Mark all as read
       </Button>
     </Tooltip>
-  )
-}
+  );
+};

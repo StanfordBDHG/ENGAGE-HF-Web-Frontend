@@ -6,42 +6,42 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { runTransaction, updateDoc } from '@firebase/firestore'
-import { UserType } from '@stanfordbdhg/engagehf-models'
+import { runTransaction, updateDoc } from "@firebase/firestore";
+import { UserType } from "@stanfordbdhg/engagehf-models";
 import {
   Tabs,
   TabsContent,
   TabsList,
   TabsTrigger,
-} from '@stanfordspezi/spezi-web-design-system/components/Tabs'
-import { toast } from '@stanfordspezi/spezi-web-design-system/components/Toaster'
-import { getUserName } from '@stanfordspezi/spezi-web-design-system/modules/auth'
-import { PageTitle } from '@stanfordspezi/spezi-web-design-system/molecules/DashboardLayout'
-import { createFileRoute, notFound, useRouter } from '@tanstack/react-router'
-import { Contact } from 'lucide-react'
-import { Helmet } from 'react-helmet'
-import { z } from 'zod'
-import { NotFound } from '@/components/NotFound'
-import { callables, db, docRefs, refs } from '@/modules/firebase/app'
+} from "@stanfordspezi/spezi-web-design-system/components/Tabs";
+import { toast } from "@stanfordspezi/spezi-web-design-system/components/Toaster";
+import { getUserName } from "@stanfordspezi/spezi-web-design-system/modules/auth";
+import { PageTitle } from "@stanfordspezi/spezi-web-design-system/molecules/DashboardLayout";
+import { createFileRoute, notFound, useRouter } from "@tanstack/react-router";
+import { Contact } from "lucide-react";
+import { Helmet } from "react-helmet";
+import { z } from "zod";
+import { NotFound } from "@/components/NotFound";
+import { callables, db, docRefs, refs } from "@/modules/firebase/app";
 import {
   getMedicationRequestData,
   getMedicationRequestMedicationIds,
-} from '@/modules/firebase/medication'
+} from "@/modules/firebase/medication";
 import {
   getDocDataOrThrow,
   getDocsData,
   type ResourceType,
-} from '@/modules/firebase/utils'
-import { routes } from '@/modules/routes'
-import { getUserData, parseUserId } from '@/modules/user/queries'
+} from "@/modules/firebase/utils";
+import { routes } from "@/modules/routes";
+import { getUserData, parseUserId } from "@/modules/user/queries";
 import {
   Medications,
   type MedicationsFormSchema,
-} from '@/routes/~_dashboard/~patients/Medications'
+} from "@/routes/~_dashboard/~patients/Medications";
 import {
   PatientForm,
   type PatientFormSchema,
-} from '@/routes/~_dashboard/~patients/PatientForm'
+} from "@/routes/~_dashboard/~patients/PatientForm";
 import {
   getAllergiesData,
   getAppointmentsData,
@@ -49,46 +49,48 @@ import {
   getLabsData,
   getMedicationsData,
   getPatientInfo,
-} from '@/routes/~_dashboard/~patients/utils'
-import { Allergies } from '@/routes/~_dashboard/~patients/~$id/Allergies'
-import { Appointments } from '@/routes/~_dashboard/~patients/~$id/Appointments'
-import { GenerateHealthSummary } from '@/routes/~_dashboard/~patients/~$id/GenerateHealthSummary'
-import { Labs } from '@/routes/~_dashboard/~patients/~$id/Labs'
-import { Notifications } from '@/routes/~_dashboard/~patients/~$id/Notifications'
-import { PatientInfo } from '@/routes/~_dashboard/~patients/~$id/PatientInfo'
-import { DashboardLayout } from '../../DashboardLayout'
+} from "@/routes/~_dashboard/~patients/utils";
+import { Allergies } from "@/routes/~_dashboard/~patients/~$id/Allergies";
+import { Appointments } from "@/routes/~_dashboard/~patients/~$id/Appointments";
+import { GenerateHealthSummary } from "@/routes/~_dashboard/~patients/~$id/GenerateHealthSummary";
+import { Labs } from "@/routes/~_dashboard/~patients/~$id/Labs";
+import { Notifications } from "@/routes/~_dashboard/~patients/~$id/Notifications";
+import { PatientInfo } from "@/routes/~_dashboard/~patients/~$id/PatientInfo";
+import { DashboardLayout } from "../../DashboardLayout";
 
 const getUserMedications = async (payload: {
-  userId: string
-  resourceType: ResourceType
+  userId: string;
+  resourceType: ResourceType;
 }) => {
-  const medicationRequests = await getDocsData(refs.medicationRequests(payload))
+  const medicationRequests = await getDocsData(
+    refs.medicationRequests(payload),
+  );
   return medicationRequests.map((request) => {
-    const ids = getMedicationRequestMedicationIds(request)
-    const dosage = request.dosageInstruction?.at(0)
+    const ids = getMedicationRequestMedicationIds(request);
+    const dosage = request.dosageInstruction?.at(0);
     return {
       id: request.id,
-      medication: ids.medicationId ?? '',
-      drug: ids.drugId ?? '',
+      medication: ids.medicationId ?? "",
+      drug: ids.drugId ?? "",
       frequencyPerDay: dosage?.timing?.repeat?.frequency ?? 1,
       quantity: dosage?.doseAndRate?.at(0)?.doseQuantity?.value ?? 1,
-      instructions: dosage?.text ?? '',
-    }
-  })
-}
+      instructions: dosage?.text ?? "",
+    };
+  });
+};
 
 export enum PatientPageTab {
-  information = 'information',
-  notifications = 'notifications',
-  medications = 'medications',
-  allergies = 'allergies',
-  labs = 'labs',
-  appointments = 'appointments',
+  information = "information",
+  notifications = "notifications",
+  medications = "medications",
+  allergies = "allergies",
+  labs = "labs",
+  appointments = "appointments",
 }
 
 const PatientPage = () => {
-  const router = useRouter()
-  const { tab } = Route.useSearch()
+  const router = useRouter();
+  const { tab } = Route.useSearch();
   const {
     userId,
     medications,
@@ -101,29 +103,29 @@ const PatientPage = () => {
     authUser,
     resourceType,
     info,
-  } = Route.useLoaderData()
+  } = Route.useLoaderData();
 
   const updatePatient = async (form: PatientFormSchema) => {
-    const clinician = await getDocDataOrThrow(docRefs.user(form.clinician))
+    const clinician = await getDocDataOrThrow(docRefs.user(form.clinician));
     const authData = {
       displayName: form.displayName,
-    }
+    };
     const userData = {
       clinician: form.clinician,
       organization: clinician.organization,
       dateOfBirth: form.dateOfBirth?.toISOString() ?? null,
       providerName: form.providerName,
-    }
-    if (resourceType === 'user') {
+    };
+    if (resourceType === "user") {
       await callables.updateUserInformation({
         userId,
         data: {
           auth: authData,
         },
-      })
-      await updateDoc(docRefs.user(userId), userData)
+      });
+      await updateDoc(docRefs.user(userId), userData);
     } else {
-      const invitation = await getDocDataOrThrow(docRefs.invitation(userId))
+      const invitation = await getDocDataOrThrow(docRefs.invitation(userId));
       await updateDoc(docRefs.invitation(userId), {
         auth: {
           ...invitation.auth,
@@ -133,16 +135,16 @@ const PatientPage = () => {
           ...invitation.user,
           ...userData,
         },
-      })
+      });
     }
-    toast.success('Patient has been successfully updated!')
-    void router.invalidate()
-  }
+    toast.success("Patient has been successfully updated!");
+    void router.invalidate();
+  };
 
   const saveMedications = async (form: MedicationsFormSchema) => {
     const medicationRequests = await getDocsData(
       refs.medicationRequests({ userId, resourceType }),
-    )
+    );
     // async is required to match types
     // eslint-disable-next-line @typescript-eslint/require-await
     await runTransaction(db, async (transaction) => {
@@ -153,8 +155,8 @@ const PatientPage = () => {
             medicationRequestId: medication.id,
             resourceType,
           }),
-        )
-      })
+        );
+      });
       form.medications.forEach((medication) => {
         transaction.set(
           docRefs.medicationRequest({
@@ -163,12 +165,12 @@ const PatientPage = () => {
             resourceType,
           }),
           getMedicationRequestData(medication),
-        )
-      })
-    })
-  }
+        );
+      });
+    });
+  };
 
-  const userName = getUserName(authUser) ?? ''
+  const userName = getUserName(authUser) ?? "";
 
   return (
     <DashboardLayout
@@ -241,10 +243,10 @@ const PatientPage = () => {
         </TabsContent>
       </Tabs>
     </DashboardLayout>
-  )
-}
+  );
+};
 
-export const Route = createFileRoute('/_dashboard/patients/$id/')({
+export const Route = createFileRoute("/_dashboard/patients/$id/")({
   component: PatientPage,
   validateSearch: z.object({
     tab: z.nativeEnum(PatientPageTab).optional().catch(undefined),
@@ -252,14 +254,16 @@ export const Route = createFileRoute('/_dashboard/patients/$id/')({
   notFoundComponent: () => (
     <NotFound
       entityName="patient"
-      backPage={{ name: 'patients list', href: routes.patients.index }}
+      backPage={{ name: "patients list", href: routes.patients.index }}
     />
   ),
   loader: async ({ params }) => {
-    const { userId, resourceType } = parseUserId(params.id)
-    const userData = await getUserData(userId, resourceType, [UserType.patient])
-    if (!userData) throw notFound()
-    const { user, authUser } = userData
+    const { userId, resourceType } = parseUserId(params.id);
+    const userData = await getUserData(userId, resourceType, [
+      UserType.patient,
+    ]);
+    if (!userData) throw notFound();
+    const { user, authUser } = userData;
 
     return {
       user,
@@ -273,6 +277,6 @@ export const Route = createFileRoute('/_dashboard/patients/$id/')({
       labsData: await getLabsData({ userId, resourceType }),
       appointmentsData: await getAppointmentsData({ userId, resourceType }),
       info: await getPatientInfo(userData),
-    }
+    };
   },
-})
+});

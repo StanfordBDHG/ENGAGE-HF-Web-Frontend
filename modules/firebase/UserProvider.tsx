@@ -6,20 +6,20 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { getUserInfo } from '@stanfordspezi/spezi-web-design-system/modules/auth'
-import { queryOptions, useSuspenseQuery } from '@tanstack/react-query'
-import { getCurrentUser } from '@/modules/firebase/app'
+import { getUserInfo } from "@stanfordspezi/spezi-web-design-system/modules/auth";
+import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
+import { getCurrentUser } from "@/modules/firebase/app";
 
 export const currentUserQueryOptions = () =>
   queryOptions({
-    queryKey: ['getUser'],
+    queryKey: ["getUser"],
     queryFn: async () => {
-      const { currentUser, user } = await getCurrentUser()
+      const { currentUser, user } = await getCurrentUser();
       return {
         auth: getUserInfo(currentUser),
         user,
-      }
+      };
     },
-  })
+  });
 
-export const useUser = () => useSuspenseQuery(currentUserQueryOptions()).data
+export const useUser = () => useSuspenseQuery(currentUserQueryOptions()).data;

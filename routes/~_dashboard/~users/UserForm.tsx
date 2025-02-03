@@ -6,29 +6,29 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { UserType } from '@stanfordbdhg/engagehf-models'
-import { Button } from '@stanfordspezi/spezi-web-design-system/components/Button'
-import { Input } from '@stanfordspezi/spezi-web-design-system/components/Input'
+import { UserType } from "@stanfordbdhg/engagehf-models";
+import { Button } from "@stanfordspezi/spezi-web-design-system/components/Button";
+import { Input } from "@stanfordspezi/spezi-web-design-system/components/Input";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@stanfordspezi/spezi-web-design-system/components/Select'
+} from "@stanfordspezi/spezi-web-design-system/components/Select";
 import {
   Field,
   FormError,
   useForm,
-} from '@stanfordspezi/spezi-web-design-system/forms'
-import { type UserInfo } from '@stanfordspezi/spezi-web-design-system/modules/auth'
-import { z } from 'zod'
-import { type Organization, type User } from '@/modules/firebase/models'
-import { useUser } from '@/modules/firebase/UserProvider'
+} from "@stanfordspezi/spezi-web-design-system/forms";
+import { type UserInfo } from "@stanfordspezi/spezi-web-design-system/modules/auth";
+import { z } from "zod";
+import { type Organization, type User } from "@/modules/firebase/models";
+import { useUser } from "@/modules/firebase/UserProvider";
 
 export const userFormSchema = z
   .object({
-    email: z.string().email().min(1, 'Email is required'),
+    email: z.string().email().min(1, "Email is required"),
     displayName: z.string(),
     organizationId: z.string().nullable(),
     type: z.nativeEnum(UserType),
@@ -37,20 +37,20 @@ export const userFormSchema = z
     if (schema.type !== UserType.admin && !schema.organizationId) {
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
-        message: 'Organization is required',
-        path: ['organizationId'],
-      })
+        message: "Organization is required",
+        path: ["organizationId"],
+      });
     }
-  })
+  });
 
-export type UserFormSchema = z.infer<typeof userFormSchema>
+export type UserFormSchema = z.infer<typeof userFormSchema>;
 
 interface UserFormProps {
-  organizations: Array<Pick<Organization, 'name' | 'id'>>
-  userInfo?: Pick<UserInfo, 'email' | 'displayName' | 'uid'>
-  user?: Pick<User, 'organization'>
-  type?: UserType
-  onSubmit: (data: UserFormSchema) => Promise<void>
+  organizations: Array<Pick<Organization, "name" | "id">>;
+  userInfo?: Pick<UserInfo, "email" | "displayName" | "uid">;
+  user?: Pick<User, "organization">;
+  type?: UserType;
+  onSubmit: (data: UserFormSchema) => Promise<void>;
 }
 
 export const UserForm = ({
@@ -60,29 +60,29 @@ export const UserForm = ({
   userInfo,
   onSubmit,
 }: UserFormProps) => {
-  const isEdit = !!user
-  const authUser = useUser()
+  const isEdit = !!user;
+  const authUser = useUser();
   const form = useForm({
     formSchema: userFormSchema,
     defaultValues: {
-      email: userInfo?.email ?? '',
-      displayName: userInfo?.displayName ?? '',
+      email: userInfo?.email ?? "",
+      displayName: userInfo?.displayName ?? "",
       type: type ?? UserType.clinician,
       organizationId:
         (authUser.user.type === UserType.owner ?
           authUser.user.organization
         : user?.organization) ?? null,
     },
-  })
+  });
 
   const handleSubmit = form.handleSubmit(async (data) => {
-    await onSubmit(data)
-  })
+    await onSubmit(data);
+  });
 
   return (
     <form onSubmit={handleSubmit} className="mx-auto w-full max-w-2xl">
       <FormError
-        prefix={`${isEdit ? 'Updating' : 'Inviting'} user failed. `}
+        prefix={`${isEdit ? "Updating" : "Inviting"} user failed. `}
         formError={form.formError}
       />
       <Field
@@ -165,8 +165,8 @@ export const UserForm = ({
         )}
       />
       <Button type="submit" isPending={form.formState.isSubmitting}>
-        {isEdit ? 'Update' : 'Invite'} user
+        {isEdit ? "Update" : "Invite"} user
       </Button>
     </form>
-  )
-}
+  );
+};

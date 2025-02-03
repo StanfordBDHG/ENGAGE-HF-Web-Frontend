@@ -9,36 +9,36 @@
 import {
   DataTable,
   type DataTableProps,
-} from '@stanfordspezi/spezi-web-design-system/components/DataTable'
-import { parseNilLocalizedText } from '@/modules/firebase/localizedText'
-import { type UserMessage } from '@/modules/firebase/models'
-import { isMessageRead } from '@/modules/notifications/helpers'
-import { Notification } from '@/modules/notifications/Notification'
-import { columnHelper, columnIds } from './helpers'
-import { MarkAllAsReadButton } from './MarkAllAsReadButton'
-import { ShowUnreadOnlySwitch } from './ShowUnreadOnlySwitch'
+} from "@stanfordspezi/spezi-web-design-system/components/DataTable";
+import { parseNilLocalizedText } from "@/modules/firebase/localizedText";
+import { type UserMessage } from "@/modules/firebase/models";
+import { isMessageRead } from "@/modules/notifications/helpers";
+import { Notification } from "@/modules/notifications/Notification";
+import { columnHelper, columnIds } from "./helpers";
+import { MarkAllAsReadButton } from "./MarkAllAsReadButton";
+import { ShowUnreadOnlySwitch } from "./ShowUnreadOnlySwitch";
 
 const columns = [
   columnHelper.accessor(
     (notification) => parseNilLocalizedText(notification.description),
-    { id: 'description' },
+    { id: "description" },
   ),
   columnHelper.accessor(
     (notification) => parseNilLocalizedText(notification.title),
-    { id: 'title' },
+    { id: "title" },
   ),
   columnHelper.accessor((notification) => new Date(notification.creationDate), {
-    id: 'creationDate',
+    id: "creationDate",
   }),
   columnHelper.accessor((notification) => isMessageRead(notification), {
     id: columnIds.isRead,
-    filterFn: 'equals',
+    filterFn: "equals",
   }),
-]
+];
 
 interface NotificationsTableProps
-  extends Omit<DataTableProps<UserMessage>, 'data' | 'columns'> {
-  notifications: UserMessage[]
+  extends Omit<DataTableProps<UserMessage>, "data" | "columns"> {
+  notifications: UserMessage[];
 }
 
 export const NotificationsTable = ({
@@ -64,12 +64,12 @@ export const NotificationsTable = ({
     {({ rows }) => (
       <div>
         {rows.map((row) => {
-          const notification = row.original
+          const notification = row.original;
           return (
             <Notification key={notification.id} notification={notification} />
-          )
+          );
         })}
       </div>
     )}
   </DataTable>
-)
+);

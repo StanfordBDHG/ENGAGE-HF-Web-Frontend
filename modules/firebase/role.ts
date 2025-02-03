@@ -6,7 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { type UserType } from '@stanfordbdhg/engagehf-models'
-import { upperFirst } from '@stanfordspezi/spezi-web-design-system/utils/misc'
+import { type UserType } from "@stanfordbdhg/engagehf-models";
+import { upperFirst } from "@stanfordspezi/spezi-web-design-system/utils/misc";
 
-export const stringifyType = (type: UserType) => upperFirst(type)
+export const stringifyType = (type: UserType) => upperFirst(type);

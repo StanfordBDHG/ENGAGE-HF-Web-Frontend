@@ -14,10 +14,10 @@ import {
   SelectLabel,
   SelectTrigger,
   SelectValue,
-} from '@stanfordspezi/spezi-web-design-system/components/Select'
-import { type ComponentProps } from 'react'
-import { parseLocalizedText } from '@/modules/firebase/localizedText'
-import { type MedicationsData } from '@/routes/~_dashboard/~patients/utils'
+} from "@stanfordspezi/spezi-web-design-system/components/Select";
+import { type ComponentProps } from "react";
+import { parseLocalizedText } from "@/modules/firebase/localizedText";
+import { type MedicationsData } from "@/routes/~_dashboard/~patients/utils";
 
 interface MedicationSelectProps
   extends MedicationsData,
@@ -44,4 +44,4 @@ export const MedicationSelect = ({
       ))}
     </SelectContent>
   </Select>
-)
+);

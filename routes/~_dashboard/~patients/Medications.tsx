@@ -6,8 +6,8 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { Button } from '@stanfordspezi/spezi-web-design-system/components/Button'
-import { Card } from '@stanfordspezi/spezi-web-design-system/components/Card'
+import { Button } from "@stanfordspezi/spezi-web-design-system/components/Button";
+import { Card } from "@stanfordspezi/spezi-web-design-system/components/Card";
 import {
   Dialog,
   DialogContent,
@@ -16,67 +16,67 @@ import {
   DialogTitle,
   DialogTrigger,
   DialogClose,
-} from '@stanfordspezi/spezi-web-design-system/components/Dialog'
-import { EmptyState } from '@stanfordspezi/spezi-web-design-system/components/EmptyState'
+} from "@stanfordspezi/spezi-web-design-system/components/Dialog";
+import { EmptyState } from "@stanfordspezi/spezi-web-design-system/components/EmptyState";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@stanfordspezi/spezi-web-design-system/components/Select'
-import { StateContainer } from '@stanfordspezi/spezi-web-design-system/components/StateContainer'
+} from "@stanfordspezi/spezi-web-design-system/components/Select";
+import { StateContainer } from "@stanfordspezi/spezi-web-design-system/components/StateContainer";
 import {
   Table,
   TableCell,
   TableHeader,
   TableRow,
   TableBody,
-} from '@stanfordspezi/spezi-web-design-system/components/Table'
-import { Textarea } from '@stanfordspezi/spezi-web-design-system/components/Textarea'
-import { Tooltip } from '@stanfordspezi/spezi-web-design-system/components/Tooltip'
+} from "@stanfordspezi/spezi-web-design-system/components/Table";
+import { Textarea } from "@stanfordspezi/spezi-web-design-system/components/Textarea";
+import { Tooltip } from "@stanfordspezi/spezi-web-design-system/components/Tooltip";
 import {
   Field,
   FormError,
   useForm,
-} from '@stanfordspezi/spezi-web-design-system/forms'
-import { Plus, Check, Trash, Pencil } from 'lucide-react'
-import { z } from 'zod'
-import { useMedicationsMap } from '@/routes/~_dashboard/~patients/clientUtils'
-import { MedicationSelect } from '@/routes/~_dashboard/~patients/MedicationSelect'
-import { type MedicationsData } from '@/routes/~_dashboard/~patients/utils'
+} from "@stanfordspezi/spezi-web-design-system/forms";
+import { Plus, Check, Trash, Pencil } from "lucide-react";
+import { z } from "zod";
+import { useMedicationsMap } from "@/routes/~_dashboard/~patients/clientUtils";
+import { MedicationSelect } from "@/routes/~_dashboard/~patients/MedicationSelect";
+import { type MedicationsData } from "@/routes/~_dashboard/~patients/utils";
 
 export const quantityOptions = [
-  { label: '0.25 tbl.', value: 0.25 },
-  { label: '0.5 tbl.', value: 0.5 },
-  { label: '1 tbl.', value: 1 },
-  { label: '2 tbl.', value: 2 },
-]
+  { label: "0.25 tbl.", value: 0.25 },
+  { label: "0.5 tbl.", value: 0.5 },
+  { label: "1 tbl.", value: 1 },
+  { label: "2 tbl.", value: 2 },
+];
 
 export const timesPerDayOptions = [
-  { label: 'once a day', value: 1 },
-  { label: 'twice a day', value: 2 },
-  { label: 'three times a day', value: 3 },
-]
+  { label: "once a day", value: 1 },
+  { label: "twice a day", value: 2 },
+  { label: "three times a day", value: 3 },
+];
 
 const formSchema = z.object({
   medications: z.array(
     z.object({
       id: z.string(),
       instructions: z.string(),
-      medication: z.string({ required_error: 'Medication is required' }),
-      drug: z.string({ required_error: 'Drug is required' }),
+      medication: z.string({ required_error: "Medication is required" }),
+      drug: z.string({ required_error: "Drug is required" }),
       quantity: z.number().min(0),
       frequencyPerDay: z.number().min(0),
     }),
   ),
-})
+});
 
-export type MedicationsFormSchema = z.infer<typeof formSchema>
+export type MedicationsFormSchema = z.infer<typeof formSchema>;
 
 interface MedicationsProps extends MedicationsData {
-  onSave: (data: MedicationsFormSchema) => Promise<void>
-  defaultValues?: MedicationsFormSchema
+  onSave: (data: MedicationsFormSchema) => Promise<void>;
+  defaultValues?: MedicationsFormSchema;
 }
 
 export const Medications = ({
@@ -87,29 +87,29 @@ export const Medications = ({
   const form = useForm({
     formSchema: formSchema,
     defaultValues,
-  })
+  });
 
-  const formValues = form.watch()
+  const formValues = form.watch();
 
-  const medicationsMap = useMedicationsMap(medications)
+  const medicationsMap = useMedicationsMap(medications);
 
   const addMedication = () =>
-    form.setValue('medications', [
+    form.setValue("medications", [
       ...formValues.medications,
       {
         id: `${formValues.medications.length + 1}`,
         // `undefined` doesn't get submitted anywhere
         medication: undefined as unknown as string,
         drug: undefined as unknown as string,
-        instructions: '',
+        instructions: "",
         quantity: 1,
         frequencyPerDay: 1,
       },
-    ])
+    ]);
 
   const save = form.handleSubmit(async (data) => {
-    await onSave(data)
-  })
+    await onSave(data);
+  });
 
   return (
     <Card>
@@ -145,16 +145,16 @@ export const Medications = ({
           </TableHeader>
           <TableBody>
             {formValues.medications.map((medicationValue, index) => {
-              const isDrugSelected = !!medicationValue.drug
+              const isDrugSelected = !!medicationValue.drug;
               const selectedMedication = medicationsMap.get(
                 medicationValue.medication,
-              )
+              );
               const selectedDrug =
                 isDrugSelected ?
                   selectedMedication?.drugs.find(
                     (drug) => drug.id === medicationValue.drug,
                   )
-                : undefined
+                : undefined;
 
               const dailyDosages =
                 selectedDrug?.ingredients.map((drug) => ({
@@ -163,19 +163,19 @@ export const Medications = ({
                     drug.strength *
                     medicationValue.frequencyPerDay *
                     medicationValue.quantity,
-                })) ?? []
+                })) ?? [];
 
               const removeMedication = () => {
                 form.setValue(
-                  'medications',
+                  "medications",
                   formValues.medications.filter(
                     (medication) => medication.id !== medicationValue.id,
                   ),
-                )
-              }
+                );
+              };
 
               const nestedKey = <T extends string>(key: T) =>
-                `medications.${index}.${key}` as const
+                `medications.${index}.${key}` as const;
 
               return (
                 <TableRow key={`${medicationValue.id}-${index}`}>
@@ -183,13 +183,13 @@ export const Medications = ({
                     <Field
                       control={form.control}
                       checkEmptyError
-                      name={nestedKey('medication')}
+                      name={nestedKey("medication")}
                       render={({ field }) => (
                         <MedicationSelect
                           medications={medications}
                           onValueChange={(value) => {
-                            field.onChange(value)
-                            form.setValue(nestedKey('drug'), '')
+                            field.onChange(value);
+                            form.setValue(nestedKey("drug"), "");
                           }}
                           {...field}
                         />
@@ -200,24 +200,24 @@ export const Medications = ({
                     <Field
                       control={form.control}
                       checkEmptyError
-                      name={nestedKey('drug')}
+                      name={nestedKey("drug")}
                       render={({ field }) => (
                         <Select
                           disabled={!medicationValue.medication}
                           onValueChange={(id) => {
-                            const medication = medicationsMap.get(id)
+                            const medication = medicationsMap.get(id);
                             if (!isDrugSelected) {
                               // Drug selected for the first time, infer frequency and quantity
                               form.setValue(
-                                nestedKey('frequencyPerDay'),
+                                nestedKey("frequencyPerDay"),
                                 medication?.dosage.frequencyPerDay ?? 1,
-                              )
+                              );
                               form.setValue(
-                                nestedKey('quantity'),
+                                nestedKey("quantity"),
                                 medication?.dosage.quantity ?? 1,
-                              )
+                              );
                             }
-                            field.onChange(id)
+                            field.onChange(id);
                           }}
                           {...field}
                         >
@@ -234,7 +234,7 @@ export const Medications = ({
                                     (ingredient) =>
                                       `${ingredient.strength}${ingredient.unit}`,
                                   )
-                                  .join(', ')}`}
+                                  .join(", ")}`}
                               >
                                 <div className="flex flex-col">
                                   <b>{drug.name}</b>
@@ -256,7 +256,7 @@ export const Medications = ({
                     <Field
                       control={form.control}
                       checkEmptyError
-                      name={nestedKey('quantity')}
+                      name={nestedKey("quantity")}
                       render={({ field }) => (
                         <Select
                           {...field}
@@ -287,7 +287,7 @@ export const Medications = ({
                     <Field
                       control={form.control}
                       checkEmptyError
-                      name={nestedKey('frequencyPerDay')}
+                      name={nestedKey("frequencyPerDay")}
                       render={({ field }) => (
                         <Select
                           {...field}
@@ -316,7 +316,7 @@ export const Medications = ({
                   </TableCell>
                   <TableCell className="font-medium">
                     {dailyDosages.length === 0 ?
-                      '-'
+                      "-"
                     : dailyDosages.length === 1 ?
                       `${dailyDosages.at(0)?.dosage}mg`
                     : <div>
@@ -350,7 +350,7 @@ export const Medications = ({
                         </DialogHeader>
                         <Field
                           control={form.control}
-                          name={nestedKey('instructions')}
+                          name={nestedKey("instructions")}
                           render={({ field }) => <Textarea {...field} />}
                         />
                         <DialogFooter>
@@ -374,11 +374,11 @@ export const Medications = ({
                     </Tooltip>
                   </TableCell>
                 </TableRow>
-              )
+              );
             })}
           </TableBody>
         </Table>
       }
     </Card>
-  )
-}
+  );
+};

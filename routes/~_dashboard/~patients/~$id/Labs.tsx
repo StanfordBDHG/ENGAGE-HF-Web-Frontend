@@ -6,50 +6,50 @@
 // SPDX-License-Identifier: MIT
 //
 
-import { deleteDoc } from '@firebase/firestore'
-import { Button } from '@stanfordspezi/spezi-web-design-system/components/Button'
+import { deleteDoc } from "@firebase/firestore";
+import { Button } from "@stanfordspezi/spezi-web-design-system/components/Button";
 import {
   DataTable,
   dateColumn,
   RowDropdownMenu,
-} from '@stanfordspezi/spezi-web-design-system/components/DataTable'
-import { DropdownMenuItem } from '@stanfordspezi/spezi-web-design-system/components/DropdownMenu'
-import { ConfirmDeleteDialog } from '@stanfordspezi/spezi-web-design-system/molecules/ConfirmDeleteDialog'
+} from "@stanfordspezi/spezi-web-design-system/components/DataTable";
+import { DropdownMenuItem } from "@stanfordspezi/spezi-web-design-system/components/DropdownMenu";
+import { ConfirmDeleteDialog } from "@stanfordspezi/spezi-web-design-system/molecules/ConfirmDeleteDialog";
 import {
   useOpenState,
   useStatefulOpenState,
-} from '@stanfordspezi/spezi-web-design-system/utils/useOpenState'
-import { useRouter } from '@tanstack/react-router'
-import { createColumnHelper } from '@tanstack/table-core'
-import { Pencil, Plus, Trash } from 'lucide-react'
-import { docRefs } from '@/modules/firebase/app'
+} from "@stanfordspezi/spezi-web-design-system/utils/useOpenState";
+import { useRouter } from "@tanstack/react-router";
+import { createColumnHelper } from "@tanstack/table-core";
+import { Pencil, Plus, Trash } from "lucide-react";
+import { docRefs } from "@/modules/firebase/app";
 import {
   createObservation,
   updateObservation,
-} from '@/routes/~_dashboard/~patients/actions'
+} from "@/routes/~_dashboard/~patients/actions";
 import type {
   LabsData,
   Observation,
-} from '@/routes/~_dashboard/~patients/utils'
+} from "@/routes/~_dashboard/~patients/utils";
 import {
   LabFormDialog,
   type LabFormSchema,
-} from '@/routes/~_dashboard/~patients/~$id/LabForm'
+} from "@/routes/~_dashboard/~patients/~$id/LabForm";
 
 interface LabsProps extends LabsData {}
 
-const columnHelper = createColumnHelper<Observation>()
+const columnHelper = createColumnHelper<Observation>();
 
 export const Labs = ({ observations, userId, resourceType }: LabsProps) => {
-  const router = useRouter()
-  const createDialog = useOpenState()
+  const router = useRouter();
+  const createDialog = useOpenState();
 
-  const deleteDialog = useStatefulOpenState<Observation>()
-  const editDialog = useStatefulOpenState<Observation>()
+  const deleteDialog = useStatefulOpenState<Observation>();
+  const editDialog = useStatefulOpenState<Observation>();
 
   const handleDelete = async () => {
-    const observation = deleteDialog.state
-    if (!observation) return
+    const observation = deleteDialog.state;
+    if (!observation) return;
     await deleteDoc(
       docRefs.userObservation({
         userId,
@@ -57,33 +57,33 @@ export const Labs = ({ observations, userId, resourceType }: LabsProps) => {
         observationId: observation.id,
         observationType: observation.type,
       }),
-    )
-    await router.invalidate()
-    deleteDialog.close()
-  }
+    );
+    await router.invalidate();
+    deleteDialog.close();
+  };
 
   const handleEdit = async (data: LabFormSchema) => {
-    const observation = editDialog.state
-    if (!observation) return
+    const observation = editDialog.state;
+    if (!observation) return;
     await updateObservation({
       userId,
       resourceType,
       observationId: observation.id,
       ...data,
-    })
-    await router.invalidate()
-    editDialog.close()
-  }
+    });
+    await router.invalidate();
+    editDialog.close();
+  };
 
   const handleCreate = async (data: LabFormSchema) => {
     await createObservation({
       userId,
       resourceType,
       ...data,
-    })
-    await router.invalidate()
-    createDialog.close()
-  }
+    });
+    await router.invalidate();
+    createDialog.close();
+  };
 
   return (
     <>
@@ -106,24 +106,24 @@ export const Labs = ({ observations, userId, resourceType }: LabsProps) => {
       />
       <DataTable
         columns={[
-          columnHelper.accessor('effectiveDateTime', {
-            header: 'Date',
+          columnHelper.accessor("effectiveDateTime", {
+            header: "Date",
             cell: dateColumn,
           }),
-          columnHelper.accessor('type', {
-            header: 'Type',
+          columnHelper.accessor("type", {
+            header: "Type",
           }),
-          columnHelper.accessor('value', {
-            header: 'Value',
+          columnHelper.accessor("value", {
+            header: "Value",
             cell: (props) => {
-              const observation = props.row.original
-              return `${observation.value} ${observation.unit}`
+              const observation = props.row.original;
+              return `${observation.value} ${observation.unit}`;
             },
           }),
           columnHelper.display({
-            id: 'actions',
+            id: "actions",
             cell: (props) => {
-              const observation = props.row.original
+              const observation = props.row.original;
               return (
                 <RowDropdownMenu>
                   <DropdownMenuItem
@@ -139,7 +139,7 @@ export const Labs = ({ observations, userId, resourceType }: LabsProps) => {
                     Delete
                   </DropdownMenuItem>
                 </RowDropdownMenu>
-              )
+              );
             },
           }),
         ]}
@@ -163,5 +163,5 @@ export const Labs = ({ observations, userId, resourceType }: LabsProps) => {
         }}
       />
     </>
-  )
-}
+  );
+};
