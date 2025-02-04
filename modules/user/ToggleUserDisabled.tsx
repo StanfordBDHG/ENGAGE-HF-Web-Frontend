@@ -25,16 +25,18 @@ export const ToggleUserDisabled = ({ user }: ToggleUserDisabledProps) => {
   const isSelf = authUser.auth.uid === user.resourceId;
   const userName = getUserName(user);
 
-  const handleEnable = () => {
+  const handleEnable = async () => {
     const enableUserPromise = callables.enableUser({ userId: user.resourceId });
     toast.promise(enableUserPromise, {
       loading: `Enabling ${userName}...`,
       success: `${userName} has been enabled.`,
       error: `Enabling ${userName} failed. Please try later.`,
     });
+    await enableUserPromise;
     void router.invalidate();
   };
-  const handleDisable = () => {
+
+  const handleDisable = async () => {
     const disableUserPromise = callables.disableUser({
       userId: user.resourceId,
     });
@@ -43,6 +45,7 @@ export const ToggleUserDisabled = ({ user }: ToggleUserDisabledProps) => {
       success: `${userName} has been disabled.`,
       error: `Disabling ${userName} failed. Please try later.`,
     });
+    await disableUserPromise;
     void router.invalidate();
   };
 
