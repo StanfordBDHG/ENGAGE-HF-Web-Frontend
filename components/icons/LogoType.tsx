@@ -6,9 +6,9 @@
 // SPDX-License-Identifier: MIT
 //
 
-import type { SVGProps } from "react";
+import type { ComponentProps } from "react";
 
-type LogoTypeProps = SVGProps<SVGSVGElement> & {
+type LogoTypeProps = ComponentProps<"svg"> & {
   className?: string;
 };
 
