@@ -12,7 +12,10 @@ import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { Helmet } from "react-helmet";
 import { AsideEngageLayout } from "@/components/AsideEngageLayout";
 import { env } from "@/env";
-import { authProvider, auth } from "@/modules/firebase/app";
+import { auth, authProvider } from "@/modules/firebase/app";
+import johnsHopkingsLogoImg from "./johnsHopkinsLogo.png";
+import michiganLogoImg from "./michiganLogo.png";
+import stanfordLogoImg from "./stanfordLogo.png";
 
 const SignIn = () => (
   <AsideEngageLayout>
@@ -22,12 +25,30 @@ const SignIn = () => (
     <AuthSignInForm
       className="mx-auto w-[350px]"
       providers={[
-        { name: "Stanford", provider: authProvider.stanford },
-        { name: "Johns Hopkins", provider: authProvider.johnsHopkins },
-        { name: "Michigan", provider: authProvider.michigan },
+        {
+          name: "Stanford",
+          provider: authProvider.stanford,
+          icon: <img src={stanfordLogoImg} alt="Stanford University logo" />,
+        },
+        {
+          name: "Johns Hopkins",
+          provider: authProvider.johnsHopkins,
+          icon: (
+            <img
+              src={johnsHopkingsLogoImg}
+              alt="Johns Hopkins University logo"
+            />
+          ),
+        },
+        {
+          name: "Michigan",
+          provider: authProvider.michigan,
+          icon: <img src={michiganLogoImg} alt="University of Michigan logo" />,
+        },
       ]}
       enableEmailPassword={env.VITE_PUBLIC_EMAIL_PASSWORD_SIGN_IN}
       auth={auth}
+      buttonSize="lg"
       signInWithPopup={signInWithPopup}
       signInWithEmailAndPassword={signInWithEmailAndPassword}
     />
