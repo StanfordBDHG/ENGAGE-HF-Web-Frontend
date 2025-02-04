@@ -1,0 +1,3 @@
+LicenseRef-Proprietary
+
+The logos of Johns Hopkins University and the University of Michigan used in this repository are the property of their respective institutions. All trademarks, service marks, and logos are owned by their respective trademark holders.
