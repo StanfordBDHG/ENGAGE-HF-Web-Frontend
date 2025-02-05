@@ -27,7 +27,7 @@ export const AsideEngageLayout = (
         <img
           src="/stanfordbiodesign.png"
           alt="Stanford Biodesign Logo"
-          className="h-[117px] w-[317px]"
+          className="h-[193px]"
         />
       </>
     }
