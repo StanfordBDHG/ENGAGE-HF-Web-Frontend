@@ -55,6 +55,7 @@ const UserPage = () => {
     } else {
       const invitation = await getDocDataOrThrow(docRefs.invitation(userId));
       await updateDoc(docRefs.invitation(userId), {
+        code: form.email,
         auth: {
           ...invitation.auth,
           ...authData,
