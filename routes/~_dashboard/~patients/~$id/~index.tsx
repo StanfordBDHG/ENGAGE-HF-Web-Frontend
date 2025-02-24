@@ -17,6 +17,7 @@ import {
 import { toast } from "@stanfordspezi/spezi-web-design-system/components/Toaster";
 import { getUserName } from "@stanfordspezi/spezi-web-design-system/modules/auth";
 import { PageTitle } from "@stanfordspezi/spezi-web-design-system/molecules/DashboardLayout";
+import { syncItems } from "@stanfordspezi/spezi-web-design-system/utils/data";
 import { createFileRoute, notFound, useRouter } from "@tanstack/react-router";
 import { Contact } from "lucide-react";
 import { Helmet } from "react-helmet";
@@ -142,30 +143,39 @@ const PatientPage = () => {
   };
 
   const saveMedications = async (form: MedicationsFormSchema) => {
-    const medicationRequests = await getDocsData(
-      refs.medicationRequests({ userId, resourceType }),
-    );
+    const freshUserMedication = await getUserMedications({
+      userId,
+      resourceType,
+    });
+    const getMedicationRequestRef = (id: string) =>
+      docRefs.medicationRequest({
+        userId,
+        medicationRequestId: id,
+        resourceType,
+      });
+
     // async is required to match types
     // eslint-disable-next-line @typescript-eslint/require-await
     await runTransaction(db, async (transaction) => {
-      medicationRequests.forEach((medication) => {
-        transaction.delete(
-          docRefs.medicationRequest({
-            userId,
-            medicationRequestId: medication.id,
-            resourceType,
-          }),
-        );
-      });
-      form.medications.forEach((medication) => {
-        transaction.set(
-          docRefs.medicationRequest({
-            userId,
-            medicationRequestId: medication.id,
-            resourceType,
-          }),
-          getMedicationRequestData(medication),
-        );
+      syncItems({
+        newItems: form.medications,
+        oldItems: freshUserMedication,
+        getId: (medication) => medication.id,
+        onDelete: (id) => {
+          transaction.delete(getMedicationRequestRef(id));
+        },
+        onCreate: (id, medication) => {
+          transaction.set(
+            getMedicationRequestRef(id),
+            getMedicationRequestData(medication),
+          );
+        },
+        onUpdate: (id, medication) => {
+          transaction.set(
+            getMedicationRequestRef(id),
+            getMedicationRequestData(medication),
+          );
+        },
       });
     });
   };
