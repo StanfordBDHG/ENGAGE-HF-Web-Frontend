@@ -41,6 +41,7 @@ import {
   useForm,
 } from "@stanfordspezi/spezi-web-design-system/forms";
 import { Plus, Check, Trash, Pencil } from "lucide-react";
+import { v4 as uuid } from "uuid";
 import { z } from "zod";
 import { useMedicationsMap } from "@/routes/~_dashboard/~patients/clientUtils";
 import { MedicationSelect } from "@/routes/~_dashboard/~patients/MedicationSelect";
@@ -97,7 +98,7 @@ export const Medications = ({
     form.setValue("medications", [
       ...formValues.medications,
       {
-        id: `${formValues.medications.length + 1}`,
+        id: uuid(),
         // `undefined` doesn't get submitted anywhere
         medication: undefined as unknown as string,
         drug: undefined as unknown as string,
