@@ -143,7 +143,7 @@ const PatientPage = () => {
   };
 
   const saveMedications = async (form: MedicationsFormSchema) => {
-    const freshUserMedication = await getUserMedications({
+    const freshUserMedications = await getUserMedications({
       userId,
       resourceType,
     });
@@ -159,7 +159,7 @@ const PatientPage = () => {
     await runTransaction(db, async (transaction) => {
       syncItems({
         newItems: form.medications,
-        oldItems: freshUserMedication,
+        oldItems: freshUserMedications,
         getId: (medication) => medication.id,
         onDelete: (id) => {
           transaction.delete(getMedicationRequestRef(id));
