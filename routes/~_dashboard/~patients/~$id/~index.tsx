@@ -17,7 +17,7 @@ import {
 import { toast } from "@stanfordspezi/spezi-web-design-system/components/Toaster";
 import { getUserName } from "@stanfordspezi/spezi-web-design-system/modules/auth";
 import { PageTitle } from "@stanfordspezi/spezi-web-design-system/molecules/DashboardLayout";
-import { syncItems } from "@stanfordspezi/spezi-web-design-system/utils/data";
+import { syncData } from "@stanfordspezi/spezi-web-design-system/utils/data";
 import { createFileRoute, notFound, useRouter } from "@tanstack/react-router";
 import { Contact } from "lucide-react";
 import { Helmet } from "react-helmet";
@@ -157,7 +157,7 @@ const PatientPage = () => {
     // async is required to match types
     // eslint-disable-next-line @typescript-eslint/require-await
     await runTransaction(db, async (transaction) => {
-      syncItems({
+      syncData({
         newItems: form.medications,
         oldItems: freshUserMedications,
         getId: (medication) => medication.id,
