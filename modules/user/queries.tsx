@@ -41,6 +41,9 @@ export const parseInvitationToUser = (
   disabled: invitation.user.disabled,
 });
 
+type T = string;
+const x: T = 5;
+
 export const parseAuthToUser = (
   id: string,
   auth: UserAuthenticationInformation,
