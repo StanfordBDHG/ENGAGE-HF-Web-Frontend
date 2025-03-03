@@ -38,14 +38,11 @@ export const MarkAllAsReadButton = ({
 
   const markNotificationsAsRead = useMutation({
     mutationFn: () =>
-      Promise.all(
-        dismissibleNotifications.map((notification) =>
-          callables.dismissMessage({
-            userId: auth.uid,
-            messageId: notification.id,
-          }),
-        ),
-      ),
+      callables.dismissMessages({
+        userId: auth.uid,
+        dismissAll: true,
+        didPerformAction: false
+      }),
     onSuccess: async () =>
       queryClient.invalidateQueries(
         notificationQueries.list({ userId: auth.uid }),

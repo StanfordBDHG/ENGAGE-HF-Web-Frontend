@@ -16,6 +16,8 @@ import {
   type DisableUserOutput,
   type DismissMessageInput,
   type DismissMessageOutput,
+  type DismissMessagesInput,
+  type DismissMessagesOutput,
   type EnableUserInput,
   type EnableUserOutput,
   type ExportHealthSummaryInput,
@@ -293,6 +295,10 @@ export const getCallables = (functions: Functions) => ({
   dismissMessage: httpsCallable<DismissMessageInput, DismissMessageOutput>(
     functions,
     "dismissMessage",
+  ),
+  dismissMessages: httpsCallable<DismissMessagesInput, DismissMessagesOutput>(
+    functions,
+    "dismissMessages",
   ),
   updateStaticData: httpsCallable<
     UpdateStaticDataInput,
