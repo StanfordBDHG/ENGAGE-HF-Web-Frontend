@@ -17,6 +17,7 @@ export const getMedicationRequestData = (medication: {
   id: null,
   extension: null,
   resourceType: "MedicationRequest",
+  meta: null,
   medicationReference: {
     reference: `medications/${medication.medication}/drugs/${medication.drug}`,
     type: null,

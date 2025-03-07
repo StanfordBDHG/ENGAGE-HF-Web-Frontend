@@ -36,6 +36,7 @@ export const getObservationData = (payload: LabFormSchema): FHIRObservation => {
     effectivePeriod: null,
     component: null,
     resourceType: "Observation",
+    meta: null,
     status: FHIRObservationStatus.final,
     code: { text: null, coding: unit.coding },
     valueQuantity: {
@@ -86,6 +87,7 @@ const getAllergyData = (payload: AllergyFormSchema) => ({
   id: null,
   extension: null,
   resourceType: "Allergy",
+  meta: null,
   type:
     (
       payload.type === AllergyType.severeAllergy ||
