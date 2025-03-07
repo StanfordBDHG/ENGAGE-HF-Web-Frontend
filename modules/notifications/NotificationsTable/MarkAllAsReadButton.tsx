@@ -41,6 +41,9 @@ export const MarkAllAsReadButton = ({
       callables.dismissMessages({
         userId: auth.uid,
         didPerformAction: false,
+        messageIds: dismissibleNotifications.map(
+          (notification) => notification.id,
+        ),
       }),
     onSuccess: async () =>
       queryClient.invalidateQueries(
