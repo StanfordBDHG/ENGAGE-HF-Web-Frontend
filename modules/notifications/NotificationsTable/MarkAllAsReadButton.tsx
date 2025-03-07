@@ -40,8 +40,7 @@ export const MarkAllAsReadButton = ({
     mutationFn: () =>
       callables.dismissMessages({
         userId: auth.uid,
-        dismissAll: true,
-        didPerformAction: false
+        didPerformAction: false,
       }),
     onSuccess: async () =>
       queryClient.invalidateQueries(
