@@ -11,12 +11,12 @@ import {
   Notification as NotificationBase,
   NotificationActions,
   NotificationContentContainer,
+  NotificationHeader,
   NotificationImage,
   NotificationLink,
   NotificationMessage,
   NotificationTime,
   NotificationTitle,
-  NotificationHeader,
 } from "@stanfordspezi/spezi-web-design-system/molecules/Notifications";
 import { useMutation } from "@tanstack/react-query";
 import { callables } from "@/modules/firebase/app";
@@ -30,8 +30,7 @@ import {
   isMessageRead,
   parseMessageToLink,
 } from "@/modules/notifications/helpers";
-import { notificationQueries } from "@/modules/notifications/queries";
-import { queryClient } from "@/modules/query/queryClient";
+import { useNotificationActions } from "@/modules/notifications/queries";
 
 interface NotificationProps {
   notification: UserMessage;
@@ -39,16 +38,14 @@ interface NotificationProps {
 
 export const Notification = ({ notification }: NotificationProps) => {
   const { auth } = useUser();
+  const { invalidateUserNotifications } = useNotificationActions();
   const markNotificationAsRead = useMutation({
     mutationFn: () =>
       callables.dismissMessage({
         userId: auth.uid,
         messageId: notification.id,
       }),
-    onSuccess: async () =>
-      queryClient.invalidateQueries(
-        notificationQueries.list({ userId: auth.uid }),
-      ),
+    onSuccess: invalidateUserNotifications,
   });
 
   const isRead = isMessageRead(notification);

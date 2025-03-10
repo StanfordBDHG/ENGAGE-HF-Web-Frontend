@@ -12,6 +12,7 @@ import { refs } from "@/modules/firebase/app";
 import { useUser } from "@/modules/firebase/UserProvider";
 import { getDocsData } from "@/modules/firebase/utils";
 import { filterUnreadNotifications } from "@/modules/notifications/helpers";
+import { queryClient } from "@/modules/query/queryClient";
 
 interface ListNotificationsPayload {
   userId: string;
@@ -41,4 +42,15 @@ export const useHasUnreadNotification = () => {
   });
 
   return { hasUnreadNotification };
+};
+
+export const useNotificationActions = () => {
+  const { auth } = useUser();
+
+  const invalidateUserNotifications = () =>
+    queryClient.invalidateQueries(
+      notificationQueries.list({ userId: auth.uid }),
+    );
+
+  return { invalidateUserNotifications };
 };

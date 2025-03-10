@@ -14,8 +14,7 @@ import { callables } from "@/modules/firebase/app";
 import { type UserMessage } from "@/modules/firebase/models";
 import { useUser } from "@/modules/firebase/UserProvider";
 import { isMessageRead } from "@/modules/notifications/helpers";
-import { notificationQueries } from "@/modules/notifications/queries";
-import { queryClient } from "@/modules/query/queryClient";
+import { useNotificationActions } from "@/modules/notifications/queries";
 
 interface MarkAllAsReadButtonProps {
   notifications: UserMessage[];
@@ -25,6 +24,7 @@ export const MarkAllAsReadButton = ({
   notifications,
 }: MarkAllAsReadButtonProps) => {
   const { auth } = useUser();
+  const { invalidateUserNotifications } = useNotificationActions();
 
   const dismissibleNotifications = useMemo(
     () =>
@@ -45,10 +45,7 @@ export const MarkAllAsReadButton = ({
           (notification) => notification.id,
         ),
       }),
-    onSuccess: async () =>
-      queryClient.invalidateQueries(
-        notificationQueries.list({ userId: auth.uid }),
-      ),
+    onSuccess: invalidateUserNotifications,
   });
 
   return (
