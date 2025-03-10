@@ -18,7 +18,7 @@ Web Frontend for the ENGAGE-HF project.
 
 ## Behavior
 
-This repository provides dashboard to manage ENGAGE-HF application, for admins and clinicians. Clinicians can interact with patients, adjust their recommended medications, allergies and appointments.
+The frontend allows providers and study coordinators to manage patients, enter medications, lab values, allergies, appointments and manage the ENGAGE-HF study.
 
 ![Application](resources/appScreenshot.png)
 
