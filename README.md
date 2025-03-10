@@ -14,23 +14,31 @@ SPDX-License-Identifier: MIT
 [![Deployment](https://github.com/StanfordBDHG/ENGAGE-HF-Web-Frontend/actions/workflows/deployment.yml/badge.svg)](https://github.com/StanfordBDHG/ENGAGE-HF-Web-Frontend/actions/workflows/deployment.yml)
 [![codecov](https://codecov.io/gh/StanfordBDHG/ENGAGE-HF-Web-Frontend/graph/badge.svg?token=PsKyNz7Woe)](https://codecov.io/gh/StanfordBDHG/ENGAGE-HF-Web-Frontend)
 
-## How To Use ENGAGE-HF Web Frontend
+Web Frontend for the ENGAGE-HF project.
 
-The ENGAGE-HF Web Frontend repository contains a Vite project providing automated GitHub Actions and setups for code linting, testing & test coverage reports, docker deployments, a docker compose setup.
+## Behavior
+
+This repository provides dashboard to manage ENGAGE-HF application, for admins and clinicians. Clinicians can interact with patients, adjust their recommended medications, allergies and appointments.
+
+## Stack
+
+The ENGAGE-HF Web Frontend repository contains a React project built with Vite, TypeScript and Firebase. It provides automated GitHub Actions, setups for code linting, testing & test coverage reports, docker deployments, a docker compose setup.
+
+In order to run Web Frontend, you need to use actual Firebase environment or Emulator. For developing locally, it's best to use the Emulator. Refer to ["Using the emulator for client applications" section of ENGAGE-HF-Firebase](https://github.com/StanfordBDHG/ENGAGE-HF-Firebase?tab=readme-ov-file#using-the-emulator-for-client-applications) for an instruction.
 
 ## Getting Started
 
-You can run the project using the following command. You will need to install Node.js and npm, e.g., using [homebrew (recommended for macOS)](https://formulae.brew.sh/formula/node) or the official [Node.js installer](https://nodejs.org/en/download).
+This project uses Node.js v22. Install Node.js, e.g. using [nvm](https://github.com/nvm-sh/nvm?tab=readme-ov-file#installing-and-updating), [homebrew (for macOS)](https://formulae.brew.sh/formula/node) or official [Node.js installer](https://nodejs.org/en/download) .
 
-1. Install All Dependencies
+1. Install all dependencies
 
 ```bash
 npm install
 ```
 
-2. Setup Environment Variables
+2. Setup environment variables
 
-Create an `.env.local` file or inject the following environment variables required for the Google Firebase Setup. Environment variables are described in the [.env.example](./.env.example) file.
+Refer `.env.example` file for environment variables documentation. Copy `.env.example` to `.env.local` and adjust if necessary.
 
 3. Start the Vite Application
 
@@ -38,9 +46,7 @@ Create an `.env.local` file or inject the following environment variables requir
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can edit the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Open [http://localhost:5173](http://localhost:5173) with your browser to see the result.
 
 ## Docker
 
