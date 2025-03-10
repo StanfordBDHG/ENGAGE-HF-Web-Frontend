@@ -16,7 +16,7 @@ SPDX-License-Identifier: MIT
 
 ## How To Use ENGAGE-HF Web Frontend
 
-The ENGAGE-HF Web Frontend repository contains a Next.js project providing automated GitHub Actions and setups for code linting, testing & test coverage reports, docker deployments, a docker compose setup, local packages for modular deployment.
+The ENGAGE-HF Web Frontend repository contains a Vite project providing automated GitHub Actions and setups for code linting, testing & test coverage reports, docker deployments, a docker compose setup.
 
 ## Getting Started
 
@@ -28,20 +28,9 @@ You can run the project using the following command. You will need to install No
 npm install
 ```
 
-2. Setup Firebase Environment Values
+2. Setup Environment Variables
 
-Create an `.env.local` file or inject the following environment variables required for the Google Firebase Setup:
-
-```
-VITE_PUBLIC_FIREBASE_API_KEY=
-VITE_PUBLIC_FIREBASE_AUTH_DOMAIN=
-VITE_PUBLIC_FIREBASE_PROJECT_ID=
-VITE_PUBLIC_FIREBASE_STORAGE_BUCKET=
-VITE_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=
-VITE_PUBLIC_FIREBASE_APP_ID=
-VITE_PUBLIC_EMULATOR=
-VITE_PUBLIC_EMAIL_PASSWORD_SIGN_IN=""
-```
+Create an `.env.local` file or inject the following environment variables required for the Google Firebase Setup. Environment variables are described in the [.env.example](./.env.example) file.
 
 3. Start the Vite Application
 
