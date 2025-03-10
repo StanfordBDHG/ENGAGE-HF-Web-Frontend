@@ -7,17 +7,24 @@
 //
 
 import { PageTitle } from "@stanfordspezi/spezi-web-design-system/molecules/DashboardLayout";
+import { useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import { Bell } from "lucide-react";
 import { Helmet } from "react-helmet";
-import { currentUserQueryOptions } from "@/modules/firebase/UserProvider";
+import {
+  currentUserQueryOptions,
+  useUser,
+} from "@/modules/firebase/UserProvider";
 import { NotificationsTable } from "@/modules/notifications/NotificationsTable";
 import { notificationQueries } from "@/modules/notifications/queries";
 import { queryClient } from "@/modules/query/queryClient";
 import { DashboardLayout } from "../DashboardLayout";
 
 const NotificationsPage = () => {
-  const { notifications } = Route.useLoaderData();
+  const { auth } = useUser();
+  const { data: notifications } = useSuspenseQuery(
+    notificationQueries.list({ userId: auth.uid }),
+  );
 
   return (
     <DashboardLayout
@@ -35,11 +42,8 @@ export const Route = createFileRoute("/_dashboard/notifications/")({
   component: NotificationsPage,
   loader: async () => {
     const user = await queryClient.ensureQueryData(currentUserQueryOptions());
-
-    return {
-      notifications: await queryClient.ensureQueryData(
-        notificationQueries.list({ userId: user.auth.uid }),
-      ),
-    };
+    await queryClient.ensureQueryData(
+      notificationQueries.list({ userId: user.auth.uid }),
+    );
   },
 });

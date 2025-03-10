@@ -28,7 +28,13 @@ const SignIn = () => (
         {
           name: "Stanford",
           provider: authProvider.stanford,
-          icon: <img src={stanfordLogoImg} alt="Stanford University logo" />,
+          icon: (
+            <img
+              src={stanfordLogoImg}
+              alt="Stanford University logo"
+              className="w-[22px]"
+            />
+          ),
         },
         {
           name: "Johns Hopkins",
@@ -37,13 +43,20 @@ const SignIn = () => (
             <img
               src={johnsHopkingsLogoImg}
               alt="Johns Hopkins University logo"
+              className="w-[32px]"
             />
           ),
         },
         {
           name: "Michigan",
           provider: authProvider.michigan,
-          icon: <img src={michiganLogoImg} alt="University of Michigan logo" />,
+          icon: (
+            <img
+              src={michiganLogoImg}
+              alt="University of Michigan logo"
+              className="w-[51px]"
+            />
+          ),
         },
       ]}
       enableEmailPassword={env.VITE_PUBLIC_EMAIL_PASSWORD_SIGN_IN}
