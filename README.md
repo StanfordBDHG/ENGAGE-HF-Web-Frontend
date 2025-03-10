@@ -20,11 +20,13 @@ Web Frontend for the ENGAGE-HF project.
 
 This repository provides dashboard to manage ENGAGE-HF application, for admins and clinicians. Clinicians can interact with patients, adjust their recommended medications, allergies and appointments.
 
+![Application](resources/appScreenshot.png)
+
 ## Stack
 
-The ENGAGE-HF Web Frontend repository contains a React project built with Vite, TypeScript and Firebase. It provides automated GitHub Actions, setups for code linting, testing & test coverage reports, docker deployments, a docker compose setup.
+The ENGAGE-HF Web Frontend repository contains a React application built with TypeScript, Vite and Firebase. It provides automated GitHub Actions, setups for code linting, testing & test coverage reports, docker deployments, a docker compose setup.
 
-In order to run Web Frontend, you need to use actual Firebase environment or Emulator. For developing locally, it's best to use the Emulator. Refer to ["Using the emulator for client applications" section of ENGAGE-HF-Firebase](https://github.com/StanfordBDHG/ENGAGE-HF-Firebase?tab=readme-ov-file#using-the-emulator-for-client-applications) for an instruction.
+In order to run Web Frontend, you need to use actual Firebase environment or Emulator with seeded data. For developing locally, it's best to use the Emulator. Refer to ["Using the emulator for client applications" section of ENGAGE-HF-Firebase](https://github.com/StanfordBDHG/ENGAGE-HF-Firebase?tab=readme-ov-file#using-the-emulator-for-client-applications) for an instruction.
 
 ## Getting Started
 
@@ -38,7 +40,7 @@ npm install
 
 2. Setup environment variables
 
-Refer `.env.example` file for environment variables documentation. Copy `.env.example` to `.env.local` and adjust if necessary.
+Refer [.env.example](.env.example) file for environment variables documentation. Copy `.env.example` to `.env.local` and adjust if necessary.
 
 3. Start the Vite Application
 
