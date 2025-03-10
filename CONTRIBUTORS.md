@@ -10,5 +10,5 @@ SPDX-License-Identifier: MIT
 
 # Stanford Biodesign Digital Health ENGAGE-HF open-source project
 
+- [Arkadiusz Bachorski](https://github.com/arkadiuszbachorski)
 - [Paul Schmiedmayer](https://github.com/PSchmiedmayer)
-- [Vishnu Ravi](https://github.com/vishnuravi)
