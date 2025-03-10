@@ -26,11 +26,27 @@ This repository provides dashboard to manage ENGAGE-HF application, for admins a
 
 The ENGAGE-HF Web Frontend repository contains a React application built with TypeScript, Vite and Firebase. It provides automated GitHub Actions, setups for code linting, testing & test coverage reports, docker deployments, a docker compose setup.
 
-In order to run Web Frontend, you need to use actual Firebase environment or Emulator with seeded data. For developing locally, it's best to use the Emulator. Refer to ["Using the emulator for client applications" section of ENGAGE-HF-Firebase](https://github.com/StanfordBDHG/ENGAGE-HF-Firebase?tab=readme-ov-file#using-the-emulator-for-client-applications) for an instruction.
-
-## Getting Started
+## Getting started
 
 This project uses Node.js v22. Install Node.js, e.g. using [nvm](https://github.com/nvm-sh/nvm?tab=readme-ov-file#installing-and-updating), [homebrew (for macOS)](https://formulae.brew.sh/formula/node) or the official [Node.js installer](https://nodejs.org/en/download) .
+
+### Backend
+
+In order to use Web Frontend, you need to use actual Firebase environment or Emulator with seeded data. For developing locally, it's best to use the Emulator.
+
+1. Clone `https://github.com/StanfordBDHG/ENGAGE-HF-Firebase` repository
+
+2. In the root of ENGAGE-HF-Firebase run:
+
+```bash
+npm run prepare && npm run serve:seeded
+```
+
+Repeat step 2 each time files have changed.
+
+Refer to [ENGAGE-HF-Firebase](https://github.com/StanfordBDHG/ENGAGE-HF-Firebase) repository for more details.
+
+### Dashboard
 
 1. Install all dependencies
 
