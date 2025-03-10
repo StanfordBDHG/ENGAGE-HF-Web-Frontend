@@ -34,7 +34,6 @@ export const TestRouterProvider = ({ children }: TestRouterProviderProps) => {
   const routeTree = rootRoute.addChildren([indexRoute]);
   const router = createRouter({ routeTree });
 
-  // @ts-expect-error Error is expected, because types are matching application
   return <RouterProvider router={router} />;
 };
 
