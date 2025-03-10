@@ -141,7 +141,7 @@ export const Medications = ({
               <TableCell className="w-[190px]">Frequency</TableCell>
               <TableCell className="w-[190px]">Daily dosage</TableCell>
               <TableCell className="w-[120px]">Instructions</TableCell>
-              <TableCell className="w-[75px]"></TableCell>
+              <TableCell className="w-[75px]" />
             </TableRow>
           </TableHeader>
           <TableBody>
