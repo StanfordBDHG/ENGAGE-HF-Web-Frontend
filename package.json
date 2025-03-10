@@ -22,8 +22,6 @@
     "lint:fix": "eslint . --fix",
     "lint:ci": "eslint --output-file eslint_report.json --format json .",
     "test": "vitest run --coverage",
-    "docs": "typedoc",
-    "docs:ci": "typedoc --out ./out/docs --githubPages true",
     "prepush": "npm run lint:fix && tsc --noEmit",
     "storybook": "storybook dev -p 6006"
   },
@@ -75,7 +73,6 @@
     "storybook": "^8.6.4",
     "tailwindcss": "^3",
     "tailwindcss-animate": "^1.0.7",
-    "typedoc": "^0.26",
     "typescript": "^5",
     "vite": "^6.2.1",
     "vite-envs": "^4.4.5",

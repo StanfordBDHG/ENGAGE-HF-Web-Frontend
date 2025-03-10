@@ -25,10 +25,4 @@
   },
   "include": ["**/*.ts", "**/*.tsx", ".storybook/**/*.ts", ".storybook/**/*.tsx"],
   "exclude": ["node_modules"],
-  "typedocOptions": {
-    "entryPoints": ["packages/*"],
-    "name": "Stanford Biodesign Digital Health ENGAGE-HF Web Frontend",
-    "entryPointStrategy": "packages",
-    "includeVersion": false
-  }
 }
