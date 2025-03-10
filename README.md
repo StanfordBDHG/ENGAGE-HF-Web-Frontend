@@ -30,7 +30,7 @@ In order to run Web Frontend, you need to use actual Firebase environment or Emu
 
 ## Getting Started
 
-This project uses Node.js v22. Install Node.js, e.g. using [nvm](https://github.com/nvm-sh/nvm?tab=readme-ov-file#installing-and-updating), [homebrew (for macOS)](https://formulae.brew.sh/formula/node) or official [Node.js installer](https://nodejs.org/en/download) .
+This project uses Node.js v22. Install Node.js, e.g. using [nvm](https://github.com/nvm-sh/nvm?tab=readme-ov-file#installing-and-updating), [homebrew (for macOS)](https://formulae.brew.sh/formula/node) or the official [Node.js installer](https://nodejs.org/en/download) .
 
 1. Install all dependencies
 
