@@ -13,7 +13,7 @@ import { getUserName } from "@stanfordspezi/spezi-web-design-system/modules/auth
 import { ConfirmDeleteDialog } from "@stanfordspezi/spezi-web-design-system/molecules/ConfirmDeleteDialog";
 import { useOpenState } from "@stanfordspezi/spezi-web-design-system/utils/useOpenState";
 import { Link, useRouter } from "@tanstack/react-router";
-import { Pencil, Trash } from "lucide-react";
+import { Pencil, Trash, FileUser } from "lucide-react";
 import { callables, docRefs } from "@/modules/firebase/app";
 import { routes } from "@/modules/routes";
 import { ToggleUserDisabled } from "@/modules/user/ToggleUserDisabled";
@@ -61,6 +61,17 @@ export const PatientMenu = ({ patient }: PatientMenuProps) => {
         <DropdownMenuItem onClick={deleteConfirm.open}>
           <Trash />
           Delete
+        </DropdownMenuItem>
+        <DropdownMenuItem
+          onClick={async () => {
+            const result = await callables.shareHealthSummary({
+              userId: patient.resourceId,
+            });
+            console.log(result);
+          }}
+        >
+          <FileUser />
+          Share Health Summary
         </DropdownMenuItem>
         <ToggleUserDisabled user={patient} />
       </RowDropdownMenu>

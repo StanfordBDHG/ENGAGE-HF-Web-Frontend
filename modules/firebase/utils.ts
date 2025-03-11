@@ -31,6 +31,8 @@ import {
   type UpdateStaticDataOutput,
   type DefaultSeedInput,
   type DefaultSeedOutput,
+  type ShareHealthSummaryInput,
+  type ShareHealthSummaryOutput,
 } from "@stanfordbdhg/engagehf-models";
 import { strategy } from "@stanfordspezi/spezi-web-design-system/utils/misc";
 import {
@@ -316,6 +318,10 @@ export const getCallables = (functions: Functions) => ({
     functions,
     "enableUser",
   ),
+  shareHealthSummary: httpsCallable<
+    ShareHealthSummaryInput,
+    ShareHealthSummaryOutput
+  >(functions, "shareHealthSummary"),
 });
 
 export const getDocData = async <T>(reference: DocumentReference<T>) => {
