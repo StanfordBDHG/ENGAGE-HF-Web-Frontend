@@ -26,8 +26,8 @@
     "storybook": "storybook dev -p 6006"
   },
   "dependencies": {
-    "@stanfordbdhg/engagehf-models": "file:/../ENGAGE-HF-Firebase/functions/models",
-    "@stanfordspezi/spezi-web-design-system": "file:/../speziwebdesignsystem",
+    "@stanfordbdhg/engagehf-models": "^0.7.0",
+    "@stanfordspezi/spezi-web-design-system": "^0.6.0",
     "@t3-oss/env-core": "^0.12.0",
     "@tanstack/react-query": "^5.66.0",
     "@tanstack/react-router": "^1.99.0",
