@@ -28,6 +28,8 @@ export const routes = {
     ) =>
       `/patients/${resourceType === "invitation" ? "invitation-" : ""}${patientId}${params?.tab ? `?tab=${params.tab}` : ""}`,
     invite: "/patients/invite",
+    viewHealthSummary: (patientId: string, shareCodeId: string) =>
+      `/patients/${patientId}/healthSummary/${shareCodeId}`,
   },
   signIn: "/sign-in",
-};
+} as const;

@@ -17,7 +17,10 @@ import {
 import { type ComponentProps } from "react";
 import { Helmet } from "react-helmet";
 import { auth } from "@/modules/firebase/app";
-import { AuthProvider } from "@/modules/firebase/AuthProvider";
+import {
+  AuthProvider,
+  isRouteProtected,
+} from "@/modules/firebase/AuthProvider";
 import { ReactQueryClientProvider } from "@/modules/query/ReactQueryClientProvider";
 import { routes } from "@/modules/routes";
 import "../modules/globals.css";
@@ -43,10 +46,9 @@ export const Route = createRootRoute({
   beforeLoad: async ({ location }) => {
     await auth.authStateReady();
     const user = auth.currentUser;
-    const isSignIn = location.pathname === routes.signIn;
-    if (isSignIn && user) {
+    if (location.pathname === routes.signIn && user) {
       throw redirect({ to: routes.home });
-    } else if (!isSignIn && !user) {
+    } else if (isRouteProtected(location.pathname) && !user) {
       throw redirect({ to: routes.signIn });
     }
   },

@@ -13,18 +13,20 @@ import { auth } from "@/modules/firebase/app";
 import { routes } from "@/modules/routes";
 
 interface AuthProviderProps {
-  children?: ReactNode;
+  children: ReactNode;
 }
+
+export const isRouteProtected = (path: string) =>
+  path !== routes.signIn && !/\/patients\/.+\/healthSummary\//.exec(path);
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
   const navigate = useNavigate();
   const user = useAuthUser(auth);
 
   useEffect(() => {
-    const isSignIn = window.location.pathname === routes.signIn;
-    if (isSignIn && user) {
+    if (window.location.pathname === routes.signIn && user) {
       void navigate({ to: routes.home });
-    } else if (!isSignIn && user === null) {
+    } else if (isRouteProtected(window.location.pathname) && user === null) {
       void navigate({ to: routes.signIn });
     }
   }, [navigate, user]);
