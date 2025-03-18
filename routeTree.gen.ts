@@ -32,6 +32,7 @@ import { Route as DashboardPatientsIndexImport } from './routes/~_dashboard/~pat
 import { Route as DashboardNotificationsIndexImport } from './routes/~_dashboard/~notifications/~index'
 import { Route as DashboardAdminIndexImport } from './routes/~_dashboard/~admin/~index'
 import { Route as DashboardPatientsIdIndexImport } from './routes/~_dashboard/~patients/~$id/~index'
+import { Route as PatientsUserIdHealthSummaryShareCodeIdIndexImport } from './routes/~patients/~$userId/~healthSummary/~$shareCodeId/~index'
 
 // Create/Update Routes
 
@@ -100,6 +101,13 @@ const DashboardPatientsIdIndexRoute = DashboardPatientsIdIndexImport.update({
   path: '/patients/$id/',
   getParentRoute: () => DashboardRoute,
 } as any)
+
+const PatientsUserIdHealthSummaryShareCodeIdIndexRoute =
+  PatientsUserIdHealthSummaryShareCodeIdIndexImport.update({
+    id: '/patients/$userId/healthSummary/$shareCodeId/',
+    path: '/patients/$userId/healthSummary/$shareCodeId/',
+    getParentRoute: () => rootRoute,
+  } as any)
 
 // Populate the FileRoutesByPath interface
 
@@ -182,6 +190,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardPatientsIdIndexImport
       parentRoute: typeof DashboardImport
     }
+    '/patients/$userId/healthSummary/$shareCodeId/': {
+      id: '/patients/$userId/healthSummary/$shareCodeId/'
+      path: '/patients/$userId/healthSummary/$shareCodeId'
+      fullPath: '/patients/$userId/healthSummary/$shareCodeId'
+      preLoaderRoute: typeof PatientsUserIdHealthSummaryShareCodeIdIndexImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
@@ -227,6 +242,7 @@ export interface FileRoutesByFullPath {
   '/users/$id': typeof DashboardUsersIdRoute
   '/users/invite': typeof DashboardUsersInviteRoute
   '/patients/$id': typeof DashboardPatientsIdIndexRoute
+  '/patients/$userId/healthSummary/$shareCodeId': typeof PatientsUserIdHealthSummaryShareCodeIdIndexRoute
 }
 
 export interface FileRoutesByTo {
@@ -240,6 +256,7 @@ export interface FileRoutesByTo {
   '/users/$id': typeof DashboardUsersIdRoute
   '/users/invite': typeof DashboardUsersInviteRoute
   '/patients/$id': typeof DashboardPatientsIdIndexRoute
+  '/patients/$userId/healthSummary/$shareCodeId': typeof PatientsUserIdHealthSummaryShareCodeIdIndexRoute
 }
 
 export interface FileRoutesById {
@@ -255,6 +272,7 @@ export interface FileRoutesById {
   '/_dashboard/users/$id': typeof DashboardUsersIdRoute
   '/_dashboard/users/invite': typeof DashboardUsersInviteRoute
   '/_dashboard/patients/$id/': typeof DashboardPatientsIdIndexRoute
+  '/patients/$userId/healthSummary/$shareCodeId/': typeof PatientsUserIdHealthSummaryShareCodeIdIndexRoute
 }
 
 export interface FileRouteTypes {
@@ -271,6 +289,7 @@ export interface FileRouteTypes {
     | '/users/$id'
     | '/users/invite'
     | '/patients/$id'
+    | '/patients/$userId/healthSummary/$shareCodeId'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -283,6 +302,7 @@ export interface FileRouteTypes {
     | '/users/$id'
     | '/users/invite'
     | '/patients/$id'
+    | '/patients/$userId/healthSummary/$shareCodeId'
   id:
     | '__root__'
     | '/_dashboard'
@@ -296,17 +316,21 @@ export interface FileRouteTypes {
     | '/_dashboard/users/$id'
     | '/_dashboard/users/invite'
     | '/_dashboard/patients/$id/'
+    | '/patients/$userId/healthSummary/$shareCodeId/'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   DashboardRoute: typeof DashboardRouteWithChildren
   SignInIndexRoute: typeof SignInIndexRoute
+  PatientsUserIdHealthSummaryShareCodeIdIndexRoute: typeof PatientsUserIdHealthSummaryShareCodeIdIndexRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   DashboardRoute: DashboardRouteWithChildren,
   SignInIndexRoute: SignInIndexRoute,
+  PatientsUserIdHealthSummaryShareCodeIdIndexRoute:
+    PatientsUserIdHealthSummaryShareCodeIdIndexRoute,
 }
 
 export const routeTree = rootRoute
@@ -320,7 +344,8 @@ export const routeTree = rootRoute
       "filePath": "~__root.tsx",
       "children": [
         "/_dashboard",
-        "/sign-in/"
+        "/sign-in/",
+        "/patients/$userId/healthSummary/$shareCodeId/"
       ]
     },
     "/_dashboard": {
@@ -375,6 +400,9 @@ export const routeTree = rootRoute
     "/_dashboard/patients/$id/": {
       "filePath": "~_dashboard/~patients/~$id/~index.tsx",
       "parent": "/_dashboard"
+    },
+    "/patients/$userId/healthSummary/$shareCodeId/": {
+      "filePath": "~patients/~$userId/~healthSummary/~$shareCodeId/~index.tsx"
     }
   }
 }
