@@ -31,7 +31,7 @@ const ViewHealthSummary = () => {
   return (
     <AsideEngageLayout>
       <Helmet>
-        <title>View Health Summary Report</title>
+        <title>View Health Summary</title>
       </Helmet>
       <div className="relative flex flex-col items-center">
         {exportHealthSummaryMutation.isPending && (
@@ -40,7 +40,7 @@ const ViewHealthSummary = () => {
           </div>
         )}
         <h1 className="mb-1 text-center text-2xl font-bold">
-          View Health Summary Report
+          View Health Summary
         </h1>
         <p className="mb-6 text-center text-sm text-muted-foreground">
           Enter one-time code to view the report
