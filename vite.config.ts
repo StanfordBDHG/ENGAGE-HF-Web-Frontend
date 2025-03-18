@@ -38,6 +38,8 @@ export default defineConfig({
     }),
     viteEnvs({
       declarationFile: path.resolve(__dirname, ".env.example"),
+      ambientModuleDeclarationFilePath: ({ appRootDirPath }) =>
+        path.join(appRootDirPath, "vite-envs.d.ts"),
     }),
   ],
   resolve: {

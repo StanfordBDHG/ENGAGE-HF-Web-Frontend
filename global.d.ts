@@ -7,7 +7,7 @@
 //
 
 import type en from "./modules/messages/translations/en.json";
-import type { ImportMetaEnv as GeneratedImportMetaEnv } from "./src/vite-env";
+import type { ImportMetaEnv as GeneratedImportMetaEnv } from "./vite-envs";
 
 /// <reference types="vite/client" />
 
