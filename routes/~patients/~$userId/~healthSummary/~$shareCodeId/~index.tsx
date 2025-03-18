@@ -46,7 +46,7 @@ const ViewHealthSummary = () => {
           Enter one-time code to view the report
         </p>
         <InputOTP
-          maxLength={8}
+          maxLength={4}
           onComplete={(shareCode: string) =>
             exportHealthSummaryMutation.mutate({
               userId,
