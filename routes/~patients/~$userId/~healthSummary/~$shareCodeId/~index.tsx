@@ -47,6 +47,7 @@ const ViewHealthSummary = () => {
         </p>
         <InputOTP
           maxLength={4}
+          inputMode="text"
           onComplete={(shareCode: string) =>
             exportHealthSummaryMutation.mutate({
               userId,
