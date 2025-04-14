@@ -22,7 +22,7 @@ export const InfoRow = ({ icon, label, value }: InfoRowProps) => (
   <li className="flex items-center gap-4">
     <div className="flex-center text-muted-foreground">{icon}</div>
     <div className="flex flex-col gap-1 text-sm">
-      <p className="font-medium leading-none">{label}</p>
+      <p className="leading-none font-medium">{label}</p>
       <p className="text-muted-foreground">{value}</p>
     </div>
   </li>

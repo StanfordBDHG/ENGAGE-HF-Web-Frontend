@@ -35,14 +35,14 @@ const ViewHealthSummary = () => {
       </Helmet>
       <div className="relative flex flex-col items-center">
         {exportHealthSummaryMutation.isPending && (
-          <div className="flex-center absolute left-0 top-0 z-10 size-full bg-surface/60 animate-in fade-in zoom-in">
+          <div className="flex-center bg-surface/60 animate-in fade-in zoom-in absolute top-0 left-0 z-10 size-full">
             <Spinner />
           </div>
         )}
         <h1 className="mb-1 text-center text-2xl font-bold">
           View Health Summary
         </h1>
-        <p className="mb-6 text-center text-sm text-muted-foreground">
+        <p className="text-muted-foreground mb-6 text-center text-sm">
           Enter one-time code to view the report
         </p>
         <InputOTP

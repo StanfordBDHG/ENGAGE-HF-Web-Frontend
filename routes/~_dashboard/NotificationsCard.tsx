@@ -53,7 +53,7 @@ export const NotificationsCard = () => {
       <Button
         asChild
         variant="ghostPrimary"
-        className="mt-auto !h-16 w-full !rounded-none border-t hover:!bg-accent/50"
+        className="hover:bg-accent/50! mt-auto h-16! w-full rounded-none! border-t"
       >
         <Link to={routes.notifications}>View all notifications</Link>
       </Button>

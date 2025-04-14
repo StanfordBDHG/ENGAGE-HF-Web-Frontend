@@ -370,7 +370,7 @@ export const Medications = ({
                         variant="ghost"
                         onClick={removeMedication}
                       >
-                        <Trash className="size-4 text-destructive" />
+                        <Trash className="text-destructive size-4" />
                       </Button>
                     </Tooltip>
                   </TableCell>

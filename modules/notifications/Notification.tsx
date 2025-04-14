@@ -69,7 +69,7 @@ export const Notification = ({ notification }: NotificationProps) => {
             <Button
               variant="link"
               size="xs"
-              className="!pl-0"
+              className="pl-0!"
               onClick={() => markNotificationAsRead.mutate()}
             >
               Mark as read

@@ -74,7 +74,9 @@ export const AppointmentForm = ({
             selected={field.value}
             onSelect={(date) => field.onChange(date)}
             defaultMonth={field.value}
-            fromDate={new Date()}
+            hidden={{
+              before: new Date(),
+            }}
             showTimePicker
           />
         )}

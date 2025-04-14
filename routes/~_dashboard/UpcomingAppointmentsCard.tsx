@@ -84,7 +84,7 @@ export const UpcomingAppointmentsCard = () => {
       <CardHeader>
         <CardTitle>Upcoming Appointments</CardTitle>
         <Tooltip tooltip="Appointments with patients assigned to you within upcoming next 2 weeks">
-          <Info className="size-5 text-muted-foreground" />
+          <Info className="text-muted-foreground size-5" />
         </Tooltip>
       </CardHeader>
       <DataTable

@@ -39,7 +39,7 @@ export const createSharedUserColumns = <User extends SharedUser>() => {
             user.resourceType === "invitation" ?
               <Tooltip tooltip="User hasn't logged in yet">
                 <div className="flex items-center gap-2">
-                  <Mail className="size-5 text-muted-foreground" />
+                  <Mail className="text-muted-foreground size-5" />
                   Invitation
                 </div>
               </Tooltip>

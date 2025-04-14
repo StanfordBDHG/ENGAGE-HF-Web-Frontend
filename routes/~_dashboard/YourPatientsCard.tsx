@@ -39,7 +39,7 @@ export const YourPatientsCard = () => {
       <Button
         asChild
         variant="ghostPrimary"
-        className="!h-16 w-full !rounded-none border-t hover:!bg-accent/50"
+        className="hover:bg-accent/50! h-16! w-full rounded-none! border-t"
       >
         <Link to={routes.patients.index}>View all patients</Link>
       </Button>

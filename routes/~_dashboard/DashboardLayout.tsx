@@ -34,8 +34,8 @@ export const DashboardLayout = (props: DashboardLayoutProps) => {
             to="/"
             className="interactive-opacity flex-center w-full gap-4 px-2 pt-4 xl:px-8"
           >
-            <Logo className="w-8 text-primary" />
-            <LogoType className="hidden !h-auto !w-full xl:block" />
+            <Logo className="text-primary w-8" />
+            <LogoType className="hidden h-auto! w-full! xl:block" />
           </Link>
           <nav className="mt-9 flex flex-col gap-1 xl:w-full">
             <MenuLinks userType={role} />

@@ -18,8 +18,8 @@ export const AsideEngageLayout = (
   <AsideBrandLayout
     aside={
       <>
-        <div className="flex-center gap-6 text-primary">
-          <div className="flex-center size-20 rounded-lg bg-primary">
+        <div className="flex-center text-primary gap-6">
+          <div className="flex-center bg-primary size-20 rounded-lg">
             <Logo className="w-10 text-white" />
           </div>
           <LogoType className="h-auto w-48" />

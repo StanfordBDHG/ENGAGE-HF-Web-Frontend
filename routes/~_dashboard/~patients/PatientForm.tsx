@@ -99,7 +99,7 @@ export const PatientForm = ({
             selected={field.value}
             onSelect={(date) => field.onChange(date)}
             defaultMonth={field.value}
-            toYear={new Date().getFullYear()}
+            endMonth={new Date(new Date().getFullYear(), 0)}
           />
         )}
       />

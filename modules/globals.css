@@ -8,40 +8,7 @@ SPDX-License-Identifier: MIT
 
 */
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import '@stanfordspezi/spezi-web-design-system/tailwind.css';
+@import '@stanfordspezi/spezi-web-design-system/base.css';
 
-@layer base {
-  *::selection {
-    @apply bg-primary/30;
-  }
-
-  body {
-    @apply bg-surface text-foreground;
-  }
-}
-
-@layer components {
-  .focus-ring {
-    @apply ring-offset-surface focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2;
-  }
-}
-
-@layer utilities {
-  .flex-center {
-    @apply flex items-center justify-center;
-  }
-
-  .inline-flex-center {
-    @apply inline-flex items-center justify-center;
-  }
-
-  .interactive-opacity {
-    @apply focus-ring transition-opacity hover:opacity-60;
-  }
-
-  .hide-all-hidden [aria-hidden='true'] {
-    display: none;
-  }
-}
+@source '../node_modules/@stanfordspezi/spezi-web-design-system/dist/**/*.js';

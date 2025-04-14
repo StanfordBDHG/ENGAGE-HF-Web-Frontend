@@ -8,11 +8,10 @@
 
 import type { ComponentProps } from "react";
 
-type LogoTypeProps = ComponentProps<"svg"> & {
-  className?: string;
-};
+type LogoTypeProps = ComponentProps<"svg">;
 
 export const LogoType = (props: LogoTypeProps) => (
+  // @ts-expect-error Verify why ref errors
   <svg
     width="69"
     height="10"
