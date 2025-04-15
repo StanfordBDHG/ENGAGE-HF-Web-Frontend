@@ -49,6 +49,7 @@ import {
   getFormProps,
   getLabsData,
   getMedicationsData,
+  getMeasurementsData,
   getPatientInfo,
 } from "@/routes/~_dashboard/~patients/utils";
 import { Allergies } from "@/routes/~_dashboard/~patients/~$id/Allergies";
@@ -58,6 +59,7 @@ import { Labs } from "@/routes/~_dashboard/~patients/~$id/Labs";
 import { Notifications } from "@/routes/~_dashboard/~patients/~$id/Notifications";
 import { PatientInfo } from "@/routes/~_dashboard/~patients/~$id/PatientInfo";
 import { DashboardLayout } from "../../DashboardLayout";
+import { Measurements } from "@/routes/~_dashboard/~patients/~$id/Measurements";
 
 const getUserMedications = async (payload: {
   userId: string;
@@ -87,6 +89,7 @@ export enum PatientPageTab {
   allergies = "allergies",
   labs = "labs",
   appointments = "appointments",
+  measurements = "measurements",
 }
 
 const PatientPage = () => {
@@ -100,6 +103,7 @@ const PatientPage = () => {
     allergiesData,
     labsData,
     appointmentsData,
+    measurementsData,
     user,
     authUser,
     resourceType,
@@ -218,6 +222,9 @@ const PatientPage = () => {
           <TabsTrigger value={PatientPageTab.appointments}>
             Appointments
           </TabsTrigger>
+          <TabsTrigger value={PatientPageTab.measurements}>
+            Measurements
+          </TabsTrigger>
         </TabsList>
         <TabsContent value={PatientPageTab.information}>
           <div className="flex flex-col gap-6 xl:flex-row">
@@ -250,6 +257,9 @@ const PatientPage = () => {
         </TabsContent>
         <TabsContent value={PatientPageTab.appointments}>
           <Appointments {...appointmentsData} />
+        </TabsContent>
+        <TabsContent value={PatientPageTab.measurements}>
+          <Measurements {...measurementsData} />
         </TabsContent>
       </Tabs>
     </DashboardLayout>
@@ -286,6 +296,7 @@ export const Route = createFileRoute("/_dashboard/patients/$id/")({
       allergiesData: await getAllergiesData({ userId, resourceType }),
       labsData: await getLabsData({ userId, resourceType }),
       appointmentsData: await getAppointmentsData({ userId, resourceType }),
+      measurementsData: await getMeasurementsData({ userId, resourceType }),
       info: await getPatientInfo(userData),
     };
   },

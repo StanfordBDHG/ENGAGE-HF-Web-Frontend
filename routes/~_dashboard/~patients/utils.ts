@@ -21,7 +21,11 @@ import {
 } from "@/modules/firebase/appointment";
 import { type FHIRAllergyIntolerance } from "@/modules/firebase/models";
 import { mapAuthData } from "@/modules/firebase/user";
-import { getDocsData, type ResourceType } from "@/modules/firebase/utils";
+import {
+  getDocsData,
+  type ResourceType,
+  UserObservationCollection,
+} from "@/modules/firebase/utils";
 import { queryClient } from "@/modules/query/queryClient";
 import {
   type UserData,
@@ -238,6 +242,65 @@ export const getPatientInfo = async ({
   };
 };
 
+const typeRecord: Record<UserObservationCollection, string> = {
+  [UserObservationCollection.bloodPressure]: "Blood Pressure",
+  [UserObservationCollection.heartRate]: "Heart Rate",
+  [UserObservationCollection.bodyWeight]: "Weight",
+  [UserObservationCollection.creatinine]: "Creatinine",
+  [UserObservationCollection.dryWeight]: "Dry Weight",
+  [UserObservationCollection.eGfr]: "eGFR",
+  [UserObservationCollection.potassium]: "Potassium",
+};
+
+export const getMeasurementsData = async ({
+  userId,
+  resourceType,
+}: {
+  userId: string;
+  resourceType: ResourceType;
+}) => {
+  const observationTypes = [
+    UserObservationCollection.bodyWeight,
+    UserObservationCollection.bloodPressure,
+    UserObservationCollection.heartRate,
+  ];
+
+  const rawObservations = await Promise.all(
+    observationTypes.map(async (type) => ({
+      type,
+      data: await getDocsData(
+        refs.userObservation({ userId, resourceType, observationType: type }),
+      ),
+    })),
+  );
+
+  const observations = rawObservations.flatMap((observations) =>
+    observations.data.map((observation) => {
+      let value = observation.valueQuantity?.value;
+      let unit = observation.valueQuantity?.unit;
+
+      if (observations.type === UserObservationCollection.bloodPressure) {
+        const systolicComponent = observation.component?.find(
+          (component) => component.code?.coding?.[0]?.code === "8480-6",
+        );
+        value = systolicComponent?.valueQuantity?.value;
+        unit = systolicComponent?.valueQuantity?.unit;
+      }
+
+      return {
+        id: observation.id,
+        effectiveDateTime: observation.effectiveDateTime,
+        value,
+        unit,
+        type: observations.type,
+        typeLabel: typeRecord[observations.type],
+      };
+    }),
+  );
+
+  return { observations, userId, resourceType };
+};
+
 export type AllergiesData = Awaited<ReturnType<typeof getAllergiesData>>;
 export type Allergy = AllergiesData["allergyIntolerances"][number];
 export type AppointmentsData = Awaited<ReturnType<typeof getAppointmentsData>>;
@@ -246,3 +309,5 @@ export type LabsData = Awaited<ReturnType<typeof getLabsData>>;
 export type Observation = LabsData["observations"][number];
 export type MedicationsData = Awaited<ReturnType<typeof getMedicationsData>>;
 export type PatientInfo = Awaited<ReturnType<typeof getPatientInfo>>;
+export type MeasurementsData = Awaited<ReturnType<typeof getMeasurementsData>>;
+export type MeasurementItem = MeasurementsData["observations"][number];
