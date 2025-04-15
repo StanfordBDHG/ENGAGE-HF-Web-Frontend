@@ -56,10 +56,10 @@ import { Allergies } from "@/routes/~_dashboard/~patients/~$id/Allergies";
 import { Appointments } from "@/routes/~_dashboard/~patients/~$id/Appointments";
 import { GenerateHealthSummary } from "@/routes/~_dashboard/~patients/~$id/GenerateHealthSummary";
 import { Labs } from "@/routes/~_dashboard/~patients/~$id/Labs";
+import { Measurements } from "@/routes/~_dashboard/~patients/~$id/Measurements";
 import { Notifications } from "@/routes/~_dashboard/~patients/~$id/Notifications";
 import { PatientInfo } from "@/routes/~_dashboard/~patients/~$id/PatientInfo";
 import { DashboardLayout } from "../../DashboardLayout";
-import { Measurements } from "@/routes/~_dashboard/~patients/~$id/Measurements";
 
 const getUserMedications = async (payload: {
   userId: string;

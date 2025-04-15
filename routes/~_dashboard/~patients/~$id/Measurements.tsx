@@ -2,11 +2,6 @@ import {
   DataTable,
   dateColumn,
 } from "@stanfordspezi/spezi-web-design-system/components/DataTable";
-import { createColumnHelper, type Table } from "@tanstack/table-core";
-import {
-  type MeasurementItem,
-  type MeasurementsData,
-} from "@/routes/~_dashboard/~patients/utils";
 import {
   Select,
   SelectContent,
@@ -14,15 +9,20 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@stanfordspezi/spezi-web-design-system/components/Select";
+import { createColumnHelper, type Table } from "@tanstack/table-core";
 import { useMemo } from "react";
+import {
+  type MeasurementItem,
+  type MeasurementsData,
+} from "@/routes/~_dashboard/~patients/utils";
 
 const columnIds = {
   type: "type",
 } as const;
 
-type ObservationTypeFilterProps = {
+interface ObservationTypeFilterProps {
   table: Table<MeasurementItem>;
-};
+}
 
 const ObservationTypeFilter = ({ table }: ObservationTypeFilterProps) => {
   const observationTypes = useMemo(() => {

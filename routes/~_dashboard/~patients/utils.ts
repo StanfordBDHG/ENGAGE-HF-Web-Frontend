@@ -281,7 +281,7 @@ export const getMeasurementsData = async ({
 
       if (observations.type === UserObservationCollection.bloodPressure) {
         const systolicComponent = observation.component?.find(
-          (component) => component.code?.coding?.[0]?.code === "8480-6",
+          (component) => component.code.coding?.[0]?.code === "8480-6",
         );
         value = systolicComponent?.valueQuantity?.value;
         unit = systolicComponent?.valueQuantity?.unit;
