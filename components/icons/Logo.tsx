@@ -11,7 +11,6 @@ import type { ComponentProps } from "react";
 type LogoProps = ComponentProps<"svg">;
 
 export const Logo = (props: LogoProps) => (
-  // @ts-expect-error Verify why ref errors
   <svg
     version="1.0"
     xmlns="http://www.w3.org/2000/svg"

@@ -26,7 +26,6 @@ import { routes } from "@/modules/routes";
 import "../modules/globals.css";
 
 const routerProps: ComponentProps<typeof SpeziProvider>["router"] = {
-  // @ts-expect-error Check why types fail here
   Link: ({ href, ref, ...props }) => <Link ref={ref} to={href} {...props} />,
 };
 
