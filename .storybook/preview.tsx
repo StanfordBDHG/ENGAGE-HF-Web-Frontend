@@ -5,6 +5,7 @@
 //
 // SPDX-License-Identifier: MIT
 //
+
 import { type Preview } from "@storybook/react";
 import "../modules/globals.css";
 
