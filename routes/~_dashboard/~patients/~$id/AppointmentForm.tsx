@@ -77,6 +77,7 @@ export const AppointmentForm = ({
             hidden={{
               before: new Date(),
             }}
+            startMonth={new Date()}
             showTimePicker
           />
         )}
