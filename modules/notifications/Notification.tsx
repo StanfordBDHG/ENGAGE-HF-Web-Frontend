@@ -7,17 +7,7 @@
 //
 
 import { Button } from "@stanfordspezi/spezi-web-design-system/components/Button";
-import {
-  Notification as NotificationBase,
-  NotificationActions,
-  NotificationContentContainer,
-  NotificationHeader,
-  NotificationImage,
-  NotificationLink,
-  NotificationMessage,
-  NotificationTime,
-  NotificationTitle,
-} from "@stanfordspezi/spezi-web-design-system/molecules/Notifications";
+import { Notification as NotificationComponent } from "@stanfordspezi/spezi-web-design-system/molecules/Notifications";
 import { useMutation } from "@tanstack/react-query";
 import { callables } from "@/modules/firebase/app";
 import {
@@ -51,42 +41,25 @@ export const Notification = ({ notification }: NotificationProps) => {
   const isRead = isMessageRead(notification);
   const link = parseMessageToLink(notification);
 
-  const content = (
-    <>
-      <NotificationImage src={null} />
-      <NotificationContentContainer>
-        <NotificationHeader>
-          <NotificationTitle>
-            {parseLocalizedText(notification.title)}
-          </NotificationTitle>
-          <NotificationTime time={new Date(notification.creationDate)} />
-        </NotificationHeader>
-        <NotificationMessage>
-          {parseNilLocalizedText(notification.description)}
-        </NotificationMessage>
-        <NotificationActions>
-          {notification.isDismissible && !isRead && (
-            <Button
-              variant="link"
-              size="xs"
-              className="pl-0!"
-              onClick={() => markNotificationAsRead.mutate()}
-            >
-              Mark as read
-            </Button>
-          )}
-        </NotificationActions>
-      </NotificationContentContainer>
-    </>
+  return (
+    <NotificationComponent
+      title={parseLocalizedText(notification.title)}
+      message={parseNilLocalizedText(notification.description)}
+      time={new Date(notification.creationDate)}
+      link={link}
+      isRead={isRead}
+      actions={
+        notification.isDismissible && !isRead ?
+          <Button
+            variant="link"
+            size="xs"
+            className="pl-0!"
+            onClick={() => markNotificationAsRead.mutate()}
+          >
+            Mark as read
+          </Button>
+        : undefined
+      }
+    />
   );
-
-  const notificationContext = { isRead };
-
-  return link ?
-      <NotificationLink href={link} notification={notificationContext}>
-        {content}
-      </NotificationLink>
-    : <NotificationBase notification={notificationContext}>
-        {content}
-      </NotificationBase>;
 };

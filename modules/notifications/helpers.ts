@@ -17,7 +17,7 @@ export const filterUnreadNotifications = (messages: UserMessage[]) =>
 
 export const parseMessageToLink = (message: UserMessage) => {
   const action = message.action;
-  if (!action) return null;
+  if (!action) return undefined;
   const actionParts = action.split("/");
   if (actionParts.at(0) === "users") {
     const userId = actionParts.at(1);
@@ -28,7 +28,7 @@ export const parseMessageToLink = (message: UserMessage) => {
       });
     }
   }
-  return null;
+  return undefined;
 };
 
 export const getNotificationPatientId = (message: UserMessage) => {
