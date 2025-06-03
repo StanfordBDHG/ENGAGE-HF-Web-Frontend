@@ -20,6 +20,7 @@ import { createSharedUserColumns, userColumnIds } from "@/modules/user/table";
 import { PatientMenu } from "@/routes/~_dashboard/~patients/PatientMenu";
 import { type Patient } from "@/routes/~_dashboard/~patients/~index";
 import { useNavigateOrOpen } from "@/utils/useNavigateOrOpen";
+import { Check } from "lucide-react";
 
 const columnHelper = createColumnHelper<Patient>();
 const userColumns = createSharedUserColumns<Patient>();
@@ -29,6 +30,13 @@ const columns = [
   userColumns.email,
   userColumns.organization,
   userColumns.disabled,
+  columnHelper.accessor("selfManaged", {
+    header: "Self Managed",
+    cell: (props) => {
+      const selfManaged = props.getValue();
+      return selfManaged ? <Check className="size-5" /> : "";
+    },
+  }),
   columnHelper.display({
     id: "actions",
     cell: (props) => <PatientMenu patient={props.row.original} />,

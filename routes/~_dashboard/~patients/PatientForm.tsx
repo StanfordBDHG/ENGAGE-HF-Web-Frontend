@@ -155,7 +155,7 @@ export const PatientForm = ({
             const { value, onChange, ...restField } = field;
             return (
               <div className="flex items-center gap-2">
-                <SideLabel label="Is self enrolled">
+                <SideLabel label="Is self managed">
                   <Checkbox
                     checked={value}
                     onCheckedChange={onChange}
