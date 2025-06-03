@@ -239,6 +239,7 @@ export const getPatientInfo = async ({
     latestQuestionnaireDate: latestQuestionnaires.at(0)?.authored,
     invitationCode: user.invitationCode,
     isInvitation: resourceType === "invitation",
+    selfManaged: user.selfManaged,
   };
 };
 

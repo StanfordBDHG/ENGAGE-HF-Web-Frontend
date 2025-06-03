@@ -42,6 +42,7 @@ export const parsePatientsQueries = async ({
     { userIds, includeUserData: true },
     ({ auth, user }, id) => ({
       ...parseAuthToUser(id, auth),
+      selfManaged: user?.selfManaged,
       organization: organizationMap.get(user?.organization ?? ""),
       disabled: user?.disabled,
     }),
