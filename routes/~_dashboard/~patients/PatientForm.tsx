@@ -27,11 +27,16 @@ import {
 } from "@stanfordspezi/spezi-web-design-system/modules/auth";
 import { z } from "zod";
 import { type User } from "@/modules/firebase/models";
+import { SideLabel } from "@stanfordspezi/spezi-web-design-system/components/SideLabel";
+import { Checkbox } from "@stanfordspezi/spezi-web-design-system/components/Checkbox";
+import { Tooltip } from "@stanfordspezi/spezi-web-design-system/components/Tooltip";
+import { Info } from "lucide-react";
 
 export const patientFormSchema = z.object({
   displayName: z.string(),
   clinician: z.string().min(1, "Clinician is required"),
   dateOfBirth: z.date().optional(),
+  selfManaged: z.boolean(),
   providerName: z.preprocess(
     (value) => (value === "" ? null : value),
     z.string().nullable(),
@@ -49,7 +54,11 @@ interface PatientFormProps {
   userInfo?: Pick<UserInfo, "email" | "displayName" | "uid">;
   user?: Pick<
     User,
-    "organization" | "clinician" | "dateOfBirth" | "providerName"
+    | "organization"
+    | "clinician"
+    | "dateOfBirth"
+    | "providerName"
+    | "selfManaged"
   >;
   onSubmit: (data: PatientFormSchema) => Promise<void>;
   clinicianPreselectId?: string;
@@ -70,6 +79,7 @@ export const PatientForm = ({
       clinician: user?.clinician ?? clinicianPreselectId ?? "",
       dateOfBirth: user?.dateOfBirth ? new Date(user.dateOfBirth) : undefined,
       providerName: user?.providerName ?? "",
+      selfManaged: user?.selfManaged ?? false,
     },
   });
 
@@ -137,6 +147,34 @@ export const PatientForm = ({
         }
         render={({ field }) => <Input {...field} value={field.value ?? ""} />}
       />
+      {!isEdit && (
+        <Field
+          control={form.control}
+          name="selfManaged"
+          render={({ field }) => {
+            const { value, onChange, ...restField } = field;
+            return (
+              <div className="flex items-center gap-2">
+                <SideLabel label="Is self enrolled">
+                  <Checkbox
+                    checked={value}
+                    onCheckedChange={onChange}
+                    {...restField}
+                  />
+                </SideLabel>
+                <Tooltip tooltip="This feature allows patients to enter their own medication and laboratory value updates.">
+                  <button
+                    type="button"
+                    className="interactive-opacity text-muted-foreground size-4 rounded-md"
+                  >
+                    <Info className="size-full" />
+                  </button>
+                </Tooltip>
+              </div>
+            );
+          }}
+        />
+      )}
       <Button type="submit" isPending={form.formState.isSubmitting}>
         {isEdit ? "Update" : "Invite"} patient
       </Button>
