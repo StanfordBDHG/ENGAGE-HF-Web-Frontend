@@ -7,6 +7,7 @@
 //
 
 import { Button } from "@stanfordspezi/spezi-web-design-system/components/Button";
+import { Checkbox } from "@stanfordspezi/spezi-web-design-system/components/Checkbox";
 import { DatePicker } from "@stanfordspezi/spezi-web-design-system/components/DatePicker";
 import { Input } from "@stanfordspezi/spezi-web-design-system/components/Input";
 import {
@@ -16,6 +17,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@stanfordspezi/spezi-web-design-system/components/Select";
+import { SideLabel } from "@stanfordspezi/spezi-web-design-system/components/SideLabel";
+import { Tooltip } from "@stanfordspezi/spezi-web-design-system/components/Tooltip";
 import {
   Field,
   FormError,
@@ -25,12 +28,9 @@ import {
   getUserName,
   type UserInfo,
 } from "@stanfordspezi/spezi-web-design-system/modules/auth";
+import { Info } from "lucide-react";
 import { z } from "zod";
 import { type User } from "@/modules/firebase/models";
-import { SideLabel } from "@stanfordspezi/spezi-web-design-system/components/SideLabel";
-import { Checkbox } from "@stanfordspezi/spezi-web-design-system/components/Checkbox";
-import { Tooltip } from "@stanfordspezi/spezi-web-design-system/components/Tooltip";
-import { Info } from "lucide-react";
 
 export const patientFormSchema = z.object({
   displayName: z.string(),
