@@ -9,6 +9,7 @@
 import { Button } from "@stanfordspezi/spezi-web-design-system/components/Button";
 import { Checkbox } from "@stanfordspezi/spezi-web-design-system/components/Checkbox";
 import { DatePicker } from "@stanfordspezi/spezi-web-design-system/components/DatePicker";
+import { InfoButton } from "@stanfordspezi/spezi-web-design-system/components/InfoButton";
 import { Input } from "@stanfordspezi/spezi-web-design-system/components/Input";
 import {
   Select,
@@ -28,7 +29,6 @@ import {
   getUserName,
   type UserInfo,
 } from "@stanfordspezi/spezi-web-design-system/modules/auth";
-import { Info } from "lucide-react";
 import { z } from "zod";
 import { type User } from "@/modules/firebase/models";
 
@@ -163,12 +163,7 @@ export const PatientForm = ({
                   />
                 </SideLabel>
                 <Tooltip tooltip="This feature allows patients to enter their own medication and laboratory value updates.">
-                  <button
-                    type="button"
-                    className="interactive-opacity text-muted-foreground size-4 rounded-md"
-                  >
-                    <Info className="size-full" />
-                  </button>
+                  <InfoButton />
                 </Tooltip>
               </div>
             );
