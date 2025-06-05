@@ -39,6 +39,7 @@ export const parseInvitationToUser = (
   organization: organizationMap.get(invitation.user.organization ?? ""),
   type: invitation.user.type,
   disabled: invitation.user.disabled,
+  selfManaged: invitation.user.selfManaged,
 });
 
 export const parseAuthToUser = (

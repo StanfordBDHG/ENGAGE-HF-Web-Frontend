@@ -40,6 +40,7 @@ const InvitePatientPage = () => {
         organization: clinician.organization,
         dateOfBirth: form.dateOfBirth?.toISOString(),
         providerName: form.providerName,
+        selfManaged: form.selfManaged,
       },
     });
     toast.success("Patient has been successfully invited!");

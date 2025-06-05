@@ -13,6 +13,7 @@ import {
 } from "@stanfordspezi/spezi-web-design-system/components/DataTable";
 import { type RequiredSome } from "@stanfordspezi/spezi-web-design-system/utils/misc";
 import { createColumnHelper } from "@tanstack/table-core";
+import { Check } from "lucide-react";
 import { useMemo } from "react";
 import { useUser } from "@/modules/firebase/UserProvider";
 import { routes } from "@/modules/routes";
@@ -29,6 +30,13 @@ const columns = [
   userColumns.email,
   userColumns.organization,
   userColumns.disabled,
+  columnHelper.accessor("selfManaged", {
+    header: "Self Managed",
+    cell: (props) => {
+      const selfManaged = props.getValue();
+      return selfManaged ? <Check className="size-5" /> : "";
+    },
+  }),
   columnHelper.display({
     id: "actions",
     cell: (props) => <PatientMenu patient={props.row.original} />,

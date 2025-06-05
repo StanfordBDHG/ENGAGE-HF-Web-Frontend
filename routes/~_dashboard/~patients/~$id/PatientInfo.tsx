@@ -8,7 +8,14 @@
 
 import { Card } from "@stanfordspezi/spezi-web-design-system/components/Card";
 import { formatNilDateTime } from "@stanfordspezi/spezi-web-design-system/utils/date";
-import { Clock, FileQuestion, Mail, BookLock, AtSign } from "lucide-react";
+import {
+  Clock,
+  FileQuestion,
+  Mail,
+  BookLock,
+  AtSign,
+  FileInput,
+} from "lucide-react";
 import { type ReactNode } from "react";
 import { type PatientInfo as PatientInfoData } from "@/routes/~_dashboard/~patients/utils";
 
@@ -51,6 +58,13 @@ export const PatientInfo = ({ info }: PatientInfoProps) => (
             icon={<Mail className="size-5" />}
             label="Invitation"
             value="patient has not yet logged in"
+          />
+        )}
+        {info.selfManaged && (
+          <InfoRow
+            icon={<FileInput className="size-5" />}
+            label="Self managed"
+            value="inputs data themselves"
           />
         )}
         <InfoRow
