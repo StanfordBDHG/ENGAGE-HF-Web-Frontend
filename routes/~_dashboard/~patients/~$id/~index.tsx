@@ -125,7 +125,10 @@ const PatientPage = () => {
       await callables.updateUserInformation({
         userId,
         data: {
-          auth: authData,
+          auth: {
+            ...authData,
+            email: form.email,
+          },
         },
       });
       await updateDoc(docRefs.user(userId), userData);
@@ -233,6 +236,7 @@ const PatientPage = () => {
               user={user}
               userInfo={authUser}
               onSubmit={updatePatient}
+              resourceType={resourceType}
               {...formProps}
             />
           </div>
