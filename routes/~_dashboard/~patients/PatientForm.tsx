@@ -31,19 +31,27 @@ import {
 } from "@stanfordspezi/spezi-web-design-system/modules/auth";
 import { z } from "zod";
 import { type User } from "@/modules/firebase/models";
+import { type ResourceType } from "@/modules/firebase/utils";
 
-export const patientFormSchema = z.object({
-  displayName: z.string(),
-  clinician: z.string().min(1, "Clinician is required"),
-  dateOfBirth: z.date().optional(),
-  selfManaged: z.boolean(),
-  providerName: z.preprocess(
-    (value) => (value === "" ? null : value),
-    z.string().nullable(),
-  ),
-});
+export const getPatientFormSchema = (isEmailRequired: boolean) =>
+  z.object({
+    email:
+      isEmailRequired ?
+        z.string().email().min(1, "Email is required")
+      : z.string().optional(),
+    displayName: z.string(),
+    clinician: z.string().min(1, "Clinician is required"),
+    dateOfBirth: z.date().optional(),
+    selfManaged: z.boolean(),
+    providerName: z.preprocess(
+      (value) => (value === "" ? null : value),
+      z.string().nullable(),
+    ),
+  });
 
-export type PatientFormSchema = z.infer<typeof patientFormSchema>;
+export type PatientFormSchema = z.infer<
+  ReturnType<typeof getPatientFormSchema>
+>;
 
 interface PatientFormProps {
   clinicians: Array<{
@@ -59,9 +67,11 @@ interface PatientFormProps {
     | "dateOfBirth"
     | "providerName"
     | "selfManaged"
+    | "type"
   >;
   onSubmit: (data: PatientFormSchema) => Promise<void>;
   clinicianPreselectId?: string;
+  resourceType?: ResourceType;
 }
 
 export const PatientForm = ({
@@ -70,11 +80,14 @@ export const PatientForm = ({
   userInfo,
   onSubmit,
   clinicianPreselectId,
+  resourceType,
 }: PatientFormProps) => {
   const isEdit = !!user;
+  const isEmailRequired = isEdit && resourceType === "user";
   const form = useForm({
-    formSchema: patientFormSchema,
+    formSchema: getPatientFormSchema(isEmailRequired),
     defaultValues: {
+      email: userInfo?.email ?? "",
       displayName: userInfo?.displayName ?? "",
       clinician: user?.clinician ?? clinicianPreselectId ?? "",
       dateOfBirth: user?.dateOfBirth ? new Date(user.dateOfBirth) : undefined,
@@ -93,6 +106,21 @@ export const PatientForm = ({
         prefix={`${isEdit ? "Updating" : "Inviting"} patient failed. `}
         formError={form.formError}
       />
+      {isEmailRequired && (
+        <Field
+          control={form.control}
+          name="email"
+          label="Email"
+          tooltip={
+            <>
+              Users use this email to login to the app. <br />
+              Changing this email might cause troubles with accessing the
+              account.
+            </>
+          }
+          render={({ field }) => <Input {...field} />}
+        />
+      )}
       <Field
         control={form.control}
         name="displayName"
