@@ -278,7 +278,7 @@ export const Medications = ({
                                 key={field.value}
                                 value={String(field.value)}
                               >
-                                {field.value} times a day
+                                {field.value} tbl.
                               </SelectItem>
                             )}
                             {quantityOptions.map((option) => (
