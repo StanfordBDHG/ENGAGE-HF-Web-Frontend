@@ -271,6 +271,16 @@ export const Medications = ({
                             <SelectValue placeholder="Drug" />
                           </SelectTrigger>
                           <SelectContent>
+                            {!quantityOptions.some(
+                              (option) => option.value === field.value,
+                            ) && (
+                              <SelectItem
+                                key={field.value}
+                                value={String(field.value)}
+                              >
+                                {field.value} tbl.
+                              </SelectItem>
+                            )}
                             {quantityOptions.map((option) => (
                               <SelectItem
                                 key={option.value}
@@ -302,6 +312,16 @@ export const Medications = ({
                             <SelectValue placeholder="Frequency" />
                           </SelectTrigger>
                           <SelectContent>
+                            {!timesPerDayOptions.some(
+                              (option) => option.value === field.value,
+                            ) && (
+                              <SelectItem
+                                key={field.value}
+                                value={String(field.value)}
+                              >
+                                {field.value} times a day
+                              </SelectItem>
+                            )}
                             {timesPerDayOptions.map((option) => (
                               <SelectItem
                                 key={option.value}

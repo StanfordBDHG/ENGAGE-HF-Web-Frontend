@@ -165,6 +165,7 @@ export const getLabsData = async ({
       value: observation.valueQuantity?.value,
       unit: observation.valueQuantity?.unit,
       type: observations.type,
+      typeLabel: typeRecord[observations.type],
     })),
   );
 
