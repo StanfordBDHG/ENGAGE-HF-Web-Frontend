@@ -118,7 +118,16 @@ const PatientPage = () => {
     const userData = {
       clinician: form.clinician,
       organization: clinician.organization,
-      dateOfBirth: form.dateOfBirth?.toISOString() ?? null,
+      dateOfBirth:
+        form.dateOfBirth !== undefined ?
+          (() => {
+            const offset = form.dateOfBirth.getTimezoneOffset();
+            const utcDate = new Date(
+              form.dateOfBirth.getTime() - offset * 60 * 1000,
+            );
+            return utcDate.toISOString().split("T")[0];
+          })()
+        : null,
       providerName: form.providerName,
     };
     if (resourceType === "user") {
