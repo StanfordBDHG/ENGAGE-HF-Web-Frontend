@@ -165,7 +165,7 @@ export const getLabsData = async ({
       value: observation.valueQuantity?.value,
       unit: observation.valueQuantity?.unit,
       type: observations.type,
-      typeLabel: typeRecord[observations.type],
+      typeLabel: userObservationLabelRecord[observations.type],
     })),
   );
 
@@ -244,7 +244,10 @@ export const getPatientInfo = async ({
   };
 };
 
-const typeRecord: Record<UserObservationCollection, string> = {
+export const userObservationLabelRecord: Record<
+  UserObservationCollection,
+  string
+> = {
   [UserObservationCollection.bloodPressure]: "Blood Pressure",
   [UserObservationCollection.heartRate]: "Heart Rate",
   [UserObservationCollection.bodyWeight]: "Weight",
@@ -295,7 +298,7 @@ export const getMeasurementsData = async ({
         value,
         unit,
         type: observations.type,
-        typeLabel: typeRecord[observations.type],
+        typeLabel: userObservationLabelRecord[observations.type],
       };
     }),
   );
