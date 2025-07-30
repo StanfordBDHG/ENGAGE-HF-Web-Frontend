@@ -11,6 +11,7 @@ import {
   FHIRAllergyIntoleranceType,
   UserType,
 } from "@stanfordbdhg/engagehf-models";
+import { type Nil } from "@stanfordspezi/spezi-web-design-system/utils/misc";
 import { groupBy } from "es-toolkit";
 import { limit, orderBy, query, where } from "firebase/firestore";
 import { AllergyType } from "@/modules/firebase/allergy";
@@ -32,7 +33,6 @@ import {
   userOrganizationQueryOptions,
 } from "@/modules/user/queries";
 import { labsObservationCollections } from "@/routes/~_dashboard/~patients/clientUtils";
-import { Nil } from "@stanfordspezi/spezi-web-design-system/utils/misc";
 
 const getUserClinicians = async () => {
   const { user } = await getCurrentUser();
