@@ -32,6 +32,7 @@ import {
   userOrganizationQueryOptions,
 } from "@/modules/user/queries";
 import { labsObservationCollections } from "@/routes/~_dashboard/~patients/clientUtils";
+import { Nil } from "@stanfordspezi/spezi-web-design-system/utils/misc";
 
 const getUserClinicians = async () => {
   const { user } = await getCurrentUser();
@@ -304,6 +305,16 @@ export const getMeasurementsData = async ({
   );
 
   return { observations, userId, resourceType };
+};
+
+/**
+ * Transforms a Date object into a string formatted as YYYY-MM-DD, without timezone offset.
+ * */
+export const formatBirthDate = (date: Nil<Date>) => {
+  if (!date) return null;
+  const offset = date.getTimezoneOffset();
+  const utcDate = new Date(date.getTime() - offset * 60 * 1000);
+  return utcDate.toISOString().split("T")[0];
 };
 
 export type AllergiesData = Awaited<ReturnType<typeof getAllergiesData>>;
