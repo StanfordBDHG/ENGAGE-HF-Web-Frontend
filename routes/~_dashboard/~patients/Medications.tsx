@@ -65,8 +65,8 @@ const formSchema = z.object({
     z.object({
       id: z.string(),
       instructions: z.string(),
-      medication: z.string({ required_error: "Medication is required" }),
-      drug: z.string({ required_error: "Drug is required" }),
+      medication: z.string({ error: "Medication is required" }),
+      drug: z.string({ error: "Drug is required" }),
       quantity: z.number().min(0),
       frequencyPerDay: z.number().min(0),
     }),
