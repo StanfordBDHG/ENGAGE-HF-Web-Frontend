@@ -51,6 +51,7 @@ import {
   getMedicationsData,
   getMeasurementsData,
   getPatientInfo,
+  formatBirthDate,
 } from "@/routes/~_dashboard/~patients/utils";
 import { Allergies } from "@/routes/~_dashboard/~patients/~$id/Allergies";
 import { Appointments } from "@/routes/~_dashboard/~patients/~$id/Appointments";
@@ -118,7 +119,7 @@ const PatientPage = () => {
     const userData = {
       clinician: form.clinician,
       organization: clinician.organization,
-      dateOfBirth: form.dateOfBirth?.toISOString() ?? null,
+      dateOfBirth: formatBirthDate(form.dateOfBirth),
       providerName: form.providerName,
     };
     if (resourceType === "user") {

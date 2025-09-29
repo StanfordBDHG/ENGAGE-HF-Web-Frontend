@@ -11,6 +11,7 @@ import {
   FHIRAllergyIntoleranceType,
   UserType,
 } from "@stanfordbdhg/engagehf-models";
+import { type Nil } from "@stanfordspezi/spezi-web-design-system/utils/misc";
 import { groupBy } from "es-toolkit";
 import { limit, orderBy, query, where } from "firebase/firestore";
 import { AllergyType } from "@/modules/firebase/allergy";
@@ -165,6 +166,7 @@ export const getLabsData = async ({
       value: observation.valueQuantity?.value,
       unit: observation.valueQuantity?.unit,
       type: observations.type,
+      typeLabel: userObservationLabelRecord[observations.type],
     })),
   );
 
@@ -243,7 +245,10 @@ export const getPatientInfo = async ({
   };
 };
 
-const typeRecord: Record<UserObservationCollection, string> = {
+export const userObservationLabelRecord: Record<
+  UserObservationCollection,
+  string
+> = {
   [UserObservationCollection.bloodPressure]: "Blood Pressure",
   [UserObservationCollection.heartRate]: "Heart Rate",
   [UserObservationCollection.bodyWeight]: "Weight",
@@ -294,12 +299,22 @@ export const getMeasurementsData = async ({
         value,
         unit,
         type: observations.type,
-        typeLabel: typeRecord[observations.type],
+        typeLabel: userObservationLabelRecord[observations.type],
       };
     }),
   );
 
   return { observations, userId, resourceType };
+};
+
+/**
+ * Transforms a Date object into a string formatted as YYYY-MM-DD, without timezone offset.
+ * */
+export const formatBirthDate = (date: Nil<Date>) => {
+  if (!date) return null;
+  const offset = date.getTimezoneOffset();
+  const utcDate = new Date(date.getTime() - offset * 60 * 1000);
+  return utcDate.toISOString().split("T")[0];
 };
 
 export type AllergiesData = Awaited<ReturnType<typeof getAllergiesData>>;

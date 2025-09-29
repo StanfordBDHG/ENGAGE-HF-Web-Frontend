@@ -74,6 +74,17 @@ interface PatientFormProps {
   resourceType?: ResourceType;
 }
 
+const parseDateOfBirth = (date: string) => {
+  const parts = date.split("T").at(0)?.split("-").map(Number);
+  const year = parts?.at(0);
+  const month = parts?.at(1);
+  const day = parts?.at(2);
+  if (year === undefined || month === undefined || day === undefined) {
+    throw new Error("Invalid date format");
+  }
+  return new Date(year, month - 1, day);
+};
+
 export const PatientForm = ({
   user,
   clinicians,
@@ -90,7 +101,8 @@ export const PatientForm = ({
       email: userInfo?.email ?? "",
       displayName: userInfo?.displayName ?? "",
       clinician: user?.clinician ?? clinicianPreselectId ?? "",
-      dateOfBirth: user?.dateOfBirth ? new Date(user.dateOfBirth) : undefined,
+      dateOfBirth:
+        user?.dateOfBirth ? parseDateOfBirth(user.dateOfBirth) : undefined,
       providerName: user?.providerName ?? "",
       selfManaged: user?.selfManaged ?? false,
     },

@@ -110,14 +110,14 @@ export const Labs = ({ observations, userId, resourceType }: LabsProps) => {
             header: "Date",
             cell: dateColumn,
           }),
-          columnHelper.accessor("type", {
+          columnHelper.accessor("typeLabel", {
             header: "Type",
           }),
           columnHelper.accessor("value", {
             header: "Value",
             cell: (props) => {
               const observation = props.row.original;
-              return `${observation.value} ${observation.unit}`;
+              return `${observation.value?.toFixed(1)} ${observation.unit}`;
             },
           }),
           columnHelper.display({

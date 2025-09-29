@@ -35,7 +35,10 @@ import {
   getUnitOfObservationType,
   labsObservationCollections,
 } from "@/routes/~_dashboard/~patients/clientUtils";
-import { type Observation } from "@/routes/~_dashboard/~patients/utils";
+import {
+  type Observation,
+  userObservationLabelRecord,
+} from "@/routes/~_dashboard/~patients/utils";
 
 export const labFormSchema = z.object({
   type: z.nativeEnum(UserObservationCollection),
@@ -104,7 +107,7 @@ export const LabForm = ({ observation, onSubmit }: LabFormProps) => {
             <SelectContent>
               {labsObservationCollections.map((type) => (
                 <SelectItem key={type} value={type}>
-                  {type}
+                  {userObservationLabelRecord[type]}
                 </SelectItem>
               ))}
             </SelectContent>

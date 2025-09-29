@@ -21,7 +21,10 @@ import {
   PatientForm,
   type PatientFormSchema,
 } from "@/routes/~_dashboard/~patients/PatientForm";
-import { getFormProps } from "@/routes/~_dashboard/~patients/utils";
+import {
+  formatBirthDate,
+  getFormProps,
+} from "@/routes/~_dashboard/~patients/utils";
 
 const InvitePatientPage = () => {
   const navigate = useNavigate();
@@ -38,7 +41,7 @@ const InvitePatientPage = () => {
         type: UserType.patient,
         clinician: form.clinician,
         organization: clinician.organization,
-        dateOfBirth: form.dateOfBirth?.toISOString(),
+        dateOfBirth: formatBirthDate(form.dateOfBirth),
         providerName: form.providerName,
         selfManaged: form.selfManaged,
       },
