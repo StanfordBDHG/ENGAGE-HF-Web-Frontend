@@ -28,15 +28,15 @@ import { useUser } from "@/modules/firebase/UserProvider";
 
 export const userFormSchema = z
   .object({
-    email: z.string().email().min(1, "Email is required"),
+    email: z.email().min(1, "Email is required"),
     displayName: z.string(),
     organizationId: z.string().nullable(),
-    type: z.nativeEnum(UserType),
+    type: z.enum(UserType),
   })
   .superRefine((schema, ctx) => {
     if (schema.type !== UserType.admin && !schema.organizationId) {
       ctx.addIssue({
-        code: z.ZodIssueCode.custom,
+        code: "custom",
         message: "Organization is required",
         path: ["organizationId"],
       });

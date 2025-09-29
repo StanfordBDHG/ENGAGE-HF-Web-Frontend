@@ -36,7 +36,7 @@ import {
 
 export const allergyFormSchema = z.object({
   medication: z.string(),
-  type: z.nativeEnum(AllergyType),
+  type: z.enum(AllergyType),
 });
 
 export type AllergyFormSchema = z.infer<typeof allergyFormSchema>;
