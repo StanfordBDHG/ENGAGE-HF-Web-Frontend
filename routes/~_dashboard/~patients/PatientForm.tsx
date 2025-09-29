@@ -44,7 +44,8 @@ export const getPatientFormSchema = (isEmailRequired: boolean) =>
     dateOfBirth: z.date().optional(),
     selfManaged: z.boolean(),
     providerName: z.preprocess(
-      (value) => (value === "" ? null : value),
+      (value: string | null | undefined) =>
+        value === "" ? null : String(value),
       z.string().nullable(),
     ),
   });
