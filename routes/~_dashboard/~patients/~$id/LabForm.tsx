@@ -41,7 +41,7 @@ import {
 } from "@/routes/~_dashboard/~patients/utils";
 
 export const labFormSchema = z.object({
-  type: z.nativeEnum(UserObservationCollection),
+  type: z.enum(UserObservationCollection),
   effectiveDateTime: z.date(),
   unit: z.string(),
   value: z.number(),

@@ -37,14 +37,15 @@ export const getPatientFormSchema = (isEmailRequired: boolean) =>
   z.object({
     email:
       isEmailRequired ?
-        z.string().email().min(1, "Email is required")
+        z.email().min(1, "Email is required")
       : z.string().optional(),
     displayName: z.string(),
     clinician: z.string().min(1, "Clinician is required"),
     dateOfBirth: z.date().optional(),
     selfManaged: z.boolean(),
     providerName: z.preprocess(
-      (value) => (value === "" ? null : value),
+      (value: string | null | undefined) =>
+        value === "" ? null : String(value),
       z.string().nullable(),
     ),
   });

@@ -274,7 +274,7 @@ const PatientPage = () => {
 export const Route = createFileRoute("/_dashboard/patients/$id/")({
   component: PatientPage,
   validateSearch: z.object({
-    tab: z.nativeEnum(PatientPageTab).optional().catch(undefined),
+    tab: z.enum(PatientPageTab).optional().catch(undefined),
   }),
   notFoundComponent: () => (
     <NotFound

@@ -9,7 +9,7 @@
 /// <reference types="vitest" />
 /// <reference types="vite/client" />
 import path from "node:path";
-import { TanStackRouterVite } from "@tanstack/router-plugin/vite";
+import { tanstackRouter } from "@tanstack/router-plugin/vite";
 import react from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
 import { viteEnvs } from "vite-envs";
@@ -18,7 +18,7 @@ export default defineConfig({
   root: ".",
   plugins: [
     react(),
-    TanStackRouterVite({
+    tanstackRouter({
       routeFilePrefix: "~",
       routesDirectory: "./routes",
       generatedRouteTree: "./routeTree.gen.ts",
