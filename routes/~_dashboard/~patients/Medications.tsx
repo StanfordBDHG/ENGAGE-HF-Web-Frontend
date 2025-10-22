@@ -51,8 +51,12 @@ export const quantityOptions = [
   { label: "0.25 tbl.", value: 0.25 },
   { label: "0.5 tbl.", value: 0.5 },
   { label: "1 tbl.", value: 1 },
+  { label: "1.5 tbl.", value: 1.5 },
   { label: "2 tbl.", value: 2 },
+  { label: "2.5 tbl.", value: 2.5 },
   { label: "3 tbl.", value: 3 },
+  { label: "3.5 tbl.", value: 3.5 },
+  { label: "4 tbl.", value: 4 },
 ];
 
 export const timesPerDayOptions = [
