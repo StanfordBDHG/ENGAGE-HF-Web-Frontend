@@ -27,7 +27,7 @@
   },
   "dependencies": {
     "@stanfordbdhg/engagehf-models": "^0.9.0",
-    "@stanfordspezi/spezi-web-design-system": "file:../spezi-web-design-system/stanfordspezi-spezi-web-design-system-0.17.0.tgz",
+    "@stanfordspezi/spezi-web-design-system": "^0.18.0",
     "@t3-oss/env-core": "^0.13.8",
     "@tanstack/react-query": "^5.90.7",
     "@tanstack/react-router": "^1.135.0",
