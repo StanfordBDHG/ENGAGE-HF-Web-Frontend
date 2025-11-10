@@ -25,7 +25,7 @@ import { routes } from "@/modules/routes";
 import "../modules/globals.css";
 
 const routerProps: ComponentProps<typeof SpeziProvider>["router"] = {
-  Link: ({ href, ref, ...props }) => <Link ref={ref} to={href} {...props} />,
+  Link: ({ href, ...props }) => <Link to={href} {...props} />,
 };
 
 const Root = () => (
