@@ -11,7 +11,6 @@ import { toast } from "@stanfordspezi/spezi-web-design-system/components/Toaster
 import { PageTitle } from "@stanfordspezi/spezi-web-design-system/molecules/DashboardLayout";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { Contact } from "lucide-react";
-import { Helmet } from "react-helmet";
 import { callables, docRefs } from "@/modules/firebase/app";
 import { useUser } from "@/modules/firebase/UserProvider";
 import { getDocDataOrThrow } from "@/modules/firebase/utils";
@@ -25,6 +24,7 @@ import {
   formatBirthDate,
   getFormProps,
 } from "@/routes/~_dashboard/~patients/utils";
+import { getTitle } from "@/utils/head";
 
 const InvitePatientPage = () => {
   const navigate = useNavigate();
@@ -56,9 +56,7 @@ const InvitePatientPage = () => {
     <DashboardLayout
       title={<PageTitle title="Invite patient" icon={<Contact />} />}
     >
-      <Helmet>
-        <title>Invite patient</title>
-      </Helmet>
+      <title>{getTitle("Invite patient")}</title>
       <PatientForm
         onSubmit={invitePatient}
         clinicianPreselectId={

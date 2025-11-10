@@ -12,9 +12,9 @@ import { Spinner } from "@stanfordspezi/spezi-web-design-system/components/Spinn
 import { base64ToBlob } from "@stanfordspezi/spezi-web-design-system/utils/file";
 import { useMutation } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
-import { Helmet } from "react-helmet";
 import { AsideEngageLayout } from "@/components/AsideEngageLayout";
 import { callables } from "@/modules/firebase/app";
+import { getTitle } from "@/utils/head";
 
 const ViewHealthSummary = () => {
   const { userId, shareCodeId } = Route.useParams();
@@ -30,9 +30,7 @@ const ViewHealthSummary = () => {
 
   return (
     <AsideEngageLayout>
-      <Helmet>
-        <title>View Health Summary</title>
-      </Helmet>
+      <title>{getTitle("View Health Summary")}</title>
       <div className="relative flex flex-col items-center">
         {exportHealthSummaryMutation.isPending && (
           <div className="flex-center bg-surface/60 animate-in fade-in zoom-in absolute top-0 left-0 z-10 size-full">

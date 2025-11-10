@@ -13,7 +13,6 @@ import { getUserName } from "@stanfordspezi/spezi-web-design-system/modules/auth
 import { PageTitle } from "@stanfordspezi/spezi-web-design-system/molecules/DashboardLayout";
 import { createFileRoute, notFound, useRouter } from "@tanstack/react-router";
 import { Users } from "lucide-react";
-import { Helmet } from "react-helmet";
 import { NotFound } from "@/components/NotFound";
 import { callables, docRefs, ensureType } from "@/modules/firebase/app";
 import { getDocDataOrThrow } from "@/modules/firebase/utils";
@@ -28,6 +27,7 @@ import {
   UserForm,
   type UserFormSchema,
 } from "@/routes/~_dashboard/~users/UserForm";
+import { getTitle } from "@/utils/head";
 import { DashboardLayout } from "../DashboardLayout";
 
 const UserPage = () => {
@@ -77,9 +77,7 @@ const UserPage = () => {
         <PageTitle title="Edit user" subTitle={userName} icon={<Users />} />
       }
     >
-      <Helmet>
-        <title>Edit {userName}</title>
-      </Helmet>
+      <title>{getTitle(`Edit ${userName}`)}</title>
       <UserForm
         organizations={organizations}
         type={user.type}

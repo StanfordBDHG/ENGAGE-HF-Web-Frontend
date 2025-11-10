@@ -12,13 +12,13 @@ import { PageTitle } from "@stanfordspezi/spezi-web-design-system/molecules/Dash
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { query, where } from "firebase/firestore";
 import { Contact, UserPlus } from "lucide-react";
-import { Helmet } from "react-helmet";
 import { getCurrentUser, refs } from "@/modules/firebase/app";
 import { routes } from "@/modules/routes";
 import { parsePatientsQueries } from "@/modules/user/patients";
 import { getNonAdminInvitationsQuery } from "@/modules/user/queries";
 import { DashboardLayout } from "@/routes/~_dashboard/DashboardLayout";
 import { PatientsTable } from "@/routes/~_dashboard/~patients/PatientsTable";
+import { getTitle } from "@/utils/head";
 
 const getQueries = async () => {
   const { user } = await getCurrentUser();
@@ -64,9 +64,7 @@ const PatientsPage = () => {
         </Button>
       }
     >
-      <Helmet>
-        <title>Patients</title>
-      </Helmet>
+      <title>{getTitle("Patients")}</title>
       <PatientsTable data={patients} />
     </DashboardLayout>
   );

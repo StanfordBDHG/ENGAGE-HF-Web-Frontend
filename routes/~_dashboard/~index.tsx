@@ -9,17 +9,15 @@
 import { PageTitle } from "@stanfordspezi/spezi-web-design-system/molecules/DashboardLayout";
 import { createFileRoute } from "@tanstack/react-router";
 import { Home } from "lucide-react";
-import { Helmet } from "react-helmet";
 import { YourPatientsCard } from "@/routes/~_dashboard/YourPatientsCard";
+import { getTitle } from "@/utils/head";
 import { DashboardLayout } from "./DashboardLayout";
 import { NotificationsCard } from "./NotificationsCard";
 import { UpcomingAppointmentsCard } from "./UpcomingAppointmentsCard";
 
 const DashboardPage = () => (
   <DashboardLayout title={<PageTitle title="Home" icon={<Home />} />}>
-    <Helmet>
-      <title>Home</title>
-    </Helmet>
+    <title>{getTitle("Home")}</title>
     <div className="grid gap-5 xl:grid-cols-2">
       <NotificationsCard />
       <UpcomingAppointmentsCard />
