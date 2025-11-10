@@ -8,6 +8,7 @@
 
 /// <reference types="vitest" />
 /// <reference types="vite/client" />
+/// <reference types="vitest/config" />
 import path from "node:path";
 import { tanstackRouter } from "@tanstack/router-plugin/vite";
 import react from "@vitejs/plugin-react";
