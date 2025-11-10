@@ -18,220 +18,84 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-// Import Routes
+import { Route as rootRouteImport } from './routes/~__root'
+import { Route as DashboardRouteImport } from './routes/~_dashboard'
+import { Route as SignInIndexRouteImport } from './routes/~sign-in/~index'
+import { Route as DashboardIndexRouteImport } from './routes/~_dashboard/~index'
+import { Route as DashboardUsersInviteRouteImport } from './routes/~_dashboard/~users/~invite'
+import { Route as DashboardUsersIdRouteImport } from './routes/~_dashboard/~users/~$id'
+import { Route as DashboardPatientsInviteRouteImport } from './routes/~_dashboard/~patients/~invite'
+import { Route as DashboardUsersIndexRouteImport } from './routes/~_dashboard/~users/~index'
+import { Route as DashboardPatientsIndexRouteImport } from './routes/~_dashboard/~patients/~index'
+import { Route as DashboardNotificationsIndexRouteImport } from './routes/~_dashboard/~notifications/~index'
+import { Route as DashboardAdminIndexRouteImport } from './routes/~_dashboard/~admin/~index'
+import { Route as DashboardPatientsIdIndexRouteImport } from './routes/~_dashboard/~patients/~$id/~index'
+import { Route as PatientsUserIdHealthSummaryShareCodeIdIndexRouteImport } from './routes/~patients/~$userId/~healthSummary/~$shareCodeId/~index'
 
-import { Route as rootRoute } from './routes/~__root'
-import { Route as DashboardImport } from './routes/~_dashboard'
-import { Route as SignInIndexImport } from './routes/~sign-in/~index'
-import { Route as DashboardIndexImport } from './routes/~_dashboard/~index'
-import { Route as DashboardUsersInviteImport } from './routes/~_dashboard/~users/~invite'
-import { Route as DashboardUsersIdImport } from './routes/~_dashboard/~users/~$id'
-import { Route as DashboardPatientsInviteImport } from './routes/~_dashboard/~patients/~invite'
-import { Route as DashboardUsersIndexImport } from './routes/~_dashboard/~users/~index'
-import { Route as DashboardPatientsIndexImport } from './routes/~_dashboard/~patients/~index'
-import { Route as DashboardNotificationsIndexImport } from './routes/~_dashboard/~notifications/~index'
-import { Route as DashboardAdminIndexImport } from './routes/~_dashboard/~admin/~index'
-import { Route as DashboardPatientsIdIndexImport } from './routes/~_dashboard/~patients/~$id/~index'
-import { Route as PatientsUserIdHealthSummaryShareCodeIdIndexImport } from './routes/~patients/~$userId/~healthSummary/~$shareCodeId/~index'
-
-// Create/Update Routes
-
-const DashboardRoute = DashboardImport.update({
+const DashboardRoute = DashboardRouteImport.update({
   id: '/_dashboard',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
-
-const SignInIndexRoute = SignInIndexImport.update({
+const SignInIndexRoute = SignInIndexRouteImport.update({
   id: '/sign-in/',
   path: '/sign-in/',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
-
-const DashboardIndexRoute = DashboardIndexImport.update({
+const DashboardIndexRoute = DashboardIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => DashboardRoute,
 } as any)
-
-const DashboardUsersInviteRoute = DashboardUsersInviteImport.update({
+const DashboardUsersInviteRoute = DashboardUsersInviteRouteImport.update({
   id: '/users/invite',
   path: '/users/invite',
   getParentRoute: () => DashboardRoute,
 } as any)
-
-const DashboardUsersIdRoute = DashboardUsersIdImport.update({
+const DashboardUsersIdRoute = DashboardUsersIdRouteImport.update({
   id: '/users/$id',
   path: '/users/$id',
   getParentRoute: () => DashboardRoute,
 } as any)
-
-const DashboardPatientsInviteRoute = DashboardPatientsInviteImport.update({
+const DashboardPatientsInviteRoute = DashboardPatientsInviteRouteImport.update({
   id: '/patients/invite',
   path: '/patients/invite',
   getParentRoute: () => DashboardRoute,
 } as any)
-
-const DashboardUsersIndexRoute = DashboardUsersIndexImport.update({
+const DashboardUsersIndexRoute = DashboardUsersIndexRouteImport.update({
   id: '/users/',
   path: '/users/',
   getParentRoute: () => DashboardRoute,
 } as any)
-
-const DashboardPatientsIndexRoute = DashboardPatientsIndexImport.update({
+const DashboardPatientsIndexRoute = DashboardPatientsIndexRouteImport.update({
   id: '/patients/',
   path: '/patients/',
   getParentRoute: () => DashboardRoute,
 } as any)
-
 const DashboardNotificationsIndexRoute =
-  DashboardNotificationsIndexImport.update({
+  DashboardNotificationsIndexRouteImport.update({
     id: '/notifications/',
     path: '/notifications/',
     getParentRoute: () => DashboardRoute,
   } as any)
-
-const DashboardAdminIndexRoute = DashboardAdminIndexImport.update({
+const DashboardAdminIndexRoute = DashboardAdminIndexRouteImport.update({
   id: '/admin/',
   path: '/admin/',
   getParentRoute: () => DashboardRoute,
 } as any)
-
-const DashboardPatientsIdIndexRoute = DashboardPatientsIdIndexImport.update({
-  id: '/patients/$id/',
-  path: '/patients/$id/',
-  getParentRoute: () => DashboardRoute,
-} as any)
-
+const DashboardPatientsIdIndexRoute =
+  DashboardPatientsIdIndexRouteImport.update({
+    id: '/patients/$id/',
+    path: '/patients/$id/',
+    getParentRoute: () => DashboardRoute,
+  } as any)
 const PatientsUserIdHealthSummaryShareCodeIdIndexRoute =
-  PatientsUserIdHealthSummaryShareCodeIdIndexImport.update({
+  PatientsUserIdHealthSummaryShareCodeIdIndexRouteImport.update({
     id: '/patients/$userId/healthSummary/$shareCodeId/',
     path: '/patients/$userId/healthSummary/$shareCodeId/',
-    getParentRoute: () => rootRoute,
+    getParentRoute: () => rootRouteImport,
   } as any)
 
-// Populate the FileRoutesByPath interface
-
-declare module '@tanstack/react-router' {
-  interface FileRoutesByPath {
-    '/_dashboard': {
-      id: '/_dashboard'
-      path: ''
-      fullPath: ''
-      preLoaderRoute: typeof DashboardImport
-      parentRoute: typeof rootRoute
-    }
-    '/_dashboard/': {
-      id: '/_dashboard/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof DashboardIndexImport
-      parentRoute: typeof DashboardImport
-    }
-    '/sign-in/': {
-      id: '/sign-in/'
-      path: '/sign-in'
-      fullPath: '/sign-in'
-      preLoaderRoute: typeof SignInIndexImport
-      parentRoute: typeof rootRoute
-    }
-    '/_dashboard/admin/': {
-      id: '/_dashboard/admin/'
-      path: '/admin'
-      fullPath: '/admin'
-      preLoaderRoute: typeof DashboardAdminIndexImport
-      parentRoute: typeof DashboardImport
-    }
-    '/_dashboard/notifications/': {
-      id: '/_dashboard/notifications/'
-      path: '/notifications'
-      fullPath: '/notifications'
-      preLoaderRoute: typeof DashboardNotificationsIndexImport
-      parentRoute: typeof DashboardImport
-    }
-    '/_dashboard/patients/': {
-      id: '/_dashboard/patients/'
-      path: '/patients'
-      fullPath: '/patients'
-      preLoaderRoute: typeof DashboardPatientsIndexImport
-      parentRoute: typeof DashboardImport
-    }
-    '/_dashboard/users/': {
-      id: '/_dashboard/users/'
-      path: '/users'
-      fullPath: '/users'
-      preLoaderRoute: typeof DashboardUsersIndexImport
-      parentRoute: typeof DashboardImport
-    }
-    '/_dashboard/patients/invite': {
-      id: '/_dashboard/patients/invite'
-      path: '/patients/invite'
-      fullPath: '/patients/invite'
-      preLoaderRoute: typeof DashboardPatientsInviteImport
-      parentRoute: typeof DashboardImport
-    }
-    '/_dashboard/users/$id': {
-      id: '/_dashboard/users/$id'
-      path: '/users/$id'
-      fullPath: '/users/$id'
-      preLoaderRoute: typeof DashboardUsersIdImport
-      parentRoute: typeof DashboardImport
-    }
-    '/_dashboard/users/invite': {
-      id: '/_dashboard/users/invite'
-      path: '/users/invite'
-      fullPath: '/users/invite'
-      preLoaderRoute: typeof DashboardUsersInviteImport
-      parentRoute: typeof DashboardImport
-    }
-    '/_dashboard/patients/$id/': {
-      id: '/_dashboard/patients/$id/'
-      path: '/patients/$id'
-      fullPath: '/patients/$id'
-      preLoaderRoute: typeof DashboardPatientsIdIndexImport
-      parentRoute: typeof DashboardImport
-    }
-    '/patients/$userId/healthSummary/$shareCodeId/': {
-      id: '/patients/$userId/healthSummary/$shareCodeId/'
-      path: '/patients/$userId/healthSummary/$shareCodeId'
-      fullPath: '/patients/$userId/healthSummary/$shareCodeId'
-      preLoaderRoute: typeof PatientsUserIdHealthSummaryShareCodeIdIndexImport
-      parentRoute: typeof rootRoute
-    }
-  }
-}
-
-// Create and export the route tree
-
-interface DashboardRouteChildren {
-  DashboardIndexRoute: typeof DashboardIndexRoute
-  DashboardAdminIndexRoute: typeof DashboardAdminIndexRoute
-  DashboardNotificationsIndexRoute: typeof DashboardNotificationsIndexRoute
-  DashboardPatientsIndexRoute: typeof DashboardPatientsIndexRoute
-  DashboardUsersIndexRoute: typeof DashboardUsersIndexRoute
-  DashboardPatientsInviteRoute: typeof DashboardPatientsInviteRoute
-  DashboardUsersIdRoute: typeof DashboardUsersIdRoute
-  DashboardUsersInviteRoute: typeof DashboardUsersInviteRoute
-  DashboardPatientsIdIndexRoute: typeof DashboardPatientsIdIndexRoute
-}
-
-const DashboardRouteChildren: DashboardRouteChildren = {
-  DashboardIndexRoute: DashboardIndexRoute,
-  DashboardAdminIndexRoute: DashboardAdminIndexRoute,
-  DashboardNotificationsIndexRoute: DashboardNotificationsIndexRoute,
-  DashboardPatientsIndexRoute: DashboardPatientsIndexRoute,
-  DashboardUsersIndexRoute: DashboardUsersIndexRoute,
-  DashboardPatientsInviteRoute: DashboardPatientsInviteRoute,
-  DashboardUsersIdRoute: DashboardUsersIdRoute,
-  DashboardUsersInviteRoute: DashboardUsersInviteRoute,
-  DashboardPatientsIdIndexRoute: DashboardPatientsIdIndexRoute,
-}
-
-const DashboardRouteWithChildren = DashboardRoute._addFileChildren(
-  DashboardRouteChildren,
-)
-
 export interface FileRoutesByFullPath {
-  '': typeof DashboardRouteWithChildren
   '/': typeof DashboardIndexRoute
   '/sign-in': typeof SignInIndexRoute
   '/admin': typeof DashboardAdminIndexRoute
@@ -244,7 +108,6 @@ export interface FileRoutesByFullPath {
   '/patients/$id': typeof DashboardPatientsIdIndexRoute
   '/patients/$userId/healthSummary/$shareCodeId': typeof PatientsUserIdHealthSummaryShareCodeIdIndexRoute
 }
-
 export interface FileRoutesByTo {
   '/': typeof DashboardIndexRoute
   '/sign-in': typeof SignInIndexRoute
@@ -258,9 +121,8 @@ export interface FileRoutesByTo {
   '/patients/$id': typeof DashboardPatientsIdIndexRoute
   '/patients/$userId/healthSummary/$shareCodeId': typeof PatientsUserIdHealthSummaryShareCodeIdIndexRoute
 }
-
 export interface FileRoutesById {
-  __root__: typeof rootRoute
+  __root__: typeof rootRouteImport
   '/_dashboard': typeof DashboardRouteWithChildren
   '/_dashboard/': typeof DashboardIndexRoute
   '/sign-in/': typeof SignInIndexRoute
@@ -274,11 +136,9 @@ export interface FileRoutesById {
   '/_dashboard/patients/$id/': typeof DashboardPatientsIdIndexRoute
   '/patients/$userId/healthSummary/$shareCodeId/': typeof PatientsUserIdHealthSummaryShareCodeIdIndexRoute
 }
-
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    | ''
     | '/'
     | '/sign-in'
     | '/admin'
@@ -319,12 +179,128 @@ export interface FileRouteTypes {
     | '/patients/$userId/healthSummary/$shareCodeId/'
   fileRoutesById: FileRoutesById
 }
-
 export interface RootRouteChildren {
   DashboardRoute: typeof DashboardRouteWithChildren
   SignInIndexRoute: typeof SignInIndexRoute
   PatientsUserIdHealthSummaryShareCodeIdIndexRoute: typeof PatientsUserIdHealthSummaryShareCodeIdIndexRoute
 }
+
+declare module '@tanstack/react-router' {
+  interface FileRoutesByPath {
+    '/_dashboard': {
+      id: '/_dashboard'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof DashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sign-in/': {
+      id: '/sign-in/'
+      path: '/sign-in'
+      fullPath: '/sign-in'
+      preLoaderRoute: typeof SignInIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_dashboard/': {
+      id: '/_dashboard/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof DashboardIndexRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/_dashboard/users/invite': {
+      id: '/_dashboard/users/invite'
+      path: '/users/invite'
+      fullPath: '/users/invite'
+      preLoaderRoute: typeof DashboardUsersInviteRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/_dashboard/users/$id': {
+      id: '/_dashboard/users/$id'
+      path: '/users/$id'
+      fullPath: '/users/$id'
+      preLoaderRoute: typeof DashboardUsersIdRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/_dashboard/patients/invite': {
+      id: '/_dashboard/patients/invite'
+      path: '/patients/invite'
+      fullPath: '/patients/invite'
+      preLoaderRoute: typeof DashboardPatientsInviteRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/_dashboard/users/': {
+      id: '/_dashboard/users/'
+      path: '/users'
+      fullPath: '/users'
+      preLoaderRoute: typeof DashboardUsersIndexRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/_dashboard/patients/': {
+      id: '/_dashboard/patients/'
+      path: '/patients'
+      fullPath: '/patients'
+      preLoaderRoute: typeof DashboardPatientsIndexRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/_dashboard/notifications/': {
+      id: '/_dashboard/notifications/'
+      path: '/notifications'
+      fullPath: '/notifications'
+      preLoaderRoute: typeof DashboardNotificationsIndexRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/_dashboard/admin/': {
+      id: '/_dashboard/admin/'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof DashboardAdminIndexRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/_dashboard/patients/$id/': {
+      id: '/_dashboard/patients/$id/'
+      path: '/patients/$id'
+      fullPath: '/patients/$id'
+      preLoaderRoute: typeof DashboardPatientsIdIndexRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/patients/$userId/healthSummary/$shareCodeId/': {
+      id: '/patients/$userId/healthSummary/$shareCodeId/'
+      path: '/patients/$userId/healthSummary/$shareCodeId'
+      fullPath: '/patients/$userId/healthSummary/$shareCodeId'
+      preLoaderRoute: typeof PatientsUserIdHealthSummaryShareCodeIdIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+  }
+}
+
+interface DashboardRouteChildren {
+  DashboardIndexRoute: typeof DashboardIndexRoute
+  DashboardAdminIndexRoute: typeof DashboardAdminIndexRoute
+  DashboardNotificationsIndexRoute: typeof DashboardNotificationsIndexRoute
+  DashboardPatientsIndexRoute: typeof DashboardPatientsIndexRoute
+  DashboardUsersIndexRoute: typeof DashboardUsersIndexRoute
+  DashboardPatientsInviteRoute: typeof DashboardPatientsInviteRoute
+  DashboardUsersIdRoute: typeof DashboardUsersIdRoute
+  DashboardUsersInviteRoute: typeof DashboardUsersInviteRoute
+  DashboardPatientsIdIndexRoute: typeof DashboardPatientsIdIndexRoute
+}
+
+const DashboardRouteChildren: DashboardRouteChildren = {
+  DashboardIndexRoute: DashboardIndexRoute,
+  DashboardAdminIndexRoute: DashboardAdminIndexRoute,
+  DashboardNotificationsIndexRoute: DashboardNotificationsIndexRoute,
+  DashboardPatientsIndexRoute: DashboardPatientsIndexRoute,
+  DashboardUsersIndexRoute: DashboardUsersIndexRoute,
+  DashboardPatientsInviteRoute: DashboardPatientsInviteRoute,
+  DashboardUsersIdRoute: DashboardUsersIdRoute,
+  DashboardUsersInviteRoute: DashboardUsersInviteRoute,
+  DashboardPatientsIdIndexRoute: DashboardPatientsIdIndexRoute,
+}
+
+const DashboardRouteWithChildren = DashboardRoute._addFileChildren(
+  DashboardRouteChildren,
+)
 
 const rootRouteChildren: RootRouteChildren = {
   DashboardRoute: DashboardRouteWithChildren,
@@ -332,78 +308,6 @@ const rootRouteChildren: RootRouteChildren = {
   PatientsUserIdHealthSummaryShareCodeIdIndexRoute:
     PatientsUserIdHealthSummaryShareCodeIdIndexRoute,
 }
-
-export const routeTree = rootRoute
+export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-/* ROUTE_MANIFEST_START
-{
-  "routes": {
-    "__root__": {
-      "filePath": "~__root.tsx",
-      "children": [
-        "/_dashboard",
-        "/sign-in/",
-        "/patients/$userId/healthSummary/$shareCodeId/"
-      ]
-    },
-    "/_dashboard": {
-      "filePath": "~_dashboard.tsx",
-      "children": [
-        "/_dashboard/",
-        "/_dashboard/admin/",
-        "/_dashboard/notifications/",
-        "/_dashboard/patients/",
-        "/_dashboard/users/",
-        "/_dashboard/patients/invite",
-        "/_dashboard/users/$id",
-        "/_dashboard/users/invite",
-        "/_dashboard/patients/$id/"
-      ]
-    },
-    "/_dashboard/": {
-      "filePath": "~_dashboard/~index.tsx",
-      "parent": "/_dashboard"
-    },
-    "/sign-in/": {
-      "filePath": "~sign-in/~index.tsx"
-    },
-    "/_dashboard/admin/": {
-      "filePath": "~_dashboard/~admin/~index.tsx",
-      "parent": "/_dashboard"
-    },
-    "/_dashboard/notifications/": {
-      "filePath": "~_dashboard/~notifications/~index.tsx",
-      "parent": "/_dashboard"
-    },
-    "/_dashboard/patients/": {
-      "filePath": "~_dashboard/~patients/~index.tsx",
-      "parent": "/_dashboard"
-    },
-    "/_dashboard/users/": {
-      "filePath": "~_dashboard/~users/~index.tsx",
-      "parent": "/_dashboard"
-    },
-    "/_dashboard/patients/invite": {
-      "filePath": "~_dashboard/~patients/~invite.tsx",
-      "parent": "/_dashboard"
-    },
-    "/_dashboard/users/$id": {
-      "filePath": "~_dashboard/~users/~$id.tsx",
-      "parent": "/_dashboard"
-    },
-    "/_dashboard/users/invite": {
-      "filePath": "~_dashboard/~users/~invite.tsx",
-      "parent": "/_dashboard"
-    },
-    "/_dashboard/patients/$id/": {
-      "filePath": "~_dashboard/~patients/~$id/~index.tsx",
-      "parent": "/_dashboard"
-    },
-    "/patients/$userId/healthSummary/$shareCodeId/": {
-      "filePath": "~patients/~$userId/~healthSummary/~$shareCodeId/~index.tsx"
-    }
-  }
-}
-ROUTE_MANIFEST_END */

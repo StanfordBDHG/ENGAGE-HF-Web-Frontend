@@ -9,19 +9,17 @@
 import { SignInForm as AuthSignInForm } from "@stanfordspezi/spezi-web-design-system/modules/auth";
 import { createFileRoute } from "@tanstack/react-router";
 import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
-import { Helmet } from "react-helmet";
 import { AsideEngageLayout } from "@/components/AsideEngageLayout";
 import { env } from "@/env";
 import { auth, authProvider } from "@/modules/firebase/app";
+import { getTitle } from "@/utils/head";
 import johnsHopkingsLogoImg from "./johnsHopkinsLogo.png";
 import michiganLogoImg from "./michiganLogo.png";
 import stanfordLogoImg from "./stanfordLogo.png";
 
 const SignIn = () => (
   <AsideEngageLayout>
-    <Helmet>
-      <title>Sign In</title>
-    </Helmet>
+    <title>{getTitle("Sign In")}</title>
     <AuthSignInForm
       className="mx-auto w-[350px]"
       providers={[

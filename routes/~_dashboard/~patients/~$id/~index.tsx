@@ -20,7 +20,6 @@ import { PageTitle } from "@stanfordspezi/spezi-web-design-system/molecules/Dash
 import { syncData } from "@stanfordspezi/spezi-web-design-system/utils/data";
 import { createFileRoute, notFound, useRouter } from "@tanstack/react-router";
 import { Contact } from "lucide-react";
-import { Helmet } from "react-helmet";
 import { z } from "zod";
 import { NotFound } from "@/components/NotFound";
 import { callables, db, docRefs, refs } from "@/modules/firebase/app";
@@ -60,6 +59,7 @@ import { Labs } from "@/routes/~_dashboard/~patients/~$id/Labs";
 import { Measurements } from "@/routes/~_dashboard/~patients/~$id/Measurements";
 import { Notifications } from "@/routes/~_dashboard/~patients/~$id/Notifications";
 import { PatientInfo } from "@/routes/~_dashboard/~patients/~$id/PatientInfo";
+import { getTitle } from "@/utils/head";
 import { DashboardLayout } from "../../DashboardLayout";
 
 const getUserMedications = async (payload: {
@@ -207,9 +207,7 @@ const PatientPage = () => {
         />
       }
     >
-      <Helmet>
-        <title>Edit {userName}</title>
-      </Helmet>
+      <title>{getTitle(`Edit ${userName}`)}</title>
       <Tabs defaultValue={tab ?? PatientPageTab.information}>
         <TabsList className="mb-6" grow>
           <TabsTrigger value={PatientPageTab.information}>

@@ -11,7 +11,6 @@ import { toast } from "@stanfordspezi/spezi-web-design-system/components/Toaster
 import { PageTitle } from "@stanfordspezi/spezi-web-design-system/molecules/DashboardLayout";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { Users } from "lucide-react";
-import { Helmet } from "react-helmet";
 import { callables, ensureType } from "@/modules/firebase/app";
 import { queryClient } from "@/modules/query/queryClient";
 import { routes } from "@/modules/routes";
@@ -21,6 +20,7 @@ import {
   UserForm,
   type UserFormSchema,
 } from "@/routes/~_dashboard/~users/UserForm";
+import { getTitle } from "@/utils/head";
 
 const InviteUserPage = () => {
   const navigate = useNavigate();
@@ -43,9 +43,7 @@ const InviteUserPage = () => {
 
   return (
     <DashboardLayout title={<PageTitle title="Invite user" icon={<Users />} />}>
-      <Helmet>
-        <title>Invite user</title>
-      </Helmet>
+      <title>{getTitle("Invite user")}</title>
       <UserForm organizations={organizations} onSubmit={inviteUser} />
     </DashboardLayout>
   );

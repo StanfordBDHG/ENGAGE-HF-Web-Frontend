@@ -10,7 +10,6 @@ import { PageTitle } from "@stanfordspezi/spezi-web-design-system/molecules/Dash
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import { Bell } from "lucide-react";
-import { Helmet } from "react-helmet";
 import {
   currentUserQueryOptions,
   useUser,
@@ -18,6 +17,7 @@ import {
 import { NotificationsTable } from "@/modules/notifications/NotificationsTable";
 import { notificationQueries } from "@/modules/notifications/queries";
 import { queryClient } from "@/modules/query/queryClient";
+import { getTitle } from "@/utils/head";
 import { DashboardLayout } from "../DashboardLayout";
 
 const NotificationsPage = () => {
@@ -30,9 +30,7 @@ const NotificationsPage = () => {
     <DashboardLayout
       title={<PageTitle title="Notifications" icon={<Bell />} />}
     >
-      <Helmet>
-        <title>Notifications</title>
-      </Helmet>
+      <title>{getTitle("Notifications")}</title>
       <NotificationsTable notifications={notifications} />
     </DashboardLayout>
   );

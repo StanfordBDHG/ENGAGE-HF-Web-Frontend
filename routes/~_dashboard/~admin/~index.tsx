@@ -13,8 +13,8 @@ import { PageTitle } from "@stanfordspezi/spezi-web-design-system/molecules/Dash
 import { useMutation } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import { MonitorCog } from "lucide-react";
-import { Helmet } from "react-helmet";
 import { callables, ensureType } from "@/modules/firebase/app";
+import { getTitle } from "@/utils/head";
 import { DashboardLayout } from "../DashboardLayout";
 
 const AdminPage = () => {
@@ -32,9 +32,7 @@ const AdminPage = () => {
 
   return (
     <DashboardLayout title={<PageTitle title="Admin" icon={<MonitorCog />} />}>
-      <Helmet>
-        <title>Admin</title>
-      </Helmet>
+      <title>{getTitle("Admin")}</title>
       <div className="flex flex-col items-start gap-8">
         <section className="flex flex-col items-start gap-2">
           <Button

@@ -15,7 +15,6 @@ import {
   redirect,
 } from "@tanstack/react-router";
 import { type ComponentProps } from "react";
-import { Helmet } from "react-helmet";
 import { auth } from "@/modules/firebase/app";
 import {
   AuthProvider,
@@ -26,14 +25,13 @@ import { routes } from "@/modules/routes";
 import "../modules/globals.css";
 
 const routerProps: ComponentProps<typeof SpeziProvider>["router"] = {
-  Link: ({ href, ref, ...props }) => <Link ref={ref} to={href} {...props} />,
+  Link: ({ href, ...props }) => <Link to={href} {...props} />,
 };
 
 const Root = () => (
   <AuthProvider>
     <SpeziProvider router={routerProps}>
       <ReactQueryClientProvider>
-        <Helmet defaultTitle="ENGAGE-HF" titleTemplate="%s - ENGAGE-HF" />
         <Outlet />
         <Toaster />
       </ReactQueryClientProvider>
