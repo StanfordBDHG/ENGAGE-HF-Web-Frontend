@@ -8,7 +8,7 @@
     "Biodesign"
   ],
   "engines": {
-    "node": "22"
+    "node": "24"
   },
   "repository": {
     "type": "git",
@@ -52,7 +52,7 @@
     "@testing-library/jest-dom": "^6",
     "@testing-library/react": "^16",
     "@total-typescript/ts-reset": "^0.6.1",
-    "@types/node": "^22",
+    "@types/node": "^24",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "@vitejs/plugin-react": "^5.1.0",
