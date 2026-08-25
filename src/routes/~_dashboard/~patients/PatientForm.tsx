@@ -73,6 +73,7 @@ interface PatientFormProps {
   onSubmit: (data: PatientFormSchema) => Promise<void>;
   clinicianPreselectId?: string;
   resourceType?: ResourceType;
+  isPermanentInvitation?: boolean;
 }
 
 const parseDateOfBirth = (date: string) => {
@@ -93,6 +94,7 @@ export const PatientForm = ({
   onSubmit,
   clinicianPreselectId,
   resourceType,
+  isPermanentInvitation,
 }: PatientFormProps) => {
   const isEdit = !!user;
   const isEmailRequired = isEdit && resourceType === "user";
@@ -106,12 +108,15 @@ export const PatientForm = ({
         user?.dateOfBirth ? parseDateOfBirth(user.dateOfBirth) : undefined,
       providerName: user?.providerName ?? "",
       selfManaged: user?.selfManaged ?? false,
-      permanent: false,
+      permanent: isPermanentInvitation ?? false,
     },
   });
+  const isPermanent = form.watch("permanent");
 
   const handleSubmit = form.handleSubmit(async (data) => {
-    await onSubmit(data);
+    await onSubmit(
+      isPermanent ? { ...data, displayName: "", dateOfBirth: undefined } : data,
+    );
   });
 
   return (
@@ -135,29 +140,33 @@ export const PatientForm = ({
           render={({ field }) => <Input {...field} />}
         />
       )}
-      <Field
-        control={form.control}
-        name="displayName"
-        label="Display name"
-        render={({ field }) => <Input {...field} />}
-      />
-      <Field
-        control={form.control}
-        name="dateOfBirth"
-        label="Date of Birth"
-        render={({ field }) => (
-          <DatePicker
-            mode="single"
-            selected={field.value}
-            onSelect={(date) => field.onChange(date)}
-            defaultMonth={field.value}
-            endMonth={new Date()}
-            hidden={{
-              after: new Date(),
-            }}
-          />
-        )}
-      />
+      {!isPermanent && (
+        <Field
+          control={form.control}
+          name="displayName"
+          label="Display name"
+          render={({ field }) => <Input {...field} />}
+        />
+      )}
+      {!isPermanent && (
+        <Field
+          control={form.control}
+          name="dateOfBirth"
+          label="Date of Birth"
+          render={({ field }) => (
+            <DatePicker
+              mode="single"
+              selected={field.value}
+              onSelect={(date) => field.onChange(date)}
+              defaultMonth={field.value}
+              endMonth={new Date()}
+              hidden={{
+                after: new Date(),
+              }}
+            />
+          )}
+        />
+      )}
       <Field
         control={form.control}
         name="clinician"

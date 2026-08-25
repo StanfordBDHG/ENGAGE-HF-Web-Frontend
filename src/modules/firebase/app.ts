@@ -12,7 +12,13 @@ import { type UserType } from "@schmiedmayerlab/engagehf-models";
 import { toast } from "@schmiedmayerlab/grove-design-system/components/Toaster";
 import { queryOptions } from "@tanstack/react-query";
 import { redirect } from "@tanstack/react-router";
-import { connectAuthEmulator, getAuth, OAuthProvider } from "firebase/auth";
+import {
+  browserLocalPersistence,
+  connectAuthEmulator,
+  getAuth,
+  OAuthProvider,
+  setPersistence,
+} from "firebase/auth";
 import { connectFirestoreEmulator, getFirestore } from "firebase/firestore";
 import { env } from "@/env";
 import { firebaseConfig } from "@/modules/firebase/config";
@@ -28,6 +34,12 @@ import { routes } from "@/modules/routes";
 const firebaseApp = initializeApp(firebaseConfig);
 
 export const auth = getAuth(firebaseApp);
+// Firebase's default IndexedDB-backed persistence closes its DB connection
+// whenever the tab is hidden, which signInWithPopup can trigger on the
+// opener tab; if the popup result lands while still "hidden", persisting
+// the signed-in user throws an unrecoverable "Database is closing/hidden"
+// error. localStorage-backed persistence has no such visibility coupling.
+void setPersistence(auth, browserLocalPersistence);
 const enableEmulation = env.VITE_PUBLIC_EMULATOR;
 if (enableEmulation)
   connectAuthEmulator(auth, "http://127.0.0.1:9099", { disableWarnings: true });

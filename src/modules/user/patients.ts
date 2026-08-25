@@ -110,6 +110,7 @@ export const parsePatientsQueries = async ({
       selfManaged: user?.selfManaged,
       organization: organizationMap.get(user?.organization ?? ""),
       disabled: user?.disabled,
+      permanent: false,
     }),
   );
 

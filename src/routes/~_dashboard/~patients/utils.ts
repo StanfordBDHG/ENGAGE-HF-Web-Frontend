@@ -242,6 +242,7 @@ export const getPatientInfo = async ({
     invitationCode: user.invitationCode,
     isInvitation: resourceType === "invitation",
     selfManaged: user.selfManaged,
+    permanent: user.permanent,
   };
 };
 

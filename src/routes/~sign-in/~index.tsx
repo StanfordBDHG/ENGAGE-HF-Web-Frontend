@@ -8,7 +8,10 @@
 
 import { SignInForm as AuthSignInForm } from "@schmiedmayerlab/grove-design-system/modules/auth";
 import { createFileRoute } from "@tanstack/react-router";
-import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
+import {
+  signInWithEmailAndPassword,
+  signInWithPopup as firebaseSignInWithPopup,
+} from "firebase/auth";
 import { AsideEngageLayout } from "@/components/AsideEngageLayout";
 import { env } from "@/env";
 import { auth, authProvider } from "@/modules/firebase/app";
@@ -16,6 +19,21 @@ import { getTitle } from "@/utils/head";
 import johnsHopkingsLogoImg from "./johnsHopkinsLogo.png";
 import michiganLogoImg from "./michiganLogo.png";
 import stanfordLogoImg from "./stanfordLogo.png";
+
+// The design system swallows and rethrows a generic "Unknown error" for any
+// SSO failure without logging the original error, making production
+// failures undiagnosable. Log it here before it reaches that catch block.
+const signInWithPopup: typeof firebaseSignInWithPopup = async (
+  auth,
+  provider,
+) => {
+  try {
+    return await firebaseSignInWithPopup(auth, provider);
+  } catch (error) {
+    console.error("SSO sign-in failed", error);
+    throw error;
+  }
+};
 
 const SignIn = () => (
   <AsideEngageLayout>

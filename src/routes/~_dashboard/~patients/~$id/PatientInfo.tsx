@@ -8,7 +8,14 @@
 
 import { Card } from "@schmiedmayerlab/grove-design-system/components/Card";
 import { formatNilDateTime } from "@schmiedmayerlab/grove-design-system/utils/date";
-import { Clock, FileQuestion, Mail, BookLock, FileInput } from "lucide-react";
+import {
+  Clock,
+  FileQuestion,
+  Mail,
+  BookLock,
+  FileInput,
+  RefreshCw,
+} from "lucide-react";
 import { type ReactNode } from "react";
 import { type PatientInfo as PatientInfoData } from "@/routes/~_dashboard/~patients/utils";
 
@@ -46,6 +53,13 @@ export const PatientInfo = ({ info }: PatientInfoProps) => (
             icon={<Mail className="size-5" />}
             label="Invitation"
             value="patient has not yet logged in"
+          />
+        )}
+        {info.isInvitation && (
+          <InfoRow
+            icon={<RefreshCw className="size-5" />}
+            label="Invitation type"
+            value={info.permanent ? "Permanent (reusable)" : "One-time use"}
           />
         )}
         {info.selfManaged && (

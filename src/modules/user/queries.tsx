@@ -40,6 +40,7 @@ export const parseInvitationToUser = (
   type: invitation.user.type,
   disabled: invitation.user.disabled,
   selfManaged: invitation.user.selfManaged,
+  permanent: invitation.permanent,
 });
 
 export const parseAuthToUser = (
@@ -90,7 +91,11 @@ const getUserAuthData = async (userId: string) => {
   }));
   const authUser = allAuthData.at(0);
   if (!authUser || !user) return null;
-  return { user, authUser, resourceType: "user" as const };
+  return {
+    user: { ...user, permanent: false },
+    authUser,
+    resourceType: "user" as const,
+  };
 };
 
 const getUserInvitationData = async (userId: string) => {
@@ -102,6 +107,7 @@ const getUserInvitationData = async (userId: string) => {
       ...invitation.user,
       invitationCode: invitation.code,
       lastActiveDate: null,
+      permanent: invitation.permanent,
     },
     authUser: {
       uid: userId,

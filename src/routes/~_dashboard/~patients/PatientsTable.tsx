@@ -13,7 +13,7 @@ import {
 } from "@schmiedmayerlab/grove-design-system/components/DataTable";
 import { type RequiredSome } from "@schmiedmayerlab/grove-design-system/utils/misc";
 import { createColumnHelper } from "@tanstack/table-core";
-import { Check } from "lucide-react";
+import { FileInput, RefreshCw, ShieldX } from "lucide-react";
 import { useMemo } from "react";
 import { useUser } from "@/modules/firebase/UserProvider";
 import { routes } from "@/modules/routes";
@@ -29,12 +29,30 @@ const columns = [
   userColumns.displayName,
   userColumns.email,
   userColumns.organization,
-  userColumns.disabled,
-  columnHelper.accessor("selfManaged", {
-    header: "Self Managed",
+  columnHelper.display({
+    id: "status",
+    header: "Status",
     cell: (props) => {
-      const selfManaged = props.getValue();
-      return selfManaged ? <Check className="size-5" /> : "";
+      const patient = props.row.original;
+      return (
+        <div className="flex flex-col gap-1">
+          {patient.disabled && (
+            <span className="flex items-center gap-2">
+              <ShieldX className="size-5" /> Disabled
+            </span>
+          )}
+          {patient.selfManaged && (
+            <span className="flex items-center gap-2">
+              <FileInput className="size-5" /> Self managed
+            </span>
+          )}
+          {patient.permanent && (
+            <span className="flex items-center gap-2">
+              <RefreshCw className="size-5" /> Permanent
+            </span>
+          )}
+        </div>
+      );
     },
   }),
   columnHelper.display({
